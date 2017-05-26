@@ -24,6 +24,45 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
+		public function forgot__page(){
+			ob_start();
+			?>
+            <div class="row">
+                <div class=" main-box">
+                    <div class="col-md-4 col-xs-12 pull-right">
+                        <form class="forgot-form" method="get" autocomplete="off">
+                            <h3 class="form-title">Forgot Password <i class="fa fa-lock"></i></h3>
+                            <p>Please input your email in the form below and an email will be sent with a new password</p>
+                            <p>Once you have logged in with the new password you are free to change it.</p>
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                <label for="user_name">email address: <span class="required">*</span></label>
+                                <input type="text" name="user_name" class="form-control input-sm" placeholder="" /> </div> <span style="height:5px;display: block;">&nbsp;</span>
+                            <div class="form-group">
+                                <input type="hidden" name="action" value="pword_login" />
+                                <button class="btn btn-block btn-success btn-sm" type="submit"><i class="fa fa-lock"></i> Reset password</button>
+                            </div>
+                            <div class="form-group">
+                                <div class="alert alert-success">Please allow a few minutes for a new password to be generated and sent to your email address provided.</div>
+                                <div class="alert alert-danger"></div>
+                            </div>
+                            <div class="form-group"> <span style="height:5px;display: block;">&nbsp;</span> <a href="<?php echo site_url();?>/login/" <button class="btn btn-block btn-warning btn-sm" type="button">  Back to Login page </button></a> </div>
+                        </form>
+                    </div>
+                    <div class="col-md-7 col-xs-12 text-center hidden-xs ">
+                        <h1 class=" big-title">Welcome to the NCCPM online Fault Reporting System.</h1>
+                        <div class="ln_solid"></div>
+                        <p>Please login to access the equipment and fault management services.</p>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+            <?php
+			$content = ob_get_clean();
+			return $content;
+		}
+
 		public function login__page(){
 			ob_start();
 			?>
@@ -50,11 +89,8 @@ if( !class_exists('User') ):
 								<div class="alert alert-danger"></div>
 							</div>
 							<div class="form-group">
-								<div class="text-center">
-									<strong><?php _e('OR');?></strong>
-								</div>
-								<span style="height:5px;display: block;">&nbsp;</span>
-								<button class="btn btn-block btn-warning btn-sm" type="button"><?php _e('Having problem in login ?');?></button>
+								                            <div class="text-center"> 
+								<strong>OR</strong> </div> <span style="height:5px;display: block;">&nbsp;</span> <a href="<?php echo site_url();?>/reset_password/" <button class="btn btn-block btn-warning btn-sm" type="button"><i class="fa fa-question-circle"></i>  Forgot your password ?</button></a> 
 							</div>
 						</form>
 					</div>
@@ -236,6 +272,14 @@ if( !class_exists('User') ):
 			else: ?>
 				<form class="add-user user-form" method="post" autocomplete="off">
 					<div class="row">
+                                    <div class="form-group col-sm-6 col-xs-12">
+                                        <label for="username"> Username <span class="required">
+								*
+							</span> </label>
+                                        <input type="text" name="username" class="form-control require" /> </div>
+                                </div>
+
+					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
 							<label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="first_name" class="form-control require"/>
@@ -328,7 +372,16 @@ if( !class_exists('User') ):
 				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
 			else: ?>
 				<form class="edit-user user-form" method="post" autocomplete="off">
+					                                 <div class="row">
+                                            <div class="form-group col-sm-6 col-xs-12">
+                                                <label for="first_name"> Username <span class="required">
+								*
+							</span> </label>
+                                                <input type="text" name="username" class="form-control require" value="<?php _e($user->username);?>" /> </div>
+                                        </div>
+
 					<div class="row">
+
 						<div class="form-group col-sm-6 col-xs-12">
 							<label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="first_name" class="form-control require" value="<?php _e($user->first_name);?>"/>
@@ -484,12 +537,15 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
-		//Process functions starts here
-		public function user__login__process(){
+public function user__login__process(){
 			global $device;
 			extract($_POST);
-			if(email_exists($user_name)){
+			
+if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $user_name)) { 
+
+				if(email_exists($user_name)){
 				$user = get_user_by('email',$user_name);
+				error_log($user_pass." : ".$user->ID);
 				if(check_password($user_pass,$user->ID)){
 					if(!is_user_active($user->ID)){
 						return 2;
@@ -511,7 +567,68 @@ if( !class_exists('User') ):
 			}else{
 				return 0;
 			}
+	
+	
+} 
+else { 
+			if(username_exists($user_name)){
+				$user = get_user_by('username',$user_name);
+				if(check_password($user_pass,$user->ID)){
+					if(!is_user_active($user->ID)){
+						return 2;
+					}else{
+						set_current_user($user->ID);
+						$this->database->insert(TBL_ACCESS_LOG,
+							array(
+								'user_id' => $user->ID,
+								'ip_address'=> $_SERVER['REMOTE_ADDR'],
+								'device' => $device,
+								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
+							)
+						);
+						return 1;
+					}
+				}else{
+					return 0;
+				}
+			}else{
+				return 0;
+			}
+} 
+
+			
+
 		}
+
+
+
+		public function reset__login__process(){
+			global $device;
+			extract($_POST);
+			if(email_exists($user_name)){
+				$user = get_user_by('email',$user_name);
+				
+			$user_pass = password_generator();
+			$record_pass = $user_pass;
+			$salt = generateSalt();
+			$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+			$salt = base64_encode($salt);
+			//$pword = set_password($user_pass);
+				
+			$result1 = $this->database->update(TBL_USERS,array('user_pass'=> $user_pass, 'user_salt' => $salt),array('user_email'=> $user_name));
+				
+				//MAILER 
+			$subject = "NCCPM Fault Management System - Login Details";
+			$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $record_pass . ". The password can be changed once logged in.";
+			 $admn = "admin@admin.com";
+			send_email($admn,$user_name,$user_name, $subject, $body);
+				
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+
 
 		public function add__user__process(){
 			extract($_POST);
@@ -531,6 +648,10 @@ if( !class_exists('User') ):
 				else:
 					
 					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+
 					$guid = get_guid(TBL_USERS);
 					$result = $this->database->insert(TBL_USERS,
 						array(
@@ -539,9 +660,12 @@ if( !class_exists('User') ):
 							'last_name' => $last_name,
 							'user_email' => $user_email,
 							'user_role' => $user_role,
+							'username' => $username,
 							'user_status' => 1,
 							'user_pass' => set_password($user_pass),
 							'created_by' => $this->current__user__id,
+							'user_pass' => $user_pass,
+							'user_salt' => $salt,
 							'courses' => isset($courses) ? $courses : ''
 						)
 					);
@@ -593,7 +717,8 @@ if( !class_exists('User') ):
 					array(
 						'first_name' => $first_name,
 						'last_name' => $last_name,
-						'user_email' => $user_email,
+						'user_email' => $user_email,							
+						'username' => $username,
 						'user_status'=> $user_status,
 						'user_role' => $user_role,
 						'courses' => isset($courses) ? $courses : ''
@@ -691,6 +816,10 @@ if( !class_exists('User') ):
 			endif;
 			return json_encode($return);
 		}
+
+
+
+
 
 		public function delete__user__process(){
 			extract($_POST);
