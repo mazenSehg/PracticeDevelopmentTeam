@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.6
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 25, 2017 at 01:12 PM
--- Server version: 5.6.16
--- PHP Version: 5.5.9
+-- Host: localhost
+-- Generation Time: May 26, 2017 at 12:29 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `course-management`
@@ -26,15 +26,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `tbl_access_log`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_access_log` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_access_log` (
+  `ID` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `ip_address` text COLLATE utf8_unicode_ci NOT NULL,
   `device` text COLLATE utf8_unicode_ci NOT NULL,
   `user_agent` text COLLATE utf8_unicode_ci NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tbl_access_log`
@@ -51,7 +50,8 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (8, 10000950333, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 10:49:13'),
 (9, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:01:43'),
 (10, 10000924747, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:02:09'),
-(11, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:12:28');
+(11, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:12:28'),
+(12, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-05-26 10:26:42');
 
 -- --------------------------------------------------------
 
@@ -59,26 +59,15 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 -- Table structure for table `tbl_bookings`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_bookings` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_bookings` (
+  `ID` bigint(20) NOT NULL,
   `course` bigint(20) NOT NULL,
   `booking_date` varchar(50) NOT NULL,
   `nurses` text NOT NULL,
   `enroll` text NOT NULL,
   `created_by` bigint(20) NOT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000755184 ;
-
---
--- Dumping data for table `tbl_bookings`
---
-
-INSERT INTO `tbl_bookings` (`ID`, `course`, `booking_date`, `nurses`, `enroll`, `created_by`, `created_on`) VALUES
-(10000075067, 10000548890, '2017-05-24', 'a:1:{i:0;s:11:"10000242676";}', 'a:1:{s:11:"10000242676";i:1;}', 0, '2017-05-24 21:39:19'),
-(10000076469, 10000548890, '2017-05-31', 'a:1:{i:0;s:11:"10000950333";}', 'a:1:{s:11:"10000950333";i:0;}', 10000924747, '2017-05-25 11:08:29'),
-(10000655262, 10000999589, '2017-05-25', 'a:2:{i:0;s:11:"10000242676";i:1;s:11:"10000950333";}', 'a:2:{s:11:"10000242676";i:1;s:11:"10000950333";i:0;}', 0, '2017-05-25 10:24:41'),
-(10000755183, 10000999589, '2017-05-24', 'a:2:{i:0;s:11:"10000242676";i:1;s:11:"10000950333";}', 'a:2:{s:11:"10000242676";i:1;s:11:"10000950333";i:1;}', 0, '2017-05-25 10:24:49');
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,28 +75,14 @@ INSERT INTO `tbl_bookings` (`ID`, `course`, `booking_date`, `nurses`, `enroll`, 
 -- Table structure for table `tbl_courses`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_courses` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_courses` (
+  `ID` bigint(20) NOT NULL,
   `name` varchar(1024) NOT NULL,
   `description` text NOT NULL,
   `admins` text NOT NULL,
   `duration` int(11) NOT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000999590 ;
-
---
--- Dumping data for table `tbl_courses`
---
-
-INSERT INTO `tbl_courses` (`ID`, `name`, `description`, `admins`, `duration`, `created_on`) VALUES
-(10000548890, 'Course One', 'This is 1st Test Course', 'a:1:{i:0;s:11:"10000924747";}', 10, '2017-05-24 19:35:21'),
-(10000999589, 'Course Two', 'This is 2nd test course', 'a:1:{i:0;s:11:"10000924747";}', 5, '2017-05-24 19:46:37'),
-(10000688693, 'Course Three', 'This is 3rd test Course', 'a:1:{i:0;s:11:"10000924747";}', 8, '2017-05-24 19:47:08'),
-(10000350748, 'Course Four', 'This is 4th test Course', 'a:1:{i:0;s:11:"10000924747";}', 8, '2017-05-24 19:48:45'),
-(10000995304, 'Course Five', 'This is 5th Test Course', 'a:1:{i:0;s:11:"10000924747";}', 7, '2017-05-24 19:50:33'),
-(10000501787, 'Course Seven', 'This is 7th Test Course', 'a:1:{i:0;s:11:"10000924747";}', 5, '2017-05-24 19:56:34'),
-(10000936032, 'Course Eight', 'This is 8th Test Course', 'a:1:{i:0;s:11:"10000924747";}', 6, '2017-05-24 19:57:22');
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -115,16 +90,15 @@ INSERT INTO `tbl_courses` (`ID`, `name`, `description`, `admins`, `duration`, `c
 -- Table structure for table `tbl_notifications`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_notifications` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_notifications` (
+  `ID` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `title` text NOT NULL,
   `notification` text NOT NULL,
   `read` int(1) NOT NULL DEFAULT '0',
   `hide` int(1) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=67 ;
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_notifications`
@@ -136,14 +110,14 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (3, 1, 'Account Details updated', 'You have successfully update your account details.', 1, 1, '2017-05-23 19:37:34'),
 (4, 1, 'Password Changed', 'You have successfully changed your account password.', 1, 1, '2017-05-23 19:37:54'),
 (5, 1, 'Password Changed', 'You have successfully changed your account password.', 1, 1, '2017-05-23 19:39:34'),
-(6, 1, 'New Admin Account Created', 'You have successfully created a new admin account (Vijay Hardaha).', 0, 0, '2017-05-24 11:26:27'),
-(7, 1, 'Account Password Reset', 'You have successfully changed (Vijayx Hardahax) account password.', 0, 0, '2017-05-24 11:37:45'),
-(8, 1, 'Account Details updated', 'You have successfully updated (Vijayx Hardahax) account details.', 0, 0, '2017-05-24 11:37:45'),
-(9, 1, 'Account Details updated', 'You have successfully updated (Vijayx Hardahax) account details.', 0, 0, '2017-05-24 11:38:01'),
-(10, 1, 'Account Details updated', 'You have successfully updated (Vijayx Hardahax) account details.', 0, 0, '2017-05-24 11:38:05'),
-(11, 1, 'Account Details updated', 'You have successfully updated (Vijay Hardaha) account details.', 0, 0, '2017-05-24 11:38:16'),
-(12, 1, 'Account deleted', 'You have successfully deleted (Aarav Mehra) account.', 0, 0, '2017-05-24 12:16:04'),
-(13, 1, 'Account deleted', 'You have successfully deleted (Vijay Hardaha) account.', 0, 0, '2017-05-24 12:17:26'),
+(6, 1, 'New Admin Account Created', 'You have successfully created a new admin account (Mazen Sehgal).', 0, 0, '2017-05-24 11:26:27'),
+(7, 1, 'Account Password Reset', 'You have successfully changed (Mazen Sehgal) account password.', 0, 0, '2017-05-24 11:37:45'),
+(8, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:37:45'),
+(9, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:38:01'),
+(10, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:38:05'),
+(11, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:38:16'),
+(12, 1, 'Account deleted', 'You have successfully deleted (Mazen Sehgal) account.', 0, 0, '2017-05-24 12:16:04'),
+(13, 1, 'Account deleted', 'You have successfully deleted (Mazen Sehgal) account.', 0, 0, '2017-05-24 12:17:26'),
 (14, 1, 'Course deleted', 'You have successfully deleted (Hospital A) course.', 0, 0, '2017-05-24 13:20:16'),
 (15, 1, 'New Account Created', 'You have successfully created a new account (Course Admin 1).', 0, 0, '2017-05-24 18:46:09'),
 (16, 1, 'New course created', 'You have successfully created a new course (Test Course).', 0, 0, '2017-05-24 18:48:14'),
@@ -184,8 +158,8 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (51, 10000242679, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-05-24 21:44:35'),
 (52, 10000242679, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-05-24 21:44:54'),
 (53, 10000242679, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-05-24 22:49:10'),
-(54, 10000242679, 'Account Details updated', 'You have successfully updated (Vijayx Hardaha) account details.', 0, 0, '2017-05-24 23:06:25'),
-(55, 10000242679, 'Account Details updated', 'You have successfully updated (Vijay Hardaha) account details.', 0, 0, '2017-05-24 23:06:28'),
+(54, 10000242679, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 23:06:25'),
+(55, 10000242679, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 23:06:28'),
 (56, 10000242679, 'New Account Created', 'You have successfully created a new account (Nurse Three).', 0, 0, '2017-05-24 23:06:54'),
 (57, 10000242679, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-05-25 10:24:41'),
 (58, 10000242679, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-05-25 10:24:49'),
@@ -204,12 +178,11 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 -- Table structure for table `tbl_options`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_options` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_options` (
+  `ID` bigint(20) NOT NULL,
   `option_name` text NOT NULL,
-  `option_value` text NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  `option_value` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_options`
@@ -227,7 +200,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (9, 'site_contact_email', 'info@coursemanagement.com'),
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
-(12, 'users_capabilities', 's:818:"a:3:{s:5:"admin";a:11:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}s:12:"course_admin";a:11:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:12:"view_booking";i:1;s:11:"add_booking";i:1;s:12:"edit_booking";i:1;s:14:"delete_booking";i:1;}s:5:"nurse";a:11:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}}";');
+(12, 'users_capabilities', 's:818:\"a:3:{s:5:\"admin\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:1;}s:5:\"nurse\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
 
 -- --------------------------------------------------------
 
@@ -235,13 +208,12 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 -- Table structure for table `tbl_usermeta`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_usermeta` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_usermeta` (
+  `ID` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `meta_key` text NOT NULL,
-  `meta_value` text NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+  `meta_value` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_usermeta`
@@ -284,8 +256,8 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 -- Table structure for table `tbl_users`
 --
 
-CREATE TABLE IF NOT EXISTS `tbl_users` (
-  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_users` (
+  `ID` bigint(20) NOT NULL,
   `user_email` varchar(512) NOT NULL,
   `user_pass` varchar(512) NOT NULL,
   `first_name` varchar(256) NOT NULL,
@@ -295,20 +267,102 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
   `created_by` bigint(20) NOT NULL,
   `courses` text NOT NULL,
   `registered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000950334 ;
+  `user_salt` varchar(200) DEFAULT NULL,
+  `username` varchar(150) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_users`
 --
 
-INSERT INTO `tbl_users` (`ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `user_status`, `created_by`, `courses`, `registered_at`) VALUES
-(10000242679, 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Vijay', 'Hardaha', 'admin', 1, 1, '', '2016-06-14 09:35:48'),
-(10000242676, 'nurse1@test.com', 'af7f628e2450d8cfc193878ae105851d', 'Nurse', 'One', 'nurse', 1, 1, 'a:7:{i:0;s:11:"10000548890";i:1;s:11:"10000999589";i:2;s:11:"10000688693";i:3;s:11:"10000350748";i:4;s:11:"10000995304";i:5;s:11:"10000501787";i:6;s:11:"10000936032";}', '2017-05-24 20:43:49'),
-(10000924747, 'courseadmin1@test.com', 'cc03e747a6afbbcbf8be7668acfebee5', 'Course', 'Admin 1', 'course_admin', 1, 1, '', '2017-05-24 18:46:09'),
-(10000950333, 'nurse2@test.com', 'cc03e747a6afbbcbf8be7668acfebee5', 'Nurse', 'Two', 'nurse', 1, 1, 'a:4:{i:0;s:11:"10000548890";i:1;s:11:"10000999589";i:2;s:11:"10000688693";i:3;s:11:"10000350748";}', '2017-05-24 20:45:26'),
-(10000274119, 'nurse3@test.com', 'fbd7fe9ba2d08a27d88862de4056f415', 'Nurse', 'Three', 'nurse', 1, 10000242679, '', '2017-05-24 23:06:54');
+INSERT INTO `tbl_users` (`ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `user_status`, `created_by`, `courses`, `registered_at`, `user_salt`, `username`) VALUES
+(10000242679, 'admin@admin.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'admin', 1, 1, '', '2016-06-14 09:35:48', '78cHgqMhLRJHz575WXy9uw==', 'admin');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_access_log`
+--
+ALTER TABLE `tbl_access_log`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_bookings`
+--
+ALTER TABLE `tbl_bookings`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_courses`
+--
+ALTER TABLE `tbl_courses`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_notifications`
+--
+ALTER TABLE `tbl_notifications`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_options`
+--
+ALTER TABLE `tbl_options`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_usermeta`
+--
+ALTER TABLE `tbl_usermeta`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_access_log`
+--
+ALTER TABLE `tbl_access_log`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `tbl_bookings`
+--
+ALTER TABLE `tbl_bookings`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000755184;
+--
+-- AUTO_INCREMENT for table `tbl_courses`
+--
+ALTER TABLE `tbl_courses`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000999590;
+--
+-- AUTO_INCREMENT for table `tbl_notifications`
+--
+ALTER TABLE `tbl_notifications`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+--
+-- AUTO_INCREMENT for table `tbl_options`
+--
+ALTER TABLE `tbl_options`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `tbl_usermeta`
+--
+ALTER TABLE `tbl_usermeta`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+--
+-- AUTO_INCREMENT for table `tbl_users`
+--
+ALTER TABLE `tbl_users`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000950334;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
