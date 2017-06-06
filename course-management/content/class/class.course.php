@@ -40,6 +40,20 @@ if( !class_exists('Course') ):
 						<label for="description"><?php _e('Description');?></label>
 						<textarea name="description" class="form-control" rows="3"></textarea>
 					</div>
+					<div class="form-group">
+						<label for="location"><?php _e('Location');?>&nbsp;<span class="required">*</span></label>
+						<select name="location" class="form-control select_single require" data-placeholder="Choose location">
+							<?php
+							$data = get_tabledata(TBL_LOCATIONS,false);
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="retrain_date"><?php _e('Retrain Date');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="retrain_date" class="form-control require" min="0"/>
+					</div>
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="add_new_course" />
@@ -84,6 +98,20 @@ if( !class_exists('Course') ):
 					<div class="form-group">
 						<label for="description"><?php _e('Description');?></label>
 						<textarea name="description" class="form-control" rows="3"><?php _e($course->description);?></textarea>
+					</div>
+					<div class="form-group">
+						<label for="location"><?php _e('Location');?>&nbsp;<span class="required">*</span></label>
+						<select name="location" class="form-control select_single require" data-placeholder="Choose location">
+							<?php
+							$data = get_tabledata(TBL_LOCATIONS,false);
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data, maybe_unserialize($course->location));
+							?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="retrain_date"><?php _e('Retrain Date');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="retrain_date" class="form-control require" min="0" value="<?php _e($course->retrain_date);?>"/>
 					</div>
 					<div class="ln_solid"></div>
 					<div class="form-group">
@@ -184,7 +212,9 @@ if( !class_exists('Course') ):
 							'name' => $name,
 							'admins' => $admins,
 							'duration' => $duration,
-							'description' => $description
+							'description' => $description,
+							'location' => $location,
+							'retrain_date' => $retrain_date,
 						)
 					);
 					if($result):
@@ -228,7 +258,9 @@ if( !class_exists('Course') ):
 							'name' => $name,
 							'admins' => $admins,
 							'duration' => $duration,
-							'description' => $description
+							'description' => $description,
+							'location' => $location,
+							'retrain_date' => $retrain_date,
 						),
 						array(
 							'ID'=> $course_id

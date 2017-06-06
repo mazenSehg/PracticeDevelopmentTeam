@@ -82,6 +82,30 @@
 			case 'delete_course':
 				echo $Course->delete__course__process();
 				break;
+			
+			case 'add_new_designation':
+				echo $Designation->add__designation__process();
+				break;
+				
+			case 'update_designation':
+				echo $Designation->update__designation__process();
+				break;
+				
+			case 'delete_designation':
+				echo $Designation->delete__designation__process();
+				break;
+				
+			case 'add_new_location':
+				echo $Location->add__location__process();
+				break;
+				
+			case 'update_location':
+				echo $Location->update__location__process();
+				break;
+				
+			case 'delete_location':
+				echo $Location->delete__location__process();
+				break;
 				
 			case 'add_new_booking':
 				echo $Booking->add__booking__process();

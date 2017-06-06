@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 26, 2017 at 12:29 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Jun 06, 2017 at 05:50 AM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -51,7 +51,10 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (9, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:01:43'),
 (10, 10000924747, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:02:09'),
 (11, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-05-25 11:12:28'),
-(12, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-05-26 10:26:42');
+(12, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', '2017-06-06 02:32:47'),
+(13, 10000242679, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30', '2017-06-06 03:25:36'),
+(14, 10000242679, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30', '2017-06-06 03:27:44'),
+(15, 10000242679, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30', '2017-06-06 03:28:03');
 
 -- --------------------------------------------------------
 
@@ -81,8 +84,39 @@ CREATE TABLE `tbl_courses` (
   `description` text NOT NULL,
   `admins` text NOT NULL,
   `duration` int(11) NOT NULL,
+  `location` bigint(20) NOT NULL,
+  `retrain_date` int(11) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_designations`
+--
+
+CREATE TABLE `tbl_designations` (
+  `ID` bigint(20) NOT NULL,
+  `name` varchar(1024) NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_locations`
+--
+
+CREATE TABLE `tbl_locations` (
+  `ID` bigint(20) NOT NULL,
+  `name` varchar(1024) NOT NULL,
+  `phone` varchar(64) NOT NULL,
+  `booking_contact` varchar(64) NOT NULL,
+  `booking_phone` varchar(64) NOT NULL,
+  `notes` text NOT NULL,
+  `extras` text NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -116,7 +150,7 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (9, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:38:01'),
 (10, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:38:05'),
 (11, 1, 'Account Details updated', 'You have successfully updated (Mazen Sehgal) account details.', 0, 0, '2017-05-24 11:38:16'),
-(12, 1, 'Account deleted', 'You have successfully deleted (Mazen Sehgal) account.', 0, 0, '2017-05-24 12:16:04'),
+(12, 1, 'Account deleted', 'You have successfully deleted (Aarav Mehra) account.', 0, 0, '2017-05-24 12:16:04'),
 (13, 1, 'Account deleted', 'You have successfully deleted (Mazen Sehgal) account.', 0, 0, '2017-05-24 12:17:26'),
 (14, 1, 'Course deleted', 'You have successfully deleted (Hospital A) course.', 0, 0, '2017-05-24 13:20:16'),
 (15, 1, 'New Account Created', 'You have successfully created a new account (Course Admin 1).', 0, 0, '2017-05-24 18:46:09'),
@@ -170,7 +204,17 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (63, 10000242679, 'Account Details updated', 'You have successfully updated (Course Admin 1) account details.', 0, 0, '2017-05-25 11:01:53'),
 (64, 10000242679, 'Account Password Reset', 'You have successfully changed (Course Admin 1) account password.', 0, 0, '2017-05-25 11:02:02'),
 (65, 10000242679, 'Account Details updated', 'You have successfully updated (Course Admin 1) account details.', 0, 0, '2017-05-25 11:02:02'),
-(66, 10000924747, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-05-25 11:08:29');
+(66, 10000924747, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-05-25 11:08:29'),
+(67, 10000242679, 'New designation created', 'You have successfully created a new designation (Test).', 0, 0, '2017-06-06 02:33:32'),
+(68, 10000242679, 'Designation updated', 'You have successfully updated designation (Testsdd).', 0, 0, '2017-06-06 02:33:37'),
+(69, 10000242679, 'Designation deleted', 'You have successfully deleted (Testsdd) designation.', 0, 0, '2017-06-06 02:33:41'),
+(70, 10000242679, 'New designation created', 'You have successfully created a new designation (Test).', 0, 0, '2017-06-06 02:41:24'),
+(71, 10000242679, 'New Account Created', 'You have successfully created a new account (Test User).', 0, 0, '2017-06-06 02:41:56'),
+(72, 10000242679, 'New location created', 'You have successfully created a new location (Test).', 0, 0, '2017-06-06 03:06:14'),
+(73, 10000242679, 'Location updated', 'You have successfully updated location (Test).', 0, 0, '2017-06-06 03:06:55'),
+(74, 10000242679, 'New course created', 'You have successfully created a new course (Test).', 0, 0, '2017-06-06 03:11:43'),
+(75, 10000242679, 'Account Details updated', 'You have successfully updated (Test User) account details.', 0, 0, '2017-06-06 03:44:59'),
+(76, 10000242679, 'New Account Created', 'You have successfully created a new account (Bob Bbb).', 0, 0, '2017-06-06 03:47:44');
 
 -- --------------------------------------------------------
 
@@ -200,7 +244,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (9, 'site_contact_email', 'info@coursemanagement.com'),
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
-(12, 'users_capabilities', 's:818:\"a:3:{s:5:\"admin\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:1;}s:5:\"nurse\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
+(12, 'users_capabilities', 's:818:"a:3:{s:5:"admin";a:11:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}s:12:"course_admin";a:11:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:12:"view_booking";i:1;s:11:"add_booking";i:1;s:12:"edit_booking";i:1;s:14:"delete_booking";i:1;}s:5:"nurse";a:11:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}}";');
 
 -- --------------------------------------------------------
 
@@ -248,7 +292,23 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (34, 10000274119, 'gender', 'Female'),
 (35, 10000274119, 'dob', '2017-05-16 12:00:00'),
 (36, 10000274119, 'user_phone', ''),
-(37, 10000274119, 'profile_img', '');
+(37, 10000274119, 'profile_img', ''),
+(38, 10000619023, 'gender', 'Male'),
+(39, 10000619023, 'dob', '2017-06-05 12:00:00'),
+(40, 10000619023, 'user_phone', ''),
+(41, 10000619023, 'profile_img', '/content/assets/img/user.png'),
+(42, 10000619023, 'user_designation', '10000094230'),
+(43, 10000619023, 'work_extension', 'Test1'),
+(44, 10000619023, 'beep', 'Test2'),
+(45, 10000619023, 'band', '8e'),
+(46, 10000572451, 'gender', 'Female'),
+(47, 10000572451, 'dob', '2017-06-01 12:00:00'),
+(48, 10000572451, 'user_phone', '12345678'),
+(49, 10000572451, 'profile_img', ''),
+(50, 10000572451, 'user_designation', '10000094230'),
+(51, 10000572451, 'work_extension', '123213'),
+(52, 10000572451, 'beep', '234324'),
+(53, 10000572451, 'band', '5');
 
 -- --------------------------------------------------------
 
@@ -266,17 +326,15 @@ CREATE TABLE `tbl_users` (
   `user_status` int(11) NOT NULL,
   `created_by` bigint(20) NOT NULL,
   `courses` text NOT NULL,
-  `registered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_salt` varchar(200) DEFAULT NULL,
-  `username` varchar(150) DEFAULT NULL
+  `registered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_users`
 --
 
-INSERT INTO `tbl_users` (`ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `user_status`, `created_by`, `courses`, `registered_at`, `user_salt`, `username`) VALUES
-(10000242679, 'admin@admin.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'admin', 1, 1, '', '2016-06-14 09:35:48', '78cHgqMhLRJHz575WXy9uw==', 'admin');
+INSERT INTO `tbl_users` (`ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `user_status`, `created_by`, `courses`, `registered_at`) VALUES
+(10000242679, 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', 'Mazen', 'Sehgal', 'admin', 1, 1, '', '2016-06-14 09:35:48');
 
 --
 -- Indexes for dumped tables
@@ -298,6 +356,18 @@ ALTER TABLE `tbl_bookings`
 -- Indexes for table `tbl_courses`
 --
 ALTER TABLE `tbl_courses`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_designations`
+--
+ALTER TABLE `tbl_designations`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_locations`
+--
+ALTER TABLE `tbl_locations`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -332,7 +402,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
@@ -344,10 +414,20 @@ ALTER TABLE `tbl_bookings`
 ALTER TABLE `tbl_courses`
   MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000999590;
 --
+-- AUTO_INCREMENT for table `tbl_designations`
+--
+ALTER TABLE `tbl_designations`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000541045;
+--
+-- AUTO_INCREMENT for table `tbl_locations`
+--
+ALTER TABLE `tbl_locations`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000833917;
+--
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -357,7 +437,7 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
