@@ -109,7 +109,6 @@ if ( !function_exists('get_user_by') ) :
 		return $userdata ;
 	}
 endif;
-
 if ( !function_exists('get_data_by') ) :
 	function get_data_by( $field, $value ) {
 		global $db;
@@ -138,6 +137,9 @@ if ( !function_exists('get_data_by') ) :
 				break;
 			case 'email':
 				$db_field = 'user_email';
+				break;
+			case 'username':
+				$db_field = 'username';
 				break;
 			case 'login':
 				/*$value = sanitize_user( $value );*/
@@ -189,10 +191,11 @@ if ( !function_exists('check_password') ) :
 		if ( !$user = get_user_by( 'id', $user_id ) ) {
 			return false;
 		}
-		$password = set_password($password, $user_id);
-		if($user->user_pass == $password) {
+                $password = set_password($password, $user_id);
+		error_log($password ." : ". $user->user_pass);
+		if($password == $user->user_pass){
 			return true;
-		} else {
+		}else{
 			return false;
 		}
 	}
