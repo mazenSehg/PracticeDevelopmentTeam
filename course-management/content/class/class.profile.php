@@ -281,30 +281,25 @@ if( !class_exists('Profile') ):
 			return $content;
 		}
 
-	public function profile__password__change__process()
-	{
-		extract($_POST);
-		$password = set_password($current_password);
-		$args     = array('ID'       => $this->user__id,'user_pass'=> $password);
-		$check = get_tabledata(TBL_USERS,true,$args);
-		if($check):
-			$this->user = get_userdata($current_user_id);
-			$salt = generateSalt();
-			$new_password = hash('SHA256', encrypt($new_password, $salt));
-			$salt = base64_encode($salt);
-			$this->database->update(TBL_USERS,array('user_pass' => $new_password, 'user_salt' => $salt),array('ID' => $this->user__id));
-		update_user_meta($this->user__id,'reset_password',0);
-
-		$notification_args = array(
-			'title'       => 'Password Changed',
-			'notification'=> 'You have successfully changed your account password.',
-		);
-		add_user_notification($notification_args);
-		return 1;
-		else:
-		return 0;
-		endif;
-	}
+		public function profile__password__change__process(){
+			extract($_POST);
+			$password = set_password($current_password);
+			$args = array('ID' => $this->user__id,'user_pass'=> $password);
+			$check = get_tabledata(TBL_USERS,true,$args);
+			if($check):
+				$new_password = set_password($new_password);
+				$this->database->update(TBL_USERS,array('user_pass'=> $new_password),array('ID'=> $this->user__id));
+				update_user_meta($this->user__id,'reset_password',0);
+				$notification_args = array(
+					'title' => __('Password Changed'),
+					'notification'=> __('You have successfully changed your account password.'),
+				);
+				add_user_notification($notification_args);
+				return 1;
+			else:
+				return 0;
+			endif;
+		}
 
 		public function update__profile__process(){
 			extract($_POST);

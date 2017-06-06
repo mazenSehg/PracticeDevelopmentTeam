@@ -261,6 +261,38 @@ if( !class_exists('Header') ):
 								</li>
 								<?php endif; ?>
 								
+								<?php if( user_can('view_designation') || user_can('edit_designation') || user_can('add_designation')): ?>
+								<li>
+									<a><i class="fa fa-book"></i><?php _e('Designations');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_designation') ): ?>
+										<li><a href="<?php the_permalink('designations');?>"><?php _e('All Designations');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_designation') || user_can('add_designation')): ?>
+										<li><a href="<?php the_permalink('add-new-designation');?>"><?php _e('Add New Designation');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-designation');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
+								
+								<?php if( user_can('view_location') || user_can('edit_location') || user_can('add_location')): ?>
+								<li>
+									<a><i class="fa fa-book"></i><?php _e('Locations');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_location') ): ?>
+										<li><a href="<?php the_permalink('locations');?>"><?php _e('All Locations');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_location') || user_can('add_location')): ?>
+										<li><a href="<?php the_permalink('add-new-location');?>"><?php _e('Add New Location');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-location');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
+								
 								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
 								<li>
 									<a><i class="fa fa-book"></i><?php _e('Bookings');?> <span class="fa fa-chevron-down"></span></a>

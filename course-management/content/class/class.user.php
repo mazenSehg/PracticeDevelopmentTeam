@@ -16,53 +16,33 @@ if( !class_exists('User') ):
 			$this->current__user = get_userdata($this->current__user__id);
 		}
 
-		public function demo__page(){
+		public function demo(){
 			ob_start();
 			?>
 			<?php
 			$content = ob_get_clean();
 			return $content;
 		}
-
-		public function forgot__page(){
-			ob_start();
-			?>
-            <div class="row">
-                <div class=" main-box">
-                    <div class="col-md-4 col-xs-12 pull-right">
-                        <form class="forgot-form" method="get" autocomplete="off">
-                            <h3 class="form-title">Forgot Password <i class="fa fa-lock"></i></h3>
-                            <p>Please input your email in the form below and an email will be sent with a new password</p>
-                            <p>Once you have logged in with the new password you are free to change it.</p>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label for="user_name">email address: <span class="required">*</span></label>
-                                <input type="text" name="user_name" class="form-control input-sm" placeholder="" /> </div> <span style="height:5px;display: block;">&nbsp;</span>
-                            <div class="form-group">
-                                <input type="hidden" name="action" value="pword_login" />
-                                <button class="btn btn-block btn-success btn-sm" type="submit"><i class="fa fa-lock"></i> Reset password</button>
-                            </div>
-                            <div class="form-group">
-                                <div class="alert alert-success">Please allow a few minutes for a new password to be generated and sent to your email address provided.</div>
-                                <div class="alert alert-danger"></div>
-                            </div>
-                            <div class="form-group"> <span style="height:5px;display: block;">&nbsp;</span> <a href="<?php echo site_url();?>/login/" <button class="btn btn-block btn-warning btn-sm" type="button">  Back to Login page </button></a> </div>
-                        </form>
-                    </div>
-                    <div class="col-md-7 col-xs-12 text-center hidden-xs ">
-                        <h1 class=" big-title">Welcome to the NCCPM online Fault Reporting System.</h1>
-                        <div class="ln_solid"></div>
-                        <p>Please login to access the equipment and fault management services.</p>
-                    </div>
-                    <div class="col-md-1"></div>
-                </div>
-            </div>
-            <?php
-			$content = ob_get_clean();
-			return $content;
+		
+		public function user_bands(){
+			return array(
+				'1' => '1',
+				'2' => '2',
+				'3' => '3',
+				'4' => '4',
+				'5' => '5',
+				'6 ' => '6',
+				'7' => '7',
+				'8' => '8',
+				'a' => 'a',
+				'8b' => '8b',
+				'8c' => '8c',
+				'8d' => '8d',
+				'8e' => '8e',
+				'9' => '9',
+			);
 		}
-
+		
 		public function login__page(){
 			ob_start();
 			?>
@@ -89,8 +69,11 @@ if( !class_exists('User') ):
 								<div class="alert alert-danger"></div>
 							</div>
 							<div class="form-group">
-								                            <div class="text-center"> 
-								<strong>OR</strong> </div> <span style="height:5px;display: block;">&nbsp;</span> <a href="<?php echo site_url();?>/reset_password/" <button class="btn btn-block btn-warning btn-sm" type="button"><i class="fa fa-question-circle"></i>  Forgot your password ?</button></a> 
+								<div class="text-center">
+									<strong><?php _e('OR');?></strong>
+								</div>
+								<span style="height:5px;display: block;">&nbsp;</span>
+								<button class="btn btn-block btn-warning btn-sm" type="button"><?php _e('Having problem in login ?');?></button>
 							</div>
 						</form>
 					</div>
@@ -272,14 +255,6 @@ if( !class_exists('User') ):
 			else: ?>
 				<form class="add-user user-form" method="post" autocomplete="off">
 					<div class="row">
-                                    <div class="form-group col-sm-6 col-xs-12">
-                                        <label for="username"> Username <span class="required">
-								*
-							</span> </label>
-                                        <input type="text" name="username" class="form-control require" /> </div>
-                                </div>
-
-					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
 							<label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="first_name" class="form-control require"/>
@@ -319,7 +294,7 @@ if( !class_exists('User') ):
 
 					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
-							<label for="company"><?php _e('Role');?>&nbsp;<span class="required">*</span></label>
+							<label for="user-role"><?php _e('Role');?>&nbsp;<span class="required">*</span></label>
 							<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 								<?php echo get_options_list(get_roles()); ?>
 							</select>
@@ -333,7 +308,40 @@ if( !class_exists('User') ):
 								echo get_options_list($option_data);
 								?>
 							</select>
-							<span class="help-block"><?php _e('Use this option only for <strong>Nurse</strong> users');?></span>
+							<small class="help-block"><?php _e('Use this option only for <strong>Nurse</strong> users');?></small>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="user_designation"><?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
+							<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation">
+								<?php
+								$data = get_tabledata(TBL_DESIGNATIONS,false);
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+							</select>
+						</div>
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="work_extension"><?php _e('Work extension');?></label>
+							<input type="text" name="work_extension" class="form-control"/>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="beep"><?php _e('Beep');?></label>
+							<input type="text" name="beep" class="form-control"/>
+						</div>
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="band"><?php _e('Band');?></label>
+							<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band">
+								<?php
+								$option_data = $this->user_bands();
+								echo get_options_list($option_data);
+								?>
+							</select>
 						</div>
 					</div>
 					
@@ -372,16 +380,7 @@ if( !class_exists('User') ):
 				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
 			else: ?>
 				<form class="edit-user user-form" method="post" autocomplete="off">
-					                                 <div class="row">
-                                            <div class="form-group col-sm-6 col-xs-12">
-                                                <label for="first_name"> Username <span class="required">
-								*
-							</span> </label>
-                                                <input type="text" name="username" class="form-control require" value="<?php _e($user->username);?>" /> </div>
-                                        </div>
-
 					<div class="row">
-
 						<div class="form-group col-sm-6 col-xs-12">
 							<label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="first_name" class="form-control require" value="<?php _e($user->first_name);?>"/>
@@ -436,6 +435,39 @@ if( !class_exists('User') ):
 								?>
 							</select>
 							<span class="help-block"><?php _e('Use this option only for <strong>Nurse</strong> users');?></span>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="user_designation"><?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
+							<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation">
+								<?php
+								$data = get_tabledata(TBL_DESIGNATIONS,false);
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data, get_user_meta($user->ID,'user_designation'));
+								?>
+							</select>
+						</div>
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="work_extension"><?php _e('Work extension');?></label>
+							<input type="text" name="work_extension" class="form-control" value="<?php echo get_user_meta($user->ID,'work_extension');?>"/>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="beep"><?php _e('Beep');?></label>
+							<input type="text" name="beep" class="form-control" value="<?php echo get_user_meta($user->ID,'beep');?>"/>
+						</div>
+						<div class="form-group col-sm-6 col-xs-12">
+							<label for="band"><?php _e('Band');?></label>
+							<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band">
+								<?php
+								$option_data = $this->user_bands();
+								echo get_options_list($option_data,get_user_meta($user->ID,'band'));
+								?>
+							</select>
 						</div>
 					</div>
 					
@@ -537,98 +569,34 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
-public function user__login__process(){
-			global $device;
-			extract($_POST);
-			
-if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $user_name)) { 
-
-				if(email_exists($user_name)){
-				$user = get_user_by('email',$user_name);
-				error_log($user_pass." : ".$user->ID);
-				if(check_password($user_pass,$user->ID)){
-					if(!is_user_active($user->ID)){
-						return 2;
-					}else{
-						set_current_user($user->ID);
-						$this->database->insert(TBL_ACCESS_LOG,
-							array(
-								'user_id' => $user->ID,
-								'ip_address'=> $_SERVER['REMOTE_ADDR'],
-								'device' => $device,
-								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
-							)
-						);
-						return 1;
-					}
-				}else{
-					return 0;
-				}
-			}else{
-				return 0;
-			}
-	
-	
-} 
-else { 
-			if(username_exists($user_name)){
-				$user = get_user_by('username',$user_name);
-				if(check_password($user_pass,$user->ID)){
-					if(!is_user_active($user->ID)){
-						return 2;
-					}else{
-						set_current_user($user->ID);
-						$this->database->insert(TBL_ACCESS_LOG,
-							array(
-								'user_id' => $user->ID,
-								'ip_address'=> $_SERVER['REMOTE_ADDR'],
-								'device' => $device,
-								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
-							)
-						);
-						return 1;
-					}
-				}else{
-					return 0;
-				}
-			}else{
-				return 0;
-			}
-} 
-
-			
-
-		}
-
-
-
-		public function reset__login__process(){
+		//Process functions starts here
+		public function user__login__process(){
 			global $device;
 			extract($_POST);
 			if(email_exists($user_name)){
 				$user = get_user_by('email',$user_name);
-				
-			$user_pass = password_generator();
-			$record_pass = $user_pass;
-			$salt = generateSalt();
-			$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-			$salt = base64_encode($salt);
-			//$pword = set_password($user_pass);
-				
-			$result1 = $this->database->update(TBL_USERS,array('user_pass'=> $user_pass, 'user_salt' => $salt),array('user_email'=> $user_name));
-				
-				//MAILER 
-			$subject = "NCCPM Fault Management System - Login Details";
-			$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $record_pass . ". The password can be changed once logged in.";
-			 $admn = "admin@admin.com";
-			send_email($admn,$user_name,$user_name, $subject, $body);
-				
-				return 1;
+				if(check_password($user_pass,$user->ID)){
+					if(!is_user_active($user->ID)){
+						return 2;
+					}else{
+						set_current_user($user->ID);
+						$this->database->insert(TBL_ACCESS_LOG,
+							array(
+								'user_id' => $user->ID,
+								'ip_address'=> $_SERVER['REMOTE_ADDR'],
+								'device' => $device,
+								'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
+							)
+						);
+						return 1;
+					}
+				}else{
+					return 0;
+				}
 			}else{
 				return 0;
 			}
 		}
-
 
 		public function add__user__process(){
 			extract($_POST);
@@ -648,10 +616,6 @@ else {
 				else:
 					
 					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
-
 					$guid = get_guid(TBL_USERS);
 					$result = $this->database->insert(TBL_USERS,
 						array(
@@ -660,12 +624,9 @@ else {
 							'last_name' => $last_name,
 							'user_email' => $user_email,
 							'user_role' => $user_role,
-							'username' => $username,
 							'user_status' => 1,
 							'user_pass' => set_password($user_pass),
 							'created_by' => $this->current__user__id,
-							'user_pass' => $user_pass,
-							'user_salt' => $salt,
 							'courses' => isset($courses) ? $courses : ''
 						)
 					);
@@ -675,6 +636,10 @@ else {
 						update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
 						update_user_meta($user__id,'user_phone',$user_phone);
 						update_user_meta($user__id,'profile_img',$profile_img);
+						update_user_meta($user__id,'user_designation',$user_designation);
+						update_user_meta($user__id,'work_extension',$work_extension);
+						update_user_meta($user__id,'beep',$beep);
+						update_user_meta($user__id,'band',$band);
 						$notification_args = array(
 							'title' => __('New Account Created'),
 							'notification'=> __('You have successfully created a new account').' ('.ucfirst($first_name).' '.ucfirst($last_name).').',
@@ -717,8 +682,7 @@ else {
 					array(
 						'first_name' => $first_name,
 						'last_name' => $last_name,
-						'user_email' => $user_email,							
-						'username' => $username,
+						'user_email' => $user_email,
 						'user_status'=> $user_status,
 						'user_role' => $user_role,
 						'courses' => isset($courses) ? $courses : ''
@@ -746,6 +710,10 @@ else {
 					update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
 					update_user_meta($user_id,'user_phone',$user_phone);
 					update_user_meta($user_id,'profile_img',$profile_img);
+					update_user_meta($user_id,'user_designation',$user_designation);
+					update_user_meta($user_id,'work_extension',$work_extension);
+					update_user_meta($user_id,'beep',$beep);
+					update_user_meta($user_id,'band',$band);
 					$notification_args = array(
 						'title' => __('Account Details updated'),
 						'notification'=> __('You have successfully updated').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
@@ -816,10 +784,6 @@ else {
 			endif;
 			return json_encode($return);
 		}
-
-
-
-
 
 		public function delete__user__process(){
 			extract($_POST);
