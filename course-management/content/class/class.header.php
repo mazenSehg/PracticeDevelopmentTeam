@@ -291,7 +291,22 @@ if( !class_exists('Header') ):
 										<?php endif;?>
 									</ul>
 								</li>
+																<li>
+									<a><i class="fa fa-book"></i><?php _e('Work Area');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_work_area') ): ?>
+										<li><a href="<?php the_permalink('work-area');?>"><?php _e('All Work Areas');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_work_area') || user_can('add_work_area')): ?>
+										<li><a href="<?php the_permalink('add-new-work-area');?>"><?php _e('Add New Work Area');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-work-area');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
 								<?php endif; ?>
+								
+
 								
 								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
 								<li>

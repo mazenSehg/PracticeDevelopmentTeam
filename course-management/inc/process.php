@@ -98,13 +98,26 @@
 			case 'add_new_location':
 				echo $Location->add__location__process();
 				break;
+
+			case 'add_new_work_area':
+				echo $Location->add__work_area__process();
+				break;
 				
 			case 'update_location':
 				echo $Location->update__location__process();
+				break;			
+
+
+			case 'update_work_area':
+				echo $Location->update__work_area__process();
 				break;
 				
 			case 'delete_location':
 				echo $Location->delete__location__process();
+				break;
+
+			case 'delete_work_area':
+				echo $Location->delete__work_area__process();
 				break;
 				
 			case 'add_new_booking':

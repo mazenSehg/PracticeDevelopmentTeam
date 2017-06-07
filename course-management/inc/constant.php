@@ -22,4 +22,5 @@ define( 'TBL_COURSES' , $db->prefix. 'courses' );
 define( 'TBL_BOOKINGS' , $db->prefix. 'bookings' );
 define( 'TBL_DESIGNATIONS' , $db->prefix. 'designations' );
 define( 'TBL_LOCATIONS' , $db->prefix. 'locations' );
+define( 'TBL_WORKS' , $db->prefix. 'work_area' );
 ?>

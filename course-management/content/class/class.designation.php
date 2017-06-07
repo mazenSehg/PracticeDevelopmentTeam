@@ -17,6 +17,10 @@ if( !class_exists('Designation') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			else: ?>
 				<form class="add-designation submit-form" method="post" autocomplete="off">
+										<div class="form-group">
+						<label for="name"><?php _e('Code');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="code" class="form-control require" />
+					</div>
 					<div class="form-group">
 						<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="name" class="form-control require" />
@@ -43,6 +47,10 @@ if( !class_exists('Designation') ):
 			else:
 			?>
 				<form class="add-designation submit-form" method="post" autocomplete="off">
+					<div class="form-group">
+						<label for="name"><?php _e('Code');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="code" class="form-control require" value="<?php _e($designation->code);?>"/>
+					</div>
 					<div class="form-group">
 						<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="name" class="form-control require" value="<?php _e($designation->name);?>"/>
@@ -113,6 +121,7 @@ if( !class_exists('Designation') ):
 			);
 			if( user_can('add_designation') ):
 				$validation_args = array(
+					'code' => $code,
 					'name' => $name,
 				);
 
@@ -126,6 +135,7 @@ if( !class_exists('Designation') ):
 					$result = $this->database->insert(TBL_DESIGNATIONS,
 						array(
 							'ID' => $guid,
+							'code' => $code,
 							'name' => $name
 						)
 					);

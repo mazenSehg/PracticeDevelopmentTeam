@@ -1,7 +1,7 @@
 <?php
 // if accessed directly than exit
 if(!defined('ABSPATH')) exit;
-
+date_default_timezone_set('Europe/London');
 if( !class_exists('User') ):
 
 	class User{
@@ -294,7 +294,7 @@ if( !class_exists('User') ):
 									<?php _e(get_user_meta($user->ID,'gender',true));?>
 								</li>
 								<?php if(get_user_meta($user->ID,'user_phone',true) != ''): ?>
-									<li><i class="fa fa-phone"></i>&nsbp;
+									<li><i class="fa fa-phone"></i>
 										<?php echo get_user_meta($user->ID,'user_phone',true);?>
 									</li>
 									<?php endif; ?>
@@ -355,15 +355,14 @@ if( !class_exists('User') ):
 											</option>
 										</select>
 									</div>
-									</div>
-								<div class ="row">
+								</div>
+								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="phone">
 											<?php _e('Phone');?>
 										</label>
-										<input type="text" name="user_phone" class="form-control" /> 
-									</div>
-																	<div class="form-group col-sm-6 col-xs-12">
+										<input type="text" name="user_phone" class="form-control" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
 										<label for="work_extension">
 											<?php _e('Work extension');?>
 										</label>
@@ -372,16 +371,13 @@ if( !class_exists('User') ):
 										<label for="beep">
 											<?php _e('Beep');?>
 										</label>
-										<input type="text" name="beep" class="form-control" /> 
-									</div>	
+										<input type="text" name="beep" class="form-control" /> </div>
 								</div>
-								
-									
 								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="user-role">
 											<?php _e('Role');?>&nbsp;<span class="required">*</span></label>
-										<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
+										<select id="purpose" name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 											<?php echo get_options_list(get_roles()); ?>
 										</select>
 									</div>
@@ -395,7 +391,7 @@ if( !class_exists('User') ):
 								$option_data = get_option_data($data,array('ID','name'));
 								echo get_options_list($option_data);
 								?>
-										</select> <small class="help-block"><?php _e('Use this option only for <strong>Nurse</strong> users');?></small> </div>
+										</select> <small class="help-block"><?php _e('Use this option only for <strong>Trainee</strong> users');?></small> </div>
 								</div>
 								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
@@ -409,10 +405,8 @@ if( !class_exists('User') ):
 								?>
 										</select>
 									</div>
-
 								</div>
 								<div class="row">
-
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="band">
 											<?php _e('Band');?>
@@ -435,6 +429,73 @@ if( !class_exists('User') ):
 									<div class="col-xs-12 col-sm-6 form-group">
 										<div class="profile-image-preview-box"><img src="" class="img-responsive img-thumbnail" /></div>
 									</div>
+								</div>
+								
+								
+								<script>
+									$(document).ready(function () {
+										$('#purpose').on('change', function () {
+											if (this.value == 'trainee') {
+												$(".nav-sub-wrapper").toggle();
+											}
+											else {
+												$(".nav-sub-wrapper").hide();
+											}
+										});
+									});
+								</script>
+								
+								
+								<div class="nav-sub-wrapper" style="display: none;">
+									<div class="row">
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Currently Employed?
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="employed" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="employed" value="0" /> No</label>
+										</div>
+										</div>
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="name">External Candidate No.</label>
+											<input type="text" name="ex_cand" class="form-control " /> 
+										</div>
+											
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="gender"> RAG Status</label>
+											<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+												<option value=""> </option>
+												<option value="0"> Red </option>
+												<option value="1"> Amber </option>
+												<option value="2"> Green </option>
+											</select>
+										</div>
+											
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Extended support Underway
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="extended_support" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="extended_support" value="0" /> No</label>
+										</div>
+											
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="name">Extended Support Since: </label>
+											<input type="text" name="support_since" class="form-control " /> 
+										</div>
+
+								</div>
+										
+										
+								</div>
 								</div>
 								<div class="ln_solid"></div>
 								<div class="form-group">
@@ -582,6 +643,8 @@ if( !class_exists('User') ):
 											</button>
 										</div>
 									</div>
+									
+									
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
 											<label for="">
@@ -602,6 +665,62 @@ if( !class_exists('User') ):
 											</div>
 										</div>
 									</div>
+
+									
+									
+									<div class="row">
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Currently Employed?
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="employed" value="1" <?php checked($user->currently_employed , 1);?> /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="employed" value="0" <?php checked($user->currently_employed , 0);?> /> No</label>
+										</div>
+										</div>
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="name">External Candidate No.</label>
+											<input type="text" name="ex_cand" class="form-control " value="<?php echo $user->external_candidate;?>" /> 
+										</div>
+											
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="gender"> RAG Status</label>
+											<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+												<option value=""> </option>
+												<option value="0" <?php selected($user->rag_status,'0');?>> Red </option>
+												<option value="1" <?php selected($user->rag_status,'1');?>> Amber </option>
+												<option value="2" <?php selected($user->rag_status,'2');?>> Green </option>
+											</select>
+										</div>
+											
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Extended support Underway
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="extended_support" value="1" <?php checked($user->extended_support , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="extended_support" value="0" <?php checked($user->currently_employed , 0);?>/> No</label>
+										</div>
+											
+											
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="name">Extended Support Since: </label>
+											<input type="text" name="support_since" class="form-control " value="<?php echo $user->support_since;?>" /> 
+										</div>
+
+											
+											
+											
+									
+									
+
+									
+									
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div>&nbsp;</div>
@@ -790,10 +909,20 @@ else {
 					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
 					$salt = base64_encode($salt);
 			
+			
+			if($user_role=="trainer"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
 					$guid = get_guid(TBL_USERS);
+			
+			
 					$result = $this->database->insert(TBL_USERS,
 						array(
 							'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
 							'first_name' => $first_name,
 							'last_name' => $last_name,
 							'user_email' => $user_email,
@@ -803,7 +932,13 @@ else {
 							'user_pass' => set_password($user_pass),
 							'user_salt' => $salt,
 							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : ''
+							'courses' => isset($courses) ? $courses : '',
+							'currently_employed' => $currently_employed,
+							'external_candidate' => $ex_cand,
+							'rag_status' => $rag_status,
+							'extended_support' => $extended_support,
+							'support_since' => $support_since,
+						
 						)
 					);
 					if($result):
@@ -854,8 +989,16 @@ else {
 				if(!isset($centre))
 					$centre = '';
 
+						if($user_role=="trainer"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+			
 				$result = $this->database->update(TBL_USERS,
 					array(
+						'trainer_ID' => $trainer_ID,
 						'first_name' => $first_name,
 						'last_name' => $last_name,
 						'user_email' => $user_email,

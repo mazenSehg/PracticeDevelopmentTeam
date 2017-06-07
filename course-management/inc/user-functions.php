@@ -6,8 +6,8 @@ if ( !function_exists('get_roles') ) :
 	function get_roles(){
 		$data = array(
 			'admin' => 'Admin',
-			'course_admin' => 'Course Admin',
-			'nurse' => 'Nurse'
+			'trainer' => 'Trainer',
+			'trainee' => 'Trainee'
 		);
 		return $data;
 	}
@@ -472,6 +472,11 @@ if ( !function_exists('all_users_capabilities') ) :
 			'view_location' => 'Can View Locations',
 			'add_location' => 'Can Add Locations',
 			'edit_location' => 'Can Edit Locations',
+			
+			'view_work_area' => 'Can View Work Area',
+			'add_work_area' => 'Can Add Work Area',
+			'edit_work_area' => 'Can Edit Work Area',
+			
 			'delete_location' => 'Can Delete Locations',
 			'view_booking' => 'Can View Bookings',
 			'add_booking' => 'Can Add Bookings',

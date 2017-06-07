@@ -37,7 +37,7 @@ if( !class_exists('Course') ):
 						<input type="number" name="duration" class="form-control require" min="0"/>
 					</div>
 					<div class="form-group">
-						<label for="description"><?php _e('Description');?></label>
+						<label for="description"><?php _e('Notes');?></label>
 						<textarea name="description" class="form-control" rows="3"></textarea>
 					</div>
 					<div class="form-group">
@@ -96,7 +96,7 @@ if( !class_exists('Course') ):
 						<input type="number" name="duration" class="form-control require" min="0" value="<?php _e($course->duration);?>"/>
 					</div>
 					<div class="form-group">
-						<label for="description"><?php _e('Description');?></label>
+						<label for="description"><?php _e('Notes');?></label>
 						<textarea name="description" class="form-control" rows="3"><?php _e($course->description);?></textarea>
 					</div>
 					<div class="form-group">
@@ -205,6 +205,7 @@ if( !class_exists('Course') ):
 					$return['message'] = 'Course name you entered is already exists, please try another name.';
 					$return['fields'] = array('name');
 				else:
+			
 					$guid = get_guid(TBL_COURSES);
 					$result = $this->database->insert(TBL_COURSES,
 						array(
