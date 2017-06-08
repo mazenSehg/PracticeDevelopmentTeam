@@ -484,7 +484,7 @@ if( !class_exists('Booking') ):
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
 						<thead>
 							<tr>
-								<th><?php _e('Nurse Name'); ?></th>
+								<th><?php _e('Trainee Name'); ?></th>
 								<th><?php _e('Complete Status'); ?></th>
 							</tr>
 						</thead>

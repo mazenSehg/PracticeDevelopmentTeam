@@ -188,6 +188,497 @@ if( !class_exists('User') ):
 					<div class="col-md-9 col-sm-9 col-xs-12">
 						<div class="profile_title">
 							<div class="col-md-6">
+								<h2><?php _e('Progress Report');?></h2> </div>
+						</div>
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+							<ul id="tab_content" class="nav nav-tabs bar_tabs" role="tablist">
+								<li role="presentation" class="active">
+									<a href="#tab_content01" role="tab" data-toggle="tab" aria-expanded="true">
+										<?php _e('Preceptorship Progress');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content02" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('HCA Induction Progress');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('FD/AP Training Record');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Student Record');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content5" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('ONP Course');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content6" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Mentorship');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content7" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Notes');?>
+									</a>
+								</li>
+							</ul>
+							<div id="myTabContent" class="tab-content">
+								<div role="tabpanel" class="tab-pane fade active in" id="tab_content01" aria-labelledby="home-tab">
+									<ul class="messages list-unstyled">
+										<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>Preceptor Progress</h1>
+											<br>
+											<div class="row">
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Precptorship Intro</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Current Preceptee');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Awaiting Pin');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Academic Delay');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Precptorship Name</label>
+													<input type="text" name="date_of_fault" class="form-control" /> </div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('International Nurse');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">WTE</label>
+													<input type="text" name="date_of_fault" class="form-control " /> </div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Precptorship Email</label>
+													<input type="text" name="date_of_fault" class="form-control " /> </div>
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Country of First Registeration</label>
+													<input type="text" name="date_of_fault" class="form-control" /> </div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="">Sign off Period</label>
+													<br/>
+													<label>
+														<input type="radio" class="flat" name="approved" value="1" /> 6 Months</label>
+													<label>&nbsp;</label>
+													<label>
+														<input type="radio" class="flat" name="approved" value="0" /> 12 Months</label>
+												</div>
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Awards</label>
+													<input type="text" name="date_of_fault" class="form-control" /> </div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Links</label>
+													<input type="text" name="date_of_fault" class="form-control " /> </div>
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="admins">
+														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+													<select name="admins[]" class="form-control select_single require">
+														<?php
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+													</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Update Preceptor Progress');?>
+												</button>
+											</div>
+										</form>
+								</div>
+								</ul>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content02" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+										<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>HCA Induction</h1>
+											<br>
+											<div class="row">
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Course Start Date</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-3 col-xs-12">
+													<label for="date-of-fault">Manager Name</label>
+													<input type="text" name="date_of_fault" class="form-control" /> </div>
+												<div class="form-group col-sm-3 col-xs-12">
+													<label for="date-of-fault">Manager Email</label>
+													<input type="text" name="date_of_fault" class="form-control " /> </div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('New to care');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Current PD Team Clinet');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Fundamental Adult Care Cluster Book complete');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Care certificate Complete');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+											</div>
+											<div class="form-group col-sm-4 col-xs-12"></div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="admins">
+													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+												<select name="admins[]" class="form-control select_single require">
+													<?php
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+												</select>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Update HCA Induction');?>
+												</button>
+											</div>
+										</form>
+									</ul>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+										<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>FDs / AP Training Record</h1>
+											<br>
+											<div class="row">
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">FD Course Start Date</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-3 col-xs-12">
+													<label for="date-of-fault">Graduation Date</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="decommed">
+														<?php _e('Course Interrupt');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-1 col-xs-12">
+													<label for="decommed">
+														<?php _e('Study Day 1');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-1 col-xs-12">
+													<label for="decommed">
+														<?php _e('Study Day 2');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-1 col-xs-12">
+													<label for="decommed">
+														<?php _e('Study Day 3');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-5 col-xs-12">
+													<label for="description-of-fault">Other Study</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="decommed">
+													<?php _e('CURRENT FD');?>
+												</label>
+												<br/>
+												<label>
+													<input type="checkbox" name="doh" class="js-switch" /> </label>
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="admins">
+													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+												<select name="admins[]" class="form-control select_single require">
+													<?php
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+												</select>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Update FD/AP Training Records');?>
+												</button>
+											</div>
+										</form>
+									</ul>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+										<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>Student Progress</h1>
+											<br>
+											<div class="row">
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Cohort</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Study Day 1</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Study Day 2</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Study Day 3</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Update student Progress');?>
+												</button>
+											</div>
+										</form>
+									</ul>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+										<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>ONP Course Attendace</h1>
+											<br>
+											<div class="row">
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="date-of-fault">Cohort</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-4 col-xs-12">
+													<label for="admins">
+														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+													<select name="admins[]" class="form-control select_single require">
+														<?php
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+													</select>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Update course Attendance');?>
+												</button>
+											</div>
+										</form>
+									</ul>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+										<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>Mentor Progress</h1>
+											<br>
+											<div class="row">
+												<div class="form-group col-sm-3 col-xs-12">
+													<label for="decommed">
+														<?php _e('Current Mentor');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Update Renewal Due</label>
+													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+												<div class="form-group col-sm-3 col-xs-12">
+													<label for="decommed">
+														<?php _e('Sign off Mentor');?>
+													</label>
+													<br/>
+													<label>
+														<input type="checkbox" name="doh" class="js-switch" /> </label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Update Mentor Progress');?>
+												</button>
+											</div>
+										</form </ul>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content7" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled"> 
+									<form class="add-user user-form" method="post" autocomplete="off">
+											<br>
+											<br>
+											<h1>Notes</h1>
+											<br>
+																			
+<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>
+													<?php _e('Date of Note');?>
+												</th>
+												<th>
+													<?php _e('Note');?>
+												</th>
+												<th>
+													<?php _e('Note Posted By');?>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											
+												<tr>
+													<td>
+														
+													</td>
+													<td>
+														
+													</td>
+													
+													<td>
+													</td>
+												</tr>
+										</tbody>
+									</table>
+																			
+																			
+	
+											<div class="row">
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Add note');?>
+												</button>
+											</div>
+										</form>
+									
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9 col-sm-9 col-xs-12">
+						<div class="profile_title">
+							<div class="col-md-6">
 								<h2><?php _e('User Activity Report');?></h2> </div>
 						</div>
 						<div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -430,8 +921,6 @@ if( !class_exists('User') ):
 										<div class="profile-image-preview-box"><img src="" class="img-responsive img-thumbnail" /></div>
 									</div>
 								</div>
-								
-								
 								<script>
 									$(document).ready(function () {
 										$('#purpose').on('change', function () {
@@ -444,8 +933,6 @@ if( !class_exists('User') ):
 										});
 									});
 								</script>
-								
-								
 								<div class="nav-sub-wrapper" style="display: none;">
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
@@ -457,44 +944,32 @@ if( !class_exists('User') ):
 												<label>
 													<input type="radio" class="flat" name="employed" value="0" /> No</label>
 										</div>
-										</div>
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="name">External Candidate No.</label>
-											<input type="text" name="ex_cand" class="form-control " /> 
-										</div>
-											
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="gender"> RAG Status</label>
-											<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
-												<option value=""> </option>
-												<option value="0"> Red </option>
-												<option value="1"> Amber </option>
-												<option value="2"> Green </option>
-											</select>
-										</div>
-											
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="current_employed">Extended support Underway
-												<br/>
-												<label>
-													<input type="radio" class="flat" name="extended_support" value="1" /> Yes</label>
-												<label>&nbsp;</label>
-												<label>
-													<input type="radio" class="flat" name="extended_support" value="0" /> No</label>
-										</div>
-											
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="name">Extended Support Since: </label>
-											<input type="text" name="support_since" class="form-control " /> 
-										</div>
-
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">External Candidate No.</label>
+										<input type="text" name="ex_cand" class="form-control " /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="gender"> RAG Status</label>
+										<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+											<option value=""> </option>
+											<option value="0"> Red </option>
+											<option value="1"> Amber </option>
+											<option value="2"> Green </option>
+										</select>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="current_employed">Extended support Underway
+											<br/>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="1" /> Yes</label>
+											<label>&nbsp;</label>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="0" /> No</label>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">Extended Support Since: </label>
+										<input type="text" name="support_since" class="form-control " /> </div>
 								</div>
-										
-										
 								</div>
 								</div>
 								<div class="ln_solid"></div>
@@ -643,8 +1118,6 @@ if( !class_exists('User') ):
 											</button>
 										</div>
 									</div>
-									
-									
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
 											<label for="">
@@ -665,9 +1138,6 @@ if( !class_exists('User') ):
 											</div>
 										</div>
 									</div>
-
-									
-									
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
 											<label for="current_employed">Currently Employed?
@@ -678,49 +1148,31 @@ if( !class_exists('User') ):
 												<label>
 													<input type="radio" class="flat" name="employed" value="0" <?php checked($user->currently_employed , 0);?> /> No</label>
 										</div>
-										</div>
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="name">External Candidate No.</label>
-											<input type="text" name="ex_cand" class="form-control " value="<?php echo $user->external_candidate;?>" /> 
-										</div>
-											
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="gender"> RAG Status</label>
-											<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
-												<option value=""> </option>
-												<option value="0" <?php selected($user->rag_status,'0');?>> Red </option>
-												<option value="1" <?php selected($user->rag_status,'1');?>> Amber </option>
-												<option value="2" <?php selected($user->rag_status,'2');?>> Green </option>
-											</select>
-										</div>
-											
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="current_employed">Extended support Underway
-												<br/>
-												<label>
-													<input type="radio" class="flat" name="extended_support" value="1" <?php checked($user->extended_support , 1);?>/> Yes</label>
-												<label>&nbsp;</label>
-												<label>
-													<input type="radio" class="flat" name="extended_support" value="0" <?php checked($user->currently_employed , 0);?>/> No</label>
-										</div>
-											
-											
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="name">Extended Support Since: </label>
-											<input type="text" name="support_since" class="form-control " value="<?php echo $user->support_since;?>" /> 
-										</div>
-
-											
-											
-											
-									
-									
-
-									
-									
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">External Candidate No.</label>
+										<input type="text" name="ex_cand" class="form-control " value="<?php echo $user->external_candidate;?>" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="gender"> RAG Status</label>
+										<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+											<option value=""> </option>
+											<option value="0" <?php selected($user->rag_status,'0');?>> Red </option>
+											<option value="1" <?php selected($user->rag_status,'1');?>> Amber </option>
+											<option value="2" <?php selected($user->rag_status,'2');?>> Green </option>
+										</select>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="current_employed">Extended support Underway
+											<br/>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="1" <?php checked($user->extended_support , 1);?>/> Yes</label>
+											<label>&nbsp;</label>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="0" <?php checked($user->currently_employed , 0);?>/> No</label>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">Extended Support Since: </label>
+										<input type="text" name="support_since" class="form-control " value="<?php echo $user->support_since;?>" /> </div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div>&nbsp;</div>
@@ -910,7 +1362,7 @@ else {
 					$salt = base64_encode($salt);
 			
 			
-			if($user_role=="trainer"){
+			if($user_role=="nurse"){
 				$first = $first_name[0];
 				$trainer_ID = $last_name."_".$first."_001";
 			}else{

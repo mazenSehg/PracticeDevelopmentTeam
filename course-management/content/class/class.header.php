@@ -261,7 +261,7 @@ if( !class_exists('Header') ):
 								</li>
 								<?php endif; ?>
 								
-								<?php if( user_can('view_designation') || user_can('edit_designation') || user_can('add_designation')): ?>
+								<?php if(is_admin()): ?>
 								<li>
 									<a><i class="fa fa-book"></i><?php _e('Designations');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">

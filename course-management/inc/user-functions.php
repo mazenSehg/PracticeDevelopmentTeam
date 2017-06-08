@@ -6,8 +6,8 @@ if ( !function_exists('get_roles') ) :
 	function get_roles(){
 		$data = array(
 			'admin' => 'Admin',
-			'trainer' => 'Trainer',
-			'trainee' => 'Trainee'
+			'course_admin' => 'Trainer',
+			'nurse' => 'Trainee'
 		);
 		return $data;
 	}

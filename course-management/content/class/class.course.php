@@ -26,7 +26,7 @@ if( !class_exists('Course') ):
 						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
 						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
 							<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -85,7 +85,7 @@ if( !class_exists('Course') ):
 						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
 						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
 							<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'user_role'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data, maybe_unserialize($course->admins));
 							?>
