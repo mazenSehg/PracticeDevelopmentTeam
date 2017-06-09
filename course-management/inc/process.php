@@ -42,7 +42,42 @@
 			case 'add_new_user':
 				echo $User->add__user__process();
 				break;
+
+
+//////////////// 	ADDITIONAL FORMS FOR USER INFO	/////////////////////////////////////////				
 				
+
+				
+			case 'update_preceptorship':
+				echo $User->update__preceptor__process();
+				break;
+
+				
+			case 'update_mca':
+				echo $User->update__mca__process();
+				break;
+
+				
+			case 'update_fdap':
+				echo $User->update__fdap__process();
+				break;
+
+				
+			case 'update_student_prog':
+				echo $User->update__student__process();
+				break;
+
+				
+			case 'update_mentor_prog':
+				echo $User->update__mentor__process();
+				break;
+
+
+			case 'update_notes':
+				echo $User->update__notes__process();
+				break;
+/////////////////////////////////////////////////////////
+
 			case 'edit_user':
 				echo $User->update__user__process();
 				break;

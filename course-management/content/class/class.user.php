@@ -327,7 +327,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_preceptorship" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update Preceptor Progress');?>
 												</button>
@@ -407,7 +407,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_mca" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update HCA Induction');?>
 												</button>
@@ -495,7 +495,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_fdap" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update FD/AP Training Records');?>
 												</button>
@@ -532,7 +532,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_student_prog" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update student Progress');?>
 												</button>
@@ -565,7 +565,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_course_atten" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update course Attendance');?>
 												</button>
@@ -609,7 +609,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_mentor_prog"/>
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update Mentor Progress');?>
 												</button>
@@ -664,7 +664,7 @@ if( !class_exists('User') ):
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship_process" />
+												<input type="hidden" name="action" value="update_notes" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Add note');?>
 												</button>
@@ -1417,7 +1417,405 @@ else {
 			endif;
 
 			return json_encode($return);
+			}		
+		
+		
+		
+		public function update__preceptor__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not create account, Please try again.'),
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if(email_exists($user_email)):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Email Already Exist');
+					$return['message'] = __('Email address you entered is already exists, please try another email address.');
+					$return['fields'] = array('user_email');
+				else:
+					
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+			
+			
+			if($user_role=="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+					$guid = get_guid(TBL_USERS);
+			
+			
+					$result = $this->database->insert(TBL_INFO,
+						array(
+							'ID' => $guid,
+							'user_ID' => current__user__id,
+//							'prec_info' => ,
+//							'current_prec' => ,
+//							'pin' => ,
+//							'delay' => ,
+//							'prec_name' => ,
+//							'int_nurse' => ,
+//							'WTE' => ,
+//							'sign_off' => ,
+//							'awards' => ,
+//							'link' => ,
+//							'prec_trainer' => ,
+//							'prec_notes' => ,
+						)
+					);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Account has been successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+			endif;
+
+			return json_encode($return);
 		}
+		
+		
+		
+		public function update__mca__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not create account, Please try again.'),
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if(email_exists($user_email)):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Email Already Exist');
+					$return['message'] = __('Email address you entered is already exists, please try another email address.');
+					$return['fields'] = array('user_email');
+				else:
+					
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+			
+			
+			if($user_role=="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+					$guid = get_guid(TBL_USERS);
+			
+			
+					$result = $this->database->insert(TBL_USERS,
+						array(
+							'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'username' => $username,
+							'user_status' => 1,
+							'user_pass' => set_password($user_pass),
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+							'courses' => isset($courses) ? $courses : '',
+							'currently_employed' => $currently_employed,
+							'external_candidate' => $ex_cand,
+							'rag_status' => $rag_status,
+							'extended_support' => $extended_support,
+							'support_since' => $support_since,
+						
+						)
+					);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Account has been successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+			endif;
+
+			return json_encode($return);
+		}
+				public function update__fdap__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not create account, Please try again.'),
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if(email_exists($user_email)):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Email Already Exist');
+					$return['message'] = __('Email address you entered is already exists, please try another email address.');
+					$return['fields'] = array('user_email');
+				else:
+					
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+			
+			
+			if($user_role=="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+					$guid = get_guid(TBL_USERS);
+			
+			
+					$result = $this->database->insert(TBL_USERS,
+						array(
+							'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'username' => $username,
+							'user_status' => 1,
+							'user_pass' => set_password($user_pass),
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+							'courses' => isset($courses) ? $courses : '',
+							'currently_employed' => $currently_employed,
+							'external_candidate' => $ex_cand,
+							'rag_status' => $rag_status,
+							'extended_support' => $extended_support,
+							'support_since' => $support_since,
+						
+						)
+					);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Account has been successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+			endif;
+
+			return json_encode($return);
+		}
+				public function update__student__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not create account, Please try again.'),
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if(email_exists($user_email)):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Email Already Exist');
+					$return['message'] = __('Email address you entered is already exists, please try another email address.');
+					$return['fields'] = array('user_email');
+				else:
+					
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+			
+			
+			if($user_role=="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+					$guid = get_guid(TBL_USERS);
+			
+			
+					$result = $this->database->insert(TBL_USERS,
+						array(
+							'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'username' => $username,
+							'user_status' => 1,
+							'user_pass' => set_password($user_pass),
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+							'courses' => isset($courses) ? $courses : '',
+							'currently_employed' => $currently_employed,
+							'external_candidate' => $ex_cand,
+							'rag_status' => $rag_status,
+							'extended_support' => $extended_support,
+							'support_since' => $support_since,
+						
+						)
+					);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Account has been successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+			endif;
+
+			return json_encode($return);
+		}
+		
+		
+				public function update__mentor__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not create account, Please try again.'),
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if(email_exists($user_email)):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Email Already Exist');
+					$return['message'] = __('Email address you entered is already exists, please try another email address.');
+					$return['fields'] = array('user_email');
+				else:
+					
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+			
+			
+			if($user_role=="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+					$guid = get_guid(TBL_USERS);
+			
+			
+					$result = $this->database->insert(TBL_USERS,
+						array(
+							'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'username' => $username,
+							'user_status' => 1,
+							'user_pass' => set_password($user_pass),
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+							'courses' => isset($courses) ? $courses : '',
+							'currently_employed' => $currently_employed,
+							'external_candidate' => $ex_cand,
+							'rag_status' => $rag_status,
+							'extended_support' => $extended_support,
+							'support_since' => $support_since,
+						
+						)
+					);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Account has been successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+			endif;
+
+			return json_encode($return);
+		}
+		
+		
+						public function update__notes__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not create account, Please try again.'),
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if(email_exists($user_email)):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Email Already Exist');
+					$return['message'] = __('Email address you entered is already exists, please try another email address.');
+					$return['fields'] = array('user_email');
+				else:
+					
+					$user_pass = password_generator();
+					$salt = generateSalt();
+					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+					$salt = base64_encode($salt);
+			
+			
+			if($user_role=="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
+					$guid = get_guid(TBL_USERS);
+			
+			
+					$result = $this->database->insert(TBL_USERS,
+						array(
+							'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'username' => $username,
+							'user_status' => 1,
+							'user_pass' => set_password($user_pass),
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+							'courses' => isset($courses) ? $courses : '',
+							'currently_employed' => $currently_employed,
+							'external_candidate' => $ex_cand,
+							'rag_status' => $rag_status,
+							'extended_support' => $extended_support,
+							'support_since' => $support_since,
+						
+						)
+					);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Account has been successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+			endif;
+
+			return json_encode($return);
+		}
+		
+		
 
 		public function update__user__process(){
 			extract($_POST);
