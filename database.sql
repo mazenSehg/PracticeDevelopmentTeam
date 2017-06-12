@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 07, 2017 at 05:32 PM
+-- Generation Time: Jun 12, 2017 at 05:44 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -58,7 +58,16 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (16, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-06 09:52:56'),
 (17, 10000240463, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-06 11:01:40'),
 (18, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-06 11:06:10'),
-(19, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-06 11:34:29');
+(19, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-06 11:34:29'),
+(20, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 08:45:16'),
+(21, 10000850547, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 08:50:51'),
+(22, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 09:02:04'),
+(23, 10000850547, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 09:04:36'),
+(24, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 09:11:05'),
+(25, 10000850547, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 12:01:19'),
+(26, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 14:32:44'),
+(27, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-12 09:18:31'),
+(28, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-12 09:28:45');
 
 -- --------------------------------------------------------
 
@@ -76,6 +85,13 @@ CREATE TABLE `tbl_bookings` (
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbl_bookings`
+--
+
+INSERT INTO `tbl_bookings` (`ID`, `course`, `booking_date`, `nurses`, `enroll`, `created_by`, `created_on`) VALUES
+(10000261578, 10000434969, '2017-06-08', 'a:1:{i:0;s:11:\"10000850547\";}', 'a:1:{i:10000850547;i:0;}', 10000242679, '2017-06-08 12:01:08');
+
 -- --------------------------------------------------------
 
 --
@@ -92,6 +108,13 @@ CREATE TABLE `tbl_courses` (
   `retrain_date` int(11) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_courses`
+--
+
+INSERT INTO `tbl_courses` (`ID`, `name`, `description`, `admins`, `duration`, `location`, `retrain_date`, `created_on`) VALUES
+(10000434969, 'STP Course', 'A course', 'a:1:{i:0;s:11:\"10000318028\";}', 1, 10000243359, 6, '2017-06-08 08:49:13');
 
 -- --------------------------------------------------------
 
@@ -163,6 +186,13 @@ CREATE TABLE `tbl_locations` (
   `extras` text NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_locations`
+--
+
+INSERT INTO `tbl_locations` (`ID`, `name`, `phone`, `booking_contact`, `booking_phone`, `notes`, `extras`, `created_on`) VALUES
+(10000243359, 'Imaging Lab', '02081231234', '02081231234', '02081231234', 'Just a room', 'a:0:{}', '2017-06-08 08:48:50');
 
 -- --------------------------------------------------------
 
@@ -287,7 +317,43 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (100, 10000242679, 'New location created', 'You have successfully created a new location (bob).', 0, 0, '2017-06-06 13:08:26'),
 (101, 10000242679, 'Location updated', 'You have successfully updated Work Area (bobby).', 0, 0, '2017-06-06 13:38:15'),
 (102, 10000242679, 'New Account Created', 'You have successfully created a new account (Bbb Bbb).', 0, 0, '2017-06-06 16:09:08'),
-(103, 10000242679, 'Account Details updated', 'You have successfully updated (Bbb Bbb) account details.', 0, 0, '2017-06-06 16:30:21');
+(103, 10000242679, 'Account Details updated', 'You have successfully updated (Bbb Bbb) account details.', 0, 0, '2017-06-06 16:30:21'),
+(104, 10000242679, 'Account Password Reset', 'You have successfully changed (Bbb Bbb) account password.', 0, 0, '2017-06-08 08:45:41'),
+(105, 10000242679, 'Account Details updated', 'You have successfully updated (Bbb Bbb) account details.', 0, 0, '2017-06-08 08:45:41'),
+(106, 10000242679, 'New location created', 'You have successfully created a new location (Imaging Lab).', 0, 0, '2017-06-08 08:48:50'),
+(107, 10000242679, 'New course created', 'You have successfully created a new course (STP Course).', 0, 0, '2017-06-08 08:49:13'),
+(108, 10000242679, 'Account Details updated', 'You have successfully updated (Bbb Bbb) account details.', 0, 0, '2017-06-08 08:49:24'),
+(109, 10000242679, 'Users Capabilities updated', 'You have successfully updated users capabilities.', 0, 0, '2017-06-08 09:02:15'),
+(110, 10000242679, 'Users Capabilities updated', 'You have successfully updated users capabilities.', 0, 0, '2017-06-08 09:02:18'),
+(111, 10000242679, 'Users Capabilities updated', 'You have successfully updated users capabilities.', 0, 0, '2017-06-08 09:04:22'),
+(112, 10000242679, 'Users Capabilities updated', 'You have successfully updated users capabilities.', 0, 0, '2017-06-08 09:04:24'),
+(113, 10000242679, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-06-08 12:01:08'),
+(114, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 12:39:51'),
+(115, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 12:40:29'),
+(116, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 12:41:40'),
+(117, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 12:43:37'),
+(118, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 12:47:49'),
+(119, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 12:57:57'),
+(120, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:01:42'),
+(121, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:08:26'),
+(122, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:09:57'),
+(123, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:17:30'),
+(124, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:21:31'),
+(125, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:25:17'),
+(126, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:36:47'),
+(127, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:42:57'),
+(128, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:44:10'),
+(129, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:45:57'),
+(130, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:51:19'),
+(131, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:52:07'),
+(132, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 13:54:42'),
+(133, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:15:55'),
+(134, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:17:21'),
+(135, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:19:03'),
+(136, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:25:50'),
+(137, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:28:13'),
+(138, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:36:41'),
+(139, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:39:45');
 
 -- --------------------------------------------------------
 
@@ -317,7 +383,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (9, 'site_contact_email', 'info@coursemanagement.com'),
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
-(12, 'users_capabilities', 's:818:\"a:3:{s:5:\"admin\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:1;}s:5:\"nurse\";a:11:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
+(12, 'users_capabilities', 's:1352:\"a:3:{s:5:\"admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:5:\"nurse\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
 
 -- --------------------------------------------------------
 
@@ -441,7 +507,30 @@ CREATE TABLE `tbl_users` (
 INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `username`, `user_status`, `created_by`, `courses`, `user_salt`, `registered_at`, `currently_employed`, `external_candidate`, `rag_status`, `extended_support`, `support_since`) VALUES
 (10000242679, '', 'admin@admin.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'admin', 'admin', 1, 1, '', '78cHgqMhLRJHz575WXy9uw==', '2016-06-14 09:35:48', NULL, NULL, NULL, NULL, NULL),
 (10000318028, 'Sehgal_M_001', 'mazen.sehgal@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'trainer', 'bob', 1, 10000242679, '', 'NPt9/aMmbKrU/JNo3hQl0g==', '2017-06-06 11:06:55', NULL, NULL, NULL, NULL, NULL),
-(10000850547, NULL, 'bbb@b.com', '4a9a2898cc698ce6a0da8b02baa9b9890179069265d14eafde550189a7205b19', 'bbb', 'bbb', 'trainee', 'bbb', 1, 10000242679, '', 'SSDAfndEKPulxSp/qlYvHQ==', '2017-06-06 16:09:08', 0, 1234521, 1, 0, 2014);
+(10000850547, NULL, 'bbb@b.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'bbb', 'bbb', 'nurse', 'bbb', 1, 10000242679, 'a:1:{i:0;s:11:\"10000434969\";}', '78cHgqMhLRJHz575WXy9uw==', '2017-06-06 16:09:08', 0, 1234521, 1, 0, 2014);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_info`
+--
+
+CREATE TABLE `tbl_user_info` (
+  `ID` int(11) NOT NULL,
+  `user_ID` int(11) DEFAULT NULL,
+  `prec_intro` date DEFAULT NULL,
+  `current_prec` int(11) DEFAULT NULL,
+  `pin` int(11) DEFAULT NULL,
+  `delay` int(11) DEFAULT NULL,
+  `prec_name` varchar(150) DEFAULT NULL,
+  `int_nurse` int(11) DEFAULT NULL,
+  `WTE` varchar(150) DEFAULT NULL,
+  `sign_off` int(11) DEFAULT NULL,
+  `awards` varchar(150) DEFAULT NULL,
+  `link` varchar(150) DEFAULT NULL,
+  `prec_trainer` int(11) DEFAULT NULL,
+  `prec_notes` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -528,6 +617,12 @@ ALTER TABLE `tbl_users`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `tbl_user_info`
+--
+ALTER TABLE `tbl_user_info`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `tbl_work_area`
 --
 ALTER TABLE `tbl_work_area`
@@ -541,7 +636,7 @@ ALTER TABLE `tbl_work_area`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
@@ -566,7 +661,7 @@ ALTER TABLE `tbl_locations`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -582,6 +677,11 @@ ALTER TABLE `tbl_usermeta`
 --
 ALTER TABLE `tbl_users`
   MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000950334;
+--
+-- AUTO_INCREMENT for table `tbl_user_info`
+--
+ALTER TABLE `tbl_user_info`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 --
 -- AUTO_INCREMENT for table `tbl_work_area`
 --

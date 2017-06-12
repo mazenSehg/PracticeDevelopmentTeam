@@ -231,12 +231,21 @@ if( !class_exists('User') ):
 							<div id="myTabContent" class="tab-content">
 								<div role="tabpanel" class="tab-pane fade active in" id="tab_content01" aria-labelledby="home-tab">
 									<ul class="messages list-unstyled">
-										<form class="add-user user-form" method="post" autocomplete="off">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>Preceptor Progress</h1>
 											<br>
-											<div class="row">
+											
+											
+											<?php
+			$fault = get_tabledata(TBL_INFO,true,array('user_ID'=> $user__id));
+			?>
+											<div class="row">	
+												<label for="date-of-fault">User ID</label>
+												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												
+												
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="date-of-fault">Precptorship Intro</label>
 													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
@@ -246,7 +255,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="p_current" class="js-switch" /> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
@@ -254,7 +263,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="p_pin" class="js-switch" /> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
@@ -262,24 +271,24 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="p_delay" class="js-switch" /> </label>
 												</div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="date-of-fault">Precptorship Name</label>
-													<input type="text" name="date_of_fault" class="form-control" /> </div>
+													<input type="text" name="p_name" class="form-control" /> </div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
 														<?php _e('International Nurse');?>
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="p_nurse" class="js-switch" /> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">WTE</label>
-													<input type="text" name="date_of_fault" class="form-control " /> </div>
+													<input type="text" name="p_wte" class="form-control " /> </div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-4 col-xs-12">
@@ -287,32 +296,32 @@ if( !class_exists('User') ):
 													<input type="text" name="date_of_fault" class="form-control " /> </div>
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="date-of-fault">Country of First Registeration</label>
-													<input type="text" name="date_of_fault" class="form-control" /> </div>
+													<input type="text" name="p_email" class="form-control" /> </div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="">Sign off Period</label>
 													<br/>
 													<label>
-														<input type="radio" class="flat" name="approved" value="1" /> 6 Months</label>
+														<input type="radio" class="flat" name="p_period" value="6" /> 6 Months</label>
 													<label>&nbsp;</label>
 													<label>
-														<input type="radio" class="flat" name="approved" value="0" /> 12 Months</label>
+														<input type="radio" class="flat" name="p_period" value="12" /> 12 Months</label>
 												</div>
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="date-of-fault">Awards</label>
-													<input type="text" name="date_of_fault" class="form-control" /> </div>
+													<input type="text" name="p_awards" class="form-control" /> </div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="date-of-fault">Links</label>
-													<input type="text" name="date_of_fault" class="form-control " /> </div>
+													<input type="text" name="p_link" class="form-control " /> </div>
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="admins">
 														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
 													<select name="admins[]" class="form-control select_single require">
 														<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -322,7 +331,7 @@ if( !class_exists('User') ):
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="p_notes" class="form-control" rows="3"></textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -393,7 +402,7 @@ if( !class_exists('User') ):
 													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
 												<select name="admins[]" class="form-control select_single require">
 													<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -481,7 +490,7 @@ if( !class_exists('User') ):
 													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
 												<select name="admins[]" class="form-control select_single require">
 													<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -556,7 +565,7 @@ if( !class_exists('User') ):
 														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
 													<select name="admins[]" class="form-control select_single require">
 														<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -808,6 +817,8 @@ if( !class_exists('User') ):
 							<form class="add-user user-form" method="post" autocomplete="off">
 								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
+										
+
 										<label for="username"> Username <span class="required">*</span> </label>
 										<input type="text" name="username" class="form-control require" /> </div>
 								</div>
@@ -1422,7 +1433,7 @@ else {
 		
 		
 		public function update__preceptor__process(){
-			extract($_POST);
+						extract($_POST);			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -1431,45 +1442,33 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
-					
-					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
-			
-			
-			if($user_role=="nurse"){
-				$first = $first_name[0];
-				$trainer_ID = $last_name."_".$first."_001";
-			}else{
-							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
-			
+					$p_current = ( isset($p_current) ) ? 1 : 0;
+					$p_pin = ( isset($p_pin) ) ? 1 : 0;
+					$p_delay = ( isset($p_delay) ) ? 1 : 0;
+					$p_nurse = ( isset($p_nurse) ) ? 1 : 0;
 			
 					$result = $this->database->insert(TBL_INFO,
 						array(
-							'ID' => $guid,
-							'user_ID' => current__user__id,
-//							'prec_info' => ,
-//							'current_prec' => ,
-//							'pin' => ,
-//							'delay' => ,
-//							'prec_name' => ,
-//							'int_nurse' => ,
-//							'WTE' => ,
-//							'sign_off' => ,
-//							'awards' => ,
-//							'link' => ,
-//							'prec_trainer' => ,
-//							'prec_notes' => ,
+							
+							'ID' => $user_id3,
+							'user_ID' => $user_id3,
+							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
+							'current_prec' => $p_current,
+							'pin' => $p_pin,
+							'delay' => $p_delay,
+							'prec_name' => $p_name,
+							'int_nurse' => $p_nurse,	
+							'WTE' => $p_wte,
+							'sign_off' => $p_period,
+							'awards' => $p_awards,
+							'link' => $p_link,
+							'prec_trainer' => $admins,
+							'prec_notes' => $p_notes,
 						)
+					);
+					$notification_args = array(
+						'title' => __('Account Information'),
+						'notification'=> __('You have successfully updated preceptor progress'),
 					);
 
 						add_user_notification($notification_args);
@@ -1477,10 +1476,11 @@ else {
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
-					endif;
 			endif;
 
 			return json_encode($return);
+			
+			
 		}
 		
 		
