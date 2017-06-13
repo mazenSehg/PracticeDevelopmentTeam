@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 12, 2017 at 05:44 PM
+-- Generation Time: Jun 13, 2017 at 04:22 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -197,6 +197,28 @@ INSERT INTO `tbl_locations` (`ID`, `name`, `phone`, `booking_contact`, `booking_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_notes`
+--
+
+CREATE TABLE `tbl_notes` (
+  `ID` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `to` bigint(10) NOT NULL,
+  `from` bigint(10) NOT NULL,
+  `note` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_notes`
+--
+
+INSERT INTO `tbl_notes` (`ID`, `date`, `to`, `from`, `note`) VALUES
+(1, '2017-06-13 13:47:42', 10000850547, 10000242679, 'test'),
+(2, '2017-06-13 13:47:52', 10000850547, 10000242679, 'comment 2');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_notifications`
 --
 
@@ -353,7 +375,35 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (136, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:25:50'),
 (137, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:28:13'),
 (138, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:36:41'),
-(139, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:39:45');
+(139, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-12 15:39:45'),
+(140, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 08:30:35'),
+(141, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 08:39:18'),
+(142, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 08:41:45'),
+(143, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 09:16:36'),
+(144, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 09:43:24'),
+(145, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 09:44:39'),
+(146, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 10:44:07'),
+(147, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 10:54:54'),
+(148, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:05:46'),
+(149, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:05:59'),
+(150, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:23:53'),
+(151, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:26:15'),
+(152, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:29:46'),
+(153, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:31:57'),
+(154, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 11:38:25'),
+(155, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 12:26:41'),
+(156, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 12:28:34'),
+(157, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 12:35:22'),
+(158, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 12:55:54'),
+(159, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 12:57:38'),
+(160, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:11:05'),
+(161, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:12:04'),
+(162, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:13:48'),
+(163, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:14:41'),
+(164, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:33:14'),
+(165, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:47:42'),
+(166, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:47:52'),
+(167, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 14:22:08');
 
 -- --------------------------------------------------------
 
@@ -516,8 +566,8 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 --
 
 CREATE TABLE `tbl_user_info` (
-  `ID` int(11) NOT NULL,
-  `user_ID` int(11) DEFAULT NULL,
+  `ID` bigint(110) NOT NULL,
+  `user_ID` bigint(100) DEFAULT NULL,
   `prec_intro` date DEFAULT NULL,
   `current_prec` int(11) DEFAULT NULL,
   `pin` int(11) DEFAULT NULL,
@@ -525,12 +575,44 @@ CREATE TABLE `tbl_user_info` (
   `prec_name` varchar(150) DEFAULT NULL,
   `int_nurse` int(11) DEFAULT NULL,
   `WTE` varchar(150) DEFAULT NULL,
+  `p_email` varchar(150) DEFAULT NULL,
+  `p_country` varchar(150) DEFAULT NULL,
   `sign_off` int(11) DEFAULT NULL,
   `awards` varchar(150) DEFAULT NULL,
   `link` varchar(150) DEFAULT NULL,
-  `prec_trainer` int(11) DEFAULT NULL,
-  `prec_notes` text
+  `prec_trainer` bigint(110) DEFAULT NULL,
+  `prec_notes` text,
+  `hca_start` date DEFAULT NULL,
+  `hca_manager` varchar(150) DEFAULT NULL,
+  `hca_email` varchar(150) DEFAULT NULL,
+  `hca_new_care` int(11) DEFAULT NULL,
+  `hca_current_client` int(11) DEFAULT NULL,
+  `hca_fundamental_care` int(11) DEFAULT NULL,
+  `hca_care` int(11) DEFAULT NULL,
+  `hca_trainer` bigint(10) DEFAULT NULL,
+  `hca_notes` text,
+  `fd_start` date DEFAULT NULL,
+  `fd_graduate` date DEFAULT NULL,
+  `fd_inturrupt` int(11) DEFAULT NULL,
+  `fd_sd1` int(11) DEFAULT NULL,
+  `fd_sd2` int(11) DEFAULT NULL,
+  `fd_sd3` int(11) DEFAULT NULL,
+  `fd_other` text,
+  `fd_current` int(11) DEFAULT NULL,
+  `fd_trainer` bigint(10) DEFAULT NULL,
+  `fd_notes` text,
+  `mentor_current` int(11) DEFAULT NULL,
+  `mentor_renew` date DEFAULT NULL,
+  `mentor_sign_off` int(11) DEFAULT NULL,
+  `mentor_notes` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user_info`
+--
+
+INSERT INTO `tbl_user_info` (`ID`, `user_ID`, `prec_intro`, `current_prec`, `pin`, `delay`, `prec_name`, `int_nurse`, `WTE`, `p_email`, `p_country`, `sign_off`, `awards`, `link`, `prec_trainer`, `prec_notes`, `hca_start`, `hca_manager`, `hca_email`, `hca_new_care`, `hca_current_client`, `hca_fundamental_care`, `hca_care`, `hca_trainer`, `hca_notes`, `fd_start`, `fd_graduate`, `fd_inturrupt`, `fd_sd1`, `fd_sd2`, `fd_sd3`, `fd_other`, `fd_current`, `fd_trainer`, `fd_notes`, `mentor_current`, `mentor_renew`, `mentor_sign_off`, `mentor_notes`) VALUES
+(10000063356, 10000850547, '2017-06-01', 1, 0, 1, 'Mazen', 1, 'LD59', 'm@s.com', 'China', 12, 'DoE', 'none', 10000318028, 'No notes', '2017-06-14', 'Hi', 'email', 1, 0, 1, 0, 10000318028, 'retort', '2017-06-01', '2017-06-08', 1, 1, 1, 0, 'test', 1, 10000318028, 'test', 1, '2017-06-06', 0, 'Jan 01, 1970');
 
 -- --------------------------------------------------------
 
@@ -591,6 +673,14 @@ ALTER TABLE `tbl_designations`
 --
 ALTER TABLE `tbl_locations`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_notes`
+--
+ALTER TABLE `tbl_notes`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID` (`ID`),
+  ADD KEY `ID_2` (`ID`);
 
 --
 -- Indexes for table `tbl_notifications`
@@ -658,10 +748,15 @@ ALTER TABLE `tbl_designations`
 ALTER TABLE `tbl_locations`
   MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000833917;
 --
+-- AUTO_INCREMENT for table `tbl_notes`
+--
+ALTER TABLE `tbl_notes`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -681,7 +776,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000914148;
 --
 -- AUTO_INCREMENT for table `tbl_work_area`
 --
