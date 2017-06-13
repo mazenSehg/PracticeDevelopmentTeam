@@ -236,131 +236,154 @@ if( !class_exists('User') ):
 											<br>
 											<h1>Preceptor Progress</h1>
 											<br>
-											
-											
 											<?php
 			$fault = get_tabledata(TBL_INFO,true,array('user_ID'=> $user__id));
+			
 			?>
-											<div class="row">	
-												<label for="date-of-fault">User ID</label>
-												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-												
-												
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Precptorship Intro</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
-												<div class="form-group col-sm-2 col-xs-12">
-													<label for="decommed">
-														<?php _e('Current Preceptee');?>
-													</label>
-													<br/>
-													<label>
-														<input type="checkbox" name="p_current" class="js-switch" /> </label>
+												<div class="row">
+													<label for="date-of-fault">User ID</label>
+													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+													
+													
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="date-of-fault">Precptorship Intro</label>
+														<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value=
+															   "<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" 
+															   
+															   /> </div>
+													
+													
+													<div class="form-group col-sm-2 col-xs-12">
+														<label for="decommed">
+															<?php _e('Current Preceptee');?>
+														</label>
+														<br/>
+														<label>
+															<input type="checkbox" name="p_current" class="js-switch" <?php
+			isset($fault->current_prec) ? checked($fault->current_prec,1) : '';?> /> </label>
+													</div>
+													
+													
+													<div class="form-group col-sm-2 col-xs-12">
+														<label for="decommed">
+															<?php _e('Awaiting Pin');?>
+														</label>
+														<br/>
+														<label>
+															<input type="checkbox" name="p_pin" class="js-switch" <?php
+			isset($fault->pin) ? checked($fault->pin,1) : '';?>/> </label>
+													</div>
+													<div class="form-group col-sm-2 col-xs-12">
+														<label for="decommed">
+															<?php _e('Academic Delay');?>
+														</label>
+														<br/>
+														<label>
+															<input type="checkbox" name="p_delay" class="js-switch" <?php isset($fault->delay) ? checked($fault->delay,1) : '';?>/> </label>
+														
+													</div>
 												</div>
-												<div class="form-group col-sm-2 col-xs-12">
-													<label for="decommed">
-														<?php _e('Awaiting Pin');?>
-													</label>
-													<br/>
-													<label>
-														<input type="checkbox" name="p_pin" class="js-switch" /> </label>
+												<div class="row">
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="date-of-fault">Precptorship Name</label>
+														<input type="text" name="p_name" class="form-control" value="<?php echo isset($fault->prec_name) ? $fault->prec_name : '';?>" /> </div>
+													<div class="form-group col-sm-2 col-xs-12">
+														<label for="decommed">
+															<?php _e('International Nurse');?>
+														</label>
+														<br/>
+														<label>
+															<input type="checkbox" name="p_nurse" class="js-switch" <?php ;
+															isset($fault->int_nurse) ? checked($fault->int_nurse,1) : '';
+																   ?> /> </label>
+													</div>
+													<div class="form-group col-sm-2 col-xs-12">
+														<label for="date-of-fault">WTE</label>
+														<input type="text" name="p_wte" class="form-control " value="<?php echo isset($fault->WTE) ? $fault->WTE : '';?>"/> </div>
 												</div>
-												<div class="form-group col-sm-2 col-xs-12">
-													<label for="decommed">
-														<?php _e('Academic Delay');?>
-													</label>
-													<br/>
-													<label>
-														<input type="checkbox" name="p_delay" class="js-switch" /> </label>
+												<div class="row">
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="date-of-fault">Precptorship Email</label>
+														<input type="text" name="p_email" class="form-control " value="<?php isset($fault->p_email) ? $fault->p_email : '';?>"/> </div>
+													
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="date-of-fault">Country of First Registeration</label>
+														<input type="text" name="p_country" class="form-control" value="<?php echo isset($fault->p_country) ? $fault->p_country : '';?>"/> </div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Precptorship Name</label>
-													<input type="text" name="p_name" class="form-control" /> </div>
-												<div class="form-group col-sm-2 col-xs-12">
-													<label for="decommed">
-														<?php _e('International Nurse');?>
-													</label>
-													<br/>
-													<label>
-														<input type="checkbox" name="p_nurse" class="js-switch" /> </label>
+												<div class="row">
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="">Sign off Period</label>
+														<br/>
+														<label>
+															<input type="radio" class="flat" name="p_period" value="6" <?php
+																   isset($fault->sign_off) ? checked($fault->sign_off,'6') : '';
+																   ?> /> 6 Months</label>
+														<label>&nbsp;</label>
+														<label>
+															<input type="radio" class="flat" name="p_period" value="12" <?php isset($fault->sign_off) ? checked($fault->sign_off,'12') : '';
+																   ?>  /> 12 Months</label>
+													</div>
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="date-of-fault">Awards</label>
+														<input type="text" name="p_awards" class="form-control" value="<?php echo isset($fault->awards) ? $fault->awards : '';?>" /> </div>
 												</div>
-												<div class="form-group col-sm-2 col-xs-12">
-													<label for="date-of-fault">WTE</label>
-													<input type="text" name="p_wte" class="form-control " /> </div>
-											</div>
-											<div class="row">
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Precptorship Email</label>
-													<input type="text" name="date_of_fault" class="form-control " /> </div>
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Country of First Registeration</label>
-													<input type="text" name="p_email" class="form-control" /> </div>
-											</div>
-											<div class="row">
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="">Sign off Period</label>
-													<br/>
-													<label>
-														<input type="radio" class="flat" name="p_period" value="6" /> 6 Months</label>
-													<label>&nbsp;</label>
-													<label>
-														<input type="radio" class="flat" name="p_period" value="12" /> 12 Months</label>
-												</div>
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Awards</label>
-													<input type="text" name="p_awards" class="form-control" /> </div>
-											</div>
-											<div class="row">
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Links</label>
-													<input type="text" name="p_link" class="form-control " /> </div>
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="admins">
-														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
-													<select name="admins[]" class="form-control select_single require">
-														<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+												<div class="row">
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="date-of-fault">Links</label>
+														<input type="text" name="p_link" class="form-control " value="<?php echo 
+											isset($fault->link) ? $fault->link : '';?>"/> </div>
+													<div class="form-group col-sm-4 col-xs-12">
+														<label for="admins">
+															<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+														<select name="trainers" class="form-control select_single require">
+															<?php
+//							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, trainer_ID AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data);
+							echo get_options_list($option_data, maybe_unserialize($user->prec_trainer));
 							?>
-													</select>
+														</select>
+														
+													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="form-group col-sm-8 col-xs-12">
-													<label for="description-of-fault">Notes</label>
-													<textarea name="p_notes" class="form-control" rows="3"></textarea>
+												<div class="row">
+													<div class="form-group col-sm-8 col-xs-12">
+														<label for="description-of-fault">Notes</label>
+														<textarea name="p_notes" class="form-control" rows="3" ><?php echo
+								isset($fault->prec_notes) ? $fault->prec_notes : '';?></textarea>
+													</div>
 												</div>
-											</div>
-											<div class="ln_solid"></div>
-											<div class="form-group">
-												<input type="hidden" name="action" value="update_preceptorship" />
-												<button class="btn btn-success btn-md" type="submit">
-													<?php _e('Update Preceptor Progress');?>
-												</button>
-											</div>
+												<div class="ln_solid"></div>
+												<div class="form-group">
+													<input type="hidden" name="action" value="update_preceptorship" />
+													<button class="btn btn-success btn-md" type="submit">
+														<?php _e('Update Preceptor Progress');?>
+													</button>
+												</div>
 										</form>
 								</div>
 								</ul>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content02" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
-										<form class="add-user user-form" method="post" autocomplete="off">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>HCA Induction</h1>
 											<br>
 											<div class="row">
+																									<label for="date-of-fault">User ID</label>
+													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
+													
+													
 													<label for="date-of-fault">Course Start Date</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input type="text" name="hca_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->hca_start) ? date('M d, Y', strtotime($fault->hca_start)) : '';?>"/> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="date-of-fault">Manager Name</label>
-													<input type="text" name="date_of_fault" class="form-control" /> </div>
+													<input type="text" name="hca_manager" class="form-control" value = "<?php echo isset($fault->hca_manager) ? $fault->hca_manager : '';?>"/> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="date-of-fault">Manager Email</label>
-													<input type="text" name="date_of_fault" class="form-control " /> </div>
+													<input type="text" name="hca_email" class="form-control " value = "<?php echo isset($fault->hca_email) ? $fault->hca_email : '';?>"/> </div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-2 col-xs-12">
@@ -369,7 +392,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="hca_new_care" class="js-switch" <?php isset($fault->hca_new_care) ? checked($fault->hca_new_care,'1') : ''; ?>/> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
@@ -377,7 +400,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="hca_current_client" class="js-switch" <?php isset($fault->hca_current_client) ? checked($fault->hca_current_client,'1') : ''; ?>/> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
@@ -385,7 +408,9 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="hca_fundamental_care" class="js-switch" <?php 
+															   isset($fault->hca_fundamental_care) ? checked($fault->hca_fundamental_care,'1') : '';
+															   ?>/> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
@@ -393,14 +418,17 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="hca_care" class="js-switch" <?php
+			isset($fault->hca_care) ? checked($fault->hca_care,'1') : '';
+			?>
+															   /> </label>
 												</div>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12"></div>
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for="admins">
 													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
-												<select name="admins[]" class="form-control select_single require">
+												<select name="hca_trainer" class="form-control select_single require">
 													<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -411,7 +439,7 @@ if( !class_exists('User') ):
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="hca_notes" class="form-control" rows="3"><?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?></textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -426,25 +454,29 @@ if( !class_exists('User') ):
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
-										<form class="add-user user-form" method="post" autocomplete="off">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>FDs / AP Training Record</h1>
 											<br>
 											<div class="row">
+																									<label for="date-of-fault">User ID</label>
+													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">FD Course Start Date</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input type="text" name="fd_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_start) ? date('M d, Y', strtotime($fault->fd_start)) : '';?>"/> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="date-of-fault">Graduation Date</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input type="text" name="fd_graduate" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_graduate) ? date('M d, Y', strtotime($fault->fd_graduate)) : '';?>"/> </div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
 														<?php _e('Course Interrupt');?>
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="fd_inturrupt" class="js-switch" <?php
+			isset($fault->fd_inturrupt) ? checked($fault->fd_inturrupt,'1') : '';
+			?>/> </label>
 												</div>
 											</div>
 											<div class="row">
@@ -454,7 +486,9 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="fd_sd1" class="js-switch" <?php
+			isset($fault->fd_sd1) ? checked($fault->fd_sd1,'1') : '';
+			?>/> </label>
 												</div>
 												<div class="form-group col-sm-1 col-xs-12">
 													<label for="decommed">
@@ -462,7 +496,9 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="fd_sd2" class="js-switch" <?php
+			isset($fault->fd_sd2) ? checked($fault->fd_sd2,'1') : '';
+			?>/> </label>
 												</div>
 												<div class="form-group col-sm-1 col-xs-12">
 													<label for="decommed">
@@ -470,11 +506,14 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="fd_sd3" class="js-switch" <?php
+			isset($fault->fd_sd3) ? checked($fault->fd_sd3,'1') : '';
+			?>/> </label>
 												</div>
 												<div class="form-group col-sm-5 col-xs-12">
 													<label for="description-of-fault">Other Study</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="fd_other" class="form-control" rows="3"><?php echo
+			isset($fault->fd_other) ?  $fault->fd_other : '';?></textarea>
 												</div>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
@@ -483,12 +522,14 @@ if( !class_exists('User') ):
 												</label>
 												<br/>
 												<label>
-													<input type="checkbox" name="doh" class="js-switch" /> </label>
+													<input type="checkbox" name="fd_current" class="js-switch" <?php
+			isset($fault->fd_current) ? checked($fault->fd_current,'1') : '';
+			?>/> </label>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for="admins">
 													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
-												<select name="admins[]" class="form-control select_single require">
+												<select name="fd_trainer" class="form-control select_single require">
 													<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -499,7 +540,9 @@ if( !class_exists('User') ):
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="fd_notes" class="form-control" rows="3"><?php
+			echo isset($fault->fd_notes) ? $fault->fd_notes : '';
+			?></textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -584,41 +627,43 @@ if( !class_exists('User') ):
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
-										<form class="add-user user-form" method="post" autocomplete="off">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>Mentor Progress</h1>
 											<br>
 											<div class="row">
+												<label for="date-of-fault">User ID</label>
+												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="decommed">
 														<?php _e('Current Mentor');?>
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="mentor_current" class="js-switch" <?php isset($fault->mentor_current) ? checked($fault->mentor_current,'1') : ''; ?> /> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Update Renewal Due</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input type="text" name="mentor_renew" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->mentor_renew) ? date('M d, Y', strtotime($fault->mentor_renew)) : '';?>"/> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="decommed">
 														<?php _e('Sign off Mentor');?>
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="doh" class="js-switch" /> </label>
+														<input type="checkbox" name="mentor_sign_off" class="js-switch" <?php isset($fault->mentor_sign_off) ? checked($fault->mentor_sign_off,'1') : ''; ?>/> </label>
 												</div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="mentor_notes" class="form-control" rows="3"><?php echo isset($fault->mentor_notes) ? date('M d, Y', strtotime($fault->mentor_notes)) : '';?></textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_mentor_prog"/>
+												<input type="hidden" name="action" value="update_mentor_prog" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update Mentor Progress');?>
 												</button>
@@ -626,49 +671,49 @@ if( !class_exists('User') ):
 										</form </ul>
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content7" aria-labelledby="profile-tab">
-									<ul class="messages list-unstyled"> 
-									<form class="add-user user-form" method="post" autocomplete="off">
+									<ul class="messages list-unstyled">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>Notes</h1>
 											<br>
-																			
-<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>
-													<?php _e('Date of Note');?>
-												</th>
-												<th>
-													<?php _e('Note');?>
-												</th>
-												<th>
-													<?php _e('Note Posted By');?>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											
-												<tr>
-													<td>
-														
-													</td>
-													<td>
-														
-													</td>
+											<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th>
+															<?php _e('Date of Note');?>
+														</th>
+														<th>
+															<?php _e('Note');?>
+														</th>
+														<th>
+															<?php _e('Note Posted By');?>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php
+			$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
+			foreach($notez as $noty): ?>
+			
+													<tr>
+														<td><?php echo $noty->date?></td>
+														<td><?php echo $noty->note?></td>
+														<td><?php echo $noty->from?></td>
+													</tr>
 													
-													<td>
-													</td>
-												</tr>
-										</tbody>
-									</table>
-																			
-																			
-	
+													<?php
+				endforeach;
+				?>
+												</tbody>
+											</table>
 											<div class="row">
+												<label for="date-of-fault">User ID</label>
+												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="note" class="form-control" rows="3"></textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -679,7 +724,6 @@ if( !class_exists('User') ):
 												</button>
 											</div>
 										</form>
-									
 									</ul>
 								</div>
 							</div>
@@ -817,8 +861,6 @@ if( !class_exists('User') ):
 							<form class="add-user user-form" method="post" autocomplete="off">
 								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
-										
-
 										<label for="username"> Username <span class="required">*</span> </label>
 										<input type="text" name="username" class="form-control require" /> </div>
 								</div>
@@ -1447,10 +1489,36 @@ else {
 					$p_delay = ( isset($p_delay) ) ? 1 : 0;
 					$p_nurse = ( isset($p_nurse) ) ? 1 : 0;
 			
+			$guid = get_guid(TBL_INFO);
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
+								$result = $this->database->update(TBL_INFO,
+					array(
+							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
+							'current_prec' => $p_current,
+							'pin' => $p_pin,
+							'delay' => $p_delay,
+							'prec_name' => $p_name,
+							'int_nurse' => $p_nurse,	
+							'WTE' => $p_wte,
+							'p_email' => $p_email,
+							'p_country' => $p_country,
+							'sign_off' => $p_period,
+							'awards' => $p_awards,
+							'link' => $p_link,
+							'prec_trainer' => $trainers,
+							'prec_notes' => $p_notes,
+					
+					),
+					array('user_ID'=> $user_id3)
+				);
+				
+			}
+			else
+			{
 					$result = $this->database->insert(TBL_INFO,
 						array(
 							
-							'ID' => $user_id3,
+							'ID' => $guid,
 							'user_ID' => $user_id3,
 							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
 							'current_prec' => $p_current,
@@ -1459,13 +1527,16 @@ else {
 							'prec_name' => $p_name,
 							'int_nurse' => $p_nurse,	
 							'WTE' => $p_wte,
+							'p_email' => $p_email,
+							'p_country' => $p_country,
 							'sign_off' => $p_period,
 							'awards' => $p_awards,
 							'link' => $p_link,
-							'prec_trainer' => $admins,
+							'prec_trainer' => $trainers,
 							'prec_notes' => $p_notes,
 						)
 					);
+			}
 					$notification_args = array(
 						'title' => __('Account Information'),
 						'notification'=> __('You have successfully updated preceptor progress'),
@@ -1484,9 +1555,11 @@ else {
 		}
 		
 		
+
 		
-		public function update__mca__process(){
-			extract($_POST);
+		
+				public function update__mca__process(){
+						extract($_POST);			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -1495,49 +1568,51 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
+					$hca_new_care = ( isset($hca_new_care) ) ? 1 : 0;
+					$hca_current_client = ( isset($hca_current_client) ) ? 1 : 0;
+					$hca_fundamental_care = ( isset($hca_fundamental_care) ) ? 1 : 0;
+					$hca_care = ( isset($hca_care) ) ? 1 : 0;
+			
+			$guid = get_guid(TBL_INFO);
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
+								$result = $this->database->update(TBL_INFO,
+					array(
+							'hca_start' => date('Y-m-d h:i:s',strtotime($hca_start)),
+							'hca_manager' => $hca_manager,
+							'hca_email' => $hca_email,									
+							'hca_new_care' => $hca_new_care,
+							'hca_current_client' => $hca_current_client,	
+							'hca_fundamental_care' => $hca_fundamental_care,	
+							'hca_care' => $hca_care,
+							'hca_trainer' => $hca_trainer,
+							'hca_notes' => $hca_notes,
 					
-					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
-			
-			
-			if($user_role=="nurse"){
-				$first = $first_name[0];
-				$trainer_ID = $last_name."_".$first."_001";
-			}else{
-							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
-			
-			
-					$result = $this->database->insert(TBL_USERS,
+					),
+					array('user_ID'=> $user_id3)
+				);
+				
+			}
+			else
+			{
+					$result = $this->database->insert(TBL_INFO,
 						array(
-							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-							'currently_employed' => $currently_employed,
-							'external_candidate' => $ex_cand,
-							'rag_status' => $rag_status,
-							'extended_support' => $extended_support,
-							'support_since' => $support_since,
-						
+														'ID' => $guid,
+							'user_ID' => $user_id3,
+							'hca_start' => date('Y-m-d h:i:s',strtotime($hca_start)),
+							'hca_manager' => $hca_manager,
+							'hca_email' => $hca_email,									
+							'hca_new_care' => $hca_new_care,
+							'hca_current_client' => $hca_current_client,	
+							'hca_fundamental_care' => $hca_fundamental_care,	
+							'hca_care' => $hca_care,
+							'hca_trainer' => $hca_trainer,
+							'hca_notes' => $hca_notes,
 						)
+					);
+			}
+					$notification_args = array(
+						'title' => __('Account Information'),
+						'notification'=> __('You have successfully updated preceptor progress'),
 					);
 
 						add_user_notification($notification_args);
@@ -1545,13 +1620,16 @@ else {
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
-					endif;
 			endif;
 
 			return json_encode($return);
+			
+			
 		}
+		
+		
 				public function update__fdap__process(){
-			extract($_POST);
+						extract($_POST);			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -1560,49 +1638,54 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
+					$fd_inturrupt = ( isset($fd_inturrupt) ) ? 1 : 0;
+					$fd_sd1 = ( isset($fd_sd1) ) ? 1 : 0;
+					$fd_sd2 = ( isset($fd_sd2) ) ? 1 : 0;
+					$fd_sd3 = ( isset($fd_sd3) ) ? 1 : 0;
+					$fd_current = ( isset($fd_current) ) ? 1 : 0;
+			
+			$guid = get_guid(TBL_INFO);
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
+								$result = $this->database->update(TBL_INFO,
+					array(
+							'fd_start' => date('Y-m-d h:i:s',strtotime($fd_start)),
+							'fd_graduate' => date('Y-m-d h:i:s',strtotime($fd_graduate)),
+							'fd_inturrupt' => $fd_inturrupt,
+							'fd_sd1' => $fd_sd1,	
+							'fd_sd2' => $fd_sd2,	
+							'fd_sd3' => $fd_sd3,	
+							'fd_other' => $fd_other,
+							'fd_current' => $fd_current,
+							'fd_trainer' => $fd_trainer,
+							'fd_notes' => $fd_notes,
 					
-					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
-			
-			
-			if($user_role=="nurse"){
-				$first = $first_name[0];
-				$trainer_ID = $last_name."_".$first."_001";
-			}else{
-							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
-			
-			
-					$result = $this->database->insert(TBL_USERS,
+					),
+					array('user_ID'=> $user_id3)
+				);
+				
+			}
+			else
+			{
+					$result = $this->database->insert(TBL_INFO,
 						array(
-							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-							'currently_employed' => $currently_employed,
-							'external_candidate' => $ex_cand,
-							'rag_status' => $rag_status,
-							'extended_support' => $extended_support,
-							'support_since' => $support_since,
-						
+														'ID' => $guid,
+							'user_ID' => $user_id3,
+							'fd_start' => date('Y-m-d h:i:s',strtotime($fd_start)),
+							'fd_graduate' => date('Y-m-d h:i:s',strtotime($fd_graduate)),
+							'fd_inturrupt' => $fd_inturrupt,
+							'fd_sd1' => $fd_sd1,	
+							'fd_sd2' => $fd_sd2,	
+							'fd_sd3' => $fd_sd3,	
+							'fd_other' => $fd_other,
+							'fd_current' => $fd_current,
+							'fd_trainer' => $fd_trainer,
+							'fd_notes' => $fd_notes,
 						)
+					);
+			}
+					$notification_args = array(
+						'title' => __('Account Information'),
+						'notification'=> __('You have successfully updated preceptor progress'),
 					);
 
 						add_user_notification($notification_args);
@@ -1610,10 +1693,11 @@ else {
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
-					endif;
 			endif;
 
 			return json_encode($return);
+			
+			
 		}
 				public function update__student__process(){
 			extract($_POST);
@@ -1683,7 +1767,7 @@ else {
 		
 		
 				public function update__mentor__process(){
-			extract($_POST);
+						extract($_POST);			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -1692,49 +1776,43 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
+					$mentor_current = ( isset($mentor_current) ) ? 1 : 0;
+					$mentor_sign_off = ( isset($mentor_sign_off) ) ? 1 : 0;
+			
+			$guid = get_guid(TBL_INFO);
 					
-					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
-			
-			
-			if($user_role=="nurse"){
-				$first = $first_name[0];
-				$trainer_ID = $last_name."_".$first."_001";
-			}else{
-							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
-			
-			
-					$result = $this->database->insert(TBL_USERS,
+					
+					/////////////
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
+								$result = $this->database->update(TBL_INFO,
+					array(
+							'mentor_current' => $mentor_current,
+							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
+							'mentor_sign_off' => $mentor_sign_off,
+							'mentor_notes' => $mentor_notes,
+					),
+					array('user_ID'=> $user_id3)
+				);
+				
+			}
+			else
+			{
+					$result = $this->database->insert(TBL_INFO,
 						array(
 							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-							'currently_employed' => $currently_employed,
-							'external_candidate' => $ex_cand,
-							'rag_status' => $rag_status,
-							'extended_support' => $extended_support,
-							'support_since' => $support_since,
-						
+							'user_ID' => $user_id3,
+							'$mentor_current' => $mentor_current,
+							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
+							'mentor_sign_off' => $mentor_sign_off,
+							'mentor_notes' => $mentor_notes,
 						)
+					);
+			}
+					
+			///////////		
+					$notification_args = array(
+						'title' => __('Account Information'),
+						'notification'=> __('You have successfully updated preceptor progress'),
 					);
 
 						add_user_notification($notification_args);
@@ -1742,15 +1820,15 @@ else {
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
-					endif;
 			endif;
 
 			return json_encode($return);
-		}
+				}
+			
 		
 		
 						public function update__notes__process(){
-			extract($_POST);
+						extract($_POST);			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -1759,49 +1837,23 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
+			
+			$guid = get_guid(TBL_NOTES);
 					
-					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
+
 			
-			
-			if($user_role=="nurse"){
-				$first = $first_name[0];
-				$trainer_ID = $last_name."_".$first."_001";
-			}else{
-							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
-			
-			
-					$result = $this->database->insert(TBL_USERS,
+					$result = $this->database->insert(TBL_NOTES,
 						array(
-							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-							'currently_employed' => $currently_employed,
-							'external_candidate' => $ex_cand,
-							'rag_status' => $rag_status,
-							'extended_support' => $extended_support,
-							'support_since' => $support_since,
-						
+
+							'to' => $user_id3,
+							'from' => $this->current__user__id,
+							'note' => $note,
 						)
+					);
+							
+					$notification_args = array(
+						'title' => __('Account Information'),
+						'notification'=> __('You have successfully updated preceptor progress'),
 					);
 
 						add_user_notification($notification_args);
@@ -1809,11 +1861,10 @@ else {
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
-					endif;
 			endif;
 
 			return json_encode($return);
-		}
+				}
 		
 		
 
