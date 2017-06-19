@@ -667,6 +667,27 @@ $(document).ready(function() {
 				$select_single.select2({ allowClear: true });
 			}
 		});
+	});	
+	
+	
+	$('.fetch-cohort-dates-data').change(function(e){
+		var _this = $(this);
+		console.log(_this.val());
+		$.ajax({ 
+			type: 'POST',
+			data: {
+				action: 'fetch_cohort_date_data',
+				course_id: _this.val(),
+			},
+			url: ajax_url,
+			dataType: 'json',
+			success: function(r){
+				console.log(r['nurses_html']);
+				$select_single.select2("destroy");
+				$('.select-dates').html(r['nurses_html']);
+				$select_single.select2({ allowClear: true });
+			}
+		});
 	});
 	
 });

@@ -44,6 +44,9 @@ if( !class_exists('User') ):
 		}
 		
 		
+
+		
+		
 		
 		public function forgot__page(){
 			ob_start();
@@ -243,35 +246,24 @@ if( !class_exists('User') ):
 												<div class="row">
 													<label for="date-of-fault">User ID</label>
 													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-													
-													
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="date-of-fault">Precptorship Intro</label>
-														<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value=
-															   "<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" 
-															   
-															   /> </div>
-													
-													
+														<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" /> </div>
 													<div class="form-group col-sm-2 col-xs-12">
 														<label for="decommed">
 															<?php _e('Current Preceptee');?>
 														</label>
 														<br/>
 														<label>
-															<input type="checkbox" name="p_current" class="js-switch" <?php
-			isset($fault->current_prec) ? checked($fault->current_prec,1) : '';?> /> </label>
+															<input type="checkbox" name="p_current" class="js-switch" <?php isset($fault->current_prec) ? checked($fault->current_prec,1) : '';?> /> </label>
 													</div>
-													
-													
 													<div class="form-group col-sm-2 col-xs-12">
 														<label for="decommed">
 															<?php _e('Awaiting Pin');?>
 														</label>
 														<br/>
 														<label>
-															<input type="checkbox" name="p_pin" class="js-switch" <?php
-			isset($fault->pin) ? checked($fault->pin,1) : '';?>/> </label>
+															<input type="checkbox" name="p_pin" class="js-switch" <?php isset($fault->pin) ? checked($fault->pin,1) : '';?>/> </label>
 													</div>
 													<div class="form-group col-sm-2 col-xs-12">
 														<label for="decommed">
@@ -280,7 +272,6 @@ if( !class_exists('User') ):
 														<br/>
 														<label>
 															<input type="checkbox" name="p_delay" class="js-switch" <?php isset($fault->delay) ? checked($fault->delay,1) : '';?>/> </label>
-														
 													</div>
 												</div>
 												<div class="row">
@@ -293,35 +284,29 @@ if( !class_exists('User') ):
 														</label>
 														<br/>
 														<label>
-															<input type="checkbox" name="p_nurse" class="js-switch" <?php ;
-															isset($fault->int_nurse) ? checked($fault->int_nurse,1) : '';
-																   ?> /> </label>
+															<input type="checkbox" name="p_nurse" class="js-switch" <?php ; isset($fault->int_nurse) ? checked($fault->int_nurse,1) : ''; ?> /> </label>
 													</div>
 													<div class="form-group col-sm-2 col-xs-12">
 														<label for="date-of-fault">WTE</label>
-														<input type="text" name="p_wte" class="form-control " value="<?php echo isset($fault->WTE) ? $fault->WTE : '';?>"/> </div>
+														<input type="text" name="p_wte" class="form-control " value="<?php echo isset($fault->WTE) ? $fault->WTE : '';?>" /> </div>
 												</div>
 												<div class="row">
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="date-of-fault">Precptorship Email</label>
-														<input type="text" name="p_email" class="form-control " value="<?php isset($fault->p_email) ? $fault->p_email : '';?>"/> </div>
-													
+														<input type="text" name="p_email" class="form-control " value="<?php echo isset($fault->p_email) ? $fault->p_email : '';?>" /> </div>
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="date-of-fault">Country of First Registeration</label>
-														<input type="text" name="p_country" class="form-control" value="<?php echo isset($fault->p_country) ? $fault->p_country : '';?>"/> </div>
+														<input type="text" name="p_country" class="form-control" value="<?php echo isset($fault->p_country) ? $fault->p_country : '';?>" /> </div>
 												</div>
 												<div class="row">
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="">Sign off Period</label>
 														<br/>
 														<label>
-															<input type="radio" class="flat" name="p_period" value="6" <?php
-																   isset($fault->sign_off) ? checked($fault->sign_off,'6') : '';
-																   ?> /> 6 Months</label>
+															<input type="radio" class="flat" name="p_period" value="6" <?php isset($fault->sign_off) ? checked($fault->sign_off,'6') : ''; ?> /> 6 Months</label>
 														<label>&nbsp;</label>
 														<label>
-															<input type="radio" class="flat" name="p_period" value="12" <?php isset($fault->sign_off) ? checked($fault->sign_off,'12') : '';
-																   ?>  /> 12 Months</label>
+															<input type="radio" class="flat" name="p_period" value="12" <?php isset($fault->sign_off) ? checked($fault->sign_off,'12') : ''; ?> /> 12 Months</label>
 													</div>
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="date-of-fault">Awards</label>
@@ -331,7 +316,7 @@ if( !class_exists('User') ):
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="date-of-fault">Links</label>
 														<input type="text" name="p_link" class="form-control " value="<?php echo 
-											isset($fault->link) ? $fault->link : '';?>"/> </div>
+											isset($fault->link) ? $fault->link : '';?>" /> </div>
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="admins">
 															<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
@@ -340,17 +325,18 @@ if( !class_exists('User') ):
 //							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, trainer_ID AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data, maybe_unserialize($user->prec_trainer));
+							echo get_options_list($option_data, maybe_unserialize($fault->prec_trainer));
 							?>
 														</select>
-														
 													</div>
 												</div>
 												<div class="row">
 													<div class="form-group col-sm-8 col-xs-12">
 														<label for="description-of-fault">Notes</label>
-														<textarea name="p_notes" class="form-control" rows="3" ><?php echo
-								isset($fault->prec_notes) ? $fault->prec_notes : '';?></textarea>
+														<textarea name="p_notes" class="form-control" rows="3">
+															<?php echo
+								isset($fault->prec_notes) ? $fault->prec_notes : '';?>
+														</textarea>
 													</div>
 												</div>
 												<div class="ln_solid"></div>
@@ -371,19 +357,17 @@ if( !class_exists('User') ):
 											<h1>HCA Induction</h1>
 											<br>
 											<div class="row">
-																									<label for="date-of-fault">User ID</label>
-													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<label for="date-of-fault">User ID</label>
+												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
-													
-													
 													<label for="date-of-fault">Course Start Date</label>
-													<input type="text" name="hca_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->hca_start) ? date('M d, Y', strtotime($fault->hca_start)) : '';?>"/> </div>
+													<input type="text" name="hca_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->hca_start) ? date('M d, Y', strtotime($fault->hca_start)) : '';?>" /> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="date-of-fault">Manager Name</label>
-													<input type="text" name="hca_manager" class="form-control" value = "<?php echo isset($fault->hca_manager) ? $fault->hca_manager : '';?>"/> </div>
+													<input type="text" name="hca_manager" class="form-control" value="<?php echo isset($fault->hca_manager) ? $fault->hca_manager : '';?>" /> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="date-of-fault">Manager Email</label>
-													<input type="text" name="hca_email" class="form-control " value = "<?php echo isset($fault->hca_email) ? $fault->hca_email : '';?>"/> </div>
+													<input type="text" name="hca_email" class="form-control " value="<?php echo isset($fault->hca_email) ? $fault->hca_email : '';?>" /> </div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-2 col-xs-12">
@@ -408,9 +392,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="hca_fundamental_care" class="js-switch" <?php 
-															   isset($fault->hca_fundamental_care) ? checked($fault->hca_fundamental_care,'1') : '';
-															   ?>/> </label>
+														<input type="checkbox" name="hca_fundamental_care" class="js-switch" <?php isset($fault->hca_fundamental_care) ? checked($fault->hca_fundamental_care,'1') : ''; ?>/> </label>
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
@@ -418,10 +400,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="hca_care" class="js-switch" <?php
-			isset($fault->hca_care) ? checked($fault->hca_care,'1') : '';
-			?>
-															   /> </label>
+														<input type="checkbox" name="hca_care" class="js-switch" <?php isset($fault->hca_care) ? checked($fault->hca_care,'1') : ''; ?> /> </label>
 												</div>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12"></div>
@@ -432,14 +411,16 @@ if( !class_exists('User') ):
 													<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data);
+							echo get_options_list($option_data,maybe_unserialize($fault->hca_trainer));
 							?>
 												</select>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="hca_notes" class="form-control" rows="3"><?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?></textarea>
+													<textarea name="hca_notes" class="form-control" rows="3">
+														<?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?>
+													</textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -460,23 +441,21 @@ if( !class_exists('User') ):
 											<h1>FDs / AP Training Record</h1>
 											<br>
 											<div class="row">
-																									<label for="date-of-fault">User ID</label>
-													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<label for="date-of-fault">User ID</label>
+												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">FD Course Start Date</label>
-													<input type="text" name="fd_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_start) ? date('M d, Y', strtotime($fault->fd_start)) : '';?>"/> </div>
+													<input type="text" name="fd_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_start) ? date('M d, Y', strtotime($fault->fd_start)) : '';?>" /> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="date-of-fault">Graduation Date</label>
-													<input type="text" name="fd_graduate" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_graduate) ? date('M d, Y', strtotime($fault->fd_graduate)) : '';?>"/> </div>
+													<input type="text" name="fd_graduate" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_graduate) ? date('M d, Y', strtotime($fault->fd_graduate)) : '';?>" /> </div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="decommed">
 														<?php _e('Course Interrupt');?>
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="fd_inturrupt" class="js-switch" <?php
-			isset($fault->fd_inturrupt) ? checked($fault->fd_inturrupt,'1') : '';
-			?>/> </label>
+														<input type="checkbox" name="fd_inturrupt" class="js-switch" <?php isset($fault->fd_inturrupt) ? checked($fault->fd_inturrupt,'1') : ''; ?>/> </label>
 												</div>
 											</div>
 											<div class="row">
@@ -486,9 +465,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="fd_sd1" class="js-switch" <?php
-			isset($fault->fd_sd1) ? checked($fault->fd_sd1,'1') : '';
-			?>/> </label>
+														<input type="checkbox" name="fd_sd1" class="js-switch" <?php isset($fault->fd_sd1) ? checked($fault->fd_sd1,'1') : ''; ?>/> </label>
 												</div>
 												<div class="form-group col-sm-1 col-xs-12">
 													<label for="decommed">
@@ -496,9 +473,7 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="fd_sd2" class="js-switch" <?php
-			isset($fault->fd_sd2) ? checked($fault->fd_sd2,'1') : '';
-			?>/> </label>
+														<input type="checkbox" name="fd_sd2" class="js-switch" <?php isset($fault->fd_sd2) ? checked($fault->fd_sd2,'1') : ''; ?>/> </label>
 												</div>
 												<div class="form-group col-sm-1 col-xs-12">
 													<label for="decommed">
@@ -506,14 +481,14 @@ if( !class_exists('User') ):
 													</label>
 													<br/>
 													<label>
-														<input type="checkbox" name="fd_sd3" class="js-switch" <?php
-			isset($fault->fd_sd3) ? checked($fault->fd_sd3,'1') : '';
-			?>/> </label>
+														<input type="checkbox" name="fd_sd3" class="js-switch" <?php isset($fault->fd_sd3) ? checked($fault->fd_sd3,'1') : ''; ?>/> </label>
 												</div>
 												<div class="form-group col-sm-5 col-xs-12">
 													<label for="description-of-fault">Other Study</label>
-													<textarea name="fd_other" class="form-control" rows="3"><?php echo
-			isset($fault->fd_other) ?  $fault->fd_other : '';?></textarea>
+													<textarea name="fd_other" class="form-control" rows="3">
+														<?php echo
+			isset($fault->fd_other) ?  $fault->fd_other : '';?>
+													</textarea>
 												</div>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
@@ -522,9 +497,7 @@ if( !class_exists('User') ):
 												</label>
 												<br/>
 												<label>
-													<input type="checkbox" name="fd_current" class="js-switch" <?php
-			isset($fault->fd_current) ? checked($fault->fd_current,'1') : '';
-			?>/> </label>
+													<input type="checkbox" name="fd_current" class="js-switch" <?php isset($fault->fd_current) ? checked($fault->fd_current,'1') : ''; ?>/> </label>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for="admins">
@@ -533,16 +506,18 @@ if( !class_exists('User') ):
 													<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data);
+							echo get_options_list($option_data,maybe_unserialize($fault->fd_trainer));
 							?>
 												</select>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="fd_notes" class="form-control" rows="3"><?php
+													<textarea name="fd_notes" class="form-control" rows="3">
+														<?php
 			echo isset($fault->fd_notes) ? $fault->fd_notes : '';
-			?></textarea>
+			?>
+													</textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -557,29 +532,51 @@ if( !class_exists('User') ):
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
-										<form class="add-user user-form" method="post" autocomplete="off">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>Student Progress</h1>
 											<br>
 											<div class="row">
+												<label for="date-of-fault">User ID</label>
+												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Cohort</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<select name="stud_cohort" class="form-control fetch-cohort-dates-data select_single require">
+														<?php
+							$data = get_tabledata(TBL_COHORTS,false,array());
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+													</select>
+												</div>
+												<div class="form-group col-sm-2 col-xs-12">
+													<label for="date-of-fault">Cohort date</label>
+													<select name="stud_cohort_date" class="form-control select_single select-dates require">
+														<?php
+							$data = get_tabledata(TBL_COHORTS_EXT,false,array());
+							$option_data = get_option_data($data,array('ID','Cohort_date'));
+							echo get_options_list($option_data);
+							?>
+													</select>
+												</div>
+											</div>
+											<div class="row">
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Study Day 1</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input id = "stud_d1" type="text" name="stud_d1" class="form-control input-datepicker" readonly="readonly" value="" /> </div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Study Day 2</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input id = "stud_d2" type="text" name="stud_d2" class="form-control input-datepicker" readonly="readonly" value="" /> </div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Study Day 3</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
+													<input id = "stud_d3" type="text" name="stud_d3" class="form-control input-datepicker" readonly="readonly" value="" /> </div>
 											</div>
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="description_of_fault" class="form-control" rows="3"></textarea>
+													<textarea name="stud_notes" class="form-control" rows="3"></textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -594,7 +591,7 @@ if( !class_exists('User') ):
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
-										<form class="add-user user-form" method="post" autocomplete="off">
+										<form class="submit-form" method="post" autocomplete="off">
 											<br>
 											<br>
 											<h1>ONP Course Attendace</h1>
@@ -606,11 +603,11 @@ if( !class_exists('User') ):
 												<div class="form-group col-sm-4 col-xs-12">
 													<label for="admins">
 														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
-													<select name="admins[]" class="form-control select_single require">
+													<select name="cohorts" class="form-control select_single require">
 														<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data);
+							echo get_options_list($option_data,maybe_unserialize($fault->cohorts));
 							?>
 													</select>
 												</div>
@@ -645,7 +642,7 @@ if( !class_exists('User') ):
 												</div>
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Update Renewal Due</label>
-													<input type="text" name="mentor_renew" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->mentor_renew) ? date('M d, Y', strtotime($fault->mentor_renew)) : '';?>"/> </div>
+													<input type="text" name="mentor_renew" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->mentor_renew) ? date('M d, Y', strtotime($fault->mentor_renew)) : '';?>" /> </div>
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="decommed">
 														<?php _e('Sign off Mentor');?>
@@ -658,7 +655,9 @@ if( !class_exists('User') ):
 											<div class="row">
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
-													<textarea name="mentor_notes" class="form-control" rows="3"><?php echo isset($fault->mentor_notes) ? date('M d, Y', strtotime($fault->mentor_notes)) : '';?></textarea>
+													<textarea name="mentor_notes" class="form-control" rows="3">
+														<?php echo isset($fault->mentor_notes) ? $fault->mentor_notes : '';?>
+													</textarea>
 												</div>
 											</div>
 											<div class="ln_solid"></div>
@@ -695,14 +694,19 @@ if( !class_exists('User') ):
 													<?php
 			$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
 			foreach($notez as $noty): ?>
-			
-													<tr>
-														<td><?php echo $noty->date?></td>
-														<td><?php echo $noty->note?></td>
-														<td><?php echo $noty->from?></td>
-													</tr>
-													
-													<?php
+														<tr>
+															<td>
+																<?php echo $noty->date?>
+															</td>
+															<td>
+																<?php echo $noty->note?>
+															</td>
+															<td>
+																<?php $user = get_userdata($noty->from);
+			echo $user->first_name . " ". $user->last_name?>
+															</td>
+														</tr>
+														<?php
 				endforeach;
 				?>
 												</tbody>
@@ -710,7 +714,6 @@ if( !class_exists('User') ):
 											<div class="row">
 												<label for="date-of-fault">User ID</label>
 												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-												
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
 													<textarea name="note" class="form-control" rows="3"></textarea>
@@ -977,7 +980,7 @@ if( !class_exists('User') ):
 								<script>
 									$(document).ready(function () {
 										$('#purpose').on('change', function () {
-											if (this.value == 'trainee') {
+											if (this.value == 'nurse') {
 												$(".nav-sub-wrapper").toggle();
 											}
 											else {
@@ -992,10 +995,10 @@ if( !class_exists('User') ):
 											<label for="current_employed">Currently Employed?
 												<br/>
 												<label>
-													<input type="radio" class="flat" name="employed" value="1" /> Yes</label>
+													<input type="radio" class="flat" name="current_employed" value="1" /> Yes</label>
 												<label>&nbsp;</label>
 												<label>
-													<input type="radio" class="flat" name="employed" value="0" /> No</label>
+													<input type="radio" class="flat" name="current_employed" value="0" /> No</label>
 										</div>
 									</div>
 									<div class="form-group col-sm-6 col-xs-12">
@@ -1003,7 +1006,7 @@ if( !class_exists('User') ):
 										<input type="text" name="ex_cand" class="form-control " /> </div>
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="gender"> RAG Status</label>
-										<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+										<select name="rag_status" class="form-control select_single" tabindex="-1" data-placeholder="Choose a gender">
 											<option value=""> </option>
 											<option value="0"> Red </option>
 											<option value="1"> Amber </option>
@@ -1402,26 +1405,39 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
+
 					
 					$user_pass = password_generator();
 					$salt = generateSalt();
 					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
 					$salt = base64_encode($salt);
+								$guid = get_guid(TBL_USERS);
 			
-			
-			if($user_role=="nurse"){
+			if($user_role!="trainer"&&$user_role!="nurse"){
 				$first = $first_name[0];
 				$trainer_ID = $last_name."_".$first."_001";
+				
+									$result = $this->database->insert(TBL_USERS,
+						array(
+											'ID' => $guid,
+							'trainer_ID' => $trainer_ID,
+							'first_name' => $first_name,
+							'last_name' => $last_name,
+							'user_email' => $user_email,
+							'user_role' => $user_role,
+							'username' => $username,
+							'user_status' => 1,
+							'user_pass' => set_password($user_pass),
+							'user_salt' => $salt,
+							'created_by' => $this->current__user__id,
+							'courses' => isset($courses) ? $courses : '',
+																
+						)
+					);
 			}else{
 							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
+						
+
 			
 			
 					$result = $this->database->insert(TBL_USERS,
@@ -1438,7 +1454,7 @@ else {
 							'user_salt' => $salt,
 							'created_by' => $this->current__user__id,
 							'courses' => isset($courses) ? $courses : '',
-							'currently_employed' => $currently_employed,
+							'currently_employed' => $current_employed,
 							'external_candidate' => $ex_cand,
 							'rag_status' => $rag_status,
 							'extended_support' => $extended_support,
@@ -1446,6 +1462,7 @@ else {
 						
 						)
 					);
+			}
 					if($result):
 						$user__id = $guid;
 						update_user_meta($user__id,'gender',$gender);
@@ -1466,7 +1483,6 @@ else {
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
 					endif;
-				endif;
 			endif;
 
 			return json_encode($return);
@@ -1700,7 +1716,7 @@ else {
 			
 		}
 				public function update__student__process(){
-			extract($_POST);
+							extract($_POST);			
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -1709,49 +1725,45 @@ else {
 			);
 
 			if(user_can('add_user')):
-				if(email_exists($user_email)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
+			
+			$guid = get_guid(TBL_INFO);
 					
-					$user_pass = password_generator();
-					$salt = generateSalt();
-					$user_pass = hash('SHA256', encrypt($user_pass, $salt));
-					$salt = base64_encode($salt);
-			
-			
-			if($user_role=="nurse"){
-				$first = $first_name[0];
-				$trainer_ID = $last_name."_".$first."_001";
-			}else{
-							$trainer_ID = NULL;
-						}
-					$guid = get_guid(TBL_USERS);
-			
-			
-					$result = $this->database->insert(TBL_USERS,
+					
+					/////////////
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
+								$result = $this->database->update(TBL_INFO,
+					array(
+							'stud_cohort' => $stud_cohort,
+							'stud_cohort_date' => $stud_cohort_date,									
+							'$stud_d1' => $stud_d1,
+							'$stud_d2' => $stud_d2,
+							'$stud_d3' => $stud_d3,	
+							'stud_notes' => $stud_notes,
+					),
+					array('user_ID'=> $user_id3)
+				);
+				
+			}
+			else
+			{
+					$result = $this->database->insert(TBL_INFO,
 						array(
 							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-							'currently_employed' => $currently_employed,
-							'external_candidate' => $ex_cand,
-							'rag_status' => $rag_status,
-							'extended_support' => $extended_support,
-							'support_since' => $support_since,
-						
+							'user_ID' => $user_id3,
+							'stud_cohort' => $stud_cohort,
+							'stud_cohort_date' => $stud_cohort_date,									
+							'$stud_d1' => date('Y-m-d h:i:s',strtotime($stud_d1)),
+							'$stud_d2' => date('Y-m-d h:i:s',strtotime($stud_d2)),
+							'$stud_d3' => date('Y-m-d h:i:s',strtotime($stud_d3)),	
+							'stud_notes' => $stud_notes,
 						)
+					);
+			}
+					
+	
+					$notification_args = array(
+						'title' => __('Account Information'),
+						'notification'=> __('You have successfully updated preceptor progress'),
 					);
 
 						add_user_notification($notification_args);
@@ -1759,11 +1771,10 @@ else {
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
-					endif;
 			endif;
 
 			return json_encode($return);
-		}
+				}
 		
 		
 				public function update__mentor__process(){
@@ -2004,6 +2015,18 @@ else {
 					$return['message_heading'] = __('Success !');
 				endif;
 			endif;
+			return json_encode($return);
+		}
+		
+		public function fetch__cohort__date__process(){
+						extract($_POST);
+			$course_id = trim($course_id);
+			$return = array();
+			$select = ' ID, Cohort_date AS name';
+			$query = " WHERE `Cohort_ID` = '".$course_id."' AND `over` = '0' ";
+			$data = get_tabledata(TBL_COHORTS_EXT, false, array() , $query , $select);
+			$option_data = get_option_data($data,array('ID','name'));
+			$return['nurses_html'] = get_options_list($option_data);
 			return json_encode($return);
 		}
 

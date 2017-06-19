@@ -108,6 +108,10 @@
 			
 			case 'add_new_course':
 				echo $Course->add__course__process();
+				break;			
+
+		case 'add_new_cohort':
+				echo $Course->add__cohort__process();
 				break;
 				
 			case 'update_course':
@@ -118,6 +122,14 @@
 				echo $Course->delete__course__process();
 				break;
 			
+			case 'update_cohort':
+				echo $Course->update__cohort__process();
+				break;
+				
+			case 'delete_cohort':
+				echo $Course->delete__cohort__process();
+				break;
+
 			case 'add_new_designation':
 				echo $Designation->add__designation__process();
 				break;
@@ -169,6 +181,11 @@
 				
 			case 'fetch_course_nurses_data':
 				echo $Booking->fetch__course__nurses__process();
+				break;			
+
+
+case 'fetch_cohort_date_data':
+				echo $User->fetch__cohort__date__process();
 				break;
 				
 			case 'fetch_booking_nurses':

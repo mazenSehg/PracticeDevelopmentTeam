@@ -19,6 +19,30 @@ login_check();
 				<!-- page content -->
 				<div class="right_col" role="main">
 					<?php if(get_current_user_role() == 'nurse'): ?>
+					
+										<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h1 class="text-center"><?php _e('User profile progress'); ?></h1>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div class="progress">
+  <div class="progress-bar progress-bar-striped active" role="progressbar"
+  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+    40%
+  </div>
+</div>
+									
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">

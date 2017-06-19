@@ -260,6 +260,22 @@ if( !class_exists('Header') ):
 									</ul>
 								</li>
 								<?php endif; ?>
+
+								<?php if(is_admin()): ?>
+								<li>
+									<a><i class="fa fa-book"></i><?php _e('Cohort');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_designation') ): ?>
+										<li><a href="<?php the_permalink('cohorts');?>"><?php _e('All Cohorts');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_designation') || user_can('add_designation')): ?>
+										<li><a href="<?php the_permalink('add-new-cohorts');?>"><?php _e('Add New Cohort');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-cohorts');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
 								
 								<?php if(is_admin()): ?>
 								<li>

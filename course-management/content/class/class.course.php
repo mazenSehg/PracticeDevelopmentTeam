@@ -64,7 +64,152 @@ if( !class_exists('Course') ):
 			$content = ob_get_clean();
 			return $content;
 		}
+		
+						public function cohort_types(){
+			return array(
+				'adult' => 'adult',
+				'child' => 'Child',
+				'midwifery' => 'Midwifery',
+				'Paramedic' => 'Paramedic',
+				'Erasmus' => 'Erasmus',
+				'R2P ' => 'R2P',
+				'Overseas Adaptive' => 'Overseas Adaptive',
+				'OPD' => 'OPD',
+			);
+		}
+		
+				public function add__cohort__page(){
+			ob_start();
+			if( !user_can( 'add_course') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: ?>
+				<form class="add-course submit-form" method="post" autocomplete="off">
+					<div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="name"><?php _e('Name');?></label>
+						<input type="text" name="name" class="form-control" />
+					</div>
+					
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="band">
+											<?php _e('Cohort Type');?>
+										</label>
+										<select name="type" class="form-control select_single" tabindex="-1" data-placeholder="Choose Cohort">
+											<?php
+								$option_data = $this->cohort_types();
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+					</div>
+					
+					<div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+										<label for="dob">
+											<?php _e('Starting Date');?>
+										</label>
+										<input type="text" name="start" class="form-control input-datepicker" readonly="readonly"/> 
+						</div>
+						
+					<div class="form-group col-sm-2 col-xs-12">
+						<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+					</div>
+					<div class="form-group col-sm-2 col-xs-12">
+						<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+					</div>
+					<div class="form-group col-sm-2 col-xs-12">
+						<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+					</div>
+					</div>
+					
+					<br>
+					<br>
+					<br>
 
+
+
+
+
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="add_new_cohort" />
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Create New Cohort');?></button>
+					</div>
+				</form>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+
+		
+		public function edit__cohort__page(){
+			ob_start();
+			$course__id = $_GET['id'];
+				$course = get_tabledata(TBL_COHORTS,true,array('ID'=> $course__id));
+			if( !user_can( 'edit_course') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$course):
+				echo page_not_found('Oops ! Cohort Details Not Found.','Please go back and check again !');
+			else:
+			?>
+				<form class="add-course submit-form" method="post" autocomplete="off">
+						<div class="form-group col-sm-6 col-xs-12">
+						<label for="name"><?php _e('Name');?></label>
+						<input type="text" name="name" class="form-control" value="<?php echo $course->name?>"/>
+					</div>
+					
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="band">
+											<?php _e('Cohort Type');?>
+										</label>
+										<select name="type" class="form-control select_single" tabindex="-1" data-placeholder="Choose Cohort">
+											<?php
+								$option_data = $this->cohort_types();
+								echo get_options_list($option_data,$course->type,'type');
+								?>
+										</select>
+									</div>
+					</div>
+					
+					<div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+										<label for="dob">
+											<?php _e('Starting Date');?>
+										</label>
+										<input type="text" name="start" class="form-control input-datepicker" readonly="readonly" value ="<?php echo date('M d, Y', strtotime($course->date)); ?>"/> 
+						</div>
+						
+					<div class="form-group col-sm-2 col-xs-12">
+						<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="years" class="form-control require" min="0" max="10"value="<?php echo $course->y; ?>"/>
+					</div>
+					<div class="form-group col-sm-2 col-xs-12">
+						<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="months" class="form-control require" min="0" max = "12"value="<?php echo $course->m; ?>"/>
+					</div>
+					<div class="form-group col-sm-2 col-xs-12">
+						<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
+						<input type="number" name="days" class="form-control require" min="0" max = "31" value="<?php echo $course->d; ?>"/>
+					</div>
+					</div>
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="update_cohort" />
+						<input type="hidden" name="course_id" value="<?php echo $course->ID;?>" />
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Update Cohort');?></button>
+					</div>
+				</form>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
+		
+		
 		public function edit__course__page(){
 			ob_start();
 			$course__id = $_GET['id'];
@@ -183,6 +328,54 @@ if( !class_exists('Course') ):
 			$content = ob_get_clean();
 			return $content;
 		}
+		
+		
+		
+				public function all__cohorts__page(){
+			ob_start();
+			$args = array();
+			$courses = get_tabledata(TBL_COHORTS,false,$args);
+			if( !user_can('view_course') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$courses):
+				echo page_not_found("Oops! There is no New courses record found",' ',false);
+			else:
+			?>
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th><?php _e('Name');?></th>
+							<th><?php _e('Cohort Type');?></th>
+							<th><?php _e('Starting Period');?></th>
+							<th><?php _e('Frequency of Cohort');?></th>
+							<th class="text-center"><?php _e('Actions');?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php if($courses): foreach($courses as $course): ?>
+						<tr>
+							<td><?php _e($course->name);?></td>
+							<td><?php _e($course->type);?></td>
+							
+							<td><?php echo date('M d,Y',strtotime($course->date));?></td>
+							<td><?php echo "Days: ".($course->d)."<br>"."Months: ".($course->m)."<br>"."Years: ".($course->y);?></td>
+							<td class="text-center">
+								<?php if( user_can('edit_course') ): ?>
+								<a href="<?php the_permalink('edit-cohort',array('id' => $course->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a>
+								<?php endif; ?>
+								
+								<?php if( user_can('delete_course') ): ?>
+								<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $course->ID;?>" data-action="delete_cohort"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
+								<?php endif; ?>
+							</td>
+						</tr>
+						<?php endforeach; endif; ?>
+					</tbody>
+				</table>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
 
 
 		//Process functions starts here
@@ -235,6 +428,58 @@ if( !class_exists('Course') ):
 			return json_encode($return);
 		}
 
+		
+				//Process functions starts here
+		public function add__cohort__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> 'Failed !',
+				'message' => 'Could not create Cohort, Please try again.',
+				'reset_form' => 0
+			);
+			if( user_can('add_course') ):
+				$validation_args = array(
+					'name' => $name,
+				);
+
+				if(is_value_exists(TBL_COHORTS,$validation_args)):
+					$return['status'] = 2;
+					$return['message_heading'] = 'Failed !';
+					$return['message'] = 'Cohort name you entered is already exists, please try another name.';
+					$return['fields'] = array('name');
+				else:
+			
+					$guid = get_guid(TBL_COHORTS);
+					$result = $this->database->insert(TBL_COHORTS,
+						array(
+							'ID' => $guid,
+							'name' => $name,
+							'type' => $type,
+							'date' => date('Y-m-d h:i:s',strtotime($start)),
+						'y' => $years,
+						'm' => $months,
+						'd' => $days,
+						)
+					);
+					if($result):
+						$notification_args = array(
+							'title' => 'New Cohort created',
+							'notification'=> 'You have successfully created a new Cohort ('.$name.').',
+						);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = 'Success !';
+						$return['message'] = 'Cohort has been created successfully.';
+						$return['reset_form'] = 1;
+					endif;
+				endif;
+			endif;
+			return json_encode($return);
+		}
+		
+		
 		public function update__course__process(){
 			extract($_POST);
 			$return = array(
@@ -284,6 +529,57 @@ if( !class_exists('Course') ):
 
 			return json_encode($return);
 		}
+		
+		
+				public function update__cohort__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> 'Failed !',
+				'message' => 'Could not update Cohort, Please try again.',
+				'reset_form' => 0
+			);
+			if( user_can('edit_course') ):
+				$validation_args = array(
+					'name'=> $name,
+				);
+
+				if(is_value_exists(TBL_COHORTS,$validation_args,$course_id)):
+					$return['status'] = 2;
+					$return['message_heading'] = 'Failed !';
+					$return['message'] = 'Course name you entered is already exists, please try another name.';
+					$return['fields'] = array('name');
+				else:
+					$result = $this->database->update(TBL_COHORTS,
+						array(
+							'name' => $name,
+							'type' => $type,
+							'date' => date('Y-m-d h:i:s',strtotime($start)),
+						'y' => $years,
+						'm' => $months,
+						'd' => $days,
+						),
+						array(
+							'ID'=> $course_id
+						)
+					);
+
+					if($result):
+						$notification_args = array(
+							'title' => 'Course updated',
+							'notification'=> 'You have successfully updated course ('.$name.').',
+						);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = 'Success !';
+						$return['message'] = 'Course has been updated successfully.';
+					endif;
+				endif;
+			endif;
+
+			return json_encode($return);
+		}
 
 		public function delete__course__process(){
 			extract($_POST);
@@ -296,6 +592,28 @@ if( !class_exists('Course') ):
 					$notification_args = array(
 						'title' => 'Course deleted',
 						'notification'=> 'You have successfully deleted ('.$data->name.') course.',
+					);
+					add_user_notification($notification_args);
+					return 1;
+				else:
+					return 0;
+				endif;
+			else:
+				return 0;
+			endif;
+		}
+		
+				public function delete__cohort__process(){
+			extract($_POST);
+			$id = trim($id);
+			if( user_can('delete_course') ):
+				$data = get_tabledata(TBL_COHORTS,true,array('ID'=> $id) ) ;
+				$args = array('ID'=> $id);
+				$result = $this->database->delete(TBL_COHORTS,$args);
+				if($result):
+					$notification_args = array(
+						'title' => 'Course deleted',
+						'notification'=> 'You have successfully deleted ('.$data->name.') Cohort.',
 					);
 					add_user_notification($notification_args);
 					return 1;

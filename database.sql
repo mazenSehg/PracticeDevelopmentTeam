@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 13, 2017 at 04:22 PM
+-- Generation Time: Jun 19, 2017 at 05:48 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -67,7 +67,13 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (25, 10000850547, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 12:01:19'),
 (26, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-08 14:32:44'),
 (27, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-12 09:18:31'),
-(28, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-12 09:28:45');
+(28, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-12 09:28:45'),
+(29, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-19 09:02:59'),
+(30, 10000850547, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-19 09:05:12'),
+(31, 10000850547, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-19 09:07:55'),
+(32, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-19 09:09:03'),
+(33, 10000318028, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-19 09:14:08'),
+(34, 10000242679, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-19 09:17:09');
 
 -- --------------------------------------------------------
 
@@ -91,6 +97,69 @@ CREATE TABLE `tbl_bookings` (
 
 INSERT INTO `tbl_bookings` (`ID`, `course`, `booking_date`, `nurses`, `enroll`, `created_by`, `created_on`) VALUES
 (10000261578, 10000434969, '2017-06-08', 'a:1:{i:0;s:11:\"10000850547\";}', 'a:1:{i:10000850547;i:0;}', 10000242679, '2017-06-08 12:01:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cohort`
+--
+
+CREATE TABLE `tbl_cohort` (
+  `ID` bigint(12) NOT NULL,
+  `name` varchar(150) DEFAULT NULL,
+  `type` varchar(150) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `y` int(100) DEFAULT NULL,
+  `m` int(100) DEFAULT NULL,
+  `d` int(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_cohort`
+--
+
+INSERT INTO `tbl_cohort` (`ID`, `name`, `type`, `date`, `y`, `m`, `d`) VALUES
+(2147483647, 'Adult Cohort', 'adult', '2011-09-01', 1, 6, 1),
+(10000771328, 'Overseas Cohort', 'Overseas Adaptive', '2015-02-02', 0, 3, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_cohort_ext`
+--
+
+CREATE TABLE `tbl_cohort_ext` (
+  `ID` int(11) NOT NULL,
+  `Cohort_ID` bigint(12) NOT NULL,
+  `Cohort_date` date NOT NULL,
+  `over` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_cohort_ext`
+--
+
+INSERT INTO `tbl_cohort_ext` (`ID`, `Cohort_ID`, `Cohort_date`, `over`) VALUES
+(101, 2147483647, '2013-03-02', 1),
+(102, 2147483647, '2014-09-03', 1),
+(103, 2147483647, '2016-03-04', 1),
+(104, 2147483647, '2017-09-05', 0),
+(105, 2147483647, '2019-03-06', 0),
+(106, 2147483647, '2020-09-07', 0),
+(107, 2147483647, '2022-03-08', 0),
+(108, 2147483647, '2023-09-09', 0),
+(109, 2147483647, '2025-03-10', 0),
+(110, 2147483647, '2026-09-11', 0),
+(111, 10000771328, '2015-05-02', 1),
+(112, 10000771328, '2015-08-02', 1),
+(113, 10000771328, '2015-11-02', 1),
+(114, 10000771328, '2016-02-02', 1),
+(115, 10000771328, '2016-05-02', 1),
+(116, 10000771328, '2016-08-02', 1),
+(117, 10000771328, '2016-11-02', 1),
+(118, 10000771328, '2017-02-02', 1),
+(119, 10000771328, '2017-05-02', 1),
+(120, 10000771328, '2017-08-02', 0);
 
 -- --------------------------------------------------------
 
@@ -403,7 +472,56 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (164, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:33:14'),
 (165, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:47:42'),
 (166, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 13:47:52'),
-(167, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 14:22:08');
+(167, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-13 14:22:08'),
+(168, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 09:09:22'),
+(169, 10000242679, 'New Account Created', 'You have successfully created a new account (Dsf Sdf).', 0, 0, '2017-06-19 09:30:00'),
+(170, 10000242679, 'New Account Created', 'You have successfully created a new account (Sdf Qwe).', 0, 0, '2017-06-19 09:39:55'),
+(171, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:41:15'),
+(172, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:41:59'),
+(173, 10000242679, 'New Account Created', 'You have successfully created a new account (Qw Er).', 0, 0, '2017-06-19 09:43:15'),
+(174, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:43:56'),
+(175, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:43:58'),
+(176, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:43:59'),
+(177, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:43:59'),
+(178, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:45:09'),
+(179, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:48:06'),
+(180, 10000242679, 'New Account Created', 'You have successfully created a new account (Te St).', 0, 0, '2017-06-19 09:49:50'),
+(181, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 09:54:47'),
+(182, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 09:56:15'),
+(183, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 09:59:04'),
+(184, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 10:00:24'),
+(185, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (test).', 0, 0, '2017-06-19 11:03:57'),
+(186, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (test).', 0, 0, '2017-06-19 11:14:30'),
+(187, 10000242679, 'Course deleted', 'You have successfully deleted (test) Cohort.', 0, 0, '2017-06-19 11:36:56'),
+(188, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (test).', 0, 0, '2017-06-19 11:41:44'),
+(189, 10000242679, 'Course deleted', 'You have successfully deleted (test) Cohort.', 0, 0, '2017-06-19 11:44:15'),
+(190, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (test).', 0, 0, '2017-06-19 11:45:01'),
+(191, 10000242679, 'Course deleted', 'You have successfully deleted (test) Cohort.', 0, 0, '2017-06-19 11:45:11'),
+(192, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (test).', 0, 0, '2017-06-19 11:45:20'),
+(193, 10000242679, 'Course updated', 'You have successfully updated course (test).', 0, 0, '2017-06-19 12:02:26'),
+(194, 10000242679, 'Course deleted', 'You have successfully deleted (test) Cohort.', 0, 0, '2017-06-19 12:19:13'),
+(195, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (Adult Cohort).', 0, 0, '2017-06-19 12:20:51'),
+(196, 10000242679, 'New Cohort created', 'You have successfully created a new Cohort (Overseas Cohort).', 0, 0, '2017-06-19 12:26:00'),
+(197, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 14:20:38'),
+(198, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 14:28:07'),
+(199, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 14:30:33'),
+(200, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:31:58'),
+(201, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:34:15'),
+(202, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:40:28'),
+(203, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:41:10'),
+(204, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:46:40'),
+(205, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:47:53'),
+(206, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:50:13'),
+(207, 10000242679, 'Account Information', 'You have successfully updated the Student record progress', 0, 0, '2017-06-19 14:52:22'),
+(208, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 14:53:58'),
+(209, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 14:57:10'),
+(210, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 14:59:59'),
+(211, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 15:19:35'),
+(212, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 15:21:47'),
+(213, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 15:24:50'),
+(214, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 15:27:38'),
+(215, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 15:29:16'),
+(216, 10000242679, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-06-19 15:31:17');
 
 -- --------------------------------------------------------
 
@@ -521,7 +639,87 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (98, 10000850547, 'user_designation', '10000641614'),
 (99, 10000850547, 'work_extension', '1232'),
 (100, 10000850547, 'beep', '231'),
-(101, 10000850547, 'band', '2');
+(101, 10000850547, 'band', '2'),
+(102, 10000070070, 'gender', 'Male'),
+(103, 10000070070, 'dob', '2017-05-31 12:00:00'),
+(104, 10000070070, 'user_phone', '12345'),
+(105, 10000070070, 'profile_img', ''),
+(106, 10000070070, 'user_designation', '10000641613'),
+(107, 10000070070, 'work_extension', '432'),
+(108, 10000070070, 'beep', '234'),
+(109, 10000070070, 'band', '1'),
+(110, 10000443358, 'gender', 'Male'),
+(111, 10000443358, 'dob', '2017-06-01 12:00:00'),
+(112, 10000443358, 'user_phone', '1234'),
+(113, 10000443358, 'profile_img', ''),
+(114, 10000443358, 'user_designation', '10000641615'),
+(115, 10000443358, 'work_extension', '432'),
+(116, 10000443358, 'beep', '234234'),
+(117, 10000443358, 'band', '6 '),
+(118, 10000815792, 'gender', 'Male'),
+(119, 10000815792, 'dob', '2017-06-01 12:00:00'),
+(120, 10000815792, 'user_phone', '123456'),
+(121, 10000815792, 'profile_img', ''),
+(122, 10000815792, 'user_designation', '10000641616'),
+(123, 10000815792, 'work_extension', '4321'),
+(124, 10000815792, 'beep', '21345'),
+(125, 10000815792, 'band', '4'),
+(126, 10000364703, 'gender', 'Female'),
+(127, 10000364703, 'dob', '2017-05-28 12:00:00'),
+(128, 10000364703, 'user_phone', '12345678'),
+(129, 10000364703, 'profile_img', ''),
+(130, 10000364703, 'user_designation', '10000641616'),
+(131, 10000364703, 'work_extension', '4321'),
+(132, 10000364703, 'beep', '1234'),
+(133, 10000364703, 'band', '5'),
+(134, 10000243270, 'gender', 'Female'),
+(135, 10000243270, 'dob', '2017-05-28 12:00:00'),
+(136, 10000243270, 'user_phone', '12345678'),
+(137, 10000243270, 'profile_img', ''),
+(138, 10000243270, 'user_designation', '10000641616'),
+(139, 10000243270, 'work_extension', '4321'),
+(140, 10000243270, 'beep', '1234'),
+(141, 10000243270, 'band', '5'),
+(142, 10000391793, 'gender', 'Female'),
+(143, 10000391793, 'dob', '2017-05-28 12:00:00'),
+(144, 10000391793, 'user_phone', '12345678'),
+(145, 10000391793, 'profile_img', ''),
+(146, 10000391793, 'user_designation', '10000641616'),
+(147, 10000391793, 'work_extension', '4321'),
+(148, 10000391793, 'beep', '1234'),
+(149, 10000391793, 'band', '5'),
+(150, 10000920309, 'gender', 'Female'),
+(151, 10000920309, 'dob', '2017-05-28 12:00:00'),
+(152, 10000920309, 'user_phone', '12345678'),
+(153, 10000920309, 'profile_img', ''),
+(154, 10000920309, 'user_designation', '10000641616'),
+(155, 10000920309, 'work_extension', '4321'),
+(156, 10000920309, 'beep', '1234'),
+(157, 10000920309, 'band', '5'),
+(158, 10000599967, 'gender', 'Male'),
+(159, 10000599967, 'dob', '2017-05-28 12:00:00'),
+(160, 10000599967, 'user_phone', '1234567'),
+(161, 10000599967, 'profile_img', ''),
+(162, 10000599967, 'user_designation', '10000641615'),
+(163, 10000599967, 'work_extension', '1234'),
+(164, 10000599967, 'beep', '4321'),
+(165, 10000599967, 'band', '5'),
+(166, 10000098665, 'gender', 'Female'),
+(167, 10000098665, 'dob', '2017-05-28 12:00:00'),
+(168, 10000098665, 'user_phone', '123456'),
+(169, 10000098665, 'profile_img', ''),
+(170, 10000098665, 'user_designation', '10000641616'),
+(171, 10000098665, 'work_extension', '4321'),
+(172, 10000098665, 'beep', '12345'),
+(173, 10000098665, 'band', '6 '),
+(174, 10000632840, 'gender', 'Female'),
+(175, 10000632840, 'dob', '2017-05-28 12:00:00'),
+(176, 10000632840, 'user_phone', '123456789'),
+(177, 10000632840, 'profile_img', ''),
+(178, 10000632840, 'user_designation', '10000641617'),
+(179, 10000632840, 'work_extension', '3214'),
+(180, 10000632840, 'beep', '5421'),
+(181, 10000632840, 'band', '5');
 
 -- --------------------------------------------------------
 
@@ -532,15 +730,15 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 CREATE TABLE `tbl_users` (
   `ID` bigint(20) NOT NULL,
   `trainer_ID` varchar(150) DEFAULT NULL,
-  `user_email` varchar(512) NOT NULL,
-  `user_pass` varchar(512) NOT NULL,
-  `first_name` varchar(256) NOT NULL,
-  `last_name` varchar(256) NOT NULL,
-  `user_role` varchar(256) NOT NULL,
+  `user_email` varchar(512) DEFAULT NULL,
+  `user_pass` varchar(512) DEFAULT NULL,
+  `first_name` varchar(256) DEFAULT NULL,
+  `last_name` varchar(256) DEFAULT NULL,
+  `user_role` varchar(256) DEFAULT NULL,
   `username` varchar(150) DEFAULT NULL,
-  `user_status` int(11) NOT NULL,
-  `created_by` bigint(20) NOT NULL,
-  `courses` text NOT NULL,
+  `user_status` int(11) DEFAULT NULL,
+  `created_by` bigint(20) DEFAULT NULL,
+  `courses` text,
   `user_salt` varchar(250) DEFAULT NULL,
   `registered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `currently_employed` int(11) DEFAULT NULL,
@@ -556,8 +754,10 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `username`, `user_status`, `created_by`, `courses`, `user_salt`, `registered_at`, `currently_employed`, `external_candidate`, `rag_status`, `extended_support`, `support_since`) VALUES
 (10000242679, '', 'admin@admin.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'admin', 'admin', 1, 1, '', '78cHgqMhLRJHz575WXy9uw==', '2016-06-14 09:35:48', NULL, NULL, NULL, NULL, NULL),
-(10000318028, 'Sehgal_M_001', 'mazen.sehgal@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'trainer', 'bob', 1, 10000242679, '', 'NPt9/aMmbKrU/JNo3hQl0g==', '2017-06-06 11:06:55', NULL, NULL, NULL, NULL, NULL),
-(10000850547, NULL, 'bbb@b.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'bbb', 'bbb', 'nurse', 'bbb', 1, 10000242679, 'a:1:{i:0;s:11:\"10000434969\";}', '78cHgqMhLRJHz575WXy9uw==', '2017-06-06 16:09:08', 0, 1234521, 1, 0, 2014);
+(10000318028, 'Sehgal_M_001', 'mazen.sehgal@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'trainer', 'bob', 1, 10000242679, '', '78cHgqMhLRJHz575WXy9uw==', '2017-06-06 11:06:55', NULL, NULL, NULL, NULL, NULL),
+(10000850547, NULL, 'bbb@b.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'bbb', 'bbb', 'nurse', 'bbb', 1, 10000242679, 'a:1:{i:0;s:11:\"10000434969\";}', '78cHgqMhLRJHz575WXy9uw==', '2017-06-06 16:09:08', 0, 1234521, 1, 0, 2014),
+(10000815792, 'er_q_001', 'qw@qw.com', '8367f51608302dbac9ed4b01e04447891a9918e98497cd1769b29984529c026e', 'qw', 'er', 'course_admin', 'qwerty', 1, 10000242679, '', '7wSfrZC5jWUGmTfsQC8zZg==', '2017-06-19 09:43:15', NULL, NULL, NULL, NULL, NULL),
+(10000632840, '', 'te@st.com', '04596e5c382ef619212ae64fd6d9bcdd02a748ae41e9a12d1d38eb8861adfbcc', 'te', 'st', 'nurse', 'test', 1, 10000242679, 'a:1:{i:0;s:11:\"10000434969\";}', 'g+rvL8GmmYgONY3O8rAr3w==', '2017-06-19 09:49:50', 0, 432134, 2, 0, 2014);
 
 -- --------------------------------------------------------
 
@@ -604,15 +804,22 @@ CREATE TABLE `tbl_user_info` (
   `mentor_current` int(11) DEFAULT NULL,
   `mentor_renew` date DEFAULT NULL,
   `mentor_sign_off` int(11) DEFAULT NULL,
-  `mentor_notes` text
+  `mentor_notes` text,
+  `stud_cohort` int(150) DEFAULT NULL,
+  `stud_cohort_date` int(150) DEFAULT NULL,
+  `stud_d1` date DEFAULT NULL,
+  `stud_d2` date DEFAULT NULL,
+  `stud_d3` date DEFAULT NULL,
+  `stud_notes` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_user_info`
 --
 
-INSERT INTO `tbl_user_info` (`ID`, `user_ID`, `prec_intro`, `current_prec`, `pin`, `delay`, `prec_name`, `int_nurse`, `WTE`, `p_email`, `p_country`, `sign_off`, `awards`, `link`, `prec_trainer`, `prec_notes`, `hca_start`, `hca_manager`, `hca_email`, `hca_new_care`, `hca_current_client`, `hca_fundamental_care`, `hca_care`, `hca_trainer`, `hca_notes`, `fd_start`, `fd_graduate`, `fd_inturrupt`, `fd_sd1`, `fd_sd2`, `fd_sd3`, `fd_other`, `fd_current`, `fd_trainer`, `fd_notes`, `mentor_current`, `mentor_renew`, `mentor_sign_off`, `mentor_notes`) VALUES
-(10000063356, 10000850547, '2017-06-01', 1, 0, 1, 'Mazen', 1, 'LD59', 'm@s.com', 'China', 12, 'DoE', 'none', 10000318028, 'No notes', '2017-06-14', 'Hi', 'email', 1, 0, 1, 0, 10000318028, 'retort', '2017-06-01', '2017-06-08', 1, 1, 1, 0, 'test', 1, 10000318028, 'test', 1, '2017-06-06', 0, 'Jan 01, 1970');
+INSERT INTO `tbl_user_info` (`ID`, `user_ID`, `prec_intro`, `current_prec`, `pin`, `delay`, `prec_name`, `int_nurse`, `WTE`, `p_email`, `p_country`, `sign_off`, `awards`, `link`, `prec_trainer`, `prec_notes`, `hca_start`, `hca_manager`, `hca_email`, `hca_new_care`, `hca_current_client`, `hca_fundamental_care`, `hca_care`, `hca_trainer`, `hca_notes`, `fd_start`, `fd_graduate`, `fd_inturrupt`, `fd_sd1`, `fd_sd2`, `fd_sd3`, `fd_other`, `fd_current`, `fd_trainer`, `fd_notes`, `mentor_current`, `mentor_renew`, `mentor_sign_off`, `mentor_notes`, `stud_cohort`, `stud_cohort_date`, `stud_d1`, `stud_d2`, `stud_d3`, `stud_notes`) VALUES
+(10000250561, 10000850547, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2017-06-12', '2017-06-23', 1, 1, 1, 0, 'test', 0, 10000318028, 'test', NULL, NULL, NULL, NULL, 2147483647, 106, NULL, NULL, NULL, 'test'),
+(10000270432, 10000632840, '2017-06-01', 1, 0, 1, 'Bob', 1, '2161', 'bob@bob.com', 'China', 12, 'BSc Computer Science', 'none', 10000318028, 'qwerty', '2017-06-05', 'Mark', 'm@h.com', 1, 0, 1, 1, 10000318028, 'test', '2017-06-05', '2017-06-06', 1, 1, 1, 0, 'University exam', 0, 10000318028, 'test', 1, '2017-06-20', 0, 'test', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -654,6 +861,18 @@ ALTER TABLE `tbl_access_log`
 -- Indexes for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_cohort`
+--
+ALTER TABLE `tbl_cohort`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `tbl_cohort_ext`
+--
+ALTER TABLE `tbl_cohort_ext`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -726,12 +945,17 @@ ALTER TABLE `tbl_work_area`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000755184;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000261579;
+--
+-- AUTO_INCREMENT for table `tbl_cohort_ext`
+--
+ALTER TABLE `tbl_cohort_ext`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 --
 -- AUTO_INCREMENT for table `tbl_courses`
 --
@@ -746,7 +970,7 @@ ALTER TABLE `tbl_designations`
 -- AUTO_INCREMENT for table `tbl_locations`
 --
 ALTER TABLE `tbl_locations`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000833917;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000243360;
 --
 -- AUTO_INCREMENT for table `tbl_notes`
 --
@@ -756,7 +980,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -766,17 +990,17 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000950334;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000950337;
 --
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000914148;
+  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000431947;
 --
 -- AUTO_INCREMENT for table `tbl_work_area`
 --
