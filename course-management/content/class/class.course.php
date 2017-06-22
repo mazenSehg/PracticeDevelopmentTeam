@@ -18,6 +18,11 @@ if( !class_exists('Course') ):
 			else: ?>
 				<form class="add-course submit-form" method="post" autocomplete="off">
 					<div class="form-group">
+						<label for="name"><?php _e('Course Code');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="code" class="form-control require" />
+					</div>
+					
+					<div class="form-group">
 						<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="name" class="form-control require" />
 					</div>
@@ -26,7 +31,7 @@ if( !class_exists('Course') ):
 						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
 						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
 							<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
@@ -221,6 +226,12 @@ if( !class_exists('Course') ):
 			else:
 			?>
 				<form class="add-course submit-form" method="post" autocomplete="off">
+					
+					<div class="form-group">
+						<label for="name"><?php _e('Course Code');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="code" value="<?php _e($course->course_ID);?>" class="form-control require" />
+					</div>
+					
 					<div class="form-group">
 						<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="name" class="form-control require" value="<?php _e($course->name);?>"/>
@@ -230,7 +241,7 @@ if( !class_exists('Course') ):
 						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
 						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
 							<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data, maybe_unserialize($course->admins));
 							?>
@@ -283,6 +294,7 @@ if( !class_exists('Course') ):
 				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 					<thead>
 						<tr>
+							<th><?php _e('Active');?></th>
 							<th><?php _e('Name');?></th>
 							<th><?php _e('Course Admin(s)');?></th>
 							<th><?php _e('Duration(days)');?></th>
@@ -294,6 +306,10 @@ if( !class_exists('Course') ):
 					<tbody>
 						<?php if($courses): foreach($courses as $course): ?>
 						<tr>
+							
+							<td>						<label>
+							<input type="checkbox" class="js-switch" <?php checked($course->active, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $course->ID;?>" data-action="course_approve_change"/>
+						</label></td>
 							<td><?php _e($course->name);?></td>
 							<td>
 								<?php
@@ -302,8 +318,9 @@ if( !class_exists('Course') ):
 								$users_count = count($users);
 								$count = 1;
 								if($users): foreach($users as $user_id):
+			$count += 1;
 									echo get_user_name($user_id);
-									echo ($count < $users_count) ? ', ' : '';
+									echo ($count < $users_count) ? '<br> ' : '';
 								endforeach; endif;
 								?>
 							</td>
@@ -389,7 +406,7 @@ if( !class_exists('Course') ):
 			);
 			if( user_can('add_course') ):
 				$validation_args = array(
-					'name' => $name,
+					'course_ID' => $code,
 				);
 
 				if(is_value_exists(TBL_COURSES,$validation_args)):
@@ -403,6 +420,7 @@ if( !class_exists('Course') ):
 					$result = $this->database->insert(TBL_COURSES,
 						array(
 							'ID' => $guid,
+							'course_ID' => $code,
 							'name' => $name,
 							'admins' => $admins,
 							'duration' => $duration,
@@ -490,7 +508,7 @@ if( !class_exists('Course') ):
 			);
 			if( user_can('edit_course') ):
 				$validation_args = array(
-					'name'=> $name,
+					'course_ID'=> $code,
 				);
 
 				if(is_value_exists(TBL_COURSES,$validation_args,$course_id)):
@@ -502,6 +520,7 @@ if( !class_exists('Course') ):
 					$result = $this->database->update(TBL_COURSES,
 						array(
 							'name' => $name,
+							'course_ID' => $code,
 							'admins' => $admins,
 							'duration' => $duration,
 							'description' => $description,
@@ -625,6 +644,48 @@ if( !class_exists('Course') ):
 			endif;
 		}
 		
+		
+		public function activate_course(){
+				{
+		extract($_POST);
+		$id = trim($id);
+		$return = array(
+			'status' => 0,
+			'message_heading'=> 'Failed !',
+			'message' => 'Could not update course details, Please try again ',
+			'reset_form' => 0
+		);
+
+		$centre = get_tabledata(TBL_COURSES, true, array('ID'=> $id) );
+		$args = array('ID'=> $id);
+		$result = $this->database->update(TBL_COURSES,array('active'=> $status),$args);
+
+		if($result):
+		if($status == 0)
+		{
+			$notification_args = array(
+				'title' => 'Centre (' .$centre->name.') is disables now',
+				'notification'=> 'You have successfully disabled (' .$centre->name.') centre.',
+			);
+			$return['message'] = 'You have successfully disabled (' .$centre->name.') centre.';
+		}
+		else
+		{
+			$notification_args = array(
+				'title' => 'Centre (' .$centre->name.') is approved now',
+				'notification'=> 'You have successfully approved (' .$centre->name.') centre.',
+			);
+			$return['message'] = 'You have successfully approved (' .$centre->name.') centre.';
+		}
+		add_user_notification($notification_args);
+		$return['status'] = 1;
+		$return['message_heading'] = 'Success !';
+		endif;
+		return json_encode($return);
+	
+		}
+		
+	}
 	}
 
 endif;

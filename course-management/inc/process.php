@@ -130,6 +130,11 @@
 				echo $Course->delete__cohort__process();
 				break;
 
+
+			case 'course_approve_change':
+				echo $Course->activate_course();
+				break;
+
 			case 'add_new_designation':
 				echo $Designation->add__designation__process();
 				break;

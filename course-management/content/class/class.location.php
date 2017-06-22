@@ -14,7 +14,7 @@ if( !class_exists('Location') ):
 			return array(
 				'chairs' => 'Chairs',
 				'computers' => 'Computers',
-				'clipboard' => 'Clipboard',
+				'clipboard' => 'Flipboard',
 				'laptop_connector' => 'Laptop Connector',
 				'project_screen' => 'Project & Screen',
 				'tables' => 'Tables',
@@ -30,6 +30,13 @@ if( !class_exists('Location') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			else: ?>
 				<form class="add-location submit-form" method="post" autocomplete="off">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 form-group">
+							<label for="name"><?php _e('Location Code');?>&nbsp;<span class="required">*</span></label>
+							<input type="text" name="code" class="form-control require" />
+						</div>
+					</div>
+					
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 form-group">
 							<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
@@ -149,6 +156,15 @@ if( !class_exists('Location') ):
 			else:
 			?>
 				<form class="add-location submit-form" method="post" autocomplete="off">
+					
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 form-group">
+							<label for="name"><?php _e('Location Code');?>&nbsp;<span class="required">*</span></label>
+							<input type="text" name="code" class="form-control require" value="<?php _e($location->location_code);?>"/>
+						</div>
+					</div>
+					
+					
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 form-group">
 							<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
@@ -368,7 +384,7 @@ if( !class_exists('Location') ):
 			);
 			if( user_can('add_location') ):
 				$validation_args = array(
-					'name' => $name,
+					'location_code' => $code,
 				);
 				
 				$extras = isset($extras) ? $extras : array();
@@ -383,6 +399,7 @@ if( !class_exists('Location') ):
 					$result = $this->database->insert(TBL_LOCATIONS,
 						array(
 							'ID' => $guid,
+							'location_code'=>$code,
 							'name' => $name,
 							'phone' => $phone,
 							'booking_contact' => $booking_contact,
@@ -468,7 +485,7 @@ if( !class_exists('Location') ):
 			);
 			if( user_can('edit_location') ):
 				$validation_args = array(
-					'name'=> $name,
+					'location_code'=> $code,
 				);
 				
 				$extras = isset($extras) ? $extras : array();
@@ -482,6 +499,7 @@ if( !class_exists('Location') ):
 					$result = $this->database->update(TBL_LOCATIONS,
 						array(
 							'name' => $name,
+							'location_code' => $code,
 							'phone' => $phone,
 							'booking_contact' => $booking_contact,
 							'booking_phone' => $booking_phone,

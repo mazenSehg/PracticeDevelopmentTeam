@@ -26,9 +26,11 @@ if( !class_exists('Booking') ):
 							$query = ''; 
 							if(!is_admin()){
 								$query = " WHERE `admins` LIKE '%".get_current_user_id()."%' ";
+								
 							}
+			//$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
 							$data = get_tabledata(TBL_COURSES,false, array(), $query);
-							$option_data = get_option_data($data,array('ID','name'));
+							$option_data = get_option_data($data,array('ID','course_ID'));
 							echo get_options_list($option_data);
 							?>
 						</select>

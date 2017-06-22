@@ -934,7 +934,7 @@ if( !class_exists('User') ):
 										</label>
 										<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
 											<?php
-								$data = get_tabledata(TBL_COURSES,false);
+								$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
 								$option_data = get_option_data($data,array('ID','name'));
 								echo get_options_list($option_data);
 								?>
@@ -947,6 +947,18 @@ if( !class_exists('User') ):
 										<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation">
 											<?php
 								$data = get_tabledata(TBL_DESIGNATIONS,false);
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+									
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user_designation">
+											<?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
+										<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area">
+											<?php
+								$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
 								$option_data = get_option_data($data,array('ID','name'));
 								echo get_options_list($option_data);
 								?>
@@ -1109,7 +1121,7 @@ if( !class_exists('User') ):
 											</label>
 											<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
 												<?php
-								$data = get_tabledata(TBL_COURSES,false);
+								$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
 								$option_data = get_option_data($data,array('ID','name'));
 								echo get_options_list($option_data,maybe_unserialize($user->courses));
 								?>
@@ -1133,7 +1145,20 @@ if( !class_exists('User') ):
 											</label>
 											<input type="text" name="work_extension" class="form-control" value="<?php echo get_user_meta($user->ID,'work_extension');?>" /> </div>
 									</div>
+									
 									<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user_designation">
+											<?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
+										<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area">
+											<?php
+								$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data,maybe_unserialize($user->work_area_ID));
+								?>
+										</select>
+									</div>
+										
 										<div class="form-group col-sm-6 col-xs-12">
 											<label for="beep">
 												<?php _e('Beep');?>
@@ -1426,6 +1451,7 @@ else {
 							'user_email' => $user_email,
 							'user_role' => $user_role,
 							'username' => $username,
+							'work_area_ID' => $work_area,
 							'user_status' => 1,
 							'user_pass' => set_password($user_pass),
 							'user_salt' => $salt,
@@ -1916,6 +1942,7 @@ else {
 						'user_email' => $user_email,
 						'username' => $username,
 						'user_status'=> $user_status,
+						'work_area_ID' => $work_area,
 						'user_role' => $user_role,
 						
 						'courses' => isset($courses) ? $courses : ''
