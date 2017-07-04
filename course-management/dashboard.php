@@ -62,22 +62,15 @@ login_check();
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"> <i class="fa fa-users"></i> </div>
-								<div class="count"><?php echo count( get_tabledata(TBL_USERS,false));?></div>
-								<h3><?php _e('Total Users');?></h3>
-							</div>
-						</div>
-						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-							<div class="tile-stats">
-								<div class="icon"> <i class="fa fa-exclamation-circle"> </i> </div>
-								<div class="count"><?php echo count( get_tabledata(TBL_COURSES,false));?></div>
-								<h3><?php _e('Total Courses');?></h3>
+								<div class="count"><?php echo count( get_tabledata(TBL_USERS,false,array('user_role'=>"course_admin")));?></div>
+								<h3><?php _e('Total Trainers');?></h3>
 							</div>
 						</div>
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"> <i class="fa fa-users"></i> </div>
-								<div class="count"><?php echo count( get_tabledata(TBL_USERS,false));?></div>
-								<h3><?php _e('Total Users');?></h3>
+								<div class="count"><?php echo count( get_tabledata(TBL_USERS,false,array('user_role'=>"trainee")));?></div>
+								<h3><?php _e('Total Trainees');?></h3>
 							</div>
 						</div>
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -85,6 +78,14 @@ login_check();
 								<div class="icon"> <i class="fa fa-exclamation-circle"> </i> </div>
 								<div class="count"><?php echo count( get_tabledata(TBL_COURSES,false));?></div>
 								<h3><?php _e('Total Courses');?></h3>
+							</div>
+						</div>
+
+						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="tile-stats">
+								<div class="icon"> <i class="fa fa-exclamation-circle"> </i> </div>
+								<div class="count"><?php echo count( get_tabledata(TBL_COHORTS,false));?></div>
+								<h3><?php _e('Total Cohorts');?></h3>
 							</div>
 						</div>
 					</div>
