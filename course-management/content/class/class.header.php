@@ -227,10 +227,12 @@ if( !class_exists('Header') ):
 
 								<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
 								<li>
-									<a><i class="fa fa-user"></i><?php _e('Users');?> <span class="fa fa-chevron-down"></span></a>
+									<a><i class="fa fa-user"></i><?php _e('Manage Users');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<?php if( user_can('view_user') ): ?>
 										<li><a href="<?php the_permalink('users');?>"><?php _e('All Users');?></a></li>
+										<li><a href="<?php the_permalink('trainers');?>"><?php _e('All Trainers');?></a></li>
+										<li><a href="<?php the_permalink('trainees');?>"><?php _e('All Trainees');?></a></li>
 										<?php endif;?>
 										
 										<?php if( user_can('edit_user') || user_can('add_user')): ?>
@@ -240,6 +242,22 @@ if( !class_exists('Header') ):
 										
 										<?php if( user_can('view_user') ): ?>
 										<li class="hidden"><a href="<?php the_permalink('view-user');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
+								
+								
+								<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
+								<li>
+									<a><i class="fa fa-user"></i><?php _e('Manage Training');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_user') ): ?>
+										<li><a href="<?php the_permalink('progress');?>"><?php _e('All Users');?></a></li>
+										<?php endif;?>	
+										
+										<?php if( user_can('view_user') ): ?>
+										<li class="hidden"><a href="<?php the_permalink('view-progress');?>"></a></li>
 										<?php endif;?>
 									</ul>
 								</li>
@@ -277,7 +295,42 @@ if( !class_exists('Header') ):
 								</li>
 								<?php endif; ?>
 								
-								<?php if(is_admin()): ?>
+								
+								
+
+								
+								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
+								<li>
+									<a><i class="fa fa-book"></i><?php _e('Bookings');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_booking') ): ?>
+										<li><a href="<?php the_permalink('bookings');?>"><?php _e('All Bookings');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_booking') || user_can('add_booking')): ?>
+										<li><a href="<?php the_permalink('add-new-booking');?>"><?php _e('Add New Booking');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-booking');?>"></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('view_booking') ): ?>
+										<li><a href="<?php the_permalink('view-booking-calendar');?>"><?php _e('View Calendar');?></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
+								<li>
+								<a>
+									<i class="fa fa-certificate">
+									</i>General Management
+									<span class="fa fa-chevron-down">
+									</span>
+								</a>
+								<ul class="nav child_menu">
+									<?php
+		
+		if(is_admin()){ ?>
+									<li>
+<?php if(is_admin()): ?>
 								<li>
 									<a><i class="fa fa-book"></i><?php _e('Designations');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
@@ -321,29 +374,12 @@ if( !class_exists('Header') ):
 									</ul>
 								</li>
 								<?php endif; ?>
-								
-
-								
-								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
-								<li>
-									<a><i class="fa fa-book"></i><?php _e('Bookings');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php if( user_can('view_booking') ): ?>
-										<li><a href="<?php the_permalink('bookings');?>"><?php _e('All Bookings');?></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('edit_booking') || user_can('add_booking')): ?>
-										<li><a href="<?php the_permalink('add-new-booking');?>"><?php _e('Add New Booking');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-booking');?>"></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('view_booking') ): ?>
-										<li><a href="<?php the_permalink('view-booking-calendar');?>"><?php _e('View Calendar');?></a></li>
-										<?php endif;?>
-									</ul>
-								</li>
-								<?php endif; ?>
-
+									</li>
+							</ul>
+									<?php
+					   
+							}?>
+							</li>
 								<?php if(is_admin()): ?>
 								<li>
 									<a><i class="fa fa-cog"></i><?php _e('Setting');?><span class="fa fa-chevron-down"></span></a>
@@ -353,7 +389,9 @@ if( !class_exists('Header') ):
 									</ul>
 								</li>
 								<?php endif; ?>
-							</ul>
+								
+								
+
 						</div>
 					</div>
 					<!-- /sidebar menu -->

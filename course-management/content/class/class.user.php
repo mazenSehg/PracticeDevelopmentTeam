@@ -191,6 +191,137 @@ if( !class_exists('User') ):
 					<div class="col-md-9 col-sm-9 col-xs-12">
 						<div class="profile_title">
 							<div class="col-md-6">
+								<h2><?php _e('User Activity Report');?></h2> </div>
+						</div>
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+							<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+								<li role="presentation" class="active">
+									<a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="true">
+										<?php _e('Recent Activity');?>
+									</a>
+								</li>
+								<li role="presentation" class="">
+									<a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Recent Access Log');?>
+									</a>
+								</li>
+							</ul>
+							<div id="myTabContent" class="tab-content">
+								<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+									<!-- start recent activity -->
+									<ul class="messages list-unstyled">
+										<?php if($notifications__result):
+									foreach($notifications__result as $user__notifications): ?>
+											<li> <img src="<?php echo get_user_profile_image($user__notifications->user_id);?>" class="avatar" alt="Avatar">
+												<div class="message_date">
+													<h3 class="date text-info"><?php echo date('d',strtotime($user__notifications->date));?></h3>
+													<p class="month">
+														<?php echo date('M',strtotime($user__notifications->date));?>
+													</p>
+												</div>
+												<div class="message_wrapper">
+													<h4 class="heading">
+												<?php echo $user__notifications->title;?>
+												<small><?php echo date('M d, Y h:i a',strtotime($user__notifications->date));?></small>
+											</h4>
+													<blockquote class="message">
+														<?php _e(htmlspecialchars_decode($user__notifications->notification));?>
+													</blockquote>
+													<br /> </div>
+											</li>
+											<?php endforeach;
+								else: ?>
+												<li>
+													<h5><?php _e('There is no recent activity details');?></h5></li>
+												<?php endif; ?>
+									</ul>
+									<!-- end recent activity -->
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+									<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>
+													<?php _e('Last Login');?>
+												</th>
+												<th>
+													<?php _e('Location');?>
+												</th>
+												<th>
+													<?php _e('Device');?>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php if($access__log__result): foreach($access__log__result as $access__log__row): ?>
+												<tr>
+													<td>
+														<?php echo date('M d, Y h:i A',strtotime($access__log__row->date));?>
+													</td>
+													<td>
+														<?php echo $access__log__row->ip_address;?>
+													</td>
+													<td><a href="#" data-toggle="tooltip" title="<?php echo $access__log__row->user_agent;?>"><?php echo $access__log__row->device;?></a></td>
+												</tr>
+												<?php endforeach; endif; ?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<?php
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
+		
+		
+		
+		
+				public function activity__and__progress__log__section( $user__id ){
+			ob_start();
+			$user = get_user_by('id',$user__id);
+			/*Notifications Query*/
+			$notifications__query = " ORDER BY `ID` DESC LIMIT 0, 5";
+			$notifications__args = array('user_id'=> $user__id);
+			$notifications__result = get_tabledata(TBL_NOTIFICATIONS,false,$notifications__args,$notifications__query);
+
+			/*Access Log Query*/
+			$access__log__query = " ORDER BY `ID` DESC LIMIT 0, 10";
+			$access__log__args = array('user_id'=> $user__id);
+			$access__log__result = get_tabledata(TBL_ACCESS_LOG,false,$access__log__args,$access__log__query);
+			?>
+
+					<div class="col-md-12 col-sm-9 col-xs-12">
+						<div class="profile_title">
+							<div class="col-md-6">
+								<h2><?php _e('Course Information');?></h2> </div>
+						</div>
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+						<p></p>
+							
+							
+							<?php 
+			$access__log__query2 = " ORDER BY `ID` DESC LIMIT 0, 10";
+			$access__log__args2 = array('user_id'=> $user__id);
+			$access__log__result2 = get_tabledata(TBL_COURSES,false,$access__log__args2,$access__log__query2);
+					if($access__log__result2): foreach($access__log__result2 as $val):
+					echo $val->ID;
+					echo "<br>";
+					
+					endforeach;
+					endif;
+							?>
+						
+</div>
+</div>
+
+
+					<div class="col-md-12 col-sm-9 col-xs-12">
+						<div class="profile_title">
+							<div class="col-md-6">
 								<h2><?php _e('Progress Report');?></h2> </div>
 						</div>
 						<div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -213,11 +344,6 @@ if( !class_exists('User') ):
 								<li role="presentation" class="">
 									<a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Student Record');?>
-									</a>
-								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content5" role="tab" data-toggle="tab" aria-expanded="false">
-										<?php _e('ONP Course');?>
 									</a>
 								</li>
 								<li role="presentation" class="">
@@ -589,39 +715,6 @@ if( !class_exists('User') ):
 										</form>
 									</ul>
 								</div>
-								<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
-									<ul class="messages list-unstyled">
-										<form class="submit-form" method="post" autocomplete="off">
-											<br>
-											<br>
-											<h1>ONP Course Attendace</h1>
-											<br>
-											<div class="row">
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="date-of-fault">Cohort</label>
-													<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" /> </div>
-												<div class="form-group col-sm-4 col-xs-12">
-													<label for="admins">
-														<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
-													<select name="cohorts" class="form-control select_single require">
-														<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data,maybe_unserialize($fault->cohorts));
-							?>
-													</select>
-												</div>
-											</div>
-											<div class="ln_solid"></div>
-											<div class="form-group">
-												<input type="hidden" name="action" value="update_course_atten" />
-												<button class="btn btn-success btn-md" type="submit">
-													<?php _e('Update course Attendance');?>
-												</button>
-											</div>
-										</form>
-									</ul>
-								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
 										<form class="submit-form" method="post" autocomplete="off">
@@ -732,88 +825,6 @@ if( !class_exists('User') ):
 							</div>
 						</div>
 					</div>
-					<div class="col-md-9 col-sm-9 col-xs-12">
-						<div class="profile_title">
-							<div class="col-md-6">
-								<h2><?php _e('User Activity Report');?></h2> </div>
-						</div>
-						<div class="" role="tabpanel" data-example-id="togglable-tabs">
-							<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-								<li role="presentation" class="active">
-									<a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="true">
-										<?php _e('Recent Activity');?>
-									</a>
-								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">
-										<?php _e('Recent Access Log');?>
-									</a>
-								</li>
-							</ul>
-							<div id="myTabContent" class="tab-content">
-								<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-									<!-- start recent activity -->
-									<ul class="messages list-unstyled">
-										<?php if($notifications__result):
-									foreach($notifications__result as $user__notifications): ?>
-											<li> <img src="<?php echo get_user_profile_image($user__notifications->user_id);?>" class="avatar" alt="Avatar">
-												<div class="message_date">
-													<h3 class="date text-info"><?php echo date('d',strtotime($user__notifications->date));?></h3>
-													<p class="month">
-														<?php echo date('M',strtotime($user__notifications->date));?>
-													</p>
-												</div>
-												<div class="message_wrapper">
-													<h4 class="heading">
-												<?php echo $user__notifications->title;?>
-												<small><?php echo date('M d, Y h:i a',strtotime($user__notifications->date));?></small>
-											</h4>
-													<blockquote class="message">
-														<?php _e(htmlspecialchars_decode($user__notifications->notification));?>
-													</blockquote>
-													<br /> </div>
-											</li>
-											<?php endforeach;
-								else: ?>
-												<li>
-													<h5><?php _e('There is no recent activity details');?></h5></li>
-												<?php endif; ?>
-									</ul>
-									<!-- end recent activity -->
-								</div>
-								<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-									<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>
-													<?php _e('Last Login');?>
-												</th>
-												<th>
-													<?php _e('Location');?>
-												</th>
-												<th>
-													<?php _e('Device');?>
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php if($access__log__result): foreach($access__log__result as $access__log__row): ?>
-												<tr>
-													<td>
-														<?php echo date('M d, Y h:i A',strtotime($access__log__row->date));?>
-													</td>
-													<td>
-														<?php echo $access__log__row->ip_address;?>
-													</td>
-													<td><a href="#" data-toggle="tooltip" title="<?php echo $access__log__row->user_agent;?>"><?php echo $access__log__row->device;?></a></td>
-												</tr>
-												<?php endforeach; endif; ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
 					<?php
 			$content = ob_get_clean();
 			return $content;
@@ -855,7 +866,34 @@ if( !class_exists('User') ):
 			$content = ob_get_clean();
 			return $content;
 		}
+		
 
+
+		public function view__progress__page(){
+			ob_start();
+			$user__id = $_GET['user_id'];
+			$user = get_userdata($user__id);
+			if(!user_can('view_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$user):
+				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
+			else: ?>
+						<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+							<h3>Progress review for: <?php echo $user->first_name.' '.$user->last_name;?></h3>
+</div>
+							<br> 
+							<br> 
+							<br> 
+							<br> 
+						<?php echo $this->activity__and__progress__log__section( $user->ID );
+			endif;
+			$content = ob_get_clean();
+			return $content;
+		}		
+		
+		
+		
+		
 		public function add__user__page(){
 			ob_start();
 			if(!user_can('add_user')):
@@ -1334,6 +1372,199 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
+		
+		
+		public function all__trainers__page(){
+			ob_start();
+			$users_list = get_tabledata(TBL_USERS,false,array('user_role'=>'course_admin'));
+			if(!user_can('view_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$users_list):
+				echo page_not_found("Oops! There is no New Users in website",' ',false);
+			else: ?>
+									<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th></th>
+												<th>
+													<?php _e('Name');?>
+												</th>
+												<th>
+													<?php _e('Email');?>
+												</th>
+												<th>
+													<?php _e('Registered On');?>
+												</th>
+												<?php if(is_admin()): ?>
+													<th class="text-center">
+														<?php _e('Status');?>
+													</th>
+													<?php endif; ?>
+														<th class="text-center">
+															<?php _e('Actions');?>
+														</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php if($users_list): foreach($users_list as $single_user):
+							$admin_label = ($single_user->user_role == 'admin') ? '<label class="label label-success">admin</label>' : '';
+						?>
+												<tr>
+													<td class="text-center"><img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
+													<td>
+														<?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?>
+													</td>
+													<td>
+														<?php _e($single_user->user_email);?>
+													</td>
+													<td>
+														<?php echo date('M d,Y',strtotime($single_user->registered_at));?>
+													</td>
+													<?php if(is_admin()): ?>
+														<td class="text-center">
+															<label>
+																<input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="
+																<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
+														</td>
+														<?php endif; ?>
+															<td class="text-center"> <a href="<?php the_permalink('view-user', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('View');?></a> <a href="<?php the_permalink('edit-user', array('user_id' => $single_user->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a> <a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $single_user->ID;?>" data-action="delete_user"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a> </td>
+												</tr>
+												<?php endforeach; endif; ?>
+										</tbody>
+									</table>
+									<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
+		public function all__trainees__page(){
+			ob_start();
+			$users_list = get_tabledata(TBL_USERS,false,array('user_role'=>'nurse'));
+			if(!user_can('view_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$users_list):
+				echo page_not_found("Oops! There is no New Users in website",' ',false);
+			else: ?>
+									<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th></th>
+												<th>
+													<?php _e('Name');?>
+												</th>
+												<th>
+													<?php _e('Email');?>
+												</th>
+												<th>
+													<?php _e('Registered On');?>
+												</th>
+												<?php if(is_admin()): ?>
+													<th class="text-center">
+														<?php _e('Status');?>
+													</th>
+													<?php endif; ?>
+														<th class="text-center">
+															<?php _e('Actions');?>
+														</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php if($users_list): foreach($users_list as $single_user):
+							$admin_label = ($single_user->user_role == 'admin') ? '<label class="label label-success">admin</label>' : '';
+						?>
+												<tr>
+													<td class="text-center"><img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
+													<td>
+														<?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?>
+													</td>
+													<td>
+														<?php _e($single_user->user_email);?>
+													</td>
+													<td>
+														<?php echo date('M d,Y',strtotime($single_user->registered_at));?>
+													</td>
+													<?php if(is_admin()): ?>
+														<td class="text-center">
+															<label>
+																<input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="
+																<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
+														</td>
+														<?php endif; ?>
+															<td class="text-center"> <a href="<?php the_permalink('view-user', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('View');?></a> <a href="<?php the_permalink('edit-user', array('user_id' => $single_user->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a> <a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $single_user->ID;?>" data-action="delete_user"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a> </td>
+												</tr>
+												<?php endforeach; endif; ?>
+										</tbody>
+									</table>
+									<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		public function all__progress__page(){
+			ob_start();
+			$args = (!is_admin()) ? array('created_by'=> $this->current__user__id) : array();
+			$users_list = get_tabledata(TBL_USERS,false,$args);
+			if(!user_can('view_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$users_list):
+				echo page_not_found("Oops! There is no New Users in website",' ',false);
+			else: ?>
+									<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th></th>
+												<th>
+													<?php _e('Name');?>
+												</th>
+												<th>
+													<?php _e('Email');?>
+												</th>
+												<th>
+													<?php _e('Registered On');?>
+												</th>
+												<?php if(is_admin()): ?>
+													<th class="text-center">
+														<?php _e('Status');?>
+													</th>
+													<?php endif; ?>
+														<th class="text-center">
+															<?php _e('Actions');?>
+														</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php if($users_list): foreach($users_list as $single_user):
+							$admin_label = ($single_user->user_role == 'admin') ? '<label class="label label-success">admin</label>' : '';
+						?>
+												<tr>
+													<td class="text-center"><img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
+													<td>
+														<?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?>
+													</td>
+													<td>
+														<?php _e($single_user->user_email);?>
+													</td>
+													<td>
+														<?php echo date('M d,Y',strtotime($single_user->registered_at));?>
+													</td>
+													<?php if(is_admin()): ?>
+														<td class="text-center">
+															<label>
+																<input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="
+																<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
+														</td>
+				<?php endif; ?>
+															<td class="text-center"> <a href="<?php the_permalink('view-progress', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a> </td>
+												</tr>
+												<?php endforeach; endif; ?>
+										</tbody>
+									</table>
+									<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
 		//Process functions starts here
 public function user__login__process(){
 			global $device;

@@ -296,7 +296,7 @@ if( !class_exists('Course') ):
 						<tr>
 							<th><?php _e('Active');?></th>
 							<th><?php _e('Name');?></th>
-							<th><?php _e('Course Admin(s)');?></th>
+							<th><?php _e('Course Trainer(s)');?></th>
 							<th><?php _e('Duration(days)');?></th>
 							<th><?php _e('Description');?></th>
 							<th><?php _e('Created On');?></th>
