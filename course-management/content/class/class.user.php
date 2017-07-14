@@ -1503,7 +1503,7 @@ if( !class_exists('User') ):
 		
 		public function all__progress__page(){
 			ob_start();
-			$args = (!is_admin()) ? array('created_by'=> $this->current__user__id) : array();
+			$args = (!is_admin()) ? array('user_role'=>'nurse') : array();
 			$users_list = get_tabledata(TBL_USERS,false,$args);
 			if(!user_can('view_user')):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');

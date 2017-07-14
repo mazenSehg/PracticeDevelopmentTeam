@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 22, 2017 at 04:00 PM
+-- Generation Time: Jul 14, 2017 at 04:02 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -86,7 +86,12 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (44, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-22 12:47:14'),
 (45, 10000950341, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-22 12:48:04'),
 (46, 10000950350, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-22 12:48:24'),
-(47, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-22 12:48:38');
+(47, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-22 12:48:38'),
+(48, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-06-26 09:07:59'),
+(49, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-04 09:47:35'),
+(50, 10000950345, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-14 13:57:25'),
+(51, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-14 13:57:41'),
+(52, 10000950345, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-14 13:58:07');
 
 -- --------------------------------------------------------
 
@@ -125,7 +130,7 @@ CREATE TABLE `tbl_cohort` (
 --
 
 INSERT INTO `tbl_cohort` (`ID`, `name`, `type`, `date`, `y`, `m`, `d`) VALUES
-(2147483647, 'Adult Cohort', 'adult', '2011-09-01', 1, 6, 1),
+(2147483647, 'Adult Cohort', 'adult', '2011-09-01', 0, 6, 0),
 (10000771328, 'Overseas Cohort', 'Overseas Adaptive', '2015-02-02', 0, 3, 0);
 
 -- --------------------------------------------------------
@@ -165,7 +170,17 @@ INSERT INTO `tbl_cohort_ext` (`ID`, `Cohort_ID`, `Cohort_date`, `over`) VALUES
 (117, 10000771328, '2016-11-02', 1),
 (118, 10000771328, '2017-02-02', 1),
 (119, 10000771328, '2017-05-02', 1),
-(120, 10000771328, '2017-08-02', 0);
+(120, 10000771328, '2017-08-02', 0),
+(121, 2147483647, '2012-03-01', 1),
+(122, 2147483647, '2012-09-01', 1),
+(123, 2147483647, '2013-03-01', 1),
+(124, 2147483647, '2013-09-01', 1),
+(125, 2147483647, '2014-03-01', 1),
+(126, 2147483647, '2014-09-01', 1),
+(127, 2147483647, '2015-03-01', 1),
+(128, 2147483647, '2015-09-01', 1),
+(129, 2147483647, '2016-03-01', 1),
+(130, 2147483647, '2016-09-01', 1);
 
 -- --------------------------------------------------------
 
@@ -718,7 +733,12 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (280, 1, 'Location updated', 'You have successfully updated location (test).', 0, 0, '2017-06-22 13:41:54'),
 (281, 1, 'Location deleted', 'You have successfully deleted (test) location.', 0, 0, '2017-06-22 13:42:03'),
 (282, 1, 'Centre (None) is approved now', 'You have successfully approved (None) centre.', 0, 0, '2017-06-22 13:59:59'),
-(283, 1, 'Centre (None) is disables now', 'You have successfully disabled (None) centre.', 0, 0, '2017-06-22 14:00:06');
+(283, 1, 'Centre (None) is disables now', 'You have successfully disabled (None) centre.', 0, 0, '2017-06-22 14:00:06'),
+(284, 1, 'Course updated', 'You have successfully updated course (Adult Cohort).', 0, 0, '2017-06-26 09:18:20'),
+(285, 1, 'Course_admin Account Disabled', 'You have successfully disbled (Victoria Wilding) account.', 0, 0, '2017-07-07 11:06:21'),
+(286, 1, 'Course_admin Account Enabled', 'You have successfully enabled (Victoria Wilding) account.', 0, 0, '2017-07-07 11:06:22'),
+(287, 1, 'New Account Created', 'You have successfully created a new account (James Leighs).', 0, 0, '2017-07-14 13:52:41'),
+(288, 1, 'Users Capabilities updated', 'You have successfully updated users capabilities.', 0, 0, '2017-07-14 13:57:58');
 
 -- --------------------------------------------------------
 
@@ -748,7 +768,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (9, 'site_contact_email', 'info@coursemanagement.com'),
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
-(12, 'users_capabilities', 's:1352:\"a:3:{s:5:\"admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:1;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:1;s:12:\"add_location\";i:1;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:1;s:13:\"add_work_area\";i:1;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:0;}s:5:\"nurse\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
+(12, 'users_capabilities', 's:1352:\"a:3:{s:5:\"admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:18:{s:9:\"view_user\";i:1;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:1;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:1;s:12:\"add_location\";i:1;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:1;s:13:\"add_work_area\";i:1;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:0;}s:5:\"nurse\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
 
 -- --------------------------------------------------------
 
@@ -780,6 +800,7 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (10, 1, 'dob', '1992-07-01 12:00:00'),
 (11, 1, 'user_phone', '7415557198'),
 (12, 1, 'profile_img', ''),
+(339, 10000340101, 'work_extension', '4422'),
 (13, 1, 'reset_password', '0'),
 (22, 10000242676, 'gender', 'Female'),
 (21, 10000924747, 'profile_img', '/content/assets/img/user.png'),
@@ -1060,7 +1081,14 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (322, 10000950346, 'user_designation', '10000641620'),
 (323, 10000950346, 'work_extension', '2188'),
 (324, 10000950346, 'beep', ''),
-(325, 10000950346, 'band', '6 ');
+(325, 10000950346, 'band', '6 '),
+(338, 10000340101, 'user_designation', '10000641641'),
+(337, 10000340101, 'profile_img', ''),
+(336, 10000340101, 'user_phone', '0123456789'),
+(335, 10000340101, 'dob', '2017-07-01 12:00:00'),
+(334, 10000340101, 'gender', 'Male'),
+(340, 10000340101, 'beep', '999'),
+(341, 10000340101, 'band', '6 ');
 
 -- --------------------------------------------------------
 
@@ -1096,7 +1124,7 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_name`, `last_name`, `user_role`, `username`, `user_status`, `created_by`, `courses`, `work_area_ID`, `user_salt`, `registered_at`, `currently_employed`, `external_candidate`, `rag_status`, `extended_support`, `support_since`) VALUES
 (10000950343, NULL, 'dhodge@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Deanna', 'Hodge', 'course_admin', 'dhodge', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL),
-(1, NULL, 'mazen.sehgal@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'admin', 'bob', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '2017-06-06 11:06:55', NULL, NULL, NULL, NULL, NULL),
+(1, NULL, 'mazen.sehgal@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Mazen', 'Sehgal', 'admin', 'admin', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '2017-06-06 11:06:55', NULL, NULL, NULL, NULL, NULL),
 (10000950341, NULL, 'caroline.eynon@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Caroline', 'Eynon', 'course_admin', 'caroline.eynon', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950342, NULL, 'g.haddock@surrey.ac.uk', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Gill', 'Haddock', 'course_admin', 'g.haddock', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950338, NULL, 'l.blazhevski@surrey.ac.uk', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Lisa', 'Blazhevski', 'course_admin', 'l.blazhevski', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
@@ -1113,7 +1141,8 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 (10000950351, NULL, 'juliannerigby@nhs.nes', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Julianne', 'Rigby', 'course_admin', 'juliannerigby', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950352, NULL, 'sallywhitehouse@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sally', 'Whitehouse', 'course_admin', 'sallywhitehouse', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950353, NULL, 'v.wilding@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Victoria', 'Wilding', 'course_admin', 'v.wilding', 1, 1, '', 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
-(10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0);
+(10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
+(10000340101, '', 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:1:{i:0;s:11:\"10000999600\";}', NULL, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010);
 
 -- --------------------------------------------------------
 
@@ -1341,7 +1370,7 @@ ALTER TABLE `tbl_work_area`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
@@ -1351,7 +1380,7 @@ ALTER TABLE `tbl_bookings`
 -- AUTO_INCREMENT for table `tbl_cohort_ext`
 --
 ALTER TABLE `tbl_cohort_ext`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 --
 -- AUTO_INCREMENT for table `tbl_courses`
 --
@@ -1366,7 +1395,7 @@ ALTER TABLE `tbl_designations`
 -- AUTO_INCREMENT for table `tbl_locations`
 --
 ALTER TABLE `tbl_locations`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000746541;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `tbl_notes`
 --
@@ -1376,7 +1405,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=289;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -1386,7 +1415,7 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
