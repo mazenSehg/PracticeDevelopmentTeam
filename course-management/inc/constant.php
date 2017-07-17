@@ -27,4 +27,5 @@ define( 'TBL_INFO' , $db->prefix. 'user_info' );
 define( 'TBL_NOTES' , $db->prefix. 'notes' );
 define( 'TBL_COHORTS' , $db->prefix. 'cohort' );
 define( 'TBL_COHORTS_EXT' , $db->prefix. 'cohort_ext' );
+define( 'TBL_CHK' , $db->prefix. 'course_user' );
 ?>

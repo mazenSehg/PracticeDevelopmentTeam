@@ -283,43 +283,101 @@ if( !class_exists('User') ):
 				public function activity__and__progress__log__section( $user__id ){
 			ob_start();
 			$user = get_user_by('id',$user__id);
-			/*Notifications Query*/
-			$notifications__query = " ORDER BY `ID` DESC LIMIT 0, 5";
-			$notifications__args = array('user_id'=> $user__id);
-			$notifications__result = get_tabledata(TBL_NOTIFICATIONS,false,$notifications__args,$notifications__query);
 
-			/*Access Log Query*/
-			$access__log__query = " ORDER BY `ID` DESC LIMIT 0, 10";
-			$access__log__args = array('user_id'=> $user__id);
-			$access__log__result = get_tabledata(TBL_ACCESS_LOG,false,$access__log__args,$access__log__query);
 			?>
 
-					<div class="col-md-12 col-sm-9 col-xs-12">
+<div class="col-md-12 col-sm-9 col-xs-12">
 						<div class="profile_title">
 							<div class="col-md-6">
 								<h2><?php _e('Course Information');?></h2> </div>
 						</div>
 						<div class="" role="tabpanel" data-example-id="togglable-tabs">
-						<p></p>
-							
-							
-							<?php 
-			$access__log__query2 = " ORDER BY `ID` DESC LIMIT 0, 10";
-			$access__log__args2 = array('user_id'=> $user__id);
-			$access__log__result2 = get_tabledata(TBL_COURSES,false,$access__log__args2,$access__log__query2);
-					if($access__log__result2): foreach($access__log__result2 as $val):
-					echo $val->ID;
-					echo "<br>";
-					
-					endforeach;
-					endif;
-							?>
+<?php
+								ob_start();
+			$user = get_user_by('id',$user__id);
+			$courses = get_tabledata(TBL_USERS,false,array('ID'=>$user__id));
+			if(!$courses):
+				echo page_not_found("Oops! There is no courses assigned to this user",' ',false);
+			else:
+			?>
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th><?php _e('Course Name(s)');?></th>
+							<th><?php _e('Booked for course');?></th>
+							<th><?php _e('Attended');?></th>
+							<th><?php _e('Documents uploaded');?></th>
+							<th><?php _e('Course Complete');?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php if($courses): foreach($courses as $course):
+						$data = unserialize($course->courses);
+					foreach($data as $a):
+						$cour = get_tabledata(TBL_COURSES,true,array('ID'=>$a));	
+						$chk = get_tabledata(TBL_CHK,true,array('course_ID'=>$a));	
 						
-</div>
+										if(isset($chk->passed)){
+						if($chk->passed!=0){ ?>
+						<tr style="background-color:#CEF2C8">
+							<?php }else{ ?>
+							<tr style="background-color:#F2C8C8">
+							<?php }}else{ ?>
+						<tr style="background-color:#F1F2C8">
+								<?php } ?>
+							<td>
+								<?php echo "<strong>".$cour->name."</strong>";?>
+								<?php echo "<br>";?>
+								<?php echo $cour->course_ID;?>
+							</td>
+							<td>
+								<?php 
+					if(isset($chk->booked)){
+							echo "<strong>".$chk->booked."</strong>";
+						}
+								?>
+							</td>	
+							<td>
+								<?php 
+					if(isset($chk->attended)){
+							echo "<strong>".$chk->attended."</strong>";
+						}
+								?>
+							</td>							
+							<td>
+								<?php 
+										if(isset($chk->uploaded)){
+							echo "<strong>".$chk->uploaded."</strong>";
+						}
+								?>
+							</td>							
+							<td>
+								<?php 
+										if(isset($chk->passed)){
+							echo "<strong>".$chk->passed."</strong>";
+						}
+								?>
+							</td>
+							
+						</tr>
+						<?php endforeach;
+					endforeach;
+					endif; ?>
+					</tbody>
+				</table>
+			<?php 
+			endif;
+					
+					?>
+						</div>
 </div>
 
 
-					<div class="col-md-12 col-sm-9 col-xs-12">
+
+
+
+
+					<div class="col-md-7 col-sm-12 col-xs-12">
 						<div class="profile_title">
 							<div class="col-md-6">
 								<h2><?php _e('Progress Report');?></h2> </div>
@@ -351,11 +409,6 @@ if( !class_exists('User') ):
 										<?php _e('Mentorship');?>
 									</a>
 								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content7" role="tab" data-toggle="tab" aria-expanded="false">
-										<?php _e('Notes');?>
-									</a>
-								</li>
 							</ul>
 							<div id="myTabContent" class="tab-content">
 								<div role="tabpanel" class="tab-pane fade active in" id="tab_content01" aria-labelledby="home-tab">
@@ -370,8 +423,7 @@ if( !class_exists('User') ):
 			
 			?>
 												<div class="row">
-													<label for="date-of-fault">User ID</label>
-													<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+													<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 													<div class="form-group col-sm-4 col-xs-12">
 														<label for="date-of-fault">Precptorship Intro</label>
 														<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" /> </div>
@@ -483,8 +535,7 @@ if( !class_exists('User') ):
 											<h1>HCA Induction</h1>
 											<br>
 											<div class="row">
-												<label for="date-of-fault">User ID</label>
-												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Course Start Date</label>
 													<input type="text" name="hca_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->hca_start) ? date('M d, Y', strtotime($fault->hca_start)) : '';?>" /> </div>
@@ -567,8 +618,7 @@ if( !class_exists('User') ):
 											<h1>FDs / AP Training Record</h1>
 											<br>
 											<div class="row">
-												<label for="date-of-fault">User ID</label>
-												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">FD Course Start Date</label>
 													<input type="text" name="fd_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_start) ? date('M d, Y', strtotime($fault->fd_start)) : '';?>" /> </div>
@@ -664,8 +714,7 @@ if( !class_exists('User') ):
 											<h1>Student Progress</h1>
 											<br>
 											<div class="row">
-												<label for="date-of-fault">User ID</label>
-												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												
 												<div class="form-group col-sm-2 col-xs-12">
 													<label for="date-of-fault">Cohort</label>
@@ -723,8 +772,7 @@ if( !class_exists('User') ):
 											<h1>Mentor Progress</h1>
 											<br>
 											<div class="row">
-												<label for="date-of-fault">User ID</label>
-												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-3 col-xs-12">
 													<label for="decommed">
 														<?php _e('Current Mentor');?>
@@ -762,12 +810,19 @@ if( !class_exists('User') ):
 											</div>
 										</form </ul>
 								</div>
-								<div role="tabpanel" class="tab-pane fade" id="tab_content7" aria-labelledby="profile-tab">
-									<ul class="messages list-unstyled">
-										<form class="submit-form" method="post" autocomplete="off">
+							</div>
+						</div>
+								
+					</div>
+							<div class="col-md-5 col-sm-15 col-xs-12">
+						<div class="profile_title">
+							<div class="col-md-6">
+								<h2><?php _e('Notes');?></h2> </div>
+						</div>
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+						</div>
+																	<form class="submit-form" method="post" autocomplete="off">
 											<br>
-											<br>
-											<h1>Notes</h1>
 											<br>
 											<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
 												<thead>
@@ -777,6 +832,9 @@ if( !class_exists('User') ):
 														</th>
 														<th>
 															<?php _e('Note');?>
+														</th>
+														<th>
+															<?php _e('Attachments');?>
 														</th>
 														<th>
 															<?php _e('Note Posted By');?>
@@ -795,6 +853,10 @@ if( !class_exists('User') ):
 																<?php echo $noty->note?>
 															</td>
 															<td>
+
+																<a href="<?php echo $noty->filepath; ?>" download>download</a>
+															</td>
+															<td>
 																<?php $user = get_userdata($noty->from);
 			echo $user->first_name . " ". $user->last_name?>
 															</td>
@@ -805,13 +867,15 @@ if( !class_exists('User') ):
 												</tbody>
 											</table>
 											<div class="row">
-												<label for="date-of-fault">User ID</label>
-												<input type="text" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-8 col-xs-12">
 													<label for="description-of-fault">Notes</label>
 													<textarea name="note" class="form-control" rows="3"></textarea>
 												</div>
 											</div>
+													<label for="description-of-fault">Attachments</label>
+												 <input type="file" name="file" accept="">
+																		
 											<div class="ln_solid"></div>
 											<div class="form-group">
 												<input type="hidden" name="action" value="update_notes" />
@@ -820,11 +884,8 @@ if( !class_exists('User') ):
 												</button>
 											</div>
 										</form>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+								
+</div>
 					<?php
 			$content = ob_get_clean();
 			return $content;
@@ -1503,7 +1564,7 @@ if( !class_exists('User') ):
 		
 		public function all__progress__page(){
 			ob_start();
-			$args = (!is_admin()) ? array('user_role'=>'nurse') : array();
+			$args = array('user_role'=>'nurse');
 			$users_list = get_tabledata(TBL_USERS,false,$args);
 			if(!user_can('view_user')):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
@@ -2108,14 +2169,23 @@ else {
 			
 			$guid = get_guid(TBL_NOTES);
 					
-
-			
+$target_dir = ABSPATH . CONTENT . "/uploads/user_info/";
+$target_file = $target_dir . basename($_FILES["file"]["name"]); 
+$uploadOk = 1;
+							$target_file = str_replace(' ', '_', $target_file);
+		$full_dir = $target_dir."/".$user_id3;
+		if (!file_exists($full_dir)) {
+    mkdir($full_dir, 0755, true);
+}
+		move_uploaded_file($_FILES["file"]["name"], $full_dir);
+							
 					$result = $this->database->insert(TBL_NOTES,
 						array(
 
 							'to' => $user_id3,
 							'from' => $this->current__user__id,
 							'note' => $note,
+							'filepath' => $target_file
 						)
 					);
 							
@@ -2130,6 +2200,7 @@ else {
 						$return['message'] = __('Account has been successfully created.');
 						$return['reset_form'] = 1;
 			endif;
+
 
 			return json_encode($return);
 				}
@@ -2180,6 +2251,9 @@ else {
 					),
 					array('ID'=> $user_id)
 				);
+			
+
+
 				$check = ($result) ? true : false;
 
 				$result1 = false;
