@@ -218,9 +218,10 @@ if( !class_exists('Booking') ):
 		}
 		
 		public function view__calendar__scripts(){
-			ob_start(); ?>
+			ob_start(); 
+?>
 			<!-- FullCalendar -->
-			 <script>
+<script>
 				$(window).load(function() {
 					var date = new Date(),
 					d = date.getDate(),
@@ -252,6 +253,7 @@ if( !class_exists('Booking') ):
 			<!-- /FullCalendar -->
 			<?php
 			return ob_get_clean();
+			
 		}
 		
 		public function get__calender__booking__data(){

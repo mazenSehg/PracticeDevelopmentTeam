@@ -38,10 +38,6 @@ if( !class_exists('Course') ):
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="duration"><?php _e('Duration (days)');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="duration" class="form-control require" min="0"/>
-					</div>
-					<div class="form-group">
 						<label for="description"><?php _e('Notes');?></label>
 						<textarea name="description" class="form-control" rows="3"></textarea>
 					</div>
@@ -55,10 +51,19 @@ if( !class_exists('Course') ):
 							?>
 						</select>
 					</div>
-					<div class="form-group">
-						<label for="retrain_date"><?php _e('Retrain Date');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="retrain_date" class="form-control require" min="0"/>
-					</div>
+					<div class="form-group col-sm-6 col-xs-12">
+										<label for="dob">
+											<?php _e('Date from');?>
+										</label>
+										<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/> 
+						</div>
+					
+					<div class="form-group col-sm-6 col-xs-12">
+										<label for="dob">
+											<?php _e('Date to');?>
+										</label>
+										<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly"/> 
+						</div>
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="add_new_course" />
@@ -248,10 +253,6 @@ if( !class_exists('Course') ):
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="duration"><?php _e('Duration (days)');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="duration" class="form-control require" min="0" value="<?php _e($course->duration);?>"/>
-					</div>
-					<div class="form-group">
 						<label for="description"><?php _e('Notes');?></label>
 						<textarea name="description" class="form-control" rows="3"><?php _e($course->description);?></textarea>
 					</div>
@@ -266,8 +267,14 @@ if( !class_exists('Course') ):
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="retrain_date"><?php _e('Retrain Date');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="retrain_date" class="form-control require" min="0" value="<?php _e($course->retrain_date);?>"/>
+						<label for="date_from"><?php _e('Date From ');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($course->date_from) ? date('M d, Y', strtotime($course->date_from)) : '';?>"/>
+					</div>
+					
+					
+					<div class="form-group">
+						<label for="date_to"><?php _e('Date To ');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($course->date_to) ? date('M d, Y', strtotime($course->date_to)) : '';?>"/>
 					</div>
 					<div class="ln_solid"></div>
 					<div class="form-group">
@@ -320,11 +327,17 @@ if( !class_exists('Course') ):
 								if($users): foreach($users as $user_id):
 			$count += 1;
 									echo get_user_name($user_id);
-									echo ($count < $users_count) ? '<br> ' : '';
+									echo ($count < $users_count) ? ', <br> ' : '';
 								endforeach; endif;
 								?>
 							</td>
-							<td><?php _e($course->duration);?></td>
+							<td><?php 
+								$diff = abs(strtotime($course->date_to) - strtotime($course->date_from));
+			$years = floor($diff / (365*60*60*24));
+$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+			echo $days+1;
+								?></td>
 							<td><?php _e($course->description);?></td>
 							<td><?php echo date('M d,Y',strtotime($course->created_on));?></td>
 							
@@ -423,10 +436,10 @@ if( !class_exists('Course') ):
 							'course_ID' => $code,
 							'name' => $name,
 							'admins' => $admins,
-							'duration' => $duration,
 							'description' => $description,
 							'location' => $location,
-							'retrain_date' => $retrain_date,
+						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
+						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
 						)
 					);
 					if($result):
@@ -522,10 +535,10 @@ if( !class_exists('Course') ):
 							'name' => $name,
 							'course_ID' => $code,
 							'admins' => $admins,
-							'duration' => $duration,
 							'description' => $description,
 							'location' => $location,
-							'retrain_date' => $retrain_date,
+						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
+						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
 						),
 						array(
 							'ID'=> $course_id
