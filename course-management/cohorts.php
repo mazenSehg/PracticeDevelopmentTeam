@@ -20,35 +20,35 @@ login_check();
 				<div class="">
 					<?php echo $Header->page__header('All Cohorts'); ?>
 					<?php
-					$sql1 = "SELECT * FROM tbl_cohort";
-					$res1 = $db->get_results($sql1);
-					foreach($res1 as $a):
-					$effectiveDate = $a->date;
-					$today = $today = date("Y-m-d");
-					for($i = 0; $i<10;$i++){
-						
-					$effectiveDate = date('Y-m-d', strtotime("+".$a->y." years,+".$a->m." months, +".$a->d." days", strtotime($effectiveDate)));
-
-
-if($effectiveDate < $today){
-$passed = 1;	
-}else{
-	$passed = 0;
-}	
-						$sql3 = "SELECT COUNT(*) AS cunt FROM tbl_cohort_ext WHERE Cohort_ID='$a->ID' AND Cohort_date='$effectiveDate'";
-						$res3 = $db->get_results($sql3);
-					if($res3[0]->cunt!=0){
-						
-					}else{
-						$sql2 = "INSERT INTO tbl_cohort_ext SET Cohort_ID='$a->ID', Cohort_date='$effectiveDate', over='$passed'";
-						$sql2 = $db->query($sql2);
-					}
-					}
-
-					echo "<br>";
-					
-					endforeach;
-					
+//					$sql1 = "SELECT * FROM tbl_cohort";
+//					$res1 = $db->get_results($sql1);
+//					foreach($res1 as $a):
+//					$effectiveDate = $a->date;
+//					$today = $today = date("Y-m-d");
+//					for($i = 0; $i<10;$i++){
+//						
+//					$effectiveDate = date('Y-m-d', strtotime("+".$a->y." years,+".$a->m." months, +".$a->d." days", strtotime($effectiveDate)));
+//
+//
+//if($effectiveDate < $today){
+//$passed = 1;	
+//}else{
+//	$passed = 0;
+//}	
+//						$sql3 = "SELECT COUNT(*) AS cunt FROM tbl_cohort_ext WHERE Cohort_ID='$a->ID' AND Cohort_date='$effectiveDate'";
+//						$res3 = $db->get_results($sql3);
+//					if($res3[0]->cunt!=0){
+//						
+//					}else{
+//						$sql2 = "INSERT INTO tbl_cohort_ext SET Cohort_ID='$a->ID', Cohort_date='$effectiveDate', over='$passed'";
+//						$sql2 = $db->query($sql2);
+//					}
+//					}
+//
+//					echo "<br>";
+//					
+//					endforeach;
+//					
 					
 					?>
 					<div class="row">

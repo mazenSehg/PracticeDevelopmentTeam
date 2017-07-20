@@ -29,21 +29,29 @@ if( !class_exists('Booking') ):
 								
 							}
 			//$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-							$data = get_tabledata(TBL_COURSES,false, array(), $query);
-							$option_data = get_option_data($data,array('ID','course_ID'));
-							echo get_options_list($option_data);
+			$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+
 							?>
 						</select>
 					</div>
+						<label for="date_from"><?php _e('Booking Date From ');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/>
+					</div>
+					
+					
 					<div class="form-group">
-						<label for="booking-date"><?php _e('Booking Date');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="booking_date" class="form-control require input-datepicker" readonly="readonly"/>
+						<label for="date_to"><?php _e('Booking Date To ');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
 					</div>
 					<div class="form-group">
 						<label for="nurses"><?php _e('Nurse(s)');?>&nbsp;<span class="required">*</span></label>
 						<select name="nurses[]" class="form-control select_single require select-nurses" data-placeholder="Choose nurse(s)" multiple="multiple">
 						</select>
 					</div>
+					
+					
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="add_new_booking" />
@@ -74,15 +82,21 @@ if( !class_exists('Booking') ):
 							if(!is_admin()){
 								$query = " WHERE `admins` LIKE '%".get_current_user_id()."%' ";
 							}
-							$data = get_tabledata(TBL_COURSES,false, array(), $query);
-							$option_data = get_option_data($data,array('ID','name'));
+			$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+								$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data,maybe_unserialize($booking->course));
 							?>
 						</select>
 					</div>
+										<div class="form-group">
+						<label for="date_from"><?php _e('Booking Date From ');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_from) ? date('M d, Y', strtotime($booking->date_from)) : '';?>"/>
+					</div>
+					
+					
 					<div class="form-group">
-						<label for="booking-date"><?php _e('Booking Date');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="booking_date" class="form-control require input-datepicker" readonly="readonly" value="<?php _e(date('M d, Y', strtotime($booking->booking_date)));?>"/>
+						<label for="date_to"><?php _e('Booking Date To ');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_to) ? date('M d, Y', strtotime($booking->date_to)) : '';?>"/>
 					</div>
 					<div class="form-group">
 						<label for="nurses"><?php _e('Nurse(s)');?>&nbsp;<span class="required">*</span></label>
@@ -138,7 +152,7 @@ if( !class_exists('Booking') ):
 						<tr>
 							<td><?php echo __('Booking (#').$booking->ID.')';?></td>
 							<td><?php _e($course->name);?></td>
-							<td><?php echo date('M d,Y',strtotime($booking->booking_date));?></td>
+							<td><?php echo date('M d,Y',strtotime($booking->date_from));?> - <?php echo date('M d,Y',strtotime($booking->date_to));?></td>
 							<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
 							<td class="text-center">
 								<?php if( user_can('edit_booking') ): ?>
@@ -168,7 +182,7 @@ if( !class_exists('Booking') ):
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h1 class="modal-title text-center text-uppercase"><?php _e('Booking Details');?></h1>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Attendees Details');?></h1>
 						</div>
 						<div class="modal-body">
 							<div id="nurse-data-modal-body"></div>
@@ -261,11 +275,11 @@ if( !class_exists('Booking') ):
 			if(!is_admin()){
 				$args = array('created_by' => get_current_user_id());
 			}
-			$results = get_tabledata(TBL_BOOKINGS,false,$args,'GROUP BY `booking_date`',array('COUNT(ID) as count' , 'booking_date'));
+			$results = get_tabledata(TBL_BOOKINGS,false,$args,'GROUP BY `date_from`',array('COUNT(ID) as count' , 'date_from', 'date_to'));
 			if($results):
 				$return = array();
 				foreach($results as $data):
-					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->booking_date ) ) ) );
+					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->date_from ) ) ) );
 				endforeach;
 				return json_encode($return);
 			else:
@@ -321,12 +335,12 @@ if( !class_exists('Booking') ):
 		
 		public function get__nurse__calender__booking__data(){
 			$nurse_id = get_current_user_id();
-			$query = " WHERE `nurses` LIKE '%".$nurse_id."%' GROUP BY `booking_date` ";
-			$results = get_tabledata(TBL_BOOKINGS,false,array(),$query,array('COUNT(ID) as count' , 'booking_date'));
+			$query = " WHERE `nurses` LIKE '%".$nurse_id."%' GROUP BY `date_from` ";
+			$results = get_tabledata(TBL_BOOKINGS,false,array(),$query,array('COUNT(ID) as count' , 'date_from'));
 			if($results):
 				$return = array();
 				foreach($results as $data):
-					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->booking_date ) ) ) );
+					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->date_from ) ) ) );
 				endforeach;
 				return json_encode($return);
 			else:
@@ -346,7 +360,7 @@ if( !class_exists('Booking') ):
 			if( user_can('add_booking') ):
 				$validation_args = array(
 					'course' => $course,
-					'booking_date' => date('Y-m-d', strtotime($booking_date))
+//					'date_from' => date('Y-m-d', strtotime($date_from))
 				);
 
 				if(is_value_exists(TBL_BOOKINGS,$validation_args)):
@@ -356,24 +370,46 @@ if( !class_exists('Booking') ):
 					$return['fields'] = array('name');
 				else:
 					$enroll = array();
-					foreach($nurses as $nurse){$enroll[$nurse] = 0;}
+					foreach($nurses as $nurse){
+						$enroll[$nurse] = 0;
+											  
+																	$result = $this->database->update(TBL_CHK,
+						array(
+							'booked' => 1,
+						),
+						array(
+							'user_ID'=> $nurse,
+							'course_ID'=> $course,
+									
+						)
+					);					  
+											  }
+			
+			
+			
 						
 					$guid = get_guid(TBL_BOOKINGS);
 					$result = $this->database->insert(TBL_BOOKINGS,
 						array(
 							'ID' => $guid,
 							'course' => $course,
-							'booking_date' => date('Y-m-d', strtotime($booking_date)),
 							'nurses' => $nurses,
 							'enroll' => $enroll,
 							'created_by' => get_current_user_id(),
+							'date_from' =>date('Y-m-d', strtotime($date_from)),
+							'date_to' => date('Y-m-d', strtotime($date_to)),
 						)
 					);
+			
+
+			
 					if($result):
+			
 						$notification_args = array(
 							'title' => __('New booking created'),
 							'notification'=> __('You have successfully created a new booking.'),
 						);
+			
 
 						add_user_notification($notification_args);
 						$return['status'] = 1;
@@ -397,7 +433,7 @@ if( !class_exists('Booking') ):
 			if( user_can('edit_booking') ):
 				$validation_args = array(
 					'course' => $course,
-					'booking_date' => date('Y-m-d', strtotime($booking_date))
+//					'date_from' => date('Y-m-d', strtotime($date_from))
 				);
 
 				if(is_value_exists(TBL_BOOKINGS,$validation_args,$booking_id)):
@@ -415,9 +451,10 @@ if( !class_exists('Booking') ):
 					$result = $this->database->update(TBL_BOOKINGS,
 						array(
 							'course' => $course,
-							'booking_date' => date('Y-m-d', strtotime($booking_date)),
 							'nurses' => $nurses,
 							'enroll' => $enroll,
+							'date_from' =>date('Y-m-d', strtotime($date_from)),
+							'date_to' => date('Y-m-d', strtotime($date_to)),
 						),
 						array(
 							'ID'=> $booking_id
@@ -497,6 +534,8 @@ if( !class_exists('Booking') ):
 							<tr>
 								<td><?php echo get_user_name($nurse);?></td>
 								<td class="text-center">
+									
+									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="attendance_complete(this);"><?php _e('Attended'); ?></button>
 									<?php if($enroll[$nurse] == 0) : ?>
 									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_complete(this);"><?php _e('Complete'); ?></button>
 									<?php else: ?>
@@ -517,7 +556,7 @@ if( !class_exists('Booking') ):
 		public function fetch__available__bookings__process(){
 			extract($_POST);
 			$return['html'] = '';
-			$query = " WHERE `booking_date` = '".$date."' ";
+			$query = " WHERE `date_from` = '".$date."' ";
 			if(!is_admin()){
 				$query .= " AND `created_by` = ".get_current_user_id()." ";
 			}
@@ -556,9 +595,9 @@ if( !class_exists('Booking') ):
 		public function fetch__available__nurse__bookings__process(){
 			extract($_POST);
 			$nurse_id = get_current_user_id();
-			$query = " WHERE GROUP BY `booking_date` ";
+			$query = " WHERE GROUP BY `date_from` ";
 			$return['html'] = '';
-			$query = " WHERE `booking_date` = '".$date."' AND `nurses` LIKE '%".$nurse_id."%' ";
+			$query = " WHERE `date_from` = '".$date."' AND `nurses` LIKE '%".$nurse_id."%' ";
 			$bookings = get_tabledata(TBL_BOOKINGS,false,array(), $query);
 			if($bookings): 
 			ob_start(); ?>
@@ -585,6 +624,28 @@ if( !class_exists('Booking') ):
 			return json_encode($return);
 		}
 		
+		public function nurse__attendance__process(){
+			extract($_POST);
+			$booking_id = trim($booking_id);
+			$user_id = trim($user_id);
+			$return['status'] = 0;
+			$return['html'] = '';
+			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
+			
+			if($booking):
+				$enroll = maybe_unserialize($booking->enroll);
+				if(!empty($enroll) && isset($enroll[$user_id]) ):
+					$enroll[$user_id] = 1;
+					$update = $this->database->update(TBL_BOOKINGS, array('enroll' => $enroll), array('ID' => $booking->ID));
+					if($update){
+						$return['status'] = 1;
+						$return['html'] = '<label class="label label-success">'.__('Completed').'</label>';
+					}
+				endif;
+			endif;
+			return json_encode($return);
+		}
+		
 		
 		public function nurse__complete__process(){
 			extract($_POST);
@@ -607,6 +668,7 @@ if( !class_exists('Booking') ):
 			endif;
 			return json_encode($return);
 		}
+		
 	}
 
 endif;

@@ -51,19 +51,6 @@ if( !class_exists('Course') ):
 							?>
 						</select>
 					</div>
-					<div class="form-group col-sm-6 col-xs-12">
-										<label for="dob">
-											<?php _e('Date from');?>
-										</label>
-										<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/> 
-						</div>
-					
-					<div class="form-group col-sm-6 col-xs-12">
-										<label for="dob">
-											<?php _e('Date to');?>
-										</label>
-										<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly"/> 
-						</div>
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="add_new_course" />
@@ -266,16 +253,6 @@ if( !class_exists('Course') ):
 							?>
 						</select>
 					</div>
-					<div class="form-group">
-						<label for="date_from"><?php _e('Date From ');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($course->date_from) ? date('M d, Y', strtotime($course->date_from)) : '';?>"/>
-					</div>
-					
-					
-					<div class="form-group">
-						<label for="date_to"><?php _e('Date To ');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($course->date_to) ? date('M d, Y', strtotime($course->date_to)) : '';?>"/>
-					</div>
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="update_course" />
@@ -438,8 +415,8 @@ $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24))
 							'admins' => $admins,
 							'description' => $description,
 							'location' => $location,
-						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
-						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
+//						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
+//						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
 						)
 					);
 					if($result):
@@ -537,8 +514,8 @@ $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24))
 							'admins' => $admins,
 							'description' => $description,
 							'location' => $location,
-						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
-						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
+//						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
+//						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
 						),
 						array(
 							'ID'=> $course_id

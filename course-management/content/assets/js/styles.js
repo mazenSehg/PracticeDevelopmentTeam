@@ -801,6 +801,44 @@ function nurse_complete(btn){
 	});	
 }
 
+
+
+
+
+
+
+function attendance_complete(btn){
+	var isDelete = confirm('Mark this user as attended?');
+	if(isDelete == false){
+		return false;
+	}
+	
+	var btn = $(btn);
+	var user_id = btn.data('user');
+	var booking_id = btn.data('booking');
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'attendance_complete',
+			booking_id: booking_id,
+			user_id: user_id,
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success : function(r){
+			if(r['status'] == 1){					
+				alert_notification('Success !','Process has been successfully done','success');
+				btn.parents('td').html(r['html']);
+			}else{
+				alert_notification('Fail !','Please try agin','info');
+			}
+		}
+	});	
+}
+
+
+
+
 function filter_user_name(value){
 	var check = 0;
 	var username_filter = [","," ","/","@","#","$","%","^","&","*","(",")","+","=","\\","|","{","}","[","]",";",":"];

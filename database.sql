@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 17, 2017 at 05:42 PM
+-- Generation Time: Jul 20, 2017 at 05:24 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -103,12 +103,21 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 CREATE TABLE `tbl_bookings` (
   `ID` bigint(20) NOT NULL,
   `course` bigint(20) NOT NULL,
-  `booking_date` varchar(50) NOT NULL,
+  `date_from` date DEFAULT NULL,
+  `date_to` date DEFAULT NULL,
   `nurses` text NOT NULL,
-  `enroll` text NOT NULL,
+  `enroll` text,
   `created_by` bigint(20) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_bookings`
+--
+
+INSERT INTO `tbl_bookings` (`ID`, `course`, `date_from`, `date_to`, `nurses`, `enroll`, `created_by`, `created_on`) VALUES
+(10000001174, 10000240234, '2017-07-19', '2017-07-27', 'a:1:{i:0;s:11:\"10000340101\";}', 'a:1:{i:10000340101;i:0;}', 1, '2017-07-20 12:50:46'),
+(10000231915, 10000936950, '2017-07-19', '2017-07-21', 'a:2:{i:0;s:11:\"10000340101\";i:1;s:11:\"10000603933\";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-07-20 12:46:47');
 
 -- --------------------------------------------------------
 
@@ -152,36 +161,26 @@ CREATE TABLE `tbl_cohort_ext` (
 --
 
 INSERT INTO `tbl_cohort_ext` (`ID`, `Cohort_ID`, `Cohort_date`, `over`) VALUES
-(101, 2147483647, '2013-03-02', 1),
-(102, 2147483647, '2014-09-03', 1),
-(103, 2147483647, '2016-03-04', 1),
-(104, 2147483647, '2017-09-05', 0),
-(105, 2147483647, '2019-03-06', 0),
-(106, 2147483647, '2020-09-07', 0),
-(107, 2147483647, '2022-03-08', 0),
-(108, 2147483647, '2023-09-09', 0),
-(109, 2147483647, '2025-03-10', 0),
-(110, 2147483647, '2026-09-11', 0),
-(111, 10000771328, '2015-05-02', 1),
-(112, 10000771328, '2015-08-02', 1),
-(113, 10000771328, '2015-11-02', 1),
-(114, 10000771328, '2016-02-02', 1),
-(115, 10000771328, '2016-05-02', 1),
-(116, 10000771328, '2016-08-02', 1),
-(117, 10000771328, '2016-11-02', 1),
-(118, 10000771328, '2017-02-02', 1),
-(119, 10000771328, '2017-05-02', 1),
-(120, 10000771328, '2017-08-02', 0),
-(121, 2147483647, '2012-03-01', 1),
-(122, 2147483647, '2012-09-01', 1),
-(123, 2147483647, '2013-03-01', 1),
-(124, 2147483647, '2013-09-01', 1),
-(125, 2147483647, '2014-03-01', 1),
-(126, 2147483647, '2014-09-01', 1),
-(127, 2147483647, '2015-03-01', 1),
-(128, 2147483647, '2015-09-01', 1),
-(129, 2147483647, '2016-03-01', 1),
-(130, 2147483647, '2016-09-01', 1);
+(61, 2147483647, '2018-01-20', 0),
+(62, 2147483647, '2018-07-20', 0),
+(63, 2147483647, '2019-01-20', 0),
+(64, 2147483647, '2019-07-20', 0),
+(65, 2147483647, '2020-01-20', 0),
+(66, 2147483647, '2020-07-20', 0),
+(67, 2147483647, '2021-01-20', 0),
+(68, 2147483647, '2021-07-20', 0),
+(69, 2147483647, '2022-01-20', 0),
+(70, 2147483647, '2022-07-20', 0),
+(71, 10000771328, '2017-10-20', 0),
+(72, 10000771328, '2018-01-20', 0),
+(73, 10000771328, '2018-04-20', 0),
+(74, 10000771328, '2018-07-20', 0),
+(75, 10000771328, '2018-10-20', 0),
+(76, 10000771328, '2019-01-20', 0),
+(77, 10000771328, '2019-04-20', 0),
+(78, 10000771328, '2019-07-20', 0),
+(79, 10000771328, '2019-10-20', 0),
+(80, 10000771328, '2020-01-20', 0);
 
 -- --------------------------------------------------------
 
@@ -195,9 +194,7 @@ CREATE TABLE `tbl_courses` (
   `name` varchar(1024) NOT NULL,
   `description` text,
   `admins` text,
-  `duration` int(11) DEFAULT NULL,
   `location` bigint(20) NOT NULL,
-  `retrain_date` int(11) DEFAULT NULL,
   `active` int(11) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -206,117 +203,9 @@ CREATE TABLE `tbl_courses` (
 -- Dumping data for table `tbl_courses`
 --
 
-INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `duration`, `location`, `retrain_date`, `active`, `created_on`) VALUES
-(10000999591, 'BasicWard_Feb15', 'Basic Ward Management', '', '', 0, 0, 0, 1, '2026-02-15 00:00:00'),
-(10000999592, 'BasicWard_Jun15', 'Basic Ward Management', '', '', 0, 0, 0, 1, '2025-06-14 23:00:00'),
-(10000999593, 'BasicWard_Nov14', 'Basic Ward Management', '', '', 0, 0, 0, 1, '2026-11-14 00:00:00'),
-(10000999594, 'BasicWard_Nov15', 'Basic Ward Management', '', '', 0, 0, 0, 1, '2020-11-15 00:00:00'),
-(10000999595, 'BasicWard_Sep14', 'Basic Ward Management', '', '', 0, 0, 0, 0, '2023-09-13 23:00:00'),
-(10000999596, 'BasicWard_Sep15', 'Basic Ward Management', '', '', 0, 0, 0, 1, '2017-09-14 23:00:00'),
-(10000999597, 'BEACH_DEC14', 'BEACH Course', '', 'a:1:{i:0;s:11:\"10000950337\";}', 0, 4, 0, 1, '2008-12-14 00:00:00'),
-(10000999598, 'BEACH_Sep14', 'BEACH Course', '', 'a:1:{i:0;s:11:\"10000950337\";}', 0, 20, 0, 0, '2011-09-13 23:00:00'),
-(10000999599, 'Cath_Nov14', 'Catheterisation', '', '', 0, 0, 0, 1, '2018-11-14 00:00:00'),
-(10000999600, 'Cath_Sep14', 'Catheterisation', '', '', 0, 0, 0, 0, '2009-09-13 23:00:00'),
-(10000999601, 'ECG_Dec14', '12 Lead ECG', '', '2', 0, 0, 0, 1, '2009-12-14 00:00:00'),
-(10000999602, 'ECG_Dec15', '12 Lead ECG', '', '', 0, 0, 0, 1, '2021-12-15 00:00:00'),
-(10000999603, 'ECG_Feb15', '12 Lead ECG', '', '', 0, 0, 0, 1, '2010-02-15 00:00:00'),
-(10000999604, 'ECG_Jun15', '12 Lead ECG', '', '', 0, 0, 0, 1, '2024-06-14 23:00:00'),
-(10000999605, 'ECG_Sep14', '12 Lead ECG', '', '2', 0, 0, 0, 0, '2016-09-13 23:00:00'),
-(10000999606, 'ECG_Sep15', '12 Lead ECG', '', '', 0, 0, 0, 1, '2022-09-14 23:00:00'),
-(10000999607, 'IV Additives January 2015', 'IV Additives', '', '', 0, 4, 0, 1, '2006-01-15 00:00:00'),
-(10000999608, 'IV_ADDS_2_Sep14', 'IV Additives', '', '2', 0, 0, 0, 0, '2030-09-13 23:00:00'),
-(10000999609, 'IV_ADDS_Apr15', 'IV Additives', '', '', 0, 0, 0, 1, '2014-04-14 23:00:00'),
-(10000999610, 'IV_ADDS_Aug15', 'IV Additives', '', '', 0, 0, 0, 1, '2011-08-14 23:00:00'),
-(10000999611, 'IV_ADDS_Dec14', 'IV Additives', '', '2', 0, 0, 0, 1, '2002-12-14 00:00:00'),
-(10000999612, 'IV_ADDS_Dec15', 'IV Additives', '', '', 0, 0, 0, 1, '2015-12-15 00:00:00'),
-(10000999613, 'IV_ADDS_Feb15', 'IV Additives', '', '', 0, 0, 0, 1, '2003-02-15 00:00:00'),
-(10000999614, 'IV_ADDS_Jan15', 'IV Additives', '', '', 0, 0, 0, 1, '2006-01-15 00:00:00'),
-(10000999615, 'IV_ADDS_Jul15', 'IV Additives', '', '', 0, 0, 0, 1, '2021-07-14 23:00:00'),
-(10000999616, 'IV_ADDS_Jun15', 'IV Additives', '', '', 0, 0, 0, 1, '2009-06-14 23:00:00'),
-(10000999617, 'IV_ADDS_Mar15', 'IV Additives', '', '', 0, 0, 0, 1, '2003-03-15 00:00:00'),
-(10000999618, 'IV_ADDS_May15', 'IV Additives', '', '', 0, 0, 0, 1, '2005-05-14 23:00:00'),
-(10000999619, 'IV_ADDS_Nov14', 'IV Additives', '', '2', 0, 0, 0, 1, '2004-11-14 00:00:00'),
-(10000999620, 'IV_ADDS_Nov15', 'IV Additives', '', '', 0, 0, 0, 1, '2010-11-15 00:00:00'),
-(10000999621, 'IV_ADDS_Oct15', 'IV Additives', '', '', 0, 0, 0, 1, '2013-10-14 23:00:00'),
-(10000999622, 'IV_ADDS_Sep14', 'IV Additives', '', '2', 0, 0, 0, 0, '2016-09-13 23:00:00'),
-(10000999623, 'IV_ADDS_Sep15', 'IV Additives', '', '', 0, 0, 0, 1, '2015-09-14 23:00:00'),
-(10000999624, 'IV_exam_Apr15', 'IV Exam', '', '', 0, 0, 0, 1, '2020-04-14 23:00:00'),
-(10000999625, 'IV_exam_Dec15', 'IV Exam', '', '', 0, 0, 0, 1, '2002-12-15 00:00:00'),
-(10000999626, 'IV_exam_Feb15', 'IV Exam', '', '', 0, 0, 0, 1, '2018-02-15 00:00:00'),
-(10000999627, 'IV_exam_Jan15', 'IV Exam', '', '', 0, 0, 0, 1, '2020-01-15 00:00:00'),
-(10000999628, 'IV_exam_JulA15', 'IV Exam', '', '', 0, 0, 0, 1, '2007-07-14 23:00:00'),
-(10000999629, 'IV_exam_JulB15', 'IV Exam', '', '', 0, 0, 0, 1, '2027-07-14 23:00:00'),
-(10000999630, 'IV_exam_Mar15', 'IV Exam', '', '', 0, 0, 0, 1, '2031-03-15 00:00:00'),
-(10000999631, 'IV_exam_May15', 'IV Exam', '', '', 0, 0, 0, 1, '2027-05-14 23:00:00'),
-(10000999632, 'IV_exam_OctA15', 'IV Exam', '', '', 0, 0, 0, 1, '2001-10-14 23:00:00'),
-(10000999633, 'IV_exam_OctB15', 'IV Exam', '', '', 0, 0, 0, 1, '2027-10-14 23:00:00'),
-(10000999634, 'IV_exam_Sep15', 'IV Exam', '', '', 0, 0, 0, 1, '2003-09-14 23:00:00'),
-(10000999635, 'IV_UP__Nov14', 'IV Update', '', '2', 0, 0, 0, 1, '2027-11-14 00:00:00'),
-(10000999636, 'IV_UP__Oct_14', 'IV Update', '', '2', 0, 0, 0, 1, '2009-10-13 23:00:00'),
-(10000999637, 'IV_UP__Sep_14', 'IV Update', '', '2', 0, 0, 0, 0, '2005-09-13 23:00:00'),
-(10000999638, 'IV_UP_DEC14', 'IV Update', '', '2', 0, 0, 0, 1, '2011-12-14 00:00:00'),
-(10000999639, 'IV_Update_Apr15', 'IV Update', '', '', 0, 0, 0, 1, '2022-04-14 23:00:00'),
-(10000999640, 'IV_Update_Aug15', 'IV Update', '', '', 0, 0, 0, 1, '2026-08-14 23:00:00'),
-(10000999641, 'IV_Update_dec15', 'IV Update', '', '', 0, 0, 0, 1, '2018-12-15 00:00:00'),
-(10000999642, 'IV_Update_Feb15', 'IV Update', '', '', 0, 0, 0, 1, '2012-02-15 00:00:00'),
-(10000999643, 'IV_Update_Jul15', 'IV Update', '', '', 0, 0, 0, 1, '2020-07-14 23:00:00'),
-(10000999644, 'IV_Update_Jun15', 'IV Update', '', '', 0, 0, 0, 1, '2018-06-14 23:00:00'),
-(10000999645, 'IV_Update_Mar15', 'IV Update', '', '', 0, 0, 0, 1, '2019-03-15 00:00:00'),
-(10000999646, 'IV_Update_May15', 'IV Update', '', '', 0, 0, 0, 1, '2012-05-14 23:00:00'),
-(10000999647, 'IV_Update_Nov15', 'IV Update', '', '', 0, 0, 0, 1, '2017-11-15 00:00:00'),
-(10000999648, 'IV_Update_Oct15', 'IV Update', '', '', 0, 0, 0, 1, '2021-10-14 23:00:00'),
-(10000999649, 'IV_Update_Sep15', 'IV Update', '', '', 0, 0, 0, 1, '2010-09-14 23:00:00'),
-(10000999650, 'IvExam_Nov14', 'IV Exam', '', '2', 0, 0, 0, 1, '2020-11-14 00:00:00'),
-(10000999651, 'IvExam_Oct14', 'IV Exam', '', '2', 0, 0, 0, 1, '2020-10-13 23:00:00'),
-(10000999652, 'IvExam_Sep14', 'IV Exam', '', '2', 0, 0, 0, 0, '2024-09-13 23:00:00'),
-(10000999653, 'IVUpdate_Jan15', 'IV Update', '', '', 0, 6, 0, 1, '2019-01-15 00:00:00'),
-(10000999654, 'Link_Jan15', 'LINKS', '12,13,14', 'a:18:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";i:2;s:11:\"10000950342\";i:3;s:11:\"10000950338\";i:4;s:11:\"10000950339\";i:5;s:11:\"10000950340\";i:6;s:11:\"10000950337\";i:7;s:11:\"10000950344\";i:8;s:11:\"10000950345\";i:9;s:11:\"10000950346\";i:10;s:11:\"10000950347\";i:11;s:11:\"10000950348\";i:12;s:11:\"10000950349\";i:13;s:11:\"10000950350\";i:14;s:11:\"10000950351\";i:15;s:11:\"10000950352\";i:16;s:11:\"10000950353\";i:17;s:11:\"10000950354\";}', 0, 9, 0, 1, '2012-01-15 00:00:00'),
-(10000999655, 'Link_Mar15', 'LINKS', '09,10,11', 'a:18:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";i:2;s:11:\"10000950342\";i:3;s:11:\"10000950338\";i:4;s:11:\"10000950339\";i:5;s:11:\"10000950340\";i:6;s:11:\"10000950337\";i:7;s:11:\"10000950344\";i:8;s:11:\"10000950345\";i:9;s:11:\"10000950346\";i:10;s:11:\"10000950347\";i:11;s:11:\"10000950348\";i:12;s:11:\"10000950349\";i:13;s:11:\"10000950350\";i:14;s:11:\"10000950351\";i:15;s:11:\"10000950352\";i:16;s:11:\"10000950353\";i:17;s:11:\"10000950354\";}', 0, 9, 0, 1, '2009-03-15 00:00:00'),
-(10000999656, 'Link_May15', 'LINKS', '18,19,20', 'a:18:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";i:2;s:11:\"10000950342\";i:3;s:11:\"10000950338\";i:4;s:11:\"10000950339\";i:5;s:11:\"10000950340\";i:6;s:11:\"10000950337\";i:7;s:11:\"10000950344\";i:8;s:11:\"10000950345\";i:9;s:11:\"10000950346\";i:10;s:11:\"10000950347\";i:11;s:11:\"10000950348\";i:12;s:11:\"10000950349\";i:13;s:11:\"10000950350\";i:14;s:11:\"10000950351\";i:15;s:11:\"10000950352\";i:16;s:11:\"10000950353\";i:17;s:11:\"10000950354\";}', 0, 10, 0, 1, '2018-05-14 23:00:00'),
-(10000999657, 'Link_Oct15', 'LINKS', '12,13,16', 'a:18:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";i:2;s:11:\"10000950342\";i:3;s:11:\"10000950338\";i:4;s:11:\"10000950339\";i:5;s:11:\"10000950340\";i:6;s:11:\"10000950337\";i:7;s:11:\"10000950344\";i:8;s:11:\"10000950345\";i:9;s:11:\"10000950346\";i:10;s:11:\"10000950347\";i:11;s:11:\"10000950348\";i:12;s:11:\"10000950349\";i:13;s:11:\"10000950350\";i:14;s:11:\"10000950351\";i:15;s:11:\"10000950352\";i:16;s:11:\"10000950353\";i:17;s:11:\"10000950354\";}', 0, 9, 0, 1, '2012-10-14 23:00:00'),
-(10000999658, 'Link_Sep15', 'LINKS', '2,3,4', 'a:18:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";i:2;s:11:\"10000950342\";i:3;s:11:\"10000950338\";i:4;s:11:\"10000950339\";i:5;s:11:\"10000950340\";i:6;s:11:\"10000950337\";i:7;s:11:\"10000950344\";i:8;s:11:\"10000950345\";i:9;s:11:\"10000950346\";i:10;s:11:\"10000950347\";i:11;s:11:\"10000950348\";i:12;s:11:\"10000950349\";i:13;s:11:\"10000950350\";i:14;s:11:\"10000950351\";i:15;s:11:\"10000950352\";i:16;s:11:\"10000950353\";i:17;s:11:\"10000950354\";}', 0, 10, 0, 1, '2002-09-14 23:00:00'),
-(10000999659, 'Links_Nov14', 'LINKS', '17,18,19', '9', 0, 0, 0, 1, '2017-11-14 00:00:00'),
-(10000999660, 'Links_Sep14', 'LINKS', 'OCT 21,22 & Nov 10', '9', 0, 9, 0, 1, '2021-10-13 23:00:00'),
-(10000999661, 'MentSign_Dec14', 'Mentor Sign-Off', '09.15-16.30', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 16, 0, 1, '2012-12-14 00:00:00'),
-(10000999662, 'MentSign_Mar15', 'Mentor Sign-Off', '09.15-16.30', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 16, 0, 1, '2012-03-15 00:00:00'),
-(10000999663, 'MentSign_May15', 'Mentor Sign-Off', '09.15-16.30', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 16, 0, 1, '2018-05-14 23:00:00'),
-(10000999664, 'MentSign_Sep14', 'Mentor Sign-Off', '09.15-16.30', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 16, 0, 0, '2016-09-13 23:00:00'),
-(10000999665, 'MentUp_Apr15', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950338\";}', 0, 4, 0, 1, '2007-04-14 23:00:00'),
-(10000999666, 'MentUp_Dec14', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 10, 0, 1, '2015-12-14 00:00:00'),
-(10000999667, 'MentUp_Feb14', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950338\";}', 0, 4, 0, 1, '2009-02-15 00:00:00'),
-(10000999668, 'MentUp_Jan14', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950349\";}', 0, 4, 0, 1, '2016-01-15 00:00:00'),
-(10000999669, 'MentUp_Jul15', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950349\";}', 0, 4, 0, 1, '2013-07-14 23:00:00'),
-(10000999670, 'MentUp_Jun15', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 4, 0, 1, '2017-06-14 23:00:00'),
-(10000999671, 'MentUp_Mar15', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950338\";}', 0, 4, 0, 1, '2011-03-15 00:00:00'),
-(10000999672, 'MentUp_May15', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950338\";}', 0, 4, 0, 1, '2014-05-14 23:00:00'),
-(10000999673, 'MentUp_Nov14', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 4, 0, 1, '2017-11-14 00:00:00'),
-(10000999674, 'MentUp_Oct14', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950342\";}', 0, 10, 0, 1, '2021-10-13 23:00:00'),
-(10000999675, 'MentUp_Sep14', 'Mentor Update', '', 'a:1:{i:0;s:11:\"10000950343\";}', 0, 9, 0, 0, '2017-09-13 23:00:00'),
-(10000999676, 'None_01', 'None', '', '', 0, 0, 0, 0, '0000-00-00 00:00:00'),
-(10000999677, 'Rec_Keep_Dec14', 'Record Keeping', '', '2', 0, 0, 0, 1, '2001-12-14 00:00:00'),
-(10000999678, 'Rec_Keep_Dec15', 'Record Keeping', '', '', 0, 0, 0, 1, '2003-12-15 00:00:00'),
-(10000999679, 'Rec_Keep_Jan15', 'Record Keeping', '', '', 0, 0, 0, 1, '2012-01-15 00:00:00'),
-(10000999680, 'Rec_Keep_May15', 'Record Keeping', '', '', 0, 0, 0, 1, '2018-05-14 23:00:00'),
-(10000999681, 'Rec_Keep_Sep14', 'Record Keeping', '', '2', 0, 0, 0, 0, '2022-09-13 23:00:00'),
-(10000999682, 'Rec_Keep_Sep15', 'Record Keeping', '', '', 0, 0, 0, 1, '2003-09-14 23:00:00'),
-(10000999683, 'Study1_Sep14', 'Study Day 1', '', '', 0, 4, 0, 1, '2029-10-13 23:00:00'),
-(10000999684, 'Study2_Sep14', 'Study Day 2', '', 'a:1:{i:0;s:11:\"10000950348\";}', 0, 10, 0, 0, '2009-09-13 23:00:00'),
-(10000999685, 'Study3_Sep14', 'Study Day 3', '', '', 0, 13, 0, 1, '2030-10-13 23:00:00'),
-(10000999686, 'Vena_Dec14', 'Venapuncture', '', '', 0, 0, 0, 1, '2015-12-14 00:00:00'),
-(10000999687, 'Vena_Nov14', 'Venapuncture', '', '', 0, 0, 0, 1, '2011-11-14 00:00:00'),
-(10000999688, 'Vena_Oct14', 'Venapuncture', '', '', 0, 0, 0, 1, '2016-10-13 23:00:00'),
-(10000999689, 'Vena_Sep14', 'Venapuncture', '', '', 0, 0, 0, 0, '2011-09-13 23:00:00'),
-(10000999690, 'Vene_Apr15', 'Venepuncture', '', '', 0, 0, 0, 1, '2023-04-14 23:00:00'),
-(10000999691, 'Vene_Dec15', 'Venepuncture', '', '', 0, 0, 0, 1, '2018-12-15 00:00:00'),
-(10000999692, 'Vene_Feb15', 'Venepuncture', '', '', 0, 0, 0, 1, '2009-02-15 00:00:00'),
-(10000999693, 'Vene_Jan15', 'Venepuncture', '', '', 0, 0, 0, 1, '2016-01-15 00:00:00'),
-(10000999694, 'Vene_Jul15', 'Venepuncture', '', '', 0, 0, 0, 1, '2017-07-14 23:00:00'),
-(10000999695, 'Vene_Jun15', 'Venepuncture', '', '', 0, 0, 0, 1, '2016-06-14 23:00:00'),
-(10000999696, 'Vene_Mar15', 'Venepuncture', '', '', 0, 0, 0, 1, '2016-03-15 00:00:00'),
-(10000999697, 'Vene_May15', 'Venepuncture', '', '', 0, 0, 0, 1, '2013-05-14 23:00:00'),
-(10000999698, 'Vene_Nov15', 'Venepuncture', '', '', 0, 0, 0, 1, '2019-11-15 00:00:00'),
-(10000999699, 'Vene_Oct15', 'Venepuncture', '', '', 0, 0, 0, 1, '2016-10-14 23:00:00'),
-(10000999700, 'Vene_Sep15', 'Venepuncture', '', '', 0, 0, 0, 1, '2017-09-14 23:00:00');
+INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `active`, `created_on`) VALUES
+(10000936950, 'PAK', 'another test', 'testsetst', 'a:2:{i:0;s:11:\"10000950338\";i:1;s:11:\"10000950340\";}', 19, 0, '2017-07-19 14:22:27'),
+(10000240234, 'TST', 'test', 'Test', 'a:2:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";}', 3, 0, '2017-07-19 14:21:09');
 
 -- --------------------------------------------------------
 
@@ -339,8 +228,9 @@ CREATE TABLE `tbl_course_user` (
 --
 
 INSERT INTO `tbl_course_user` (`ID`, `user_ID`, `course_ID`, `booked`, `attended`, `uploaded`, `passed`) VALUES
-(10000942977, 10000340101, 10000999592, 0, 1, 1, 0),
-(10000942978, 10000340101, 10000999593, 0, 0, 0, 0);
+(10000942984, 10000340101, 10000936950, 1, 0, 0, 0),
+(10000942985, 10000340101, 10000240234, 1, 0, 0, 0),
+(10000942986, 10000603933, 10000936950, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -452,7 +342,7 @@ CREATE TABLE `tbl_notes` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `to` bigint(10) NOT NULL,
   `from` bigint(10) NOT NULL,
-  `note` varchar(500) NOT NULL,
+  `note` text,
   `filepath` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -463,7 +353,9 @@ CREATE TABLE `tbl_notes` (
 INSERT INTO `tbl_notes` (`ID`, `date`, `to`, `from`, `note`, `filepath`) VALUES
 (16, '2017-07-17 15:08:07', 10000340101, 1, 'bobby', '/Applications/XAMPP/xamppfiles/htdocs/course-management/content/uploads/user_info/Screen Shot 2017-05-31 at 14.33.28.png'),
 (17, '2017-07-17 15:11:05', 10000340101, 1, 'trial', '/Applications/XAMPP/xamppfiles/htdocs/course-management/content/uploads/user_info/python.py'),
-(18, '2017-07-17 15:26:25', 10000340101, 1, '546', '/Applications/XAMPP/xamppfiles/htdocs/course-management/content/uploads/user_info/xmlgraphics-commons-1.5.jar');
+(18, '2017-07-17 15:26:25', 10000340101, 1, '546', '/Applications/XAMPP/xamppfiles/htdocs/course-management/content/uploads/user_info/xmlgraphics-commons-1.5.jar'),
+(19, '2017-07-20 09:55:29', 10000340101, 1, 'This is a really long note, hopefully the table should scale correctly for it. ', '/Applications/XAMPP/xamppfiles/htdocs/course-management/content/uploads/user_info/'),
+(20, '2017-07-20 09:55:51', 10000340101, 1, 'This is a really long note, hopefully the table should scale correctly for it. This is a really long note, hopefully the table should scale correctly for it.This is a really long note, hopefully the table should scale correctly for it.', '/Applications/XAMPP/xamppfiles/htdocs/course-management/content/uploads/user_info/');
 
 -- --------------------------------------------------------
 
@@ -818,7 +710,34 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (330, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-17 15:05:33'),
 (331, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-17 15:08:07'),
 (332, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-17 15:11:05'),
-(333, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-17 15:26:25');
+(333, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-17 15:26:25'),
+(334, 1, 'New course created', 'You have successfully created a new course (ayyy).', 0, 0, '2017-07-19 13:54:02'),
+(335, 1, 'New course created', 'You have successfully created a new course (maz).', 0, 0, '2017-07-19 13:57:37'),
+(336, 1, 'New course created', 'You have successfully created a new course (Test).', 0, 0, '2017-07-19 14:14:16'),
+(337, 1, 'New course created', 'You have successfully created a new course (ttt).', 0, 0, '2017-07-19 14:17:48'),
+(338, 1, 'New course created', 'You have successfully created a new course (test).', 0, 0, '2017-07-19 14:21:09'),
+(339, 1, 'New course created', 'You have successfully created a new course (another test).', 0, 0, '2017-07-19 14:22:27'),
+(340, 1, 'Course updated', 'You have successfully updated course (another test).', 0, 0, '2017-07-19 14:23:16'),
+(341, 1, 'Account Details updated', 'You have successfully updated (James Leighs) account details.', 0, 0, '2017-07-19 14:38:59'),
+(342, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-19 14:39:25'),
+(343, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-20 09:53:05'),
+(344, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-20 09:54:23'),
+(345, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-20 09:55:29'),
+(346, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-07-20 09:55:51'),
+(347, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-20 09:56:24'),
+(348, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 10:19:17'),
+(349, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 10:25:31'),
+(350, 1, 'New Account Created', 'You have successfully created a new account (Sandra Gomes).', 0, 0, '2017-07-20 12:14:46'),
+(351, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-20 12:35:24'),
+(352, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-20 12:35:27'),
+(353, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:35:40'),
+(354, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:38:12'),
+(355, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-20 12:40:15'),
+(356, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:40:25'),
+(357, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:41:39'),
+(358, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:46:47'),
+(359, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:50:47'),
+(360, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-20 14:19:29');
 
 -- --------------------------------------------------------
 
@@ -1288,7 +1207,15 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (458, 10000125388, 'user_designation', '10000641616'),
 (459, 10000125388, 'work_extension', '9876546321'),
 (460, 10000125388, 'beep', '2161'),
-(461, 10000125388, 'band', '4');
+(461, 10000125388, 'band', '4'),
+(462, 10000603933, 'gender', 'Female'),
+(463, 10000603933, 'dob', '2017-07-01 12:00:00'),
+(464, 10000603933, 'user_phone', '123456798'),
+(465, 10000603933, 'profile_img', ''),
+(466, 10000603933, 'user_designation', '10000641616'),
+(467, 10000603933, 'work_extension', '123485687'),
+(468, 10000603933, 'beep', '555'),
+(469, 10000603933, 'band', '5');
 
 -- --------------------------------------------------------
 
@@ -1342,7 +1269,8 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 (10000950352, NULL, 'sallywhitehouse@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sally', 'Whitehouse', 'course_admin', 'sallywhitehouse', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950353, NULL, 'v.wilding@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Victoria', 'Wilding', 'course_admin', 'v.wilding', 1, 1, '', 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
-(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:7:{i:0;s:11:\"10000999591\";i:1;s:11:\"10000999592\";i:2;s:11:\"10000999593\";i:3;s:11:\"10000999594\";i:4;s:11:\"10000999595\";i:5;s:11:\"10000999596\";i:6;s:11:\"10000999651\";}', 0, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010);
+(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:2:{i:0;s:11:\"10000936950\";i:1;s:11:\"10000240234\";}', 0, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
+(10000603933, '', 's@g.com', '591a238ee479f3a001e305fce074ebf7863c972ecf7de78d69206255d1d13c2e', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 'a:1:{i:0;s:11:\"10000936950\";}', NULL, 'JVhvWgGOMaLPKWTYdCXDMg==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015);
 
 -- --------------------------------------------------------
 
@@ -1581,22 +1509,22 @@ ALTER TABLE `tbl_access_log`
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000969920;
 --
 -- AUTO_INCREMENT for table `tbl_cohort_ext`
 --
 ALTER TABLE `tbl_cohort_ext`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT for table `tbl_courses`
 --
 ALTER TABLE `tbl_courses`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000999701;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000936951;
 --
 -- AUTO_INCREMENT for table `tbl_course_user`
 --
 ALTER TABLE `tbl_course_user`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000942979;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000942987;
 --
 -- AUTO_INCREMENT for table `tbl_designations`
 --
@@ -1611,12 +1539,12 @@ ALTER TABLE `tbl_locations`
 -- AUTO_INCREMENT for table `tbl_notes`
 --
 ALTER TABLE `tbl_notes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -1626,7 +1554,7 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=462;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=470;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --

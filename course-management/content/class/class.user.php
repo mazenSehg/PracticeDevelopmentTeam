@@ -315,7 +315,7 @@ if( !class_exists('User') ):
 						$data = unserialize($course->courses);
 					foreach($data as $a):
 						$cour = get_tabledata(TBL_COURSES,true,array('ID'=>$a));	
-						$chk = get_tabledata(TBL_CHK,true,array('course_ID'=>$a));	
+						$chk = get_tabledata(TBL_CHK,true,array('course_ID'=>$a,'user_ID'=>$user__id));	
 						
 										if(isset($chk->passed)){
 						if($chk->passed!=0){ ?>

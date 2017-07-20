@@ -208,6 +208,9 @@ case 'fetch_cohort_date_data':
 			case 'nurse_complete':
 				echo $Booking->nurse__complete__process();
 				break;
+			case 'attendance_complete':
+				echo $Booking->nurse__attendance__process();
+				break;
 				
 		endswitch;
 	else:
