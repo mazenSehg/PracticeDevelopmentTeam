@@ -264,6 +264,9 @@ ul.booking_clinics .booking-btn{
 .complete-nurse{
 	margin:0 !important;
 }
+.daterangepicker.dropdown-menu{
+	z-index: 9999;
+}
 @media only screen and (max-width:767px){
 	.home-page .main-box .right-box{
 		padding-top:0;

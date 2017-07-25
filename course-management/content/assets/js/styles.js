@@ -766,7 +766,6 @@ function get_available_bookings($date, $action){
 		url: ajax_url,
 		dataType: 'json',
 		success : function(r){
-			console.log(r);
 			$('#booking-data-modal-body').html(r['html']);
 		}
 	});	
@@ -801,18 +800,11 @@ function nurse_complete(btn){
 	});	
 }
 
-
-
-
-
-
-
 function attendance_complete(btn){
 	var isDelete = confirm('Mark this user as attended?');
 	if(isDelete == false){
 		return false;
 	}
-	
 	var btn = $(btn);
 	var user_id = btn.data('user');
 	var booking_id = btn.data('booking');
@@ -835,9 +827,6 @@ function attendance_complete(btn){
 		}
 	});	
 }
-
-
-
 
 function filter_user_name(value){
 	var check = 0;

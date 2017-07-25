@@ -18,46 +18,39 @@ if( !class_exists('Booking') ):
 			if( !user_can( 'add_booking') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			else: ?>
-				<form class="add-booking submit-form" method="post" autocomplete="off">
-					<div class="form-group">
-						<label for="course"><?php _e('Course');?>&nbsp;<span class="required">*</span></label>
-						<select name="course" class="form-control select_single require fetch-course-nurses-data" data-placeholder="Choose course">
-							<?php
-							$query = ''; 
-							if(!is_admin()){
-								$query = " WHERE `admins` LIKE '%".get_current_user_id()."%' ";
-								
-							}
-			//$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-			$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-								$option_data = get_option_data($data,array('ID','name'));
-								echo get_options_list($option_data);
-
-							?>
-						</select>
-					</div>
-						<label for="date_from"><?php _e('Booking Date From ');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/>
-					</div>
-					
-					
-					<div class="form-group">
-						<label for="date_to"><?php _e('Booking Date To ');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
-					</div>
-					<div class="form-group">
-						<label for="nurses"><?php _e('Nurse(s)');?>&nbsp;<span class="required">*</span></label>
-						<select name="nurses[]" class="form-control select_single require select-nurses" data-placeholder="Choose nurse(s)" multiple="multiple">
-						</select>
-					</div>
-					
-					
-					<div class="ln_solid"></div>
-					<div class="form-group">
-						<input type="hidden" name="action" value="add_new_booking" />
-						<button class="btn btn-success btn-md" type="submit"><?php _e('Create New Booking');?></button>
-					</div>
-				</form>
+			<form class="add-booking submit-form" method="post" autocomplete="off">
+				<div class="form-group">
+					<label for="course"><?php _e('Course');?>&nbsp;<span class="required">*</span></label>
+					<select name="course" class="form-control select_single require fetch-course-nurses-data" data-placeholder="Choose course">
+						<?php
+						$query = ''; 
+						if(!is_admin()){
+							$query = " WHERE `admins` LIKE '%".get_current_user_id()."%' ";
+						}
+						$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="date_from"><?php _e('Booking Date From');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/>
+				</div>
+				<div class="form-group">
+					<label for="date_to"><?php _e('Booking Date To');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="nurses"><?php _e('Nurse(s)');?>&nbsp;<span class="required">*</span></label>
+					<select name="nurses[]" class="form-control select_single require select-nurses" data-placeholder="Choose nurse(s)" multiple="multiple"></select>
+				</div>
+				<div class="ln_solid"></div>
+				<div class="form-group">
+					<input type="hidden" name="action" value="add_new_booking" />
+					<button class="btn btn-success btn-md" type="submit"><?php _e('Create New Booking');?></button>
+				</div>
+			</form>
 			<?php endif;
 			$content = ob_get_clean();
 			return $content;
@@ -73,50 +66,48 @@ if( !class_exists('Booking') ):
 				echo page_not_found('Oops ! Booking Details Not Found.','Please go back and check again !');
 			else:
 			?>
-				<form class="add-booking submit-form" method="post" autocomplete="off">
-					<div class="form-group">
-						<label for="course"><?php _e('Course');?>&nbsp;<span class="required">*</span></label>
-						<select name="course" class="form-control select_single require fetch-course-nurses-data" data-placeholder="Choose course">
-							<?php
-							$query = ''; 
-							if(!is_admin()){
-								$query = " WHERE `admins` LIKE '%".get_current_user_id()."%' ";
-							}
-			$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-								$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data,maybe_unserialize($booking->course));
-							?>
-						</select>
-					</div>
-										<div class="form-group">
-						<label for="date_from"><?php _e('Booking Date From ');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_from) ? date('M d, Y', strtotime($booking->date_from)) : '';?>"/>
-					</div>
-					
-					
-					<div class="form-group">
-						<label for="date_to"><?php _e('Booking Date To ');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_to) ? date('M d, Y', strtotime($booking->date_to)) : '';?>"/>
-					</div>
-					<div class="form-group">
-						<label for="nurses"><?php _e('Nurse(s)');?>&nbsp;<span class="required">*</span></label>
-						<select name="nurses[]" class="form-control select_single require select-nurses" data-placeholder="Choose nurse(s)" multiple="multiple">
-							<?php
-							$select = ' ID, CONCAT_WS(" ", first_name , last_name) AS name ';
-							$query = " WHERE `courses` LIKE '%".$booking->course."%' AND `user_role` = 'nurse' ";
-							$data = get_tabledata(TBL_USERS, false, array() , $query , $select);
-							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data, maybe_unserialize($booking->nurses));
-							?>
-						</select>
-					</div>
-					<div class="ln_solid"></div>
-					<div class="form-group">
-						<input type="hidden" name="action" value="update_booking" />
-						<input type="hidden" name="booking_id" value="<?php echo $booking->ID;?>" />
-						<button class="btn btn-success btn-md" type="submit"><?php _e('Update Booking');?></button>
-					</div>
-				</form>
+			<form class="add-booking submit-form" method="post" autocomplete="off">
+				<div class="form-group">
+					<label for="course"><?php _e('Course');?>&nbsp;<span class="required">*</span></label>
+					<select name="course" class="form-control select_single require fetch-course-nurses-data" data-placeholder="Choose course">
+						<?php
+						$query = ''; 
+						if(!is_admin()){
+							$query = " WHERE `admins` LIKE '%".get_current_user_id()."%' ";
+						}
+						$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data,maybe_unserialize($booking->course));
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="date_from"><?php _e('Booking Date From ');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_from) ? date('M d, Y', strtotime($booking->date_from)) : '';?>"/>
+				</div>
+				<div class="form-group">
+					<label for="date_to"><?php _e('Booking Date To ');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_to) ? date('M d, Y', strtotime($booking->date_to)) : '';?>"/>
+				</div>
+				<div class="form-group">
+					<label for="nurses"><?php _e('Nurse(s)');?>&nbsp;<span class="required">*</span></label>
+					<select name="nurses[]" class="form-control select_single require select-nurses" data-placeholder="Choose nurse(s)" multiple="multiple">
+						<?php
+						$select = ' ID, CONCAT_WS(" ", first_name , last_name) AS name ';
+						$query = " WHERE `courses` LIKE '%".$booking->course."%' AND `user_role` = 'nurse' ";
+						$data = get_tabledata(TBL_USERS, false, array() , $query , $select);
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data, maybe_unserialize($booking->nurses));
+						?>
+					</select>
+				</div>
+				<div class="ln_solid"></div>
+				<div class="form-group">
+					<input type="hidden" name="action" value="update_booking" />
+					<input type="hidden" name="booking_id" value="<?php echo $booking->ID;?>" />
+					<button class="btn btn-success btn-md" type="submit"><?php _e('Update Booking');?></button>
+				</div>
+			</form>
 			<?php endif;
 			$content = ob_get_clean();
 			return $content;
@@ -135,40 +126,40 @@ if( !class_exists('Booking') ):
 				echo page_not_found("Oops! There is no New bookings record found",' ',false);
 			else:
 			?>
-				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th><?php _e('#Booking');?></th>
-							<th><?php _e('Course Name');?></th>
-							<th><?php _e('Booking Date');?></th>
-							<th><?php _e('Created On');?></th>
-							<th class="text-center"><?php _e('Actions');?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php if($bookings): foreach($bookings as $booking):
-							$course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));
-						?>
-						<tr>
-							<td><?php echo __('Booking (#').$booking->ID.')';?></td>
-							<td><?php _e($course->name);?></td>
-							<td><?php echo date('M d,Y',strtotime($booking->date_from));?> - <?php echo date('M d,Y',strtotime($booking->date_to));?></td>
-							<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
-							<td class="text-center">
-								<?php if( user_can('edit_booking') ): ?>
-								<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_nurses(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('View Nurse(s)');?></button>
-								<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a>
-								<?php endif; ?>
-								
-								<?php if( user_can('delete_booking') ): ?>
-								<button type="button" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $booking->ID;?>" data-action="delete_booking"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></button>
-								<?php endif; ?>
-							</td>
-						</tr>
-						<?php endforeach; endif; ?>
-					</tbody>
-				</table>
-				<?php echo $this->nurses__data__modal(); ?>
+			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th><?php _e('#Booking');?></th>
+						<th><?php _e('Course Name');?></th>
+						<th><?php _e('Booking Date');?></th>
+						<th><?php _e('Created On');?></th>
+						<th class="text-center"><?php _e('Actions');?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if($bookings): foreach($bookings as $booking):
+						$course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));
+					?>
+					<tr>
+						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
+						<td><?php _e($course->name);?></td>
+						<td><?php echo date('M d,Y',strtotime($booking->date_from));?> - <?php echo date('M d,Y',strtotime($booking->date_to));?></td>
+						<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
+						<td class="text-center">
+							<?php if( user_can('edit_booking') ): ?>
+							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_nurses(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('View Nurse(s)');?></button>
+							<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a>
+							<?php endif; ?>
+							
+							<?php if( user_can('delete_booking') ): ?>
+							<button type="button" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $booking->ID;?>" data-action="delete_booking"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></button>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<?php endforeach; endif; ?>
+				</tbody>
+			</table>
+			<?php echo $this->nurses__data__modal(); ?>
 			<?php endif;
 			$content = ob_get_clean();
 			return $content;
@@ -221,6 +212,30 @@ if( !class_exists('Booking') ):
 			return ob_get_clean();
 		}
 		
+		public function add__booking__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="add-booking-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Add Booking');?></h1>
+						</div>
+						<div class="modal-body">
+							<?php echo $this->add__booking__page(); ?>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="hidden add-booking-modal-btn" data-toggle="modal" data-target="#add-booking-modal"></div>
+			<?php
+			return ob_get_clean();
+		}
+		
 		public function view__calendar__page(){
 			ob_start(); ?>
 			<div id='calendar'></div>
@@ -228,14 +243,15 @@ if( !class_exists('Booking') ):
 			echo $this->view__calendar__scripts();
 			echo $this->booking__data__modal();
 			echo $this->nurses__data__modal();
+			echo $this->add__booking__modal();
 			return ob_get_clean();
 		}
 		
 		public function view__calendar__scripts(){
-			ob_start(); 
-?>
+			ob_start();
+			?>
 			<!-- FullCalendar -->
-<script>
+			<script>
 				$(window).load(function() {
 					var date = new Date(),
 					d = date.getDate(),
@@ -243,7 +259,6 @@ if( !class_exists('Booking') ):
 					y = date.getFullYear(),
 					started,
 					categoryClass;
-
 					var calendar = $('#calendar').fullCalendar({
 						header: {
 							left: 'prev,next today',
@@ -251,7 +266,14 @@ if( !class_exists('Booking') ):
 						},
 						selectable: true,
 						selectHelper: true,
-						select: false,
+						select: function(start, end) {
+							var s_date = new Date(start._d);
+							var e_date = new Date(end._d);
+							var modal = $("#add-booking-modal");
+							modal.find('form input[name="date_from"]').val(moment(s_date).format('MMMM DD,YYYY'));
+							modal.find('form input[name="date_to"]').val(moment(e_date).subtract(1, 'days').format('MMMM DD,YYYY'));
+							$('.add-booking-modal-btn').click();
+						},
 						eventClick: function(calEvent, jsEvent, view) {
 							$('.fc_create').click();
 							var date = new Date(calEvent._start._d);
@@ -260,14 +282,15 @@ if( !class_exists('Booking') ):
 			  				calendar.fullCalendar('unselect');
 						},
 						editable: true,
-						events: <?php echo $this->get__calender__booking__data(); ?>
+						<?php if($this->get__calender__booking__data()): ?>
+						events: <?php echo $this->get__calender__booking__data(); ?>,
+						<?php endif; ?>
 					});
 				});
 			</script>
 			<!-- /FullCalendar -->
 			<?php
 			return ob_get_clean();
-			
 		}
 		
 		public function get__calender__booking__data(){
@@ -279,7 +302,7 @@ if( !class_exists('Booking') ):
 			if($results):
 				$return = array();
 				foreach($results as $data):
-					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->date_from ) ) ) );
+					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->date_from ) ) , 'end' => isset($data->date_to) && $data->date_to != '' ? $this->add_date($data->date_to, '1 day') : $this->add_date($data->date_from, '1 day') ) );
 				endforeach;
 				return json_encode($return);
 			else:
@@ -324,7 +347,9 @@ if( !class_exists('Booking') ):
 			  				calendar.fullCalendar('unselect');
 						},
 						editable: true,
-						events: <?php echo $this->get__nurse__calender__booking__data(); ?>
+						<?php if($this->get__nurse__calender__booking__data()): ?>
+						events: <?php echo $this->get__nurse__calender__booking__data(); ?>,
+						<?php endif; ?>
 					});
 				});
 			</script>
@@ -336,11 +361,11 @@ if( !class_exists('Booking') ):
 		public function get__nurse__calender__booking__data(){
 			$nurse_id = get_current_user_id();
 			$query = " WHERE `nurses` LIKE '%".$nurse_id."%' GROUP BY `date_from` ";
-			$results = get_tabledata(TBL_BOOKINGS,false,array(),$query,array('COUNT(ID) as count' , 'date_from'));
+			$results = get_tabledata(TBL_BOOKINGS,false,array(),$query,array('COUNT(ID) as count' , 'date_from', 'date_to'));
 			if($results):
 				$return = array();
 				foreach($results as $data):
-					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->date_from ) ) ) );
+					array_push($return, array('title' => 'Available Bookings ('.$data->count.')' , 'start' => date('Y-m-d',strtotime($data->date_from ) ) , 'end' => isset($data->date_to) && $data->date_to != '' ? $this->add_date($data->date_to, '1 day') : $this->add_date($data->date_from, '1 day') ) );
 				endforeach;
 				return json_encode($return);
 			else:
@@ -348,6 +373,13 @@ if( !class_exists('Booking') ):
 			endif;
 		}
 		
+		public function add_date($d,$str){
+			$d = date('Y-m-d',strtotime($d) );
+			$date = date_create($d);
+			date_add($date,date_interval_create_from_date_string($str));
+			return date_format($date,"Y-m-d");
+		}
+
 		//Process functions starts here
 		public function add__booking__process(){
 			extract($_POST);
@@ -360,7 +392,6 @@ if( !class_exists('Booking') ):
 			if( user_can('add_booking') ):
 				$validation_args = array(
 					'course' => $course,
-//					'date_from' => date('Y-m-d', strtotime($date_from))
 				);
 
 				if(is_value_exists(TBL_BOOKINGS,$validation_args)):
@@ -372,22 +403,18 @@ if( !class_exists('Booking') ):
 					$enroll = array();
 					foreach($nurses as $nurse){
 						$enroll[$nurse] = 0;
-											  
-																	$result = $this->database->update(TBL_CHK,
-						array(
-							'booked' => 1,
-						),
-						array(
-							'user_ID'=> $nurse,
-							'course_ID'=> $course,
-									
-						)
-					);					  
-											  }
-			
-			
-			
-						
+						$attendance[$nurse] = 0;
+						$result = $this->database->update(TBL_CHK,
+							array(
+								'booked' => 1,
+							),
+							array(
+								'user_ID' => $nurse,
+								'course_ID' => $course,
+							)
+						);		  
+					}
+					
 					$guid = get_guid(TBL_BOOKINGS);
 					$result = $this->database->insert(TBL_BOOKINGS,
 						array(
@@ -395,27 +422,23 @@ if( !class_exists('Booking') ):
 							'course' => $course,
 							'nurses' => $nurses,
 							'enroll' => $enroll,
+							'attendance' => $attendance,
 							'created_by' => get_current_user_id(),
-							'date_from' =>date('Y-m-d', strtotime($date_from)),
+							'date_from' => date('Y-m-d', strtotime($date_from)),
 							'date_to' => date('Y-m-d', strtotime($date_to)),
 						)
 					);
-			
-
-			
 					if($result):
-			
 						$notification_args = array(
 							'title' => __('New booking created'),
 							'notification'=> __('You have successfully created a new booking.'),
 						);
-			
-
 						add_user_notification($notification_args);
 						$return['status'] = 1;
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Booking has been created successfully.');
 						$return['reset_form'] = 1;
+						$return['reload'] = 1;
 					endif;
 				endif;
 			endif;
@@ -433,7 +456,6 @@ if( !class_exists('Booking') ):
 			if( user_can('edit_booking') ):
 				$validation_args = array(
 					'course' => $course,
-//					'date_from' => date('Y-m-d', strtotime($date_from))
 				);
 
 				if(is_value_exists(TBL_BOOKINGS,$validation_args,$booking_id)):
@@ -444,16 +466,19 @@ if( !class_exists('Booking') ):
 				else:
 					$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
 					$old_enroll = maybe_unserialize($booking->enroll);
+					$old_attendance = maybe_unserialize($booking->attendance);
 					$enroll = array();
 					foreach($nurses as $nurse){
 						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
+						$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
 					}
 					$result = $this->database->update(TBL_BOOKINGS,
 						array(
 							'course' => $course,
 							'nurses' => $nurses,
 							'enroll' => $enroll,
-							'date_from' =>date('Y-m-d', strtotime($date_from)),
+							'attendance' => $attendance,
+							'date_from' => date('Y-m-d', strtotime($date_from)),
 							'date_to' => date('Y-m-d', strtotime($date_to)),
 						),
 						array(
@@ -520,6 +545,7 @@ if( !class_exists('Booking') ):
 			if($booking):
 				$nurses = maybe_unserialize($booking->nurses);
 				$enroll = maybe_unserialize($booking->enroll);
+				$attendance = maybe_unserialize($booking->attendance);
 				if(!empty($nurses)):
 					ob_start(); ?>
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
@@ -534,12 +560,17 @@ if( !class_exists('Booking') ):
 							<tr>
 								<td><?php echo get_user_name($nurse);?></td>
 								<td class="text-center">
-									
-									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="attendance_complete(this);"><?php _e('Attended'); ?></button>
-									<?php if($enroll[$nurse] == 0) : ?>
-									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_complete(this);"><?php _e('Complete'); ?></button>
+									<?php if($attendance[$nurse] == 0) : ?>
+									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="attendance_complete(this);"><?php _e('Attend'); ?></button>
 									<?php else: ?>
-									<label class="label label-success"><?php _e('Completed'); ?></label>
+									<label class="label label-info"><?php _e('Attended'); ?></label>
+									<?php endif; ?>
+									<?php if($attendance[$nurse] == 1) : ?>
+										<?php if($enroll[$nurse] == 0) : ?>
+										<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_complete(this);"><?php _e('Complete'); ?></button>
+										<?php else: ?>
+										<label class="label label-success"><?php _e('Completed'); ?></label>
+										<?php endif; ?>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -633,19 +664,27 @@ if( !class_exists('Booking') ):
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
 			
 			if($booking):
-				$enroll = maybe_unserialize($booking->enroll);
-				if(!empty($enroll) && isset($enroll[$user_id]) ):
-					$enroll[$user_id] = 1;
-					$update = $this->database->update(TBL_BOOKINGS, array('enroll' => $enroll), array('ID' => $booking->ID));
+				$attendance = maybe_unserialize($booking->attendance);
+				if(!empty($attendance) && isset($attendance[$user_id]) ):
+					$attendance[$user_id] = 1;
+					$update = $this->database->update(TBL_BOOKINGS, array('attendance' => $attendance), array('ID' => $booking->ID));
 					if($update){
 						$return['status'] = 1;
-						$return['html'] = '<label class="label label-success">'.__('Completed').'</label>';
+						$html = '<label class="label label-info">'.__('Attended').'</label>';
+						$enroll = maybe_unserialize($booking->enroll);
+						if(!empty($enroll) && isset($enroll[$user_id]) ):
+							if($enroll[$user_id] == 1){
+								$html .= '<label class="label label-success">'.__('Completed').'</label>';
+							}else{
+								$html .= '<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="'.$booking->ID.'" data-user="'.$user_id.'" onclick="nurse_complete(this);">'.__('Complete').'</button>';
+							}
+						endif;
+						$return['html'] = $html;
 					}
 				endif;
 			endif;
 			return json_encode($return);
-		}
-		
+		}		
 		
 		public function nurse__complete__process(){
 			extract($_POST);
@@ -662,14 +701,12 @@ if( !class_exists('Booking') ):
 					$update = $this->database->update(TBL_BOOKINGS, array('enroll' => $enroll), array('ID' => $booking->ID));
 					if($update){
 						$return['status'] = 1;
-						$return['html'] = '<label class="label label-success">'.__('Completed').'</label>';
+						$return['html'] = '<label class="label label-info">'.__('Attended').'</label><label class="label label-success">'.__('Completed').'</label>';
 					}
 				endif;
 			endif;
 			return json_encode($return);
 		}
-		
 	}
-
 endif;
 ?>

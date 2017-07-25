@@ -42,42 +42,33 @@
 			case 'add_new_user':
 				echo $User->add__user__process();
 				break;
-
-
-//////////////// 	ADDITIONAL FORMS FOR USER INFO	/////////////////////////////////////////				
 				
-
-				
+			/*ADDITIONAL FORMS FOR USER INFO*/				
+							
 			case 'update_preceptorship':
 				echo $User->update__preceptor__process();
 				break;
-
 				
 			case 'update_mca':
 				echo $User->update__mca__process();
 				break;
-
 				
 			case 'update_fdap':
 				echo $User->update__fdap__process();
 				break;
-
-				
+			
 			case 'update_student_prog':
 				echo $User->update__student__process();
 				break;
-
 				
 			case 'update_mentor_prog':
 				echo $User->update__mentor__process();
 				break;
 
-
 			case 'update_notes':
 				echo $User->update__notes__process();
 				break;
-/////////////////////////////////////////////////////////
-
+				
 			case 'edit_user':
 				echo $User->update__user__process();
 				break;
@@ -105,12 +96,12 @@
 			case 'hide_notification':
 				echo $Profile->hide__notification__process();
 				break;
-			
+		
 			case 'add_new_course':
 				echo $Course->add__course__process();
 				break;			
-
-		case 'add_new_cohort':
+				
+			case 'add_new_cohort':
 				echo $Course->add__cohort__process();
 				break;
 				
@@ -129,7 +120,6 @@
 			case 'delete_cohort':
 				echo $Course->delete__cohort__process();
 				break;
-
 
 			case 'course_approve_change':
 				echo $Course->activate_course();
@@ -188,8 +178,7 @@
 				echo $Booking->fetch__course__nurses__process();
 				break;			
 
-
-case 'fetch_cohort_date_data':
+			case 'fetch_cohort_date_data':
 				echo $User->fetch__cohort__date__process();
 				break;
 				
@@ -208,6 +197,7 @@ case 'fetch_cohort_date_data':
 			case 'nurse_complete':
 				echo $Booking->nurse__complete__process();
 				break;
+				
 			case 'attendance_complete':
 				echo $Booking->nurse__attendance__process();
 				break;
@@ -217,5 +207,5 @@ case 'fetch_cohort_date_data':
 		print_r($_POST);
 	endif;
 	
-	exit();
+exit();
 ?>
