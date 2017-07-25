@@ -272,7 +272,7 @@ if( !class_exists('Course') ):
 			if( !user_can('view_course') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$courses):
-				echo page_not_found("Oops! There is no New courses record found",' ',false);
+				echo page_not_found("Oops! THERE ARE NO NEW courses record found",' ',false);
 			else:
 			?>
 				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -281,7 +281,6 @@ if( !class_exists('Course') ):
 							<th><?php _e('Active');?></th>
 							<th><?php _e('Name');?></th>
 							<th><?php _e('Course Trainer(s)');?></th>
-							<th><?php _e('Duration(days)');?></th>
 							<th><?php _e('Description');?></th>
 							<th><?php _e('Created On');?></th>
 							<th class="text-center"><?php _e('Actions');?></th>
@@ -304,17 +303,11 @@ if( !class_exists('Course') ):
 								if($users): foreach($users as $user_id):
 			$count += 1;
 									echo get_user_name($user_id);
-									echo ($count < $users_count) ? ', <br> ' : '';
+									echo ($count < $users_count) ? '' : ', <br> ';
 								endforeach; endif;
 								?>
 							</td>
-							<td><?php 
-								$diff = abs(strtotime($course->date_to) - strtotime($course->date_from));
-			$years = floor($diff / (365*60*60*24));
-$months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-			echo $days+1;
-								?></td>
+
 							<td><?php _e($course->description);?></td>
 							<td><?php echo date('M d,Y',strtotime($course->created_on));?></td>
 							
@@ -345,7 +338,7 @@ $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24))
 			if( !user_can('view_course') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$courses):
-				echo page_not_found("Oops! There is no New courses record found",' ',false);
+				echo page_not_found("Oops! THERE ARE NO NEW courses record found",' ',false);
 			else:
 			?>
 				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">

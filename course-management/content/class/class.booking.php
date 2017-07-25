@@ -123,7 +123,7 @@ if( !class_exists('Booking') ):
 			if( !user_can('view_booking') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$bookings):
-				echo page_not_found("Oops! There is no New bookings record found",' ',false);
+				echo page_not_found("Oops! THERE ARE NO NEW bookings record found",' ',false);
 			else:
 			?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -662,6 +662,8 @@ if( !class_exists('Booking') ):
 			$return['status'] = 0;
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
+			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course));
+			$gID = $course->ID;
 			
 			if($booking):
 				$attendance = maybe_unserialize($booking->attendance);
@@ -682,6 +684,16 @@ if( !class_exists('Booking') ):
 						$return['html'] = $html;
 					}
 				endif;
+			
+				$result = $this->database->update(TBL_CHK,
+				array(
+					'attended' => 1,
+				),
+				array(
+					'user_ID' => $user_id,
+					'course_ID' => $gID,
+				)
+				);	
 			endif;
 			return json_encode($return);
 		}		
@@ -693,7 +705,8 @@ if( !class_exists('Booking') ):
 			$return['status'] = 0;
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
-			
+			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course));
+			$gID = $course->ID;
 			if($booking):
 				$enroll = maybe_unserialize($booking->enroll);
 				if(!empty($enroll) && isset($enroll[$user_id]) ):
@@ -704,6 +717,16 @@ if( !class_exists('Booking') ):
 						$return['html'] = '<label class="label label-info">'.__('Attended').'</label><label class="label label-success">'.__('Completed').'</label>';
 					}
 				endif;
+			
+							$result = $this->database->update(TBL_CHK,
+				array(
+					'passed' => 1,
+				),
+				array(
+					'user_ID' => $user_id,
+					'course_ID' => $gID,
+				)
+				);	
 			endif;
 			return json_encode($return);
 		}

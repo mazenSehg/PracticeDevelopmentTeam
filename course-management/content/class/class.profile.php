@@ -204,7 +204,7 @@ if( !class_exists('Profile') ):
 					<ul class="pagination pagination-split"><?php echo paginate($paginate_url,$show_page, $total_pages); ?></ul>
 				<?php endif;
 			else:
-				echo page_not_found("Oops! There is no New Notifications",' ',false);
+				echo page_not_found("Oops! THERE ARE NO NEW Notifications",' ',false);
 			endif;
 			$content = ob_get_clean();
 			return $content;
@@ -243,7 +243,7 @@ if( !class_exists('Profile') ):
 							</div>
 						</li>
 					<?php else: ?>
-						<li><h5 class="text-uppercase"><?php _e('There is no new notifications');?></h5></li>
+						<li><h5 class="text-uppercase"><?php _e('THERE ARE NO NEW notifications');?></h5></li>
 					<?php endif; ?>
 				</ul>
 			</li>

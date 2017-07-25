@@ -284,7 +284,7 @@ if( !class_exists('Location') ):
 			if( !user_can('view_location') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$locations):
-				echo page_not_found("Oops! There is no New locations record found",' ',false);
+				echo page_not_found("Oops! THERE ARE NO NEW locations record found",' ',false);
 			else:
 			?>
 				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
@@ -332,7 +332,7 @@ if( !class_exists('Location') ):
 			if( !user_can('view_work_areas') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$locations):
-				echo page_not_found("Oops! There is no New work Areas record found",' ',false);
+				echo page_not_found("Oops! THERE ARE NO NEW work Areas record found",' ',false);
 			else:
 			?>
 				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
