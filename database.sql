@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.1.6
+-- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Jul 20, 2017 at 05:24 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Host: 127.0.0.1
+-- Generation Time: Jul 25, 2017 at 08:42 AM
+-- Server version: 5.6.16
+-- PHP Version: 5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `course-management`
@@ -26,14 +26,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `tbl_access_log`
 --
 
-CREATE TABLE `tbl_access_log` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_access_log` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `ip_address` text COLLATE utf8_unicode_ci NOT NULL,
   `device` text COLLATE utf8_unicode_ci NOT NULL,
   `user_agent` text COLLATE utf8_unicode_ci NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=64 ;
 
 --
 -- Dumping data for table `tbl_access_log`
@@ -92,7 +93,17 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (50, 10000950345, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-14 13:57:25'),
 (51, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-14 13:57:41'),
 (52, 10000950345, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-14 13:58:07'),
-(53, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-17 09:45:35');
+(53, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-07-17 09:45:35'),
+(54, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-20 18:32:36'),
+(55, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 05:09:49'),
+(56, 10000603933, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:37:32'),
+(57, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:37:49'),
+(58, 10000603933, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:38:18'),
+(59, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:38:31'),
+(60, 10000603933, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:38:56'),
+(61, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:39:14'),
+(62, 10000603933, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:39:32'),
+(63, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:40:45');
 
 -- --------------------------------------------------------
 
@@ -100,24 +111,26 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 -- Table structure for table `tbl_bookings`
 --
 
-CREATE TABLE `tbl_bookings` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_bookings` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `course` bigint(20) NOT NULL,
   `date_from` date DEFAULT NULL,
   `date_to` date DEFAULT NULL,
   `nurses` text NOT NULL,
+  `attendance` text NOT NULL,
   `enroll` text,
   `created_by` bigint(20) NOT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000928872 ;
 
 --
 -- Dumping data for table `tbl_bookings`
 --
 
-INSERT INTO `tbl_bookings` (`ID`, `course`, `date_from`, `date_to`, `nurses`, `enroll`, `created_by`, `created_on`) VALUES
-(10000001174, 10000240234, '2017-07-19', '2017-07-27', 'a:1:{i:0;s:11:\"10000340101\";}', 'a:1:{i:10000340101;i:0;}', 1, '2017-07-20 12:50:46'),
-(10000231915, 10000936950, '2017-07-19', '2017-07-21', 'a:2:{i:0;s:11:\"10000340101\";i:1;s:11:\"10000603933\";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-07-20 12:46:47');
+INSERT INTO `tbl_bookings` (`ID`, `course`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
+(10000197931, 10000240234, '2017-07-05', '2017-07-07', 'a:1:{i:0;s:11:"10000340101";}', 'a:1:{s:11:"10000340101";i:1;}', 'a:1:{s:11:"10000340101";i:1;}', 1, '2017-07-25 06:30:16'),
+(10000853535, 10000936950, '2017-06-26', '2017-06-30', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{s:11:"10000340101";i:1;s:11:"10000603933";i:0;}', 'a:2:{s:11:"10000340101";i:0;s:11:"10000603933";i:0;}', 1, '2017-07-25 06:29:41');
 
 -- --------------------------------------------------------
 
@@ -125,14 +138,15 @@ INSERT INTO `tbl_bookings` (`ID`, `course`, `date_from`, `date_to`, `nurses`, `e
 -- Table structure for table `tbl_cohort`
 --
 
-CREATE TABLE `tbl_cohort` (
+CREATE TABLE IF NOT EXISTS `tbl_cohort` (
   `ID` bigint(12) NOT NULL,
   `name` varchar(150) DEFAULT NULL,
   `type` varchar(150) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `y` int(100) DEFAULT NULL,
   `m` int(100) DEFAULT NULL,
-  `d` int(100) DEFAULT NULL
+  `d` int(100) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -149,12 +163,13 @@ INSERT INTO `tbl_cohort` (`ID`, `name`, `type`, `date`, `y`, `m`, `d`) VALUES
 -- Table structure for table `tbl_cohort_ext`
 --
 
-CREATE TABLE `tbl_cohort_ext` (
-  `ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_cohort_ext` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Cohort_ID` bigint(12) NOT NULL,
   `Cohort_date` date NOT NULL,
-  `over` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `over` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=81 ;
 
 --
 -- Dumping data for table `tbl_cohort_ext`
@@ -188,24 +203,25 @@ INSERT INTO `tbl_cohort_ext` (`ID`, `Cohort_ID`, `Cohort_date`, `over`) VALUES
 -- Table structure for table `tbl_courses`
 --
 
-CREATE TABLE `tbl_courses` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_courses` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `course_ID` varchar(50) NOT NULL,
   `name` varchar(1024) NOT NULL,
   `description` text,
   `admins` text,
   `location` bigint(20) NOT NULL,
   `active` int(11) NOT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000936951 ;
 
 --
 -- Dumping data for table `tbl_courses`
 --
 
 INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `active`, `created_on`) VALUES
-(10000936950, 'PAK', 'another test', 'testsetst', 'a:2:{i:0;s:11:\"10000950338\";i:1;s:11:\"10000950340\";}', 19, 0, '2017-07-19 14:22:27'),
-(10000240234, 'TST', 'test', 'Test', 'a:2:{i:0;s:11:\"10000950343\";i:1;s:11:\"10000950341\";}', 3, 0, '2017-07-19 14:21:09');
+(10000936950, 'PAK', 'another test', 'testsetst', 'a:2:{i:0;s:11:"10000950338";i:1;s:11:"10000950340";}', 19, 0, '2017-07-19 14:22:27'),
+(10000240234, 'TST', 'test', 'Test', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950341";}', 3, 0, '2017-07-19 14:21:09');
 
 -- --------------------------------------------------------
 
@@ -213,15 +229,16 @@ INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `
 -- Table structure for table `tbl_course_user`
 --
 
-CREATE TABLE `tbl_course_user` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_course_user` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_ID` bigint(20) NOT NULL,
   `course_ID` bigint(20) NOT NULL,
   `booked` int(1) NOT NULL,
   `attended` int(1) NOT NULL,
   `uploaded` int(1) NOT NULL,
-  `passed` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `passed` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000942987 ;
 
 --
 -- Dumping data for table `tbl_course_user`
@@ -238,12 +255,13 @@ INSERT INTO `tbl_course_user` (`ID`, `user_ID`, `course_ID`, `booked`, `attended
 -- Table structure for table `tbl_designations`
 --
 
-CREATE TABLE `tbl_designations` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_designations` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(150) NOT NULL,
   `name` varchar(1024) NOT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000641647 ;
 
 --
 -- Dumping data for table `tbl_designations`
@@ -292,8 +310,8 @@ INSERT INTO `tbl_designations` (`ID`, `code`, `name`, `created_on`) VALUES
 -- Table structure for table `tbl_locations`
 --
 
-CREATE TABLE `tbl_locations` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_locations` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `location_code` varchar(50) DEFAULT NULL,
   `name` varchar(1024) DEFAULT NULL,
   `phone` varchar(64) DEFAULT NULL,
@@ -301,35 +319,36 @@ CREATE TABLE `tbl_locations` (
   `booking_phone` varchar(64) DEFAULT NULL,
   `notes` text,
   `extras` text,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `tbl_locations`
 --
 
 INSERT INTO `tbl_locations` (`ID`, `location_code`, `name`, `phone`, `booking_contact`, `booking_phone`, `notes`, `extras`, `created_on`) VALUES
-(1, 'A1_ED', 'A1 ED Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(2, 'A2_ED', 'A2 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(3, 'A3_ED', 'A3 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(4, 'A4_ED', 'A4 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(5, 'A5_ED', 'A5 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(6, 'A6_ED', 'A6 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(7, 'A7_ED', 'A7 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(8, 'A8_ED', 'A8 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(9, 'A9_ED', 'B1 Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:14:\"project_screen\";i:3;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(10, 'AnesSeminar_RSCH', 'Anesthetic Seminar Room', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:14:\"project_screen\";i:3;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(11, 'B2_Ed', 'B2 Ed Centre', '', '', '', '', 'a:6:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:9:\"clipboard\";i:3;s:16:\"laptop_connector\";i:4;s:14:\"project_screen\";i:5;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(12, 'Canteen_RSCH', 'Canteen Level A', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(13, 'LecTheatre_ED', 'Lecture Theatre', '', '', '', '', 'a:6:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:9:\"clipboard\";i:3;s:16:\"laptop_connector\";i:4;s:14:\"project_screen\";i:5;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(14, 'Libary_ED', 'Library Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(15, 'LibraryCourtyard_ED', 'Library Courtyard Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(16, 'LibrarySeminar_ED', 'Library Seminar Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:6:\"tables\";i:3;s:22:\"interactive_whiteboard\";}', '0000-00-00 00:00:00'),
-(17, 'LibraryTraining_ED', 'Library Training Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:14:\"project_screen\";i:3;s:6:\"tables\";}', '0000-00-00 00:00:00'),
-(18, 'LittleMattuTrainingSuite_RSCH', 'Little Mattu', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(1, 'A1_ED', 'A1 ED Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(2, 'A2_ED', 'A2 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(3, 'A3_ED', 'A3 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(4, 'A4_ED', 'A4 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(5, 'A5_ED', 'A5 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(6, 'A6_ED', 'A6 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(7, 'A7_ED', 'A7 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(8, 'A8_ED', 'A8 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(9, 'A9_ED', 'B1 Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:14:"project_screen";i:3;s:6:"tables";}', '0000-00-00 00:00:00'),
+(10, 'AnesSeminar_RSCH', 'Anesthetic Seminar Room', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:14:"project_screen";i:3;s:6:"tables";}', '0000-00-00 00:00:00'),
+(11, 'B2_Ed', 'B2 Ed Centre', '', '', '', '', 'a:6:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:9:"clipboard";i:3;s:16:"laptop_connector";i:4;s:14:"project_screen";i:5;s:6:"tables";}', '0000-00-00 00:00:00'),
+(12, 'Canteen_RSCH', 'Canteen Level A', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(13, 'LecTheatre_ED', 'Lecture Theatre', '', '', '', '', 'a:6:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:9:"clipboard";i:3;s:16:"laptop_connector";i:4;s:14:"project_screen";i:5;s:6:"tables";}', '0000-00-00 00:00:00'),
+(14, 'Libary_ED', 'Library Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(15, 'LibraryCourtyard_ED', 'Library Courtyard Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(16, 'LibrarySeminar_ED', 'Library Seminar Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:6:"tables";i:3;s:22:"interactive_whiteboard";}', '0000-00-00 00:00:00'),
+(17, 'LibraryTraining_ED', 'Library Training Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:14:"project_screen";i:3;s:6:"tables";}', '0000-00-00 00:00:00'),
+(18, 'LittleMattuTrainingSuite_RSCH', 'Little Mattu', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
 (19, 'ParentCraft_RSCH', 'Parent Craft Room OPD 1', '', '', '', '', 'a:0:{}', '0000-00-00 00:00:00'),
-(20, 'TrainingSuite_1_RSCH', 'Training Suite 1', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:16:\"laptop_connector\";i:3;s:14:\"project_screen\";}', '0000-00-00 00:00:00'),
-(21, 'TrainingSuite_2_RSCH', 'Training Suite 2', '', '', '', '', 'a:5:{i:0;s:6:\"chairs\";i:1;s:16:\"laptop_connector\";i:2;s:14:\"project_screen\";i:3;s:4:\"sink\";i:4;s:13:\"hospital_beds\";}', '0000-00-00 00:00:00');
+(20, 'TrainingSuite_1_RSCH', 'Training Suite 1', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:16:"laptop_connector";i:3;s:14:"project_screen";}', '0000-00-00 00:00:00'),
+(21, 'TrainingSuite_2_RSCH', 'Training Suite 2', '', '', '', '', 'a:5:{i:0;s:6:"chairs";i:1;s:16:"laptop_connector";i:2;s:14:"project_screen";i:3;s:4:"sink";i:4;s:13:"hospital_beds";}', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -337,14 +356,17 @@ INSERT INTO `tbl_locations` (`ID`, `location_code`, `name`, `phone`, `booking_co
 -- Table structure for table `tbl_notes`
 --
 
-CREATE TABLE `tbl_notes` (
-  `ID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_notes` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `to` bigint(10) NOT NULL,
   `from` bigint(10) NOT NULL,
   `note` text,
-  `filepath` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `filepath` varchar(500) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `ID` (`ID`),
+  KEY `ID_2` (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `tbl_notes`
@@ -363,15 +385,16 @@ INSERT INTO `tbl_notes` (`ID`, `date`, `to`, `from`, `note`, `filepath`) VALUES
 -- Table structure for table `tbl_notifications`
 --
 
-CREATE TABLE `tbl_notifications` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_notifications` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `title` text NOT NULL,
   `notification` text NOT NULL,
   `read` int(1) NOT NULL DEFAULT '0',
   `hide` int(1) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=387 ;
 
 --
 -- Dumping data for table `tbl_notifications`
@@ -737,7 +760,33 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (357, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:41:39'),
 (358, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:46:47'),
 (359, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-20 12:50:47'),
-(360, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-20 14:19:29');
+(360, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-20 14:19:29'),
+(361, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-25 05:14:50'),
+(362, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-25 05:18:47'),
+(363, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-25 05:19:02'),
+(364, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-25 05:19:22'),
+(365, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 05:58:25'),
+(366, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 05:58:27'),
+(367, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:00:24'),
+(368, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:02:37'),
+(369, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:12:38'),
+(370, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:12:40'),
+(371, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:14:49'),
+(372, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:22:29'),
+(373, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:24:21'),
+(374, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:24:23'),
+(375, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:24:29'),
+(376, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:25:49'),
+(377, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:26:19'),
+(378, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:26:21'),
+(379, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:26:33'),
+(380, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:28:43'),
+(381, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:29:31'),
+(382, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-07-25 06:29:33'),
+(383, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:29:41'),
+(384, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-07-25 06:30:16'),
+(385, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-25 06:38:06'),
+(386, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-07-25 06:38:46');
 
 -- --------------------------------------------------------
 
@@ -745,11 +794,12 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 -- Table structure for table `tbl_options`
 --
 
-CREATE TABLE `tbl_options` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_options` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `option_name` text NOT NULL,
-  `option_value` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `option_value` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `tbl_options`
@@ -767,7 +817,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (9, 'site_contact_email', 'info@coursemanagement.com'),
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
-(12, 'users_capabilities', 's:1352:\"a:3:{s:5:\"admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:18:{s:9:\"view_user\";i:1;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:1;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:1;s:12:\"add_location\";i:1;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:1;s:13:\"add_work_area\";i:1;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:0;}s:5:\"nurse\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
+(12, 'users_capabilities', 's:1352:"a:3:{s:5:"admin";a:18:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:0;s:12:"add_location";i:0;s:13:"edit_location";i:0;s:14:"view_work_area";i:0;s:13:"add_work_area";i:0;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}s:12:"course_admin";a:18:{s:9:"view_user";i:1;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:1;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:1;s:12:"add_location";i:1;s:13:"edit_location";i:0;s:14:"view_work_area";i:1;s:13:"add_work_area";i:1;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:1;s:11:"add_booking";i:1;s:12:"edit_booking";i:1;s:14:"delete_booking";i:0;}s:5:"nurse";a:18:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:0;s:12:"add_location";i:0;s:13:"edit_location";i:0;s:14:"view_work_area";i:0;s:13:"add_work_area";i:0;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}}";');
 
 -- --------------------------------------------------------
 
@@ -775,12 +825,13 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 -- Table structure for table `tbl_usermeta`
 --
 
-CREATE TABLE `tbl_usermeta` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_usermeta` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `meta_key` text NOT NULL,
-  `meta_value` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `meta_value` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=470 ;
 
 --
 -- Dumping data for table `tbl_usermeta`
@@ -1223,8 +1274,8 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 -- Table structure for table `tbl_users`
 --
 
-CREATE TABLE `tbl_users` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_users` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `trainer_ID` varchar(150) DEFAULT NULL,
   `user_email` varchar(512) DEFAULT NULL,
   `user_pass` varchar(512) DEFAULT NULL,
@@ -1242,8 +1293,9 @@ CREATE TABLE `tbl_users` (
   `external_candidate` int(11) DEFAULT NULL,
   `rag_status` int(11) DEFAULT NULL,
   `extended_support` int(11) DEFAULT NULL,
-  `support_since` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `support_since` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10000989114 ;
 
 --
 -- Dumping data for table `tbl_users`
@@ -1269,8 +1321,8 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 (10000950352, NULL, 'sallywhitehouse@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sally', 'Whitehouse', 'course_admin', 'sallywhitehouse', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950353, NULL, 'v.wilding@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Victoria', 'Wilding', 'course_admin', 'v.wilding', 1, 1, '', 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, '', NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
-(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:2:{i:0;s:11:\"10000936950\";i:1;s:11:\"10000240234\";}', 0, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
-(10000603933, '', 's@g.com', '591a238ee479f3a001e305fce074ebf7863c972ecf7de78d69206255d1d13c2e', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 'a:1:{i:0;s:11:\"10000936950\";}', NULL, 'JVhvWgGOMaLPKWTYdCXDMg==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015);
+(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:2:{i:0;s:11:"10000936950";i:1;s:11:"10000240234";}', 0, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
+(10000603933, '', 's@g.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 'a:1:{i:0;s:11:"10000936950";}', NULL, '78cHgqMhLRJHz575WXy9uw==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015);
 
 -- --------------------------------------------------------
 
@@ -1278,8 +1330,8 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 -- Table structure for table `tbl_user_info`
 --
 
-CREATE TABLE `tbl_user_info` (
-  `ID` bigint(110) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_user_info` (
+  `ID` bigint(110) NOT NULL AUTO_INCREMENT,
   `user_ID` bigint(100) DEFAULT NULL,
   `prec_intro` date DEFAULT NULL,
   `current_prec` int(11) DEFAULT NULL,
@@ -1323,8 +1375,9 @@ CREATE TABLE `tbl_user_info` (
   `stud_d1` date DEFAULT NULL,
   `stud_d2` date DEFAULT NULL,
   `stud_d3` date DEFAULT NULL,
-  `stud_notes` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `stud_notes` text,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1332,8 +1385,8 @@ CREATE TABLE `tbl_user_info` (
 -- Table structure for table `tbl_work_area`
 --
 
-CREATE TABLE `tbl_work_area` (
-  `ID` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `tbl_work_area` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(150) DEFAULT NULL,
   `name` varchar(150) DEFAULT NULL,
   `phone1` int(15) DEFAULT NULL,
@@ -1342,8 +1395,9 @@ CREATE TABLE `tbl_work_area` (
   `first_name` varchar(150) DEFAULT NULL,
   `last_name` varchar(150) DEFAULT NULL,
   `email` varchar(150) DEFAULT NULL,
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `tbl_work_area`
@@ -1400,176 +1454,6 @@ INSERT INTO `tbl_work_area` (`ID`, `code`, `name`, `phone1`, `phone2`, `bleep`, 
 (48, 'Uni_S_01', 'University Of Surrey', 1483, 2793, 0, 'Simon', 'Pawlin', 's.pawlin@nhs.net', '0000-00-00 00:00:00'),
 (49, 'Wisley_01', 'Wisley', 4693, 0, 0, 'Sreeja', 'Sukumaran', 'ssukumaran@nhs.net', '0000-00-00 00:00:00');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tbl_access_log`
---
-ALTER TABLE `tbl_access_log`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_bookings`
---
-ALTER TABLE `tbl_bookings`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_cohort`
---
-ALTER TABLE `tbl_cohort`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_cohort_ext`
---
-ALTER TABLE `tbl_cohort_ext`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_courses`
---
-ALTER TABLE `tbl_courses`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_course_user`
---
-ALTER TABLE `tbl_course_user`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_designations`
---
-ALTER TABLE `tbl_designations`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_locations`
---
-ALTER TABLE `tbl_locations`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_notes`
---
-ALTER TABLE `tbl_notes`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `ID` (`ID`),
-  ADD KEY `ID_2` (`ID`);
-
---
--- Indexes for table `tbl_notifications`
---
-ALTER TABLE `tbl_notifications`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_options`
---
-ALTER TABLE `tbl_options`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_usermeta`
---
-ALTER TABLE `tbl_usermeta`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_users`
---
-ALTER TABLE `tbl_users`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_user_info`
---
-ALTER TABLE `tbl_user_info`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `tbl_work_area`
---
-ALTER TABLE `tbl_work_area`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbl_access_log`
---
-ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
---
--- AUTO_INCREMENT for table `tbl_bookings`
---
-ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000969920;
---
--- AUTO_INCREMENT for table `tbl_cohort_ext`
---
-ALTER TABLE `tbl_cohort_ext`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
---
--- AUTO_INCREMENT for table `tbl_courses`
---
-ALTER TABLE `tbl_courses`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000936951;
---
--- AUTO_INCREMENT for table `tbl_course_user`
---
-ALTER TABLE `tbl_course_user`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000942987;
---
--- AUTO_INCREMENT for table `tbl_designations`
---
-ALTER TABLE `tbl_designations`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000641647;
---
--- AUTO_INCREMENT for table `tbl_locations`
---
-ALTER TABLE `tbl_locations`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
---
--- AUTO_INCREMENT for table `tbl_notes`
---
-ALTER TABLE `tbl_notes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
---
--- AUTO_INCREMENT for table `tbl_notifications`
---
-ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
---
--- AUTO_INCREMENT for table `tbl_options`
---
-ALTER TABLE `tbl_options`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `tbl_usermeta`
---
-ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=470;
---
--- AUTO_INCREMENT for table `tbl_users`
---
-ALTER TABLE `tbl_users`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000989114;
---
--- AUTO_INCREMENT for table `tbl_user_info`
---
-ALTER TABLE `tbl_user_info`
-  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tbl_work_area`
---
-ALTER TABLE `tbl_work_area`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
