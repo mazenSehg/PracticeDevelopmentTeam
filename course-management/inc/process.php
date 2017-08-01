@@ -99,7 +99,11 @@
 		
 			case 'add_new_course':
 				echo $Course->add__course__process();
-				break;			
+				break;
+
+			case 'add_new_course_type':
+				echo $Course->add__course__type__process();
+				break;
 				
 			case 'add_new_cohort':
 				echo $Course->add__cohort__process();

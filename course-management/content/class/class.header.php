@@ -275,6 +275,15 @@ if( !class_exists('Header') ):
 										<li><a href="<?php the_permalink('add-new-course');?>"><?php _e('Add New Course');?></a></li>
 										<li class="hidden"><a href="<?php the_permalink('edit-course');?>"></a></li>
 										<?php endif;?>
+										
+										<?php if( user_can('view_course') ): ?>
+										<li><a href="<?php the_permalink('course-types');?>"><?php _e('All Course Types');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_course') || user_can('add_course')): ?>
+										<li><a href="<?php the_permalink('add-new-course-typer');?>"><?php _e('Add New Course Type');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-course-type');?>"></a></li>
+										<?php endif;?>
 									</ul>
 								</li>
 								<?php endif; ?>

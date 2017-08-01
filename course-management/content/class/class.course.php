@@ -11,7 +11,8 @@ if( !class_exists('Course') ):
 			$this->database = $db;
 		}
 
-		public function add__course__page(){
+		
+				public function add__course__type__page(){
 			ob_start();
 			if( !user_can( 'add_course') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
@@ -26,9 +27,44 @@ if( !class_exists('Course') ):
 						<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="name" class="form-control require" />
 					</div>
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="add_new_course_type" />
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Create New Course Type');?></button>
+					</div>
+				</form>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
+		
+		
+		public function add__course__page(){
+			ob_start();
+			if( !user_can( 'add_course') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: ?>
+				<form class="add-course submit-form" method="post" autocomplete="off">					
+					<div class="form-group">
+						<label for="admins"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="code" class="form-control select_single require" data-placeholder="Choose course Type" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_COURSE_TYPE,false,array(),'',' ID, CONCAT_WS(" | ", course_ID , name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
 					
 					<div class="form-group">
-						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
+						<label for="name"><?php _e('Additional Name');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="name" class="form-control require" />
+					</div>
+					
+					<div class="form-group">
+						<label for="admins"><?php _e('Course Trainers(s)');?>&nbsp;<span class="required">*</span></label>
 						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
 							<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
@@ -51,6 +87,29 @@ if( !class_exists('Course') ):
 							?>
 						</select>
 					</div>
+					
+					
+									<div class="form-group">
+					<label for="date_from"><?php _e('Booking Date From');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/>
+				</div>
+				<div class="form-group">
+					<label for="date_to"><?php _e('Booking Date To');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;<span class="required">*</span></label>
+					<select name="nurses[]" class="form-control select_single require" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+						$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					
+					
+					
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="add_new_course" />
@@ -265,6 +324,90 @@ if( !class_exists('Course') ):
 			return $content;
 		}
 
+		
+		
+		
+		
+		
+		
+				public function all__courses__types__page(){
+			ob_start();
+			$args = array();
+			$courses = get_tabledata(TBL_COURSES,false,$args);
+			if( !user_can('view_course') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$courses):
+				echo page_not_found("Oops! THERE ARE NO NEW courses record found",' ',false);
+			else:
+			?>
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th><?php _e('Active');?></th>
+							<th><?php _e('Name');?></th>
+							<th><?php _e('Course Trainer(s)');?></th>
+							<th><?php _e('Description');?></th>
+							<th><?php _e('Created On');?></th>
+							<th class="text-center"><?php _e('Actions');?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php if($courses): foreach($courses as $course): ?>
+						<tr>
+							
+							<td>						<label>
+							<input type="checkbox" class="js-switch" <?php checked($course->active, 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $course->ID;?>" data-action="course_approve_change"/>
+						</label></td>
+							<td><?php _e($course->name);?></td>
+							<td>
+								<?php
+								$users = maybe_unserialize($course->admins);
+								$users = (is_array($users)) ? $users : (array)$users;
+								$users_count = count($users);
+								$count = 1;
+								if($users): foreach($users as $user_id):
+			$count += 1;
+									echo get_user_name($user_id);
+									echo ($count < $users_count) ? '' : ', <br> ';
+								endforeach; endif;
+								?>
+							</td>
+
+							<td><?php _e($course->description);?></td>
+							<td><?php echo date('M d,Y',strtotime($course->created_on));?></td>
+							
+							<td class="text-center">
+								<?php if( user_can('edit_course') ): ?>
+								<a href="<?php the_permalink('edit-course',array('id' => $course->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a>
+								<?php endif; ?>
+								
+								<?php if( user_can('delete_course') ): ?>
+								<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $course->ID;?>" data-action="delete_course"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
+								<?php endif; ?>
+							</td>
+						</tr>
+						<?php endforeach; endif; ?>
+					</tbody>
+				</table>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		public function all__courses__page(){
 			ob_start();
 			$args = array();
@@ -392,13 +535,11 @@ if( !class_exists('Course') ):
 					'course_ID' => $code,
 				);
 
-				if(is_value_exists(TBL_COURSES,$validation_args)):
-					$return['status'] = 2;
-					$return['message_heading'] = 'Failed !';
-					$return['message'] = 'Course name you entered is already exists, please try another name.';
-					$return['fields'] = array('name');
-				else:
-			
+					$enroll = array();
+					foreach($nurses as $nurse){
+					$enroll[$nurse] = 0;
+					$attendance[$nurse] = 0;
+					}
 					$guid = get_guid(TBL_COURSES);
 					$result = $this->database->insert(TBL_COURSES,
 						array(
@@ -408,10 +549,45 @@ if( !class_exists('Course') ):
 							'admins' => $admins,
 							'description' => $description,
 							'location' => $location,
-//						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
-//						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
+							'nurses' => $nurses,
+							'enroll' => $enroll,
+							'attendance' => $attendance,
+							'date_from' => date('Y-m-d', strtotime($date_from)),
+							'date_to' => date('Y-m-d', strtotime($date_to)),
 						)
 					);
+			
+					$enroll = array();
+					foreach($nurses as $nurse){
+						$enroll[$nurse] = 0;
+						$attendance[$nurse] = 0;
+						$result = $this->database->update(TBL_CHK,
+							array(
+								'booked' => 1,
+							),
+							array(
+								'user_ID' => $nurse,
+								'course_ID' => $code,
+							)
+						);		  
+					}
+					
+					$guid = get_guid(TBL_BOOKINGS);
+					$result = $this->database->insert(TBL_BOOKINGS,
+						array(
+							'ID' => $guid,
+							'course' => $code,
+							'nurses' => $nurses,
+							'enroll' => $enroll,
+							'attendance' => $attendance,
+							'created_by' => get_current_user_id(),
+							'date_from' => date('Y-m-d', strtotime($date_from)),
+							'date_to' => date('Y-m-d', strtotime($date_to)),
+						)
+					);
+			
+			
+			
 					if($result):
 						$notification_args = array(
 							'title' => 'New course created',
@@ -422,6 +598,53 @@ if( !class_exists('Course') ):
 						$return['status'] = 1;
 						$return['message_heading'] = 'Success !';
 						$return['message'] = 'Course has been created successfully.';
+						$return['reset_form'] = 1;
+				endif;
+			endif;
+			return json_encode($return);
+		}
+		
+		//Process functions starts here
+		public function add__course__type__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> 'Failed !',
+				'message' => 'Could not create course type, Please try again.',
+				'reset_form' => 0
+			);
+			if( user_can('add_course') ):
+				$validation_args = array(
+					'course_ID' => $code,
+				);
+
+				if(is_value_exists(TBL_COURSE_TYPE,$validation_args)):
+					$return['status'] = 2;
+					$return['message_heading'] = 'Failed !';
+					$return['message'] = 'Course type name you entered is already exists, please try another name.';
+					$return['fields'] = array('name');
+				else:
+			
+					$guid = get_guid(TBL_COURSE_TYPE);
+					$result = $this->database->insert(TBL_COURSE_TYPE,
+						array(
+							'ID' => $guid,
+							'course_ID' => $code,
+							'name' => $name,
+//						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
+//						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
+						)
+					);
+					if($result):
+						$notification_args = array(
+							'title' => 'New course created',
+							'notification'=> 'You have successfully created a new course type: ('.$name.').',
+						);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = 'Success !';
+						$return['message'] = 'Course Type has been created successfully.';
 						$return['reset_form'] = 1;
 					endif;
 				endif;
