@@ -111,10 +111,18 @@
 				
 			case 'update_course':
 				echo $Course->update__course__process();
+				break;			
+
+			case 'update_course_type':
+				echo $Course->update__course__type__process();
 				break;
 				
 			case 'delete_course':
 				echo $Course->delete__course__process();
+				break;			
+
+			case 'delete_course_type':
+				echo $Course->delete__course__type__process();
 				break;
 			
 			case 'update_cohort':

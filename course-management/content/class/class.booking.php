@@ -77,7 +77,7 @@ if( !class_exists('Booking') ):
 						}
 						$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
 						$option_data = get_option_data($data,array('ID','name'));
-						echo get_options_list($option_data,maybe_unserialize($booking->course));
+						echo get_options_list($option_data,maybe_unserialize($booking->course_ID));
 						?>
 					</select>
 				</div>
@@ -94,7 +94,7 @@ if( !class_exists('Booking') ):
 					<select name="nurses[]" class="form-control select_single require select-nurses" data-placeholder="Choose nurse(s)" multiple="multiple">
 						<?php
 						$select = ' ID, CONCAT_WS(" ", first_name , last_name) AS name ';
-						$query = " WHERE `courses` LIKE '%".$booking->course."%' AND `user_role` = 'nurse' ";
+						$query = " WHERE `courses` LIKE '%".$booking->course_ID."%' AND `user_role` = 'nurse' ";
 						$data = get_tabledata(TBL_USERS, false, array() , $query , $select);
 						$option_data = get_option_data($data,array('ID','name'));
 						echo get_options_list($option_data, maybe_unserialize($booking->nurses));
@@ -138,7 +138,7 @@ if( !class_exists('Booking') ):
 				</thead>
 				<tbody>
 					<?php if($bookings): foreach($bookings as $booking):
-						$course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));
+						$course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));
 					?>
 					<tr>
 						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
@@ -604,7 +604,7 @@ if( !class_exists('Booking') ):
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));?>
+					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));?>
 					<tr>
 						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
 						<td><?php _e($course->name);?></td>
@@ -641,7 +641,7 @@ if( !class_exists('Booking') ):
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));?>
+					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));?>
 					<tr>
 						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
 						<td><?php _e($course->name);?></td>
@@ -662,7 +662,7 @@ if( !class_exists('Booking') ):
 			$return['status'] = 0;
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
-			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course));
+			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course_ID));
 			$gID = $course->ID;
 			
 			if($booking):
@@ -705,7 +705,7 @@ if( !class_exists('Booking') ):
 			$return['status'] = 0;
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
-			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course));
+			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course_ID));
 			$gID = $course->ID;
 			if($booking):
 				$enroll = maybe_unserialize($booking->enroll);
