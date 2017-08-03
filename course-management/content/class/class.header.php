@@ -248,17 +248,9 @@ if( !class_exists('Header') ):
 								
 								
 								<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
-								<li>
-									<a><i class="fa fa-user"></i><?php _e('Manage Training');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php if( user_can('view_user') ): ?>
-										<li><a href="<?php the_permalink('progress');?>"><?php _e('All Users');?></a></li>
-										<?php endif;?>	
-										
-										<?php if( user_can('view_user') ): ?>
-										<li class="hidden"><a href="<?php the_permalink('view-progress');?>"></a></li>
-										<?php endif;?>
-									</ul>
+								
+                                <li>
+									<a href="<?php the_permalink('progress');?>"><i class="fa fa-user"></i><?php _e('Manage Training');?></a>
 								</li>
 								<?php endif; ?>
 
@@ -476,14 +468,7 @@ if( !class_exists('Header') ):
 				<div class="title_left"><h3><?php _e($title);?></h3></div>
 				<?php if($status === true): ?>
 					<div class="title_right">
-						<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search for...">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button"><?php _e('Go!');?></button>
-								</span>
-							</div>
-						</div>
+
 					</div>
 				<?php endif; ?>
 			</div>

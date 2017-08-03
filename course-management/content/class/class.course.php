@@ -563,19 +563,22 @@ if( !class_exists('Course') ):
 					'course_ID' => $code,
 				);
 
+            					$ayyy = get_guid(TBL_COURSES);
+			
 					$enroll = array();
 					foreach($nurses as $nurse){
-					$enroll[$nurse] = 0;
-					$attendance[$nurse] = 0;
+						$enroll[$nurse] = 0;
+						$attendance[$nurse] = 0;	  
 					}
-					$guid = get_guid(TBL_COURSES);
-			$ayyy = $guid;
+            
+            
+
 			$bob = get_tabledata(TBL_COURSE_TYPE,true,array('ID'=>$code));
 			$names = $bob->course_ID."_".$bob->name."_".$name;
 			
 					$result = $this->database->insert(TBL_COURSES,
 						array(
-							'ID' => $guid,
+							'ID' => $ayyy,
 							'course_ID' => $code,
 							'name' => $names,
 							'admins' => $admins,
@@ -588,28 +591,15 @@ if( !class_exists('Course') ):
 							'date_to' => date('Y-m-d', strtotime($date_to)),
 						)
 					);
-			
-					$enroll = array();
-					foreach($nurses as $nurse){
-						$enroll[$nurse] = 0;
-						$attendance[$nurse] = 0;
-						$result = $this->database->update(TBL_CHK,
-							array(
-								'booked' => 1,
-							),
-							array(
-								'user_ID' => $nurse,
-								'course_ID' => $code,
-							)
-						);		  
-					}
+
+            //INSERT INTO TBL_CHK
 					
 					$guid = get_guid(TBL_BOOKINGS);
 					$result = $this->database->insert(TBL_BOOKINGS,
 						array(
 							'ID' => $guid,
-							'course_ID' =>$ayyy,
-							'course' => $code,
+							'course_ID' =>$guid,
+							'course' => $ayyy,
 							'nurses' => $nurses,
 							'enroll' => $enroll,
 							'attendance' => $attendance,

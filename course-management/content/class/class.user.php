@@ -579,7 +579,62 @@ public function activity__and__progress__log__section( $user__id ){
 											<br>
 											<br>
 											<h1>Courses</h1>
-											<br>
+                                        <?php
+											$user = get_user_by('id',$user__id);
+    
+			$bookings = get_tabledata(TBL_BOOKINGS,false,array());
+			if(!$bookings):
+				echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
+			else:
+			?>
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th><?php _e('Course Name(s)');?></th>
+							<th><?php _e('Booked for course');?></th>
+							<th><?php _e('Attended');?></th>
+							<th><?php _e('Documents uploaded');?></th>
+							<th><?php _e('Course Complete');?></th>
+						</tr>
+					</thead>
+					<tbody>
+                        <?php if($bookings): foreach($bookings as $booking):
+    $data = unserialize($booking->nurses);
+    $data2 = unserialize($booking->attendance);
+    $match = 0;
+    $attended;
+    foreach($data as $i):
+    if($user->ID==$i){
+    $match = 1;
+        $attended =  $data2[$user->ID];
+        
+}
+    endforeach;
+
+
+                        //$corse = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));
+                        ?>
+                        <tr>
+                            <?php if($match!=0):
+                            $course = get_tabledata(TBL_COURSES,false,array('ID'=>$booking->course));
+                            ?>
+                            <td><?php echo $course[0]->name; ?></td>
+                            <td><?php echo date('M d, Y', strtotime($booking->date_from)); ?></td>
+                            <td><?php if($attended!=0):echo "yes"; else: echo "no."; endif; ?></td>
+                            <td><?php  ?></td>
+                            <td><?php  ?></td>
+                        <?php endif;?>
+                        </tr>
+                            <?php
+                        endforeach;endif;    
+                        ?>
+                            
+					</tbody>
+				</table>
+			<?php 
+			endif;
+    ?>
+                                        
 											
 									</ul>
 								</div>
@@ -913,7 +968,7 @@ public function activity__and__progress__log__section( $user__id ){
 			elseif(!$user):
 				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
 			else: ?>
-						<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+						<div class="col-md-12 col-sm-3 col-xs-12 profile_left">
 							<h3>Progress review for: <?php echo $user->first_name.' '.$user->last_name;?></h3>
 </div>
 							<br> 
