@@ -324,6 +324,53 @@ if( !class_exists('Location') ):
 			return $content;
 		}
 		
+                public function all__rules__page(){
+			ob_start();
+			$args = array();
+			$locations = get_tabledata(TBL_WORKS,false,$args);
+			if( !user_can('view_work_areas') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			elseif(!$locations):
+				echo page_not_found("Oops! THERE ARE NO NEW work Areas record found",' ',false);
+			else:
+			?>
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th><?php _e('code');?></th>
+							<th><?php _e('Name');?></th>
+							<th><?php _e('phone1.');?></th>
+							<th><?php _e('phone2.');?></th>
+							<th><?php _e('Created On');?></th>
+							<th class="text-center"><?php _e('Actions');?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php if($locations): foreach($locations as $location): ?>
+						<tr>
+							<td><?php _e($location->code);?></td>
+							<td><?php _e($location->name);?></td>
+							<td><?php _e($location->phone1);?></td>
+							<td><?php _e($location->phone2);?></td>
+							<td><?php echo date('M d,Y',strtotime($location->created_on));?></td>
+							<td class="text-center">
+								<?php if( user_can('edit_location') ): ?>
+								<a href="<?php the_permalink('edit-work-area',array('id' => $location->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a>
+								<?php endif; ?>
+								
+								<?php if( user_can('delete_location') ): ?>
+								<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $location->ID;?>" data-action="delete_work_area"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
+								<?php endif; ?>
+							</td>
+						</tr>
+						<?php endforeach; endif; ?>
+					</tbody>
+				</table>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+
+                }
 		
 				public function all__work_area__page(){
 			ob_start();

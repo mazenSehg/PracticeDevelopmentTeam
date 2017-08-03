@@ -140,6 +140,11 @@
 			case 'add_new_designation':
 				echo $Designation->add__designation__process();
 				break;
+
+
+            case 'add_new_designation_rule':
+				echo $Designation->add__designation__rules__process();
+				break;
 				
 			case 'update_designation':
 				echo $Designation->update__designation__process();
@@ -147,6 +152,10 @@
 				
 			case 'delete_designation':
 				echo $Designation->delete__designation__process();
+				break;			
+
+            case 'delete_designation_rules':
+				echo $Designation->delete__designation__rules__process();
 				break;
 				
 			case 'add_new_location':

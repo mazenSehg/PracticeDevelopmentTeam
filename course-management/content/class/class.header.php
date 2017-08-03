@@ -343,6 +343,17 @@ if( !class_exists('Header') ):
 										<?php endif;?>
 									</ul>
 								</li>
+                                    
+								<li>
+									<a><i class="fa fa-book"></i><?php _e('Rules');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="<?php the_permalink('rules');?>"><?php _e('Designation Rules');?></a></li>
+										
+
+										<li><a href="<?php the_permalink('add-new-designation-rules');?>"><?php _e('Add New Designation Rule');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-designation-rules');?>"></a></li>
+									</ul>
+								</li>
 								<?php endif; ?>
 								
 									
