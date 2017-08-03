@@ -302,7 +302,8 @@ public function activity__and__progress__log__section( $user__id ){
 						</div>
 						<div class="" role="tabpanel" data-example-id="togglable-tabs">
 							<ul id="tab_content" class="nav nav-tabs bar_tabs" role="tablist">
-                        <li role="presentation" class="">
+                        
+                                <li role="presentation" class="active">
 							<a href="#tab_content7" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Courses');?>
 									</a>
@@ -315,7 +316,7 @@ public function activity__and__progress__log__section( $user__id ){
     
                     if($data->preceptorship!=0){
                         ?>
-                        <li role="presentation" class="active">
+                        <li role="presentation" class="">
 							<a href="#tab_content01" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Preceptorship Progress');?>
 									</a>
@@ -374,7 +375,7 @@ public function activity__and__progress__log__section( $user__id ){
 						</li>  
 							</ul>
 							<div id="myTabContent" class="tab-content">
-								<div role="tabpanel" class="tab-pane fade active in" id="tab_content01" aria-labelledby="home-tab">
+								<div role="tabpanel" class="tab-pane fade " id="tab_content01" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
 										<form class="submit-form" method="post" autocomplete="off">
 											<br>
@@ -490,7 +491,7 @@ public function activity__and__progress__log__section( $user__id ){
 										</form>
 								</div>
 								</ul>
-								<div role="tabpanel" class="tab-pane fade" id="tab_content02" aria-labelledby="profile-tab">
+								<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
 										<form class="submit-form" method="post" autocomplete="off">
 											<br>
@@ -571,6 +572,85 @@ public function activity__and__progress__log__section( $user__id ){
 												</button>
 											</div>
 										</form>
+									</ul>
+								</div>
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content7" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+											<br>
+											<br>
+											<h1>Courses</h1>
+											<br>
+											
+									</ul>
+								</div>
+                            
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content8" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+											<br>
+											<br>
+											<h1>Notes</h1>
+											<br>														<form class="submit-form" method="post" autocomplete="off">
+											<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th>
+															<?php _e('Date of Note');?>
+														</th>
+														<th>
+															<?php _e('Note');?>
+														</th>
+														<th>
+															<?php _e('Attachments');?>
+														</th>
+														<th>
+															<?php _e('Note Posted By');?>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php
+			$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
+			foreach($notez as $noty): ?>
+														<tr>
+															<td>
+																<?php echo $noty->date?>
+															</td>
+															<td>
+																<?php echo $noty->note?>
+															</td>
+															<td>
+
+																<a href="<?php echo $noty->filepath; ?>" download>download</a>
+															</td>
+															<td>
+																<?php $user = get_userdata($noty->from);
+			echo $user->first_name . " ". $user->last_name?>
+															</td>
+														</tr>
+														<?php
+				endforeach;
+				?>
+												</tbody>
+											</table>
+											<div class="row">
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<div class="form-group col-sm-8 col-xs-12">
+													<label for="description-of-fault">Notes</label>
+													<textarea name="note" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+													<label for="description-of-fault">Attachments</label>
+												 <input type="file" name="file" accept="">
+																		
+											<div class="ln_solid"></div>
+											<div class="form-group">
+												<input type="hidden" name="action" value="update_notes" />
+												<button class="btn btn-success btn-md" type="submit">
+													<?php _e('Add note');?>
+												</button>
+											</div>
+										</form>
+								
 									</ul>
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
@@ -777,78 +857,6 @@ public function activity__and__progress__log__section( $user__id ){
 						</div>
 								
 					</div>
-							<div class="col-md-5 col-sm-15 col-xs-12">
-						<div class="profile_title">
-							<div class="col-md-6">
-								<h2><?php _e('Notes');?></h2> </div>
-						</div>
-						<div class="" role="tabpanel" data-example-id="togglable-tabs">
-						</div>
-																	<form class="submit-form" method="post" autocomplete="off">
-											<br>
-											<br>
-											<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
-												<thead>
-													<tr>
-														<th>
-															<?php _e('Date of Note');?>
-														</th>
-														<th>
-															<?php _e('Note');?>
-														</th>
-														<th>
-															<?php _e('Attachments');?>
-														</th>
-														<th>
-															<?php _e('Note Posted By');?>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<?php
-			$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
-			foreach($notez as $noty): ?>
-														<tr>
-															<td>
-																<?php echo $noty->date?>
-															</td>
-															<td>
-																<?php echo $noty->note?>
-															</td>
-															<td>
-
-																<a href="<?php echo $noty->filepath; ?>" download>download</a>
-															</td>
-															<td>
-																<?php $user = get_userdata($noty->from);
-			echo $user->first_name . " ". $user->last_name?>
-															</td>
-														</tr>
-														<?php
-				endforeach;
-				?>
-												</tbody>
-											</table>
-											<div class="row">
-												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-												<div class="form-group col-sm-8 col-xs-12">
-													<label for="description-of-fault">Notes</label>
-													<textarea name="note" class="form-control" rows="3"></textarea>
-												</div>
-											</div>
-													<label for="description-of-fault">Attachments</label>
-												 <input type="file" name="file" accept="">
-																		
-											<div class="ln_solid"></div>
-											<div class="form-group">
-												<input type="hidden" name="action" value="update_notes" />
-												<button class="btn btn-success btn-md" type="submit">
-													<?php _e('Add note');?>
-												</button>
-											</div>
-										</form>
-								
-</div>
 					<?php
 			$content = ob_get_clean();
 			return $content;
