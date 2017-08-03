@@ -149,6 +149,10 @@
 			case 'update_designation':
 				echo $Designation->update__designation__process();
 				break;
+
+			case 'update_designation_role':
+				echo $Designation->update__designation__role__process();
+				break;
 				
 			case 'delete_designation':
 				echo $Designation->delete__designation__process();

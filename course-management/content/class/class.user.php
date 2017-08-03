@@ -277,138 +277,101 @@ if( !class_exists('User') ):
 		
 		
 		
-		
-		
-		
-				public function activity__and__progress__log__section( $user__id ){
+public function activity__and__progress__log__section( $user__id ){
 			ob_start();
 			$user = get_user_by('id',$user__id);
-
-			?>
-
-<div class="col-md-12 col-sm-9 col-xs-12">
-						<div class="profile_title">
-							<div class="col-md-6">
-								<h2><?php _e('Course Information');?></h2> </div>
-						</div>
-						<div class="" role="tabpanel" data-example-id="togglable-tabs">
-<?php
-								ob_start();
-			$user = get_user_by('id',$user__id);
 			$courses = get_tabledata(TBL_USERS,false,array('ID'=>$user__id));
+    
 			if(!$courses):
 				echo page_not_found("Oops! There is no courses assigned to this user",' ',false);
 			else:
-			?>
-				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th><?php _e('Course Name(s)');?></th>
-							<th><?php _e('Booked for course');?></th>
-							<th><?php _e('Attended');?></th>
-							<th><?php _e('Documents uploaded');?></th>
-							<th><?php _e('Course Complete');?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php if($courses): foreach($courses as $course):
-						$data = unserialize($course->courses);
-					foreach($data as $a):
-						$cour = get_tabledata(TBL_COURSES,true,array('ID'=>$a));	
-						$chk = get_tabledata(TBL_CHK,true,array('course_ID'=>$a,'user_ID'=>$user__id));	
-						
-										if(isset($chk->passed)){
-						if($chk->passed!=0){ ?>
-						<tr style="background-color:#CEF2C8">
-							<?php }else{ ?>
-							<tr style="background-color:#F2C8C8">
-							<?php }}else{ ?>
-						<tr style="background-color:#F1F2C8">
-								<?php } ?>
-							<td>
-								<?php echo "<strong>".$cour->name."</strong>";?>
-								<?php echo "<br>";?>
-								<?php echo $cour->course_ID;?>
-							</td>
-							<td>
-								<?php 
-					if(isset($chk->booked)){
-							echo "<strong>".$chk->booked."</strong>";
-						}
-								?>
-							</td>	
-							<td>
-								<?php 
-					if(isset($chk->attended)){
-							echo "<strong>".$chk->attended."</strong>";
-						}
-								?>
-							</td>							
-							<td>
-								<?php 
-										if(isset($chk->uploaded)){
-							echo "<strong>".$chk->uploaded."</strong>";
-						}
-								?>
-							</td>							
-							<td>
-								<?php 
-										if(isset($chk->passed)){
-							echo "<strong>".$chk->passed."</strong>";
-						}
-								?>
-							</td>
-							
-						</tr>
-						<?php endforeach;
-					endforeach;
-					endif; ?>
-					</tbody>
-				</table>
-			<?php 
 			endif;
 					
 					?>
-						</div>
-</div>
 
 
 
 
 
 
-					<div class="col-md-7 col-sm-12 col-xs-12">
+
+					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="profile_title">
 							<div class="col-md-6">
 								<h2><?php _e('Progress Report');?></h2> </div>
 						</div>
 						<div class="" role="tabpanel" data-example-id="togglable-tabs">
 							<ul id="tab_content" class="nav nav-tabs bar_tabs" role="tablist">
-								<li role="presentation" class="active">
-									<a href="#tab_content01" role="tab" data-toggle="tab" aria-expanded="true">
+                        <li role="presentation" class="">
+							<a href="#tab_content7" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Courses');?>
+									</a>
+						</li>  
+<?php
+    				$designation_ID =  get_user_meta($user__id,'user_designation');
+                    $desig =  get_tabledata(TBL_DESIGNATIONS,false,array('ID'=>$designation_ID));
+                    $rule = get_tabledata(TBL_RULES,false,array('designation'=>$desig[0]->ID));
+                    if($rule): foreach($rule as $data):
+    
+                    if($data->preceptorship!=0){
+                        ?>
+                        <li role="presentation" class="active">
+							<a href="#tab_content01" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Preceptorship Progress');?>
 									</a>
-								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content02" role="tab" data-toggle="tab" aria-expanded="false">
+						</li>        
+                        <?php                        
+                    }
+                    if($data->hca!=0){
+                        ?>
+                    
+                        <li role="presentation" class="">
+							<a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('HCA Induction Progress');?>
 									</a>
-								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">
+						</li>        
+                        <?php
+                    }
+                    if($data->fdap!=0){
+                        ?>
+                        <li role="presentation" class="">
+							<a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('FD/AP Training Record');?>
 									</a>
-								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">
+						</li>        
+                        <?php                      
+                    }
+                    if($data->record!=0){
+                        ?>
+                        <li role="presentation" class="">
+                            <a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Student Record');?>
 									</a>
-								</li>
-								<li role="presentation" class="">
-									<a href="#tab_content6" role="tab" data-toggle="tab" aria-expanded="false">
+						</li>        
+                        <?php                       
+                    }
+                    if($data->mentorship!=0){
+                        ?>
+                        <li role="presentation" class="">
+							<a href="#tab_content6" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Mentorship');?>
 									</a>
-								</li>
+						</li>        
+                        <?php                     
+                    }
+                    endforeach;
+                    else:
+    
+                 //   echo "No rule has been set.";
+                    
+                        endif;
+?>		
+
+                                                        <li role="presentation" class="">
+							<a href="#tab_content8" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Notes');?>
+									</a>
+						</li>  
 							</ul>
 							<div id="myTabContent" class="tab-content">
 								<div role="tabpanel" class="tab-pane fade active in" id="tab_content01" aria-labelledby="home-tab">
@@ -890,6 +853,9 @@ if( !class_exists('User') ):
 			$content = ob_get_clean();
 			return $content;
 		}
+
+        
+        
 
 		public function view__profile__page(){
 			ob_start();
