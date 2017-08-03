@@ -12,7 +12,87 @@ if( !class_exists('Booking') ):
 			global $db;
 			$this->database = $db;
 		}
-
+		public function add__course__page(){
+			ob_start();
+			if( !user_can( 'add_course') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: ?>
+				<form class="add-course submit-form" method="post" autocomplete="off">					
+					<div class="form-group">
+						<label for="admins"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="code" class="form-control select_single require" data-placeholder="Choose course Type" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_COURSE_TYPE,false,array(),'',' ID, CONCAT_WS(" | ", course_ID , name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					
+					<div class="form-group">
+						<label for="name"><?php _e('Additional Name');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="name" class="form-control require" />
+					</div>
+					
+					<div class="form-group">
+						<label for="admins"><?php _e('Course Trainers(s)');?>&nbsp;<span class="required">*</span></label>
+						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="description"><?php _e('Notes');?></label>
+						<textarea name="description" class="form-control" rows="3"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="location"><?php _e('Location');?>&nbsp;<span class="required">*</span></label>
+						<select name="location" class="form-control select_single require" data-placeholder="Choose location">
+							<?php
+							$data = get_tabledata(TBL_LOCATIONS,false);
+							$option_data = get_option_data($data,array('ID','name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					
+					
+									<div class="form-group">
+					<label for="date_from"><?php _e('Booking Date From');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_from" class="form-control input-datepicker" readonly="readonly"/>
+				</div>
+				<div class="form-group">
+					<label for="date_to"><?php _e('Booking Date To');?>&nbsp;<span class="required">*</span></label>
+					<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;<span class="required">*</span></label>
+					<select name="nurses[]" class="form-control select_single require" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+						$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+						$option_data = get_option_data($data,array('ID','name'));
+						echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					
+					
+					
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="add_new_course" />
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Create New Course');?></button>
+					</div>
+				</form>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+        
+        
 		public function add__booking__page(){
 			ob_start();
 			if( !user_can( 'add_booking') ):
@@ -223,7 +303,7 @@ if( !class_exists('Booking') ):
 							<h1 class="modal-title text-center text-uppercase"><?php _e('Add Booking');?></h1>
 						</div>
 						<div class="modal-body">
-							<?php echo $this->add__booking__page(); ?>
+							<?php echo $this->add__course__page(); ?>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
@@ -553,6 +633,7 @@ if( !class_exists('Booking') ):
 							<tr>
 								<th><?php _e('Trainee Name'); ?></th>
 								<th><?php _e('Complete Status'); ?></th>
+								<th><?php _e('Additional'); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -566,13 +647,20 @@ if( !class_exists('Booking') ):
 									<label class="label label-info"><?php _e('Attended'); ?></label>
 									<?php endif; ?>
 									<?php if($attendance[$nurse] == 1) : ?>
+                                    
 										<?php if($enroll[$nurse] == 0) : ?>
-										<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_complete(this);"><?php _e('Complete'); ?></button>
+
+                                    <button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_complete(this);"><?php _e('Complete'); ?></button>
 										<?php else: ?>
 										<label class="label label-success"><?php _e('Completed'); ?></label>
 										<?php endif; ?>
 									<?php endif; ?>
+                    
 								</td>
+                                <td>
+                    <button type="button" class="btn btn-xs btn-warning complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_info(this);"><?php _e('Additional Information'); ?></button>	
+                                    
+                                </td>
 							</tr>
 							<?php endforeach; ?>
 						</tbody>
@@ -597,16 +685,14 @@ if( !class_exists('Booking') ):
 			<table class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th><?php _e('#Booking');?></th>
 						<th><?php _e('Course Name');?></th>
 						<th><?php _e('Created On');?></th>
 						<th class="text-center"><?php _e('Actions');?></th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));?>
+					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));?>
 					<tr>
-						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
 						<td><?php _e($course->name);?></td>
 						<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
 						<td class="text-center">
@@ -641,7 +727,7 @@ if( !class_exists('Booking') ):
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));?>
+					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course));?>
 					<tr>
 						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
 						<td><?php _e($course->name);?></td>
@@ -662,7 +748,7 @@ if( !class_exists('Booking') ):
 			$return['status'] = 0;
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
-			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course_ID));
+			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course));
 			$gID = $course->ID;
 			
 			if($booking):
@@ -705,7 +791,7 @@ if( !class_exists('Booking') ):
 			$return['status'] = 0;
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
-			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course_ID));
+			$course = get_tabledata(TBL_COURSES, true,array('ID' =>$booking->course));
 			$gID = $course->ID;
 			if($booking):
 				$enroll = maybe_unserialize($booking->enroll);

@@ -287,7 +287,7 @@ if( !class_exists('Location') ):
 				echo page_not_found("Oops! THERE ARE NO NEW locations record found",' ',false);
 			else:
 			?>
-				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive  datatable-buttons" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th><?php _e('Name');?></th>
@@ -334,7 +334,7 @@ if( !class_exists('Location') ):
 				echo page_not_found("Oops! THERE ARE NO NEW work Areas record found",' ',false);
 			else:
 			?>
-				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive  datatable-buttons" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th><?php _e('code');?></th>
@@ -382,7 +382,7 @@ if( !class_exists('Location') ):
 				echo page_not_found("Oops! THERE ARE NO NEW work Areas record found",' ',false);
 			else:
 			?>
-				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive  datatable-buttons" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th><?php _e('code');?></th>

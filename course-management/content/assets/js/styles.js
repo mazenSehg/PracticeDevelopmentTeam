@@ -771,6 +771,36 @@ function get_available_bookings($date, $action){
 	});	
 }
 
+function nurse_info(btn){
+	var isDelete = confirm('Does this trainee Require files/information to be submitted?');
+	if(isDelete == false){
+		return false;
+	}
+	
+	var btn = $(btn);
+	var user_id = btn.data('user');
+	var booking_id = btn.data('booking');
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'nurse_upload',
+			booking_id: booking_id,
+			user_id: user_id,
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success : function(r){
+			if(r['status'] == 1){					
+				alert_notification('Success !','Data has been uploaded for this trainee','success');
+				btn.parents('td').html(r['html']);
+			}else{
+				alert_notification('Fail !','Please try agin','info');
+			}
+		}
+	});	
+}
+
+
 function nurse_complete(btn){
 	var isDelete = confirm('Are you sure want to perform this action?');
 	if(isDelete == false){
@@ -791,7 +821,7 @@ function nurse_complete(btn){
 		dataType: 'json',
 		success : function(r){
 			if(r['status'] == 1){					
-				alert_notification('Success !','Process has been successfully done','success');
+				alert_notification('Success !','Process has been successfully completed.','success');
 				btn.parents('td').html(r['html']);
 			}else{
 				alert_notification('Fail !','Please try agin','info');

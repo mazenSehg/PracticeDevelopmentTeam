@@ -264,6 +264,7 @@ if( !class_exists('Header') ):
 										
 										<?php if( user_can('edit_course') || user_can('add_course')): ?>
 										<li><a href="<?php the_permalink('add-new-course');?>"><?php _e('Add New Course');?></a></li>
+                                        <li><a href="<?php the_permalink('view-booking-calendar');?>"><?php _e('View Calendar');?></a></li>
 										<li class="hidden"><a href="<?php the_permalink('edit-course');?>"></a></li>
 										<?php endif;?>
 									</ul>
@@ -288,27 +289,28 @@ if( !class_exists('Header') ):
 								
 								
 								
-
+<!--
 								
-								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
+								<?php //if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
 								<li>
-									<a><i class="fa fa-book"></i><?php _e('Bookings');?> <span class="fa fa-chevron-down"></span></a>
+									<a><i class="fa fa-book"></i><?php// _e('Bookings');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<?php if( user_can('view_booking') ): ?>
-										<li><a href="<?php the_permalink('bookings');?>"><?php _e('All Bookings');?></a></li>
-										<?php endif;?>
+										<?php// if( user_can('view_booking') ): ?>
+										<li><a href="<?php //the_permalink('bookings');?>"><?php// _e('All Bookings');?></a></li>
+										<?php// endif;?>
 										
-										<?php if( user_can('edit_booking') || user_can('add_booking')): ?>
-										<li><a href="<?php the_permalink('add-new-booking');?>"><?php _e('Add New Booking');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-booking');?>"></a></li>
-										<?php endif;?>
+										<?php// if( user_can('edit_booking') || user_can('add_booking')): ?>
+										<li><a href="<?php// the_permalink('add-new-booking');?>"><?php// _e('Add New Booking');?></a></li>
+										<li class="hidden"><a href="<?php //the_permalink('edit-booking');?>"></a></li>
+										<?php// endif;?>
 										
-										<?php if( user_can('view_booking') ): ?>
-										<li><a href="<?php the_permalink('view-booking-calendar');?>"><?php _e('View Calendar');?></a></li>
-										<?php endif;?>
+										<?php //if( user_can('view_booking') ): ?>
+										<li><a href="<?php //the_permalink('view-booking-calendar');?>"><?php// _e('View Calendar');?></a></li>
+										<?php// endif;?>
 									</ul>
 								</li>
-								<?php endif; ?>
+								<?php //endif; ?>
+--->
 								<li>
 								<a>
 									<i class="fa fa-certificate">

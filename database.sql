@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2017 at 01:56 PM
+-- Generation Time: Aug 04, 2017 at 01:05 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -113,13 +113,14 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 
 CREATE TABLE `tbl_bookings` (
   `ID` bigint(20) NOT NULL,
-  `course` bigint(20) NOT NULL,
+  `course_ID` bigint(20) DEFAULT NULL,
+  `course` bigint(20) DEFAULT NULL,
   `date_from` date DEFAULT NULL,
   `date_to` date DEFAULT NULL,
   `nurses` text NOT NULL,
   `attendance` text NOT NULL,
   `enroll` text,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint(20) DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -127,8 +128,10 @@ CREATE TABLE `tbl_bookings` (
 -- Dumping data for table `tbl_bookings`
 --
 
-INSERT INTO `tbl_bookings` (`ID`, `course`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000711227, 2147483647, '2017-08-03', '2017-08-05', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-08-01 10:43:27');
+INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `course`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
+(10000326035, 10000326035, 10000889484, '2017-08-04', '2017-08-05', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{i:10000340101;i:1;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-08-03 19:20:21'),
+(10000355438, 10000355438, 10000295133, '2017-08-07', '2017-08-09', 'a:1:{i:0;s:11:"10000340101";}', 'a:1:{i:10000340101;i:0;}', 'a:1:{i:10000340101;i:0;}', 1, '2017-08-03 23:00:04'),
+(10000469811, 10000469811, 10000390353, '2017-08-12', '2017-08-15', 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{i:10000603933;i:1;}', 'a:1:{i:10000603933;i:0;}', 1, '2017-08-03 19:20:40');
 
 -- --------------------------------------------------------
 
@@ -220,7 +223,9 @@ CREATE TABLE `tbl_courses` (
 --
 
 INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `active`, `created_on`) VALUES
-(10000160737, 2147483647, 'test', 'test', 'a:2:{i:0;s:11:"10000950341";i:1;s:11:"10000950338";}', 6, '2017-08-03', '2017-08-05', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 0, '2017-08-01 10:43:27');
+(10000390353, 2147483647, 'TST_bob_trial', 'another', 'a:1:{i:0;s:11:"10000950341";}', 5, '2017-08-12', '2017-08-15', 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{i:10000603933;i:0;}', 'a:1:{i:10000603933;i:0;}', 0, '2017-08-03 19:20:40'),
+(10000889484, 2147483647, 'TST_bob_testing', 'test', 'a:1:{i:0;s:11:"10000950342";}', 3, '2017-08-04', '2017-08-05', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 0, '2017-08-03 19:20:21'),
+(10000295133, 2147483647, 'TST_bob_llama', 'yes', 'a:1:{i:0;s:11:"10000950341";}', 4, '2017-08-07', '2017-08-09', 'a:1:{i:0;s:11:"10000340101";}', 'a:1:{i:10000340101;i:0;}', 'a:1:{i:10000340101;i:0;}', 0, '2017-08-03 23:00:04');
 
 -- --------------------------------------------------------
 
@@ -256,15 +261,6 @@ CREATE TABLE `tbl_course_user` (
   `uploaded` int(1) NOT NULL,
   `passed` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_course_user`
---
-
-INSERT INTO `tbl_course_user` (`ID`, `user_ID`, `course_ID`, `booked`, `attended`, `uploaded`, `passed`) VALUES
-(10000942984, 10000340101, 10000936950, 1, 1, 0, 1),
-(10000942985, 10000340101, 10000240234, 1, 1, 0, 1),
-(10000942986, 10000603933, 10000936950, 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -821,7 +817,37 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (406, 1, 'New designation created', 'You have successfully created a new designation Rules.', 0, 0, '2017-08-03 11:55:39'),
 (407, 1, 'Designation deleted', 'You have successfully deleted () designation rule.', 0, 0, '2017-08-03 11:55:45'),
 (408, 1, 'New designation created', 'You have successfully created a new designation Rules.', 0, 0, '2017-08-03 11:55:56'),
-(409, 1, 'Designation deleted', 'You have successfully deleted () designation rule.', 0, 0, '2017-08-03 11:56:17');
+(409, 1, 'Designation deleted', 'You have successfully deleted () designation rule.', 0, 0, '2017-08-03 11:56:17'),
+(410, 1, 'New designation created', 'You have successfully created a new designation Rules.', 0, 0, '2017-08-03 12:01:12'),
+(411, 1, 'New designation created', 'You have successfully created a new designation Rules.', 0, 0, '2017-08-03 12:26:50'),
+(412, 1, 'Designation updated', 'You have successfully updated designation ().', 0, 0, '2017-08-03 14:01:28'),
+(413, 1, 'Designation updated', 'You have successfully updated designation ().', 0, 0, '2017-08-03 14:02:07'),
+(414, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-03 14:02:34'),
+(415, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-03 14:02:43'),
+(416, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-03 14:19:11'),
+(417, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:13:29');
+INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read`, `hide`, `date`) VALUES
+(418, 1, 'Course deleted', 'You have successfully deleted (TST_bob_test) course.', 0, 0, '2017-08-03 16:14:34'),
+(419, 1, 'Centre (TST_bob_testing) is approved now', 'You have successfully approved (TST_bob_testing) centre.', 0, 0, '2017-08-03 16:17:51'),
+(420, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:18:58'),
+(421, 1, 'New course created', 'You have successfully created a new course (testing).', 0, 0, '2017-08-03 16:19:17'),
+(422, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:19:31'),
+(423, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:19:54'),
+(424, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:58:19'),
+(425, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:58:21'),
+(426, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-03 16:59:58'),
+(427, 1, 'Course deleted', 'You have successfully deleted (TST_bob_test) course.', 0, 0, '2017-08-03 17:01:20'),
+(428, 1, 'Course deleted', 'You have successfully deleted (TST_bob_test) course.', 0, 0, '2017-08-03 17:07:26'),
+(429, 1, 'Course deleted', 'You have successfully deleted (TST_bob_test) course.', 0, 0, '2017-08-03 17:12:06'),
+(430, 1, 'Course deleted', 'You have successfully deleted (TST_bob_test) course.', 0, 0, '2017-08-03 17:13:07'),
+(431, 1, 'Centre (TST_bob_test) is approved now', 'You have successfully approved (TST_bob_test) centre.', 0, 0, '2017-08-03 17:13:46'),
+(432, 1, 'Course deleted', 'You have successfully deleted (TST_bob_test) course.', 0, 0, '2017-08-03 17:15:00'),
+(433, 1, 'New course created', 'You have successfully created a new course (testing).', 0, 0, '2017-08-03 17:15:19'),
+(434, 1, 'New course created', 'You have successfully created a new course (another).', 0, 0, '2017-08-03 17:31:48'),
+(435, 1, 'New course created', 'You have successfully created a new course (testing).', 0, 0, '2017-08-03 19:20:21'),
+(436, 1, 'New course created', 'You have successfully created a new course (trial).', 0, 0, '2017-08-03 19:20:40'),
+(437, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-03 21:16:45'),
+(438, 1, 'New course created', 'You have successfully created a new course (llama).', 0, 0, '2017-08-03 23:00:04');
 
 -- --------------------------------------------------------
 
@@ -868,6 +894,14 @@ CREATE TABLE `tbl_rules` (
   `record` int(11) NOT NULL,
   `mentorship` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_rules`
+--
+
+INSERT INTO `tbl_rules` (`ID`, `designation`, `preceptorship`, `hca`, `fdap`, `record`, `mentorship`) VALUES
+(10000571188, 10000641641, 0, 0, 0, 0, 0),
+(10000995409, 10000641612, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1630,7 +1664,7 @@ ALTER TABLE `tbl_cohort_ext`
 -- AUTO_INCREMENT for table `tbl_courses`
 --
 ALTER TABLE `tbl_courses`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000936951;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000986309;
 --
 -- AUTO_INCREMENT for table `tbl_course_types`
 --
@@ -1660,7 +1694,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=410;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=439;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -1670,7 +1704,7 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_rules`
 --
 ALTER TABLE `tbl_rules`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000900337;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000995410;
 --
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --

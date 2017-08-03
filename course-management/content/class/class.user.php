@@ -601,12 +601,14 @@ public function activity__and__progress__log__section( $user__id ){
                         <?php if($bookings): foreach($bookings as $booking):
     $data = unserialize($booking->nurses);
     $data2 = unserialize($booking->attendance);
+    $data3 = unserialize($booking->enroll);
     $match = 0;
     $attended;
     foreach($data as $i):
     if($user->ID==$i){
     $match = 1;
         $attended =  $data2[$user->ID];
+        $completed = $data3[$user->ID];
         
 }
     endforeach;
@@ -622,7 +624,8 @@ public function activity__and__progress__log__section( $user__id ){
                             <td><?php echo date('M d, Y', strtotime($booking->date_from)); ?></td>
                             <td><?php if($attended!=0):echo "yes"; else: echo "no."; endif; ?></td>
                             <td><?php  ?></td>
-                            <td><?php  ?></td>
+                            <td><?php if($completed!=0):echo "yes"; else: echo "no."; endif; ?></td>
+
                         <?php endif;?>
                         </tr>
                             <?php
@@ -1645,7 +1648,10 @@ public function activity__and__progress__log__section( $user__id ){
 																<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
 														</td>
 				<?php endif; ?>
-															<td class="text-center"> <a href="<?php the_permalink('view-progress', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a> </td>
+															<td class="text-center"> 
+<a href="<?php the_permalink('view-progress', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a>
+<a href="<?php the_permalink('view-progress', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Add to Course');?></a>
+                                                    </td>
 												</tr>
 												<?php endforeach; endif; ?>
 										</tbody>
