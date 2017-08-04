@@ -323,6 +323,10 @@ if( !class_exists('Course') ):
 				<form class="add-course submit-form" method="post" autocomplete="off">
 					
 					<div class="form-group">
+						<input type="hidden" name="ID" value="<?php _e($course__id);?>" class="form-control require" />
+					</div>
+					
+					<div class="form-group">
 						<label for="name"><?php _e('Course Code');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="code" value="<?php _e($course->course_ID);?>" class="form-control require" />
 					</div>
@@ -356,6 +360,31 @@ if( !class_exists('Course') ):
 							?>
 						</select>
 					</div>
+					
+					
+									<div class="form-group">
+					<label for="date_from"><?php _e('Booking Date From');?>&nbsp;<span class="required">*</span></label>
+					<?php $dob = $course->date_from != '' ? date('M d, Y', strtotime(trim($course->date_from))) : ''; ?>
+					<input type="text" name="date_from" value= "<?php echo $dob;?>"class="form-control input-datepicker" readonly="readonly"/>
+				</div>
+				<div class="form-group">
+					<label for="date_to"><?php _e('Booking Date To');?>&nbsp;<span class="required">*</span></label>
+					<?php $dob = $course->date_to != '' ? date('M d, Y', strtotime(trim($course->date_to))) : ''; ?>
+					<input type="text" name="date_to" value="<?php echo $dob;?>" class="form-control input-datepicker" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;<span class="required">*</span></label>
+					<select name="nurses[]" class="form-control select_single require" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+								$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data,maybe_unserialize($course->nurses));
+								?>
+						</select>
+					</div>
+															
+					
+					
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<input type="hidden" name="action" value="update_course" />
@@ -598,7 +627,7 @@ if( !class_exists('Course') ):
 					$result = $this->database->insert(TBL_BOOKINGS,
 						array(
 							'ID' => $guid,
-							'course_ID' =>$guid,
+							'course_ID' =>$code,
 							'course' => $ayyy,
 							'nurses' => $nurses,
 							'enroll' => $enroll,
@@ -734,16 +763,39 @@ if( !class_exists('Course') ):
 				'reset_form' => 0
 			);
 			if( user_can('edit_course') ):
-				$validation_args = array(
-					'course_ID'=> $code,
-				);
+			
+					$booking = get_tabledata(TBL_BOOKINGS,true,array('course' => $ID));
+					$old_enroll = maybe_unserialize($booking->enroll);
+					$old_attendance = maybe_unserialize($booking->attendance);
+					$enroll = array();
+					foreach($nurses as $nurse){
+						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
+						$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
+					}
+					$result = $this->database->update(TBL_BOOKINGS,
+						array(
+							'course' => $ID,
+							'nurses' => $nurses,
+							'enroll' => $enroll,
+							'attendance' => $attendance,
+							'date_from' => date('Y-m-d', strtotime($date_from)),
+							'date_to' => date('Y-m-d', strtotime($date_to)),
+						),
+						array(
+							'course'=> $ID
+						)
+					);
+			
+			
 
-				if(is_value_exists(TBL_COURSES,$validation_args,$course_id)):
-					$return['status'] = 2;
-					$return['message_heading'] = 'Failed !';
-					$return['message'] = 'Course name you entered is already exists, please try another name.';
-					$return['fields'] = array('name');
-				else:
+					$booking = get_tabledata(TBL_COURSES,true,array('ID' => $ID));
+					$old_enroll = maybe_unserialize($booking->enroll);
+					$old_attendance = maybe_unserialize($booking->attendance);
+					$enroll = array();
+					foreach($nurses as $nurse){
+						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
+						$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
+					}
 					$result = $this->database->update(TBL_COURSES,
 						array(
 							'name' => $name,
@@ -751,13 +803,17 @@ if( !class_exists('Course') ):
 							'admins' => $admins,
 							'description' => $description,
 							'location' => $location,
-//						'date_from' => date('Y-m-d h:i:s',strtotime($date_from)),
-//						'date_to' => date('Y-m-d h:i:s',strtotime($date_to))
+							'nurses' => $nurses,
+							'enroll' => $enroll,
+							'attendance' => $attendance,
+							'date_from' => date('Y-m-d', strtotime($date_from)),
+							'date_to' => date('Y-m-d', strtotime($date_to)),
 						),
 						array(
-							'ID'=> $course_id
+							'ID'=> $ID
 						)
 					);
+
 
 					if($result):
 						$notification_args = array(
@@ -769,7 +825,6 @@ if( !class_exists('Course') ):
 						$return['status'] = 1;
 						$return['message_heading'] = 'Success !';
 						$return['message'] = 'Course has been updated successfully.';
-					endif;
 				endif;
 			endif;
 

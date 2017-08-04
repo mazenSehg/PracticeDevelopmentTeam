@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 04, 2017 at 01:05 AM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Generation Time: Aug 04, 2017 at 06:51 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -129,9 +129,7 @@ CREATE TABLE `tbl_bookings` (
 --
 
 INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `course`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000326035, 10000326035, 10000889484, '2017-08-04', '2017-08-05', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{i:10000340101;i:1;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-08-03 19:20:21'),
-(10000355438, 10000355438, 10000295133, '2017-08-07', '2017-08-09', 'a:1:{i:0;s:11:"10000340101";}', 'a:1:{i:10000340101;i:0;}', 'a:1:{i:10000340101;i:0;}', 1, '2017-08-03 23:00:04'),
-(10000469811, 10000469811, 10000390353, '2017-08-12', '2017-08-15', 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{i:10000603933;i:1;}', 'a:1:{i:10000603933;i:0;}', 1, '2017-08-03 19:20:40');
+(10000931969, 10000726899, 10000604644, '2017-08-06', '2017-08-09', 'a:1:{i:0;s:11:\"10000340101\";}', 'a:1:{i:10000340101;i:1;}', 'a:1:{i:10000340101;i:1;}', 1, '2017-08-04 16:46:55');
 
 -- --------------------------------------------------------
 
@@ -223,9 +221,7 @@ CREATE TABLE `tbl_courses` (
 --
 
 INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `active`, `created_on`) VALUES
-(10000390353, 2147483647, 'TST_bob_trial', 'another', 'a:1:{i:0;s:11:"10000950341";}', 5, '2017-08-12', '2017-08-15', 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{i:10000603933;i:0;}', 'a:1:{i:10000603933;i:0;}', 0, '2017-08-03 19:20:40'),
-(10000889484, 2147483647, 'TST_bob_testing', 'test', 'a:1:{i:0;s:11:"10000950342";}', 3, '2017-08-04', '2017-08-05', 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 0, '2017-08-03 19:20:21'),
-(10000295133, 2147483647, 'TST_bob_llama', 'yes', 'a:1:{i:0;s:11:"10000950341";}', 4, '2017-08-07', '2017-08-09', 'a:1:{i:0;s:11:"10000340101";}', 'a:1:{i:10000340101;i:0;}', 'a:1:{i:10000340101;i:0;}', 0, '2017-08-03 23:00:04');
+(10000604644, 10000726899, 'TRIAL_testing_test', 'test', 'a:1:{i:0;s:11:\"10000950340\";}', 17, '2017-08-06', '2017-08-09', 'a:1:{i:0;s:11:\"10000340101\";}', 'a:1:{i:10000340101;i:0;}', 'a:1:{i:10000340101;i:0;}', 0, '2017-08-04 16:46:55');
 
 -- --------------------------------------------------------
 
@@ -234,7 +230,7 @@ INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `
 --
 
 CREATE TABLE `tbl_course_types` (
-  `ID` int(11) NOT NULL,
+  `ID` bigint(20) NOT NULL,
   `course_ID` varchar(125) NOT NULL,
   `name` varchar(125) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -244,7 +240,8 @@ CREATE TABLE `tbl_course_types` (
 --
 
 INSERT INTO `tbl_course_types` (`ID`, `course_ID`, `name`) VALUES
-(2147483647, 'TST', 'bob');
+(2147483647, 'TST', 'bob'),
+(10000726899, 'TRIAL', 'testing');
 
 -- --------------------------------------------------------
 
@@ -339,27 +336,27 @@ CREATE TABLE `tbl_locations` (
 --
 
 INSERT INTO `tbl_locations` (`ID`, `location_code`, `name`, `phone`, `booking_contact`, `booking_phone`, `notes`, `extras`, `created_on`) VALUES
-(1, 'A1_ED', 'A1 ED Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(2, 'A2_ED', 'A2 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(3, 'A3_ED', 'A3 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(4, 'A4_ED', 'A4 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(5, 'A5_ED', 'A5 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(6, 'A6_ED', 'A6 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(7, 'A7_ED', 'A7 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(8, 'A8_ED', 'A8 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(9, 'A9_ED', 'B1 Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:14:"project_screen";i:3;s:6:"tables";}', '0000-00-00 00:00:00'),
-(10, 'AnesSeminar_RSCH', 'Anesthetic Seminar Room', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:14:"project_screen";i:3;s:6:"tables";}', '0000-00-00 00:00:00'),
-(11, 'B2_Ed', 'B2 Ed Centre', '', '', '', '', 'a:6:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:9:"clipboard";i:3;s:16:"laptop_connector";i:4;s:14:"project_screen";i:5;s:6:"tables";}', '0000-00-00 00:00:00'),
-(12, 'Canteen_RSCH', 'Canteen Level A', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(13, 'LecTheatre_ED', 'Lecture Theatre', '', '', '', '', 'a:6:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:9:"clipboard";i:3;s:16:"laptop_connector";i:4;s:14:"project_screen";i:5;s:6:"tables";}', '0000-00-00 00:00:00'),
-(14, 'Libary_ED', 'Library Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(15, 'LibraryCourtyard_ED', 'Library Courtyard Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
-(16, 'LibrarySeminar_ED', 'Library Seminar Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:6:"tables";i:3;s:22:"interactive_whiteboard";}', '0000-00-00 00:00:00'),
-(17, 'LibraryTraining_ED', 'Library Training Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:14:"project_screen";i:3;s:6:"tables";}', '0000-00-00 00:00:00'),
-(18, 'LittleMattuTrainingSuite_RSCH', 'Little Mattu', '', '', '', '', 'a:2:{i:0;s:6:"chairs";i:1;s:6:"tables";}', '0000-00-00 00:00:00'),
+(1, 'A1_ED', 'A1 ED Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(2, 'A2_ED', 'A2 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(3, 'A3_ED', 'A3 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(4, 'A4_ED', 'A4 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(5, 'A5_ED', 'A5 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(6, 'A6_ED', 'A6 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(7, 'A7_ED', 'A7 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(8, 'A8_ED', 'A8 Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(9, 'A9_ED', 'B1 Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:14:\"project_screen\";i:3;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(10, 'AnesSeminar_RSCH', 'Anesthetic Seminar Room', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:14:\"project_screen\";i:3;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(11, 'B2_Ed', 'B2 Ed Centre', '', '', '', '', 'a:6:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:9:\"clipboard\";i:3;s:16:\"laptop_connector\";i:4;s:14:\"project_screen\";i:5;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(12, 'Canteen_RSCH', 'Canteen Level A', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(13, 'LecTheatre_ED', 'Lecture Theatre', '', '', '', '', 'a:6:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:9:\"clipboard\";i:3;s:16:\"laptop_connector\";i:4;s:14:\"project_screen\";i:5;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(14, 'Libary_ED', 'Library Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(15, 'LibraryCourtyard_ED', 'Library Courtyard Ed Centre', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(16, 'LibrarySeminar_ED', 'Library Seminar Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:6:\"tables\";i:3;s:22:\"interactive_whiteboard\";}', '0000-00-00 00:00:00'),
+(17, 'LibraryTraining_ED', 'Library Training Room Ed Centre', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:14:\"project_screen\";i:3;s:6:\"tables\";}', '0000-00-00 00:00:00'),
+(18, 'LittleMattuTrainingSuite_RSCH', 'Little Mattu', '', '', '', '', 'a:2:{i:0;s:6:\"chairs\";i:1;s:6:\"tables\";}', '0000-00-00 00:00:00'),
 (19, 'ParentCraft_RSCH', 'Parent Craft Room OPD 1', '', '', '', '', 'a:0:{}', '0000-00-00 00:00:00'),
-(20, 'TrainingSuite_1_RSCH', 'Training Suite 1', '', '', '', '', 'a:4:{i:0;s:6:"chairs";i:1;s:9:"computers";i:2;s:16:"laptop_connector";i:3;s:14:"project_screen";}', '0000-00-00 00:00:00'),
-(21, 'TrainingSuite_2_RSCH', 'Training Suite 2', '', '', '', '', 'a:5:{i:0;s:6:"chairs";i:1;s:16:"laptop_connector";i:2;s:14:"project_screen";i:3;s:4:"sink";i:4;s:13:"hospital_beds";}', '0000-00-00 00:00:00');
+(20, 'TrainingSuite_1_RSCH', 'Training Suite 1', '', '', '', '', 'a:4:{i:0;s:6:\"chairs\";i:1;s:9:\"computers\";i:2;s:16:\"laptop_connector\";i:3;s:14:\"project_screen\";}', '0000-00-00 00:00:00'),
+(21, 'TrainingSuite_2_RSCH', 'Training Suite 2', '', '', '', '', 'a:5:{i:0;s:6:\"chairs\";i:1;s:16:\"laptop_connector\";i:2;s:14:\"project_screen\";i:3;s:4:\"sink\";i:4;s:13:\"hospital_beds\";}', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -847,7 +844,29 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (435, 1, 'New course created', 'You have successfully created a new course (testing).', 0, 0, '2017-08-03 19:20:21'),
 (436, 1, 'New course created', 'You have successfully created a new course (trial).', 0, 0, '2017-08-03 19:20:40'),
 (437, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-03 21:16:45'),
-(438, 1, 'New course created', 'You have successfully created a new course (llama).', 0, 0, '2017-08-03 23:00:04');
+(438, 1, 'New course created', 'You have successfully created a new course (llama).', 0, 0, '2017-08-03 23:00:04'),
+(439, 1, 'Course updated', 'You have successfully updated course (TST_bob_llama).', 0, 0, '2017-08-04 16:00:18'),
+(440, 1, 'Course updated', 'You have successfully updated course (TST_bob_llama).', 0, 0, '2017-08-04 16:07:23'),
+(441, 1, 'New course created', 'You have successfully created a new course type: (testing).', 0, 0, '2017-08-04 16:21:43'),
+(442, 1, 'New course created', 'You have successfully created a new course (new).', 0, 0, '2017-08-04 16:22:21'),
+(443, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_new).', 0, 0, '2017-08-04 16:29:55'),
+(444, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_new) course.', 0, 0, '2017-08-04 16:30:20'),
+(445, 1, 'Course deleted', 'You have successfully deleted (TST_bob_llama) course.', 0, 0, '2017-08-04 16:30:21'),
+(446, 1, 'Course deleted', 'You have successfully deleted (TST_bob_testing) course.', 0, 0, '2017-08-04 16:30:23'),
+(447, 1, 'Course deleted', 'You have successfully deleted (TST_bob_trial) course.', 0, 0, '2017-08-04 16:30:25'),
+(448, 1, 'New course created', 'You have successfully created a new course (test).', 0, 0, '2017-08-04 16:34:01'),
+(449, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:41:26'),
+(450, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:42:03'),
+(451, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:42:57'),
+(452, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:43:04'),
+(453, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:43:21'),
+(454, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:44:13'),
+(455, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:44:59'),
+(456, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_test) course.', 0, 0, '2017-08-04 16:46:34'),
+(457, 1, 'New course created', 'You have successfully created a new course (test).', 0, 0, '2017-08-04 16:46:55'),
+(458, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:48:29'),
+(459, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:48:52'),
+(460, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:49:11');
 
 -- --------------------------------------------------------
 
@@ -877,7 +896,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (9, 'site_contact_email', 'info@coursemanagement.com'),
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
-(12, 'users_capabilities', 's:1352:"a:3:{s:5:"admin";a:18:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:0;s:12:"add_location";i:0;s:13:"edit_location";i:0;s:14:"view_work_area";i:0;s:13:"add_work_area";i:0;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}s:12:"course_admin";a:18:{s:9:"view_user";i:1;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:1;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:1;s:12:"add_location";i:1;s:13:"edit_location";i:0;s:14:"view_work_area";i:1;s:13:"add_work_area";i:1;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:1;s:11:"add_booking";i:1;s:12:"edit_booking";i:1;s:14:"delete_booking";i:0;}s:5:"nurse";a:18:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:0;s:12:"add_location";i:0;s:13:"edit_location";i:0;s:14:"view_work_area";i:0;s:13:"add_work_area";i:0;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}}";');
+(12, 'users_capabilities', 's:1352:\"a:3:{s:5:\"admin\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}s:12:\"course_admin\";a:18:{s:9:\"view_user\";i:1;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:1;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:1;s:12:\"add_location\";i:1;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:1;s:13:\"add_work_area\";i:1;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:1;s:11:\"add_booking\";i:1;s:12:\"edit_booking\";i:1;s:14:\"delete_booking\";i:0;}s:5:\"nurse\";a:18:{s:9:\"view_user\";i:0;s:8:\"add_user\";i:0;s:9:\"edit_user\";i:0;s:11:\"view_course\";i:0;s:10:\"add_course\";i:0;s:11:\"edit_course\";i:0;s:13:\"delete_course\";i:0;s:13:\"view_location\";i:0;s:12:\"add_location\";i:0;s:13:\"edit_location\";i:0;s:14:\"view_work_area\";i:0;s:13:\"add_work_area\";i:0;s:14:\"edit_work_area\";i:0;s:15:\"delete_location\";i:0;s:12:\"view_booking\";i:0;s:11:\"add_booking\";i:0;s:12:\"edit_booking\";i:0;s:14:\"delete_booking\";i:0;}}\";');
 
 -- --------------------------------------------------------
 
@@ -1654,7 +1673,7 @@ ALTER TABLE `tbl_access_log`
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000928872;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000931970;
 --
 -- AUTO_INCREMENT for table `tbl_cohort_ext`
 --
@@ -1669,7 +1688,7 @@ ALTER TABLE `tbl_courses`
 -- AUTO_INCREMENT for table `tbl_course_types`
 --
 ALTER TABLE `tbl_course_types`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000726900;
 --
 -- AUTO_INCREMENT for table `tbl_course_user`
 --
@@ -1694,7 +1713,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=439;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=461;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
