@@ -383,8 +383,10 @@ public function activity__and__progress__log__section( $user__id ){
 											<h1>Preceptor Progress</h1>
 											<br>
 											<?php
-			$fault = get_tabledata(TBL_INFO,true,array('user_ID'=> $user__id));
-			
+			$data = get_tabledata(TBL_INFO,false,array('user_ID' => $user__id));
+$original_array=unserialize($data[0]->preceptorship);
+var_export($original_array);	
+
 			?>
 												<div class="row">
 													<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
@@ -465,7 +467,7 @@ public function activity__and__progress__log__section( $user__id ){
 														<select name="trainers" class="form-control select_single require">
 															<?php
 //							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, trainer_ID AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data, maybe_unserialize($fault->prec_trainer));
 							?>
@@ -498,6 +500,9 @@ public function activity__and__progress__log__section( $user__id ){
 											<br>
 											<h1>HCA Induction</h1>
 											<br>
+											<?php 
+											$data = get_tabledata(TBL_INFO,false,array('user_ID'=>$user__id));
+											?>
 											<div class="row">
 												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 												<div class="form-group col-sm-2 col-xs-12">
@@ -550,7 +555,7 @@ public function activity__and__progress__log__section( $user__id ){
 													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
 												<select name="hca_trainer" class="form-control select_single require">
 													<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data,maybe_unserialize($fault->hca_trainer));
 							?>
@@ -566,7 +571,7 @@ public function activity__and__progress__log__section( $user__id ){
 											</div>
 											<div class="ln_solid"></div>
 											<div class="form-group">
-												<input type="hidden" name="action" value="update_mca" />
+												<input type="hidden" name="action" value="update_hca" />
 												<button class="btn btn-success btn-md" type="submit">
 													<?php _e('Update HCA Induction');?>
 												</button>
@@ -587,14 +592,14 @@ public function activity__and__progress__log__section( $user__id ){
 				echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
 			else:
 			?>
-				<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th><?php _e('Course Name(s)');?></th>
-							<th><?php _e('Booked for course');?></th>
+							<th><?php _e('Course Booked');?></th>
 							<th><?php _e('Attended');?></th>
 							<th><?php _e('Documents uploaded');?></th>
-							<th><?php _e('Course Complete');?></th>
+							<th><?php _e('Course Completed');?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -616,7 +621,10 @@ public function activity__and__progress__log__section( $user__id ){
 
                         //$corse = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));
                         ?>
-                        <tr>
+						
+						<?php 
+	?>
+                        <tr bgcolor="<?php if($completed!=0):echo "#E0F8E0"; else: echo "#F78181"; endif; ?>">
                             <?php if($match!=0):
                             $course = get_tabledata(TBL_COURSES,false,array('ID'=>$booking->course));
                             ?>
@@ -780,10 +788,10 @@ public function activity__and__progress__log__section( $user__id ){
 												<label for="admins">
 													<?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
 												<select name="fd_trainer" class="form-control select_single require">
-													<?php
-							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+															<?php
+							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data,maybe_unserialize($fault->fd_trainer));
+							echo get_options_list($option_data, maybe_unserialize($fault->fd_trainer));
 							?>
 												</select>
 											</div>
@@ -1859,9 +1867,8 @@ else {
 					$p_nurse = ( isset($p_nurse) ) ? 1 : 0;
 			
 			$guid = get_guid(TBL_INFO);
-			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
-								$result = $this->database->update(TBL_INFO,
-					array(
+
+			$a=	array(
 							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
 							'current_prec' => $p_current,
 							'pin' => $p_pin,
@@ -1877,6 +1884,15 @@ else {
 							'prec_trainer' => $trainers,
 							'prec_notes' => $p_notes,
 					
+					);
+			$b=serialize($a);
+			
+			
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
+								$result = $this->database->update(TBL_INFO,
+					array(
+									'preceptorship' =>$b,
+					
 					),
 					array('user_ID'=> $user_id3)
 				);
@@ -1889,20 +1905,8 @@ else {
 							
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
-							'current_prec' => $p_current,
-							'pin' => $p_pin,
-							'delay' => $p_delay,
-							'prec_name' => $p_name,
-							'int_nurse' => $p_nurse,	
-							'WTE' => $p_wte,
-							'p_email' => $p_email,
-							'p_country' => $p_country,
-							'sign_off' => $p_period,
-							'awards' => $p_awards,
-							'link' => $p_link,
-							'prec_trainer' => $trainers,
-							'prec_notes' => $p_notes,
+							'preceptorship' =>$b,
+
 						)
 					);
 			}
@@ -1927,7 +1931,7 @@ else {
 
 		
 		
-				public function update__mca__process(){
+				public function update__hca__process(){
 						extract($_POST);			
 			$return = array(
 				'status' => 0,
@@ -1943,9 +1947,9 @@ else {
 					$hca_care = ( isset($hca_care) ) ? 1 : 0;
 			
 			$guid = get_guid(TBL_INFO);
-			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
-								$result = $this->database->update(TBL_INFO,
-					array(
+					
+					
+					$a= 	array(
 							'hca_start' => date('Y-m-d h:i:s',strtotime($hca_start)),
 							'hca_manager' => $hca_manager,
 							'hca_email' => $hca_email,									
@@ -1956,29 +1960,17 @@ else {
 							'hca_trainer' => $hca_trainer,
 							'hca_notes' => $hca_notes,
 					
-					),
-					array('user_ID'=> $user_id3)
-				);
-				
-			}
-			else
-			{
+					);
+					$b = serialize($a);
+
 					$result = $this->database->insert(TBL_INFO,
 						array(
-														'ID' => $guid,
+							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'hca_start' => date('Y-m-d h:i:s',strtotime($hca_start)),
-							'hca_manager' => $hca_manager,
-							'hca_email' => $hca_email,									
-							'hca_new_care' => $hca_new_care,
-							'hca_current_client' => $hca_current_client,	
-							'hca_fundamental_care' => $hca_fundamental_care,	
-							'hca_care' => $hca_care,
-							'hca_trainer' => $hca_trainer,
-							'hca_notes' => $hca_notes,
+							'his' => $b,
 						)
 					);
-			}
+			
 					$notification_args = array(
 						'title' => __('Account Information'),
 						'notification'=> __('You have successfully updated preceptor progress'),
@@ -2014,9 +2006,9 @@ else {
 					$fd_current = ( isset($fd_current) ) ? 1 : 0;
 			
 			$guid = get_guid(TBL_INFO);
-			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
-								$result = $this->database->update(TBL_INFO,
-					array(
+					
+					
+					$a = array(
 							'fd_start' => date('Y-m-d h:i:s',strtotime($fd_start)),
 							'fd_graduate' => date('Y-m-d h:i:s',strtotime($fd_graduate)),
 							'fd_inturrupt' => $fd_inturrupt,
@@ -2028,6 +2020,15 @@ else {
 							'fd_trainer' => $fd_trainer,
 							'fd_notes' => $fd_notes,
 					
+					);
+					$b= serialize($a);
+					
+					
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
+								$result = $this->database->update(TBL_INFO,
+					array(
+									'flap' => $b,
+					
 					),
 					array('user_ID'=> $user_id3)
 				);
@@ -2037,18 +2038,9 @@ else {
 			{
 					$result = $this->database->insert(TBL_INFO,
 						array(
-														'ID' => $guid,
-							'user_ID' => $user_id3,
-							'fd_start' => date('Y-m-d h:i:s',strtotime($fd_start)),
-							'fd_graduate' => date('Y-m-d h:i:s',strtotime($fd_graduate)),
-							'fd_inturrupt' => $fd_inturrupt,
-							'fd_sd1' => $fd_sd1,	
-							'fd_sd2' => $fd_sd2,	
-							'fd_sd3' => $fd_sd3,	
-							'fd_other' => $fd_other,
-							'fd_current' => $fd_current,
-							'fd_trainer' => $fd_trainer,
-							'fd_notes' => $fd_notes,
+								'ID' => $guid,
+								'user_ID' => $user_id3,
+								'flap'=> $b,
 						)
 					);
 			}
@@ -2080,18 +2072,22 @@ else {
 			if(user_can('add_user')):
 			
 			$guid = get_guid(TBL_INFO);
-					
-					
-					/////////////
-			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
-								$result = $this->database->update(TBL_INFO,
-					array(
+			$a = 					array(
 							'stud_cohort' => $stud_cohort,
 							'stud_cohort_date' => $stud_cohort_date,									
 							'$stud_d1' => $stud_d1,
 							'$stud_d2' => $stud_d2,
 							'$stud_d3' => $stud_d3,	
 							'stud_notes' => $stud_notes,
+					);
+					
+					$b= serialize($a);
+					
+					
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
+								$result = $this->database->update(TBL_INFO,
+					array(
+									'student' => $b,
 					),
 					array('user_ID'=> $user_id3)
 				);
@@ -2103,17 +2099,10 @@ else {
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'stud_cohort' => $stud_cohort,
-							'stud_cohort_date' => $stud_cohort_date,									
-							'$stud_d1' => date('Y-m-d h:i:s',strtotime($stud_d1)),
-							'$stud_d2' => date('Y-m-d h:i:s',strtotime($stud_d2)),
-							'$stud_d3' => date('Y-m-d h:i:s',strtotime($stud_d3)),	
-							'stud_notes' => $stud_notes,
+							'student' => $b,
 						)
 					);
 			}
-					
-	
 					$notification_args = array(
 						'title' => __('Account Information'),
 						'notification'=> __('You have successfully updated preceptor progress'),
@@ -2145,15 +2134,19 @@ else {
 			
 			$guid = get_guid(TBL_INFO);
 					
-					
-					/////////////
-			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
-								$result = $this->database->update(TBL_INFO,
-					array(
+			$a = 	array(
 							'mentor_current' => $mentor_current,
 							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
 							'mentor_sign_off' => $mentor_sign_off,
 							'mentor_notes' => $mentor_notes,
+					);
+					
+					$b = serialize($a);
+					
+			if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
+								$result = $this->database->update(TBL_INFO,
+					array(
+							'mentorship' => $b,
 					),
 					array('user_ID'=> $user_id3)
 				);
@@ -2165,15 +2158,11 @@ else {
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'$mentor_current' => $mentor_current,
-							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
-							'mentor_sign_off' => $mentor_sign_off,
-							'mentor_notes' => $mentor_notes,
+							'mentorship'=> $b,
 						)
 					);
 			}
 					
-			///////////		
 					$notification_args = array(
 						'title' => __('Account Information'),
 						'notification'=> __('You have successfully updated preceptor progress'),

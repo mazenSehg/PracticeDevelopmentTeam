@@ -754,6 +754,25 @@ function get_nurses(btn){
 	});
 }
 
+function get_form(btn){
+	var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+	$('#nurse-data-modal-body').html('<h1 class="text-center green">'+spinner+'</h1>');
+	$('#booking-data-modal .modal-footer button[data-dismiss="modal"]').click();
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'fetch_form',
+			booking_id: $(btn).data('booking')
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success: function(r){
+			$('#nurse-data-modal-body').html(r['html']);
+			return false;
+		}
+	});
+}
+
 function get_available_bookings($date, $action){
 	var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
 	$('#booking-data-modal-body').html('<h1 class="text-center green">'+spinner+'</h1>');

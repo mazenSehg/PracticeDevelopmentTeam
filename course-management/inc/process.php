@@ -49,8 +49,8 @@
 				echo $User->update__preceptor__process();
 				break;
 				
-			case 'update_mca':
-				echo $User->update__mca__process();
+			case 'update_hca':
+				echo $User->update__hca__process();
 				break;
 				
 			case 'update_fdap':
@@ -99,6 +99,10 @@
 		
 			case 'add_new_course':
 				echo $Course->add__course__process();
+				break;
+
+			case 'add_to_course':
+				echo $User->add__to__course__process();
 				break;
 
 			case 'add_new_course_type':
@@ -209,6 +213,15 @@
 				
 			case 'fetch_booking_nurses':
 				echo $Booking->fetch__booking__nurses__process();
+				break;
+
+
+			case 'fetch_form':
+				echo $Booking->fetch__form__process();
+				break;
+
+			case 'fetch_course_nurses':
+				echo $User->fetch__course__nurses__process();
 				break;
 			
 			case 'fetch_available_bookings':

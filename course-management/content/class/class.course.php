@@ -65,7 +65,7 @@ if( !class_exists('Course') ):
 					
 					<div class="form-group">
 						<label for="admins"><?php _e('Course Trainers(s)');?>&nbsp;<span class="required">*</span></label>
-						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
+						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course Trainer(s)" multiple="multiple">
 							<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -98,8 +98,8 @@ if( !class_exists('Course') ):
 					<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
 				</div>
 				<div class="form-group">
-					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;<span class="required">*</span></label>
-					<select name="nurses[]" class="form-control select_single require" data-placeholder="Choose trainee(s)" multiple="multiple">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
+					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 						$option_data = get_option_data($data,array('ID','name'));
@@ -338,7 +338,7 @@ if( !class_exists('Course') ):
 					
 					<div class="form-group">
 						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
-						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course admin(s)" multiple="multiple">
+						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course Trainer(s)" multiple="multiple">
 							<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -373,8 +373,8 @@ if( !class_exists('Course') ):
 					<input type="text" name="date_to" value="<?php echo $dob;?>" class="form-control input-datepicker" readonly="readonly" />
 				</div>
 				<div class="form-group">
-					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;<span class="required">*</span></label>
-					<select name="nurses[]" class="form-control select_single require" data-placeholder="Choose trainee(s)" multiple="multiple">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
+					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
 						<?php
 								$data = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 								$option_data = get_option_data($data,array('ID','name'));
@@ -595,9 +595,14 @@ if( !class_exists('Course') ):
             					$ayyy = get_guid(TBL_COURSES);
 			
 					$enroll = array();
+					if(isset($nurses)){
 					foreach($nurses as $nurse){
 						$enroll[$nurse] = 0;
 						$attendance[$nurse] = 0;	  
+					}
+					}else{
+						$nurses = NULL;
+						$attendance = NULL;
 					}
             
             
@@ -764,6 +769,7 @@ if( !class_exists('Course') ):
 			);
 			if( user_can('edit_course') ):
 			
+			if(isset($nurses)){
 					$booking = get_tabledata(TBL_BOOKINGS,true,array('course' => $ID));
 					$old_enroll = maybe_unserialize($booking->enroll);
 					$old_attendance = maybe_unserialize($booking->attendance);
@@ -772,6 +778,12 @@ if( !class_exists('Course') ):
 						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
 						$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
 					}
+					}else{
+						$attendance = NULL;
+						$nurses = NULL;
+						$enroll = NULL;
+					}
+					
 					$result = $this->database->update(TBL_BOOKINGS,
 						array(
 							'course' => $ID,
@@ -787,14 +799,19 @@ if( !class_exists('Course') ):
 					);
 			
 			
-
 					$booking = get_tabledata(TBL_COURSES,true,array('ID' => $ID));
 					$old_enroll = maybe_unserialize($booking->enroll);
 					$old_attendance = maybe_unserialize($booking->attendance);
 					$enroll = array();
+					if(isset($nurse)){
 					foreach($nurses as $nurse){
 						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
 						$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
+					}
+					}else{
+						$attendance = NULL;
+						$nurses = NULL;
+						$enroll = NULL;
 					}
 					$result = $this->database->update(TBL_COURSES,
 						array(
