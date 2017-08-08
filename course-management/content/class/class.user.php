@@ -295,19 +295,24 @@ public function activity__and__progress__log__section( $user__id ){
 
 
 
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="profile_title">
-							<div class="col-md-6">
-								<h2><?php _e('Progress Report');?></h2> </div>
-						</div>
+
 						<div class="" role="tabpanel" data-example-id="togglable-tabs">
 							<ul id="tab_content" class="nav nav-tabs bar_tabs" role="tablist">
-                        
-                                <li role="presentation" class="active">
+                              
+                              
+                              
+                              <li role="presentation" class="">
+							<a href="#tab_content10" role="tab" data-toggle="tab" aria-expanded="false">
+										<?php _e('Profile');?>
+									</a>
+						</li>  
+						
+						                                <li role="presentation" class="active">
 							<a href="#tab_content7" role="tab" data-toggle="tab" aria-expanded="false">
 										<?php _e('Courses');?>
 									</a>
 						</li>  
+						
 <?php
     				$designation_ID =  get_user_meta($user__id,'user_designation');
                     $desig =  get_tabledata(TBL_DESIGNATIONS,false,array('ID'=>$designation_ID));
@@ -579,6 +584,66 @@ var_export($original_array);
 										</form>
 									</ul>
 								</div>
+								
+<div role="tabpanel" class="tab-pane fade" id="tab_content10" aria-labelledby="profile-tab">
+									<ul class="messages list-unstyled">
+									<?php
+			$user = get_userdata($user__id);
+
+										?>
+											<br>
+											<br>
+											<h1>Profile</h1>
+											<br>
+																<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+							<div class="profile_img">
+								<div id="crop-avatar"> <img class="img-responsive avatar-view" src="<?php echo get_user_profile_image($user__id);?>" alt="Avatar"> </div>
+							</div>
+							<h3><?php echo $user->first_name.' '.$user->last_name;?></h3>
+								<strong>Date of Birth:</strong> <?php echo date('M d,Y',strtotime(get_user_meta($user->ID,'dob',true)));?><br>
+																	
+																		
+							<br /> <a class="btn btn-success btn-sm" href="<?php the_permalink('edit-user', array('user_id' => $user__id));?>"><i class="fa fa-edit m-right-xs"></i>&nbsp;<?php _e('Edit User Details');?></a> </div>
+							
+
+																<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+							<div class="profile_img">
+
+							</div>
+							<h3>Contact Details</h3>
+								<strong>Email</strong>: <?php echo $user->user_email;?><br>
+								<strong>Phone: </strong><?php echo get_user_meta($user->ID,'user_phone',true);?><br>
+								<strong>Work Extension: </strong><?php echo get_user_meta($user->ID,'work_extension',true);?><br>
+								<strong>Beep: </strong><?php echo get_user_meta($user->ID,'beep',true);?><br>
+									 
+									</div>
+			<div class="col-md-3 col-sm-5 col-xs-12 profile_left">
+							<div class="profile_img">
+<?php
+	$w_area = get_tabledata(TBL_WORKS,true,array('ID' => $user->work_area_ID));
+	$a = get_user_meta($user->ID,'user_designation',true);
+		$desig = get_tabledata(TBL_DESIGNATIONS,true,array('ID' => $a));
+	?>
+							</div>
+							<h3>Work Details</h3>
+								<strong>Currently Employed</strong>: <?php echo $user->currently_employed;?><br>
+								<strong>Work Area</strong>: <?php echo $w_area->name;?><br>		
+								<strong>Designation: </strong><?php echo $desig->name;?><br>	
+								<strong>Band: </strong><?php echo get_user_meta($user->ID,'band',true);;?><br>	
+								</br>					
+								<strong>External Candidate Number: </strong><?php echo $user->external_candidate;?><br>
+								<strong>RAG Status: </strong><?php echo $user->rag_status;?><br>
+								<strong>Extended Support: </strong><?php echo $user->extended_support;?><br>
+								<strong>Support Since: </strong><?php echo $user->support_since;?><br>									 
+									</div>
+				
+							
+									</ul>
+								</div>
+
+
+
+
                                 <div role="tabpanel" class="tab-pane fade active in" id="tab_content7" aria-labelledby="profile-tab">
 									<ul class="messages list-unstyled">
 											<br>
@@ -1067,18 +1132,6 @@ var_export($original_array);
 											<?php echo get_options_list(get_roles()); ?>
 										</select>
 									</div>
-									<div class="form-group col-sm-6 col-xs-12">
-										<label for="courses">
-											<?php _e('Course(s)');?>
-										</label>
-										<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
-											<?php
-								$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-								$option_data = get_option_data($data,array('ID','name'));
-								echo get_options_list($option_data);
-								?>
-										</select> <small class="help-block"><?php _e('Use this option only for <strong>Trainee</strong> users');?></small> </div>
-								</div>
 								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="user_designation">
@@ -1193,6 +1246,197 @@ var_export($original_array);
 			return $content;
 		}
 
+
+
+
+		public function add__trainee__page(){
+			
+			ob_start();
+			if(!user_can('add_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: ?>
+							<form class="add-user user-form" method="post" autocomplete="off">
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="username"> Username <span class="required">*</span> </label>
+										<input type="text" name="username" class="form-control require" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="first_name">
+											<?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
+										<input type="text" name="first_name" class="form-control require" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="last_name">
+											<?php _e('Last Name');?>&nbsp;<span class="required">*</span></label>
+										<input type="text" name="last_name" class="form-control require" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="email">
+											<?php _e('Email');?>&nbsp;<span class="required">*</span></label>
+										<input type="text" name="user_email" class="form-control require" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="dob">
+											<?php _e('Date of birth');?>
+										</label>
+										<input type="text" name="dob" class="form-control input-datepicker-today" readonly="readonly" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="gender">
+											<?php _e('Gender');?>&nbsp;<span class="required">*</span></label>
+										<select name="gender" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+											<option value=""></option>
+											<option value="Male">
+												<?php _e('Male');?>
+											</option>
+											<option value="Female">
+												<?php _e('Female');?>
+											</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="phone">
+											<?php _e('Phone');?>
+										</label>
+										<input type="text" name="user_phone" class="form-control" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="work_extension">
+											<?php _e('Work extension');?>
+										</label>
+										<input type="text" name="work_extension" class="form-control" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="beep">
+											<?php _e('Beep');?>
+										</label>
+										<input type="text" name="beep" class="form-control" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user-role">
+											<?php _e('Role');?>&nbsp;<span class="required">*</span></label>
+										<select id="purpose" name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
+											<?php echo get_options_list(get_roles()); ?>
+										</select>
+									</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user_designation">
+											<?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
+										<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation">
+											<?php
+								$data = get_tabledata(TBL_DESIGNATIONS,false);
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+									
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user_designation">
+											<?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
+										<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area">
+											<?php
+								$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="band">
+											<?php _e('Band');?>
+										</label>
+										<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band">
+											<?php
+								$option_data = $this->user_bands();
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 form-goup">
+										<label>
+											<?php _e('Upload Profile Image');?>
+										</label>
+										<input type="text" name="profile_img" class="form-control" value="" placeholder="Uploaded image url" readonly="readonly" />
+										<br/> <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#upload-image-modal"><i class="fa fa-camera"></i>&nbsp;<?php _e('Upload Image');?></a> </div>
+									<div class="col-xs-12 col-sm-6 form-group">
+										<div class="profile-image-preview-box"><img src="" class="img-responsive img-thumbnail" /></div>
+									</div>
+								</div>
+								<script>
+									$(document).ready(function () {
+										$('#purpose').on('change', function () {
+											if (this.value == 'nurse') {
+												$(".nav-sub-wrapper").toggle();
+											}
+											else {
+												$(".nav-sub-wrapper").hide();
+											}
+										});
+									});
+								</script>
+								<div class="nav-sub-wrapper" style="display: none;">
+									<div class="row">
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Currently Employed?
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="current_employed" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="current_employed" value="0" /> No</label>
+										</div>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">External Candidate No.</label>
+										<input type="text" name="ex_cand" class="form-control " /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="gender"> RAG Status</label>
+										<select name="rag_status" class="form-control select_single" tabindex="-1" data-placeholder="Choose a gender">
+											<option value=""> </option>
+											<option value="0"> Red </option>
+											<option value="1"> Amber </option>
+											<option value="2"> Green </option>
+										</select>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="current_employed">Extended support Underway
+											<br/>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="1" /> Yes</label>
+											<label>&nbsp;</label>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="0" /> No</label>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">Extended Support Since: </label>
+										<input type="text" name="support_since" class="form-control " /> </div>
+								</div>
+								</div>
+								</div>
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<input type="hidden" name="action" value="add_new_user" />
+									<button class="btn btn-success btn-md" type="submit">
+										<?php _e('Add New User');?>
+									</button>
+								</div>
+							</form>
+							<?php echo $this->upload__image__section();
+			endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		
 		public function edit__user__page(){
 			ob_start();
 			$user__id = $_GET['user_id'];
@@ -1254,18 +1498,6 @@ var_export($original_array);
 												<?php echo get_options_list(get_roles(),array($user->user_role)); ?>
 											</select>
 										</div>
-										<div class="form-group col-sm-6 col-xs-12">
-											<label for="courses">
-												<?php _e('Course(s)');?>
-											</label>
-											<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
-												<?php
-								$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-								$option_data = get_option_data($data,array('ID','name'));
-								echo get_options_list($option_data,maybe_unserialize($user->courses));
-								?>
-											</select> <span class="help-block"><?php _e('Use this option only for <strong>Nurse</strong> users');?></span> </div>
-									</div>
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
 											<label for="user_designation">
@@ -1790,9 +2022,7 @@ else {
 							'user_status' => 1,
 							'user_pass' => set_password($user_pass),
 							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-																
+							'created_by' => $this->current__user__id,																
 						)
 					);
 			}else{
@@ -1814,7 +2044,6 @@ else {
 							'user_pass' => set_password($user_pass),
 							'user_salt' => $salt,
 							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
 							'currently_employed' => $current_employed,
 							'external_candidate' => $ex_cand,
 							'rag_status' => $rag_status,
@@ -2271,7 +2500,6 @@ $uploadOk = 1;
 						'work_area_ID' => $work_area,
 						'user_role' => $user_role,
 						
-						'courses' => isset($courses) ? $courses : ''
 					),
 					array('ID'=> $user_id)
 				);

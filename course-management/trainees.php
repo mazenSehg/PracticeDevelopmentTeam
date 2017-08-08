@@ -29,6 +29,7 @@ login_check();
 						<div class="x_panel">
 							<?php if( user_can('add_user') ): ?>
 							<div class="x_title">
+								<a href="<?php echo site_url();?>/new-trainees/" class="btn btn-dark btn-sm">Add New Trainee</a>
 								<div class="clearfix"></div>
 							</div>
 							<?php endif; ?>

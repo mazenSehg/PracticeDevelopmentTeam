@@ -758,9 +758,9 @@ if( !class_exists('Booking') ):
 							<tr>
 								<td><?php echo get_user_name($nurse);?></td>
 								<td class="text-center">
+									
 									<?php if($attendance[$nurse] == 0) : ?>
 									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="attendance_complete(this);"><?php _e('Attend'); ?></button>
-									<input type="checkbox" name="doh" class="js-switch doh-action" /> </label>
 									<?php else: ?>
 									<label class="label label-info"><?php _e('Attended'); ?></label>
 									<?php endif; ?>

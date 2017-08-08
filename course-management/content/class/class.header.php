@@ -251,7 +251,10 @@ if( !class_exists('Header') ):
 								
                                 <li>
 									<a href="<?php the_permalink('progress');?>"><i class="fa fa-user"></i><?php _e('Manage Training');?></a>
+								<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
 								</li>
+								
+								
 								<?php endif; ?>
 
 								<?php if( user_can('view_course') || user_can('edit_course') || user_can('add_course')): ?>
