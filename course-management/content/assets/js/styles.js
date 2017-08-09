@@ -791,11 +791,7 @@ function get_available_bookings($date, $action){
 }
 
 function nurse_info(btn){
-	var isDelete = confirm('Does this trainee Require files/information to be submitted?');
-	if(isDelete == false){
-		return false;
-	}
-	
+
 	var btn = $(btn);
 	var user_id = btn.data('user');
 	var booking_id = btn.data('booking');

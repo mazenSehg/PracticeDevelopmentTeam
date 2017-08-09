@@ -881,45 +881,9 @@ if( !class_exists('Booking') ):
 				$attendance = maybe_unserialize($booking->attendance);
 				if(!empty($nurses)):
 					ob_start(); ?>
-					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
-						<thead>
-							<tr>
-								<th><?php _e('Trainee'); ?></th>
-								<th><?php _e('Complete Status'); ?></th>
-								<th><?php _e('Additional'); ?></th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach($nurses as $nurse): ?>
-							<tr>
-								<td><?php echo get_user_name($nurse);?></td>
-								<td class="text-center">
-									<?php if($attendance[$nurse] == 0) : ?>
-									<button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="attendance_complete(this);"><?php _e('Attend'); ?></button>
-									<?php else: ?>
-									<label class="label label-info"><?php _e('Attended'); ?></label>
-									<?php endif; ?>
-									<?php if($attendance[$nurse] == 1) : ?>
-                                    
-										<?php if($enroll[$nurse] == 0) : ?>
+<h1>Ayyyyy</h1>
 
-                                    <button type="button" class="btn btn-xs btn-success complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_complete(this);"><?php _e('Complete'); ?></button>
-										<?php else: ?>
-										<label class="label label-success"><?php _e('Completed'); ?></label>
-										<?php endif; ?>
-									<?php endif; ?>
-                    
-								</td>
-                                <td>
-                    <button type="button" class="btn btn-xs btn-warning complete-nurse" data-booking="<?php echo $booking->ID;?>" data-user="<?php echo $nurse; ?>" onclick="nurse_info(this);"><?php _e('Additional Information'); ?></button>	
-                                    
-                                </td>
-							</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-					<?php
-						
+					<?php	
 					$return['html'] = ob_get_clean();
 				endif;
 			endif;

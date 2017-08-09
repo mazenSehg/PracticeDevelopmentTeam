@@ -236,6 +236,10 @@
 				echo $Booking->nurse__complete__process();
 				break;
 				
+			case 'nurse_upload':
+				echo $Booking->fetch__nurses__upload__process();
+				break;
+
 			case 'attendance_complete':
 				echo $Booking->nurse__attendance__process();
 				break;

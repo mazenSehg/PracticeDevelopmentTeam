@@ -626,17 +626,17 @@ var_export($original_array);
 	?>
 							</div>
 							<h3>Work Details</h3>
-								<strong>Currently Employed</strong>: <?php echo $user->currently_employed;?><br>
+								<strong>Currently Employed: </strong><?php if($user->currently_employed!=0){echo "Yes";}else{echo "No";};?><br>
 								<strong>Work Area</strong>: <?php echo $w_area->name;?><br>		
 								<strong>Designation: </strong><?php echo $desig->name;?><br>	
 								<strong>Band: </strong><?php echo get_user_meta($user->ID,'band',true);;?><br>	
 								</br>					
 								<strong>External Candidate Number: </strong><?php echo $user->external_candidate;?><br>
 								<strong>RAG Status: </strong><?php echo $user->rag_status;?><br>
-								<strong>Extended Support: </strong><?php echo $user->extended_support;?><br>
+								<strong>RAG Status: </strong><?php if($user->extended_support==0){echo "Red";}else if($user->extended_support==1){echo "Amber";}else if($user->extended_support==3){echo "Green";};?><br>
+								<strong>Extended Support: </strong><?php if($user->extended_support!=0){echo "Yes";}else{echo "No";};?><br>
 								<strong>Support Since: </strong><?php echo $user->support_since;?><br>									 
 									</div>
-				
 							
 									</ul>
 								</div>
@@ -750,8 +750,17 @@ var_export($original_array);
 																<?php echo $noty->note?>
 															</td>
 															<td>
-
-																<a href="<?php echo $noty->filepath; ?>" download>download</a>
+<?php 
+				
+function filePathParts($arg1) {
+return $arg1['basename'];
+}
+	
+				$xmlFile = pathinfo($noty->filepath);
+	$name = filePathParts($xmlFile);
+	
+				?>
+					<a href="<?php echo $noty->filepath; ?>" download>download<br>(<?php echo $name;?>)</a>
 															</td>
 															<td>
 																<?php $user = get_userdata($noty->from);
@@ -1045,7 +1054,7 @@ var_export($original_array);
 				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
 			else: ?>
 						<div class="col-md-12 col-sm-3 col-xs-12 profile_left">
-							<h3>Progress review for: <?php echo $user->first_name.' '.$user->last_name;?></h3>
+							<h3>Traning Progress for: <?php echo $user->first_name.' '.$user->last_name;?></h3>
 </div>
 							<br> 
 							<br> 
