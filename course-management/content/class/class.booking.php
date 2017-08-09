@@ -95,33 +95,21 @@ if( !class_exists('Booking') ):
 		
 		public function edit__course__page(){
 			ob_start();
-			$course__id = $_GET['id'];
+			$course__id = 10000546594;
+			echo $course__id;
 				$course = get_tabledata(TBL_COURSES,true,array('ID'=> $course__id));
-			if( !user_can( 'edit_course') ):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
-			elseif(!$course):
-				echo page_not_found('Oops ! Course Details Not Found.','Please go back and check again !');
-			else:
 			?>
+<div id="edit-data-modal-body"></div>
 				<form class="add-course submit-form" method="post" autocomplete="off">
 					
 					<div class="form-group">
 						<input type="hidden" name="ID" value="<?php _e($course__id);?>" class="form-control require" />
 					</div>
 					
-					<div class="form-group">
-						<label for="name"><?php _e('Course Code');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="code" value="<?php _e($course->course_ID);?>" class="form-control require" />
-					</div>
-					
-					<div class="form-group">
-						<label for="name"><?php _e('Name');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="name" class="form-control require" value="<?php _e($course->name);?>"/>
-					</div>
 					
 					<div class="form-group">
 						<label for="admins"><?php _e('Course Admin(s)');?>&nbsp;<span class="required">*</span></label>
-						<select name="admins[]" class="form-control select_single require" data-placeholder="Choose course Trainer(s)" multiple="multiple">
+						<select name="admins[]" class="form-control select_single require" data-placeholder="Course Trainer(s)" multiple="multiple">
 							<?php
 							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 							$option_data = get_option_data($data,array('ID','name'));
@@ -145,16 +133,6 @@ if( !class_exists('Booking') ):
 					</div>
 					
 					
-									<div class="form-group">
-					<label for="date_from"><?php _e('Booking Date From');?>&nbsp;<span class="required">*</span></label>
-					<?php $dob = $course->date_from != '' ? date('M d, Y', strtotime(trim($course->date_from))) : ''; ?>
-					<input type="text" name="date_from" value= "<?php echo $dob;?>"class="form-control input-datepicker" readonly="readonly"/>
-				</div>
-				<div class="form-group">
-					<label for="date_to"><?php _e('Booking Date To');?>&nbsp;<span class="required">*</span></label>
-					<?php $dob = $course->date_to != '' ? date('M d, Y', strtotime(trim($course->date_to))) : ''; ?>
-					<input type="text" name="date_to" value="<?php echo $dob;?>" class="form-control input-datepicker" readonly="readonly" />
-				</div>
 				<div class="form-group">
 					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
 					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
@@ -175,7 +153,7 @@ if( !class_exists('Booking') ):
 						<button class="btn btn-success btn-md" type="submit"><?php _e('Update Course');?></button>
 					</div>
 				</form>
-			<?php endif;
+			<?php
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -418,6 +396,8 @@ if( !class_exists('Booking') ):
 							<h1 class="modal-title text-center text-uppercase"><?php _e('Edit Course Booking');?></h1>
 						</div>
 						<div class="modal-body">
+							<div id="edit-data-modal-body"></div>
+							
 							<?php echo $this->edit__course__page(); ?>
 						</div>
 						<div class="modal-footer">
@@ -820,9 +800,9 @@ if( !class_exists('Booking') ):
 							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_nurses(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('View Trainee(s)');?></button>
 
 							
-							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_form(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('Add Trainee(s) to Course');?></button>
+							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#edit-course-modal" data-booking="<?php echo $booking->course;?>" onclick="get_form(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('Add Trainee(s) to Course');?></button>
 
-							<?php endif; ?>
+							<?php echo $booking->course; endif; ?>
 						</td>
 
 
@@ -866,32 +846,22 @@ if( !class_exists('Booking') ):
 			<?php endif;
 			$return['html'] = ob_get_clean();
 			return json_encode($return);
-		}
-		
+		}		
 		
 		
 		public function fetch__form__process(){
-					extract($_POST);
-			$booking_id = trim($booking_id);
-			$return['html'] = '';
-			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
-			if($booking):
-				$nurses = maybe_unserialize($booking->nurses);
-				$enroll = maybe_unserialize($booking->enroll);
-				$attendance = maybe_unserialize($booking->attendance);
-				if(!empty($nurses)):
-					ob_start(); ?>
-<h1>Ayyyyy</h1>
+			extract($_POST);
+			//print_r($_POST);
+			$nurse_id = get_current_user_id();
+			$cID = $_POST['booking_id'];
+			echo $cID;
 
-					<?php	
-					$return['html'] = ob_get_clean();
-				endif;
-			endif;
-			return json_encode($return);	
-			
-			
-			
+			$return['html'] = ob_get_clean();
+			return json_encode($return);
 		}
+		
+		
+		
 		public function nurse__attendance__process(){
 			extract($_POST);
 			$booking_id = trim($booking_id);

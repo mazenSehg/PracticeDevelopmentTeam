@@ -757,7 +757,8 @@ function get_nurses(btn){
 function get_form(btn){
 	var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
 	$('#nurse-data-modal-body').html('<h1 class="text-center green">'+spinner+'</h1>');
-	$('#booking-data-modal .modal-footer button[data-dismiss="modal"]').click();
+	$('#edit-data-modal-body .modal-footer button[data-dismiss="modal"]').click();
+	console.log($(btn).data('booking'));
 	$.ajax({ 
 		type: 'POST',
 		data: {
@@ -767,7 +768,7 @@ function get_form(btn){
 		url: ajax_url,
 		dataType: 'json',
 		success: function(r){
-			$('#nurse-data-modal-body').html(r['html']);
+			$('#edit-data-modal-body').html(r['html']);
 			return false;
 		}
 	});
