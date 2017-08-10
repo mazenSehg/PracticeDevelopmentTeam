@@ -96,7 +96,8 @@ if( !class_exists('Booking') ):
 		public function edit__course__page(){
 			ob_start();
 			$course__id = 10000546594;
-			echo $course__id;
+			global $ncID;
+			echo "--".$ncID;
 				$course = get_tabledata(TBL_COURSES,true,array('ID'=> $course__id));
 			?>
 <div id="edit-data-modal-body"></div>
@@ -801,6 +802,7 @@ if( !class_exists('Booking') ):
 
 							
 							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#edit-course-modal" data-booking="<?php echo $booking->course;?>" onclick="get_form(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('Add Trainee(s) to Course');?></button>
+							
 
 							<?php echo $booking->course; endif; ?>
 						</td>
@@ -851,11 +853,12 @@ if( !class_exists('Booking') ):
 		
 		public function fetch__form__process(){
 			extract($_POST);
-			//print_r($_POST);
 			$nurse_id = get_current_user_id();
 			$cID = $_POST['booking_id'];
-			echo $cID;
-
+//			echo $cID;
+			global $ncID;
+			$ncID = $cID;
+			echo "-" .$ncID;
 			$return['html'] = ob_get_clean();
 			return json_encode($return);
 		}

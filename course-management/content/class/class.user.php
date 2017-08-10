@@ -315,8 +315,7 @@ public function activity__and__progress__log__section( $user__id ){
 						
 <?php
     				$designation_ID =  get_user_meta($user__id,'user_designation');
-                    $desig =  get_tabledata(TBL_DESIGNATIONS,false,array('ID'=>$designation_ID));
-                    $rule = get_tabledata(TBL_RULES,false,array('designation'=>$desig[0]->ID));
+                    $rule = get_tabledata(TBL_RULES,false,array('user_ID'=>$user__id));
                     if($rule): foreach($rule as $data):
     
                     if($data->preceptorship!=0){
@@ -387,12 +386,6 @@ public function activity__and__progress__log__section( $user__id ){
 											<br>
 											<h1>Preceptor Progress</h1>
 											<br>
-											<?php
-			$data = get_tabledata(TBL_INFO,false,array('user_ID' => $user__id));
-$original_array=unserialize($data[0]->preceptorship);
-var_export($original_array);	
-
-			?>
 												<div class="row">
 													<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 													<div class="form-group col-sm-4 col-xs-12">
@@ -1238,6 +1231,56 @@ return $arg1['basename'];
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="name">Extended Support Since: </label>
 										<input type="text" name="support_since" class="form-control " /> </div>
+										
+					<div class="row">
+						<br><br>
+						<h2>Training information Required: </h2><br><br>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Preceptorship progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">HCA Induction Progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="hca" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="hca" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">FD/AP Training Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Student Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="record" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="record" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Mentorship
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="0" /> No</label>
+										</div>
+									</div>
 								</div>
 								</div>
 								</div>
@@ -1428,6 +1471,9 @@ return $arg1['basename'];
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="name">Extended Support Since: </label>
 										<input type="text" name="support_since" class="form-control " /> </div>
+										
+										
+								
 								</div>
 								</div>
 								</div>
@@ -1447,9 +1493,11 @@ return $arg1['basename'];
 		
 		
 		public function edit__user__page(){
-			ob_start();
+			ob_start(); 
+			
 			$user__id = $_GET['user_id'];
-			$user = get_userdata($user__id);
+			$user = get_userdata($user__id); 
+			$designation = get_tabledata(TBL_RULES,true,array('user_ID'=> $user__id));
 			if(!user_can('edit_user')):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$user):
@@ -1634,6 +1682,54 @@ return $arg1['basename'];
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="name">Extended Support Since: </label>
 										<input type="text" name="support_since" class="form-control " value="<?php echo $user->support_since;?>" /> </div>
+										
+								<div class="row">
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Preceptorship progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="1" <?php checked($designation->preceptorship , 1);?> /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="0" <?php checked($designation->preceptorship , 0);?> /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">HCA Induction Progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="hca" value="1" <?php checked($designation->hca , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="hca" value="0" <?php checked($designation->hca , 0);?>/> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">FD/AP Training Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="1" <?php checked($designation->fdap , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="0" <?php checked($designation->fdap , 0);?>/> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Student Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="record" value="1" <?php checked($designation->record , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="record" value="0" <?php checked($designation->record , 0);?>/> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Mentorship
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="1" <?php checked($designation->mentorship , 1);?> /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="0"<?php checked($designation->mentorship , 0);?> /> No</label>
+										</div>
+									</div>
 									<div class="ln_solid"></div>
 									<div class="form-group">
 										<div>&nbsp;</div>
@@ -2014,7 +2110,7 @@ else {
 					$salt = base64_encode($salt);
 								$guid = get_guid(TBL_USERS);
 			
-			if($user_role!="trainer"&&$user_role!="nurse"){
+			if($user_role!="admin"&&$user_role!="nurse"){
 				$first = $first_name[0];
 				$trainer_ID = $last_name."_".$first."_001";
 				
@@ -2061,7 +2157,21 @@ else {
 						
 						)
 					);
+				
+					$guid2 = get_guid(TBL_RULES);
+					$result = $this->database->insert(TBL_RULES,
+						array(
+							'ID' => $guid2,
+							'user_ID' => $guid,
+							'preceptorship' => $preceptorship,
+							'hca' => $hca,
+							'fdap' => $fdap,
+							'record' => $record,
+							'mentorship' => $mentorship,
+						)
+					);
 			}
+			
 					if($result):
 						$user__id = $guid;
 						update_user_meta($user__id,'gender',$gender);
@@ -2471,7 +2581,6 @@ $uploadOk = 1;
 
 		public function update__user__process(){
 			extract($_POST);
-
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -2491,7 +2600,7 @@ $uploadOk = 1;
 				if(!isset($centre))
 					$centre = '';
 
-						if($user_role=="trainer"){
+						if($user_role=="course_admin"){
 				$first = $first_name[0];
 				$trainer_ID = $last_name."_".$first."_001";
 			}else{
@@ -2513,6 +2622,18 @@ $uploadOk = 1;
 					array('ID'=> $user_id)
 				);
 			
+					$result = $this->database->update(TBL_RULES,
+						array(
+							'preceptorship' => $preceptorship,
+							'hca' => $hca,
+							'fdap' => $fdap,
+							'record' => $record,
+							'mentorship' => $mentorship,
+						),
+						array(
+							'user_ID'=> $user_id,
+						)
+					);			
 
 
 				$check = ($result) ? true : false;
