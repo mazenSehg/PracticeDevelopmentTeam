@@ -1964,7 +1964,9 @@ return $arg1['basename'];
 												<?php endforeach; endif; ?>
 										</tbody>
 									</table>
-									<?php endif;
+											
+											
+			<?php endif;
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -1978,60 +1980,43 @@ return $arg1['basename'];
 			elseif(!$users_list):
 				echo page_not_found("Oops! THERE ARE NO NEW Users in website",' ',false);
 			else: ?>
-									<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th></th>
-												<th>
-													<?php _e('Name');?>
-												</th>
-												<th>
-													<?php _e('Email');?>
-												</th>
-												<th>
-													<?php _e('Registered On');?>
-												</th>
-												<?php if(is_admin()): ?>
-													<th class="text-center">
-														<?php _e('Status');?>
-													</th>
-													<?php endif; ?>
-														<th class="text-center">
-															<?php _e('Actions');?>
-														</th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php if($users_list): foreach($users_list as $single_user):
-							$admin_label = ($single_user->user_role == 'admin') ? '<label class="label label-success">admin</label>' : '';
-						?>
-												<tr>
-													<td class="text-center"><img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
-													<td>
-														<?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?>
-													</td>
-													<td>
-														<?php _e($single_user->user_email);?>
-													</td>
-													<td>
-														<?php echo date('M d,Y',strtotime($single_user->registered_at));?>
-													</td>
-													<?php if(is_admin()): ?>
-														<td class="text-center">
-															<label>
-																<input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="
-																<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
-														</td>
-				<?php endif; ?>
-															<td class="text-center"> 
-<a href="<?php the_permalink('view-progress', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a>
-<a href="<?php the_permalink('view-progress', array('user_id' => $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Add to Course');?></a>
-                                                    </td>
-												</tr>
-												<?php endforeach; endif; ?>
-										</tbody>
-									</table>
-									<?php endif;
+			
+			
+			
+			
+			
+											<div class="row custom-filters">
+		<div class="form-group col-sm-2 col-xs-6">
+			<label for="centre">Work Area</label>
+			<select name="centre" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area">
+				<?php
+
+		$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code , name) AS name');
+		$option_data = get_option_data($data,array('ID','name'));
+		echo get_options_list($option_data);
+				?>
+			</select>
+		</div>
+											</div>
+											<br>
+	
+			
+			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive table-responsive ajax-datatable-buttons" cellspacing="0" width="100%" data-table="fetch_all_courses" data-order-column="1">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Registered On</th>
+			<th>Status</th>
+			<th class="text-center">Actions</th>
+		</tr>
+	</thead>
+</table>
+
+								
+				
+				<?php
+			endif;
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -2664,7 +2649,39 @@ $uploadOk = 1;
 						array(
 							'user_ID'=> $user_id,
 						)
-					);			
+					);	
+			
+			if( is_value_exists(TBL_RULES,array('user_ID' => $user_id),$user_id) ){
+					$result = $this->database->update(TBL_RULES,
+						array(
+							'preceptorship' => $preceptorship,
+							'hca' => $hca,
+							'fdap' => $fdap,
+							'record' => $record,
+							'mentorship' => $mentorship,
+						),
+						array(
+							'user_ID'=> $user_id,
+						)
+					);	
+			}
+			else
+			{
+					$guid2 = get_guid(TBL_RULES);
+					$result = $this->database->insert(TBL_RULES,
+						array(
+							'ID' => $guid2,
+							'user_ID' => $user_id,
+							'preceptorship' => $preceptorship,
+							'hca' => $hca,
+							'fdap' => $fdap,
+							'record' => $record,
+							'mentorship' => $mentorship,
+						)
+					);
+			}
+			
+			
 
 
 				$check = ($result) ? true : false;
@@ -2774,6 +2791,97 @@ $uploadOk = 1;
 			$return['nurses_html'] = get_options_list($option_data);
 			return json_encode($return);
 		}
+		
+		
+		public function fetch_all_courses_process(){
+$orders_columns = array(
+			0 => 'name',
+			1 => 'user_email',
+		);
+		$recordsTotal = $recordsFiltered = 0;
+		$draw = $_POST["draw"];
+		$orderByColumnIndex = $_POST['order'][0]['column'];
+		$orderBy = ( array_key_exists( $orderByColumnIndex , $orders_columns ) ) ? $orders_columns[$orderByColumnIndex] : 'created_on';
+		$orderType = $_POST['order'][0]['dir'];
+		$start = $_POST["start"];
+		$length = $_POST['length'];
+
+		$query = '';
+
+		$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy, $orderType ,$start , $length);
+		$data = array();
+		if(!empty($_POST['search']['value'])){
+			$columns = array('ID','name');
+			for($i = 0 ; $i < count($columns);$i++){
+				$column = $columns[$i];
+				$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
+			}
+			$where = implode(" OR " , $where);
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= $where;
+		}
+			
+			
+			
+		if(isset($_POST['designation']) && $_POST['designation'] != '' && $_POST['designation'] != 'undefined'){
+			$query .= ($query != '') ? ' AND ' : ' WHERE ';
+			$query .= " `centre` = '".$_POST['designation']."' ";
+		}
+
+		$recordsTotal = get_tabledata(TBL_USERS,true,array(), $query, 'COUNT(ID) as count');
+		$recordsTotal = $recordsTotal->count;
+		$data_list = get_tabledata(TBL_USERS,false,array('user_role' => 'nurse'));
+		$recordsFiltered = $recordsTotal;
+			
+			if($data_list): foreach($data_list as $equipment):
+//				$centre = get_tabledata(TBL_CENTRES,true,array('ID'=>$equipment->centre));
+//				$equipment_type = get_tabledata(TBL_EQUIPMENT_TYPES,true,array('ID'=>$equipment->equipment_type));
+//				$manufacturer = get_tabledata(TBL_MANUFACTURERS,true,array('ID'=>$equipment->manufacturer));
+//				$model = get_tabledata(TBL_MODELS,true,array('ID'=>$equipment->model));
+//				$service_agent = get_tabledata(TBL_SERVICE_AGENTS,true,array('ID'=>$equipment->service_agent));
+			
+				$row = array();
+				array_push($row, __($equipment->first_name));
+				array_push($row, __($equipment->user_email));				
+				array_push($row, date('M d,Y',strtotime($equipment->registered_at)));
+				if(is_admin()):
+					ob_start();
+					?>
+					<div class="text-center">
+						<label>
+							<input type="checkbox" class="js-switch" <?php checked($equipment->user_status, 1);?> onclick="approve_switch(this);" data-id="<?php echo $equipment->ID;?>" data-action="equipment_approve_change"/>
+						</label>
+					</div>
+					<div style="display:none;"><?php echo $equipment->user_status; ?></div>
+					<?php 
+					$checkbox = ob_get_clean();
+					array_push($row, $checkbox);
+				endif;
+				ob_start();
+				?>
+				<div class="text-center">
+					<a href="<?php the_permalink('view-progress', array('user_id' => $equipment->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a>
+					<a href="<?php the_permalink('view-progress', array('user_id' => $equipment->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Add to Course');?></a>
+
+				</div>
+				<?php 
+				$action = ob_get_clean();
+				array_push($row, $action);
+				$data[] = $row;
+				endforeach;
+			endif;
+			
+			/* Response to client before JSON encoding */
+			$response = array(
+				"draw" => intval($draw),
+				"recordsTotal" => $recordsTotal,
+				"recordsFiltered"=> $recordsFiltered,
+				"data" => $data,
+			);
+			return json_encode($response);
+		}
+		
+		
 
 		public function delete__user__process(){
 			extract($_POST);

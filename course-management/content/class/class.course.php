@@ -475,31 +475,6 @@ if( !class_exists('Course') ):
 				echo page_not_found("Oops! THERE ARE NO NEW courses record found",' ',false);
 			else:
 			?>
-		<div class="row custom-filters">
-						
-			<div class="form-group col-sm-4 col-xs-6">
-			<label for="fault-type">Course Type</label>
-			<select name="fault_type" class="form-control select_single" tabindex="-1" data-placeholder="Choose Course Type">
-				<?php
-				$data = get_tabledata(TBL_COURSE_TYPE,false,array(), 'ORDER BY `name` ASC');
-				$option_data = get_option_data($data,array('ID','name'));
-				echo get_options_list($option_data);
-				?>
-			</select>
-		</div>
-			<div class="form-group col-sm-2 col-xs-6 col 2">
-					<label for="date_of_fault">
-					<?php _e('Fault Date From');?>
-					</label>
-					<input type="text" name="date_from" class="form-control input-datepicker-today" /> </div>
-				<div class="form-group col-sm-2 col-xs-6 col 2">
-					<label for="date_of_fault">
-					<?php _e('Fault Date To');?>
-					</label>
-					<input type="text" name="date_to" class="form-control input-datepicker-today" /> </div>
-				<div class="col-xs-6 col-sm-2 col-sm-pull-4">
-			</div>
-		</div>
 					<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 					<thead>
 						<tr>

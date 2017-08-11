@@ -10,7 +10,7 @@ login_check();
 <!DOCTYPE html>
 <html>
 <head>
-	<title>All Users &mdash; <?php echo get_site_name();?></title>
+	<title>All Trainee Users &mdash; <?php echo get_site_name();?></title>
 	
 	<?php echo $Header->head();?>
 </head>
@@ -23,7 +23,7 @@ login_check();
 		<!-- page content -->
 		<div class="right_col" role="main">
 			<div class="">
-				<?php echo $Header->page__header('All Users Progress'); ?>
+				<?php echo $Header->page__header('All Trainees Progress'); ?>
 				
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">

@@ -64,6 +64,7 @@ if( !class_exists('Header') ):
 			<script>
 				var site_url = '<?php echo site_url();?>';
 				var ajax_url = '<?php echo PROCESS_URL;?>';
+				var table_ajax_url = '<?php echo TABLE_PROCESS_URL;?>';
 			</script>
 			<?php echo $this->scripts(); ?>
 			<?php
@@ -296,28 +297,6 @@ if( !class_exists('Header') ):
 								
 								
 								
-<!--
-								
-								<?php //if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
-								<li>
-									<a><i class="fa fa-book"></i><?php// _e('Bookings');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php// if( user_can('view_booking') ): ?>
-										<li><a href="<?php //the_permalink('bookings');?>"><?php// _e('All Bookings');?></a></li>
-										<?php// endif;?>
-										
-										<?php// if( user_can('edit_booking') || user_can('add_booking')): ?>
-										<li><a href="<?php// the_permalink('add-new-booking');?>"><?php// _e('Add New Booking');?></a></li>
-										<li class="hidden"><a href="<?php //the_permalink('edit-booking');?>"></a></li>
-										<?php// endif;?>
-										
-										<?php //if( user_can('view_booking') ): ?>
-										<li><a href="<?php //the_permalink('view-booking-calendar');?>"><?php// _e('View Calendar');?></a></li>
-										<?php// endif;?>
-									</ul>
-								</li>
-								<?php //endif; ?>
---->
 								<li>
 								<a>
 									<i class="fa fa-certificate">
@@ -342,17 +321,6 @@ if( !class_exists('Header') ):
 										<li><a href="<?php the_permalink('add-new-designation');?>"><?php _e('Add New Designation');?></a></li>
 										<li class="hidden"><a href="<?php the_permalink('edit-designation');?>"></a></li>
 										<?php endif;?>
-									</ul>
-								</li>
-                                    
-								<li>
-									<a><i class="fa fa-book"></i><?php _e('Rules');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="<?php the_permalink('rules');?>"><?php _e('Designation Rules');?></a></li>
-										
-
-										<li><a href="<?php the_permalink('add-new-designation-rules');?>"><?php _e('Add New Designation Rule');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-designation-rules');?>"></a></li>
 									</ul>
 								</li>
 								<?php endif; ?>

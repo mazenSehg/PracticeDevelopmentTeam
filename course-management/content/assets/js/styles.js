@@ -87,14 +87,14 @@ $(document).ready(function() {
 					type: 'POST',
 					data: function ( d ) {
 						d.action = $('.ajax-datatable-buttons').data('table');
-						d.centre = $('.custom-filters select[name="centre"]').val();
-						d.equipment_type = $('.custom-filters select[name="equipment_type"]').val();
-						d.equipment = $('.custom-filters select[name="equipment"]').val();
-						d.fault_type = $('.custom-filters select[name="fault_type"]').val();
-						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
-						d.model = $('.custom-filters select[name="model"]').val();
-						d.approved = $('.custom-filters select[name="approved"]').val();
-						d.date_of_fault = $('.custom-filters select[name="date_of_fault"]').val();
+						d.centre = $('.custom-filters select[name="workarea"]').val();
+//						d.equipment_type = $('.custom-filters select[name="equipment_type"]').val();
+//						d.equipment = $('.custom-filters select[name="equipment"]').val();
+//						d.fault_type = $('.custom-filters select[name="fault_type"]').val();
+//						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
+//						d.model = $('.custom-filters select[name="model"]').val();
+//						d.approved = $('.custom-filters select[name="approved"]').val();
+//						d.date_of_fault = $('.custom-filters select[name="date_of_fault"]').val();
 					},
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -108,6 +108,7 @@ $(document).ready(function() {
 					}
 				},
 			});
+			console.log($('.custom-filters select[name="workarea"]').val());
 		}
 	};
 
