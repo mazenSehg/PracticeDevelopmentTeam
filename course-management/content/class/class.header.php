@@ -235,10 +235,14 @@ if( !class_exists('Header') ):
 										<?php endif;?>
 										
 										<?php if( user_can('edit_user') || user_can('add_user')): ?>
-										<li><a href="<?php the_permalink('add-new-user');?>"><?php _e('Add New User');?></a></li>
+										<li><a href="<?php the_permalink('add-new-user');?>"><?php _e('Add New Admin/Trainer');?></a></li>
 										<li class="hidden"><a href="<?php the_permalink('edit-user');?>"></a></li>
 										<?php endif;?>
 										
+										<?php if( user_can('edit_user') || user_can('add_user')): ?>
+										<li><a href="<?php the_permalink('new-trainees');?>"><?php _e('Add New Trainee');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
+										<?php endif;?>										
 										<?php if( user_can('view_user') ): ?>
 										<li class="hidden"><a href="<?php the_permalink('view-user');?>"></a></li>
 										<?php endif;?>
@@ -253,7 +257,7 @@ if( !class_exists('Header') ):
 									<a href="<?php the_permalink('progress');?>"><i class="fa fa-user"></i><?php _e('Manage Training');?></a>
 								<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
 								</li>
-								
+								<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
 								
 								<?php endif; ?>
 

@@ -1366,14 +1366,11 @@ return $arg1['basename'];
 										</label>
 										<input type="text" name="beep" class="form-control" /> </div>
 								</div>
-								<div class="row">
-									<div class="form-group col-sm-6 col-xs-12">
-										<label for="user-role">
-											<?php _e('Role');?>&nbsp;<span class="required">*</span></label>
-										<select id="purpose" name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
-											<?php echo get_options_list(get_roles()); ?>
-										</select>
+								
+								<div class="form-group">
+										<input type="hidden" id="purpose" name="user_role" value = "nurse" class="form-control" tabindex="-1" data-placeholder="Choose role">
 									</div>
+								
 								<div class="row">
 									<div class="form-group col-sm-6 col-xs-12">
 										<label for="user_designation">
@@ -1423,19 +1420,6 @@ return $arg1['basename'];
 										<div class="profile-image-preview-box"><img src="" class="img-responsive img-thumbnail" /></div>
 									</div>
 								</div>
-								<script>
-									$(document).ready(function () {
-										$('#purpose').on('change', function () {
-											if (this.value == 'nurse') {
-												$(".nav-sub-wrapper").toggle();
-											}
-											else {
-												$(".nav-sub-wrapper").hide();
-											}
-										});
-									});
-								</script>
-								<div class="nav-sub-wrapper" style="display: none;">
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
 											<label for="current_employed">Currently Employed?
@@ -1472,9 +1456,55 @@ return $arg1['basename'];
 										<label for="name">Extended Support Since: </label>
 										<input type="text" name="support_since" class="form-control " /> </div>
 										
-										
-								
-								</div>
+					<div class="row">
+						<br><br>
+						<h2>Training information Required: </h2><br><br>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Preceptorship progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">HCA Induction Progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="hca" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="hca" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">FD/AP Training Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Student Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="record" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="record" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Mentorship
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="0" /> No</label>
+										</div>
+									</div>
 								</div>
 								</div>
 								<div class="ln_solid"></div>
@@ -2151,6 +2181,7 @@ else {
 							'created_by' => $this->current__user__id,
 							'currently_employed' => $current_employed,
 							'external_candidate' => $ex_cand,
+							'work_area_ID' => $work_area,
 							'rag_status' => $rag_status,
 							'extended_support' => $extended_support,
 							'support_since' => $support_since,
