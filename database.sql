@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 04, 2017 at 06:51 PM
+-- Generation Time: Aug 11, 2017 at 11:55 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -103,7 +103,9 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (61, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:39:14'),
 (62, 10000603933, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:39:32'),
 (63, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', '2017-07-25 06:40:45'),
-(64, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:54.0) Gecko/20100101 Firefox/54.0', '2017-08-03 11:51:00');
+(64, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:54.0) Gecko/20100101 Firefox/54.0', '2017-08-03 11:51:00'),
+(65, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-08-08 10:34:59'),
+(66, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12', '2017-08-11 09:51:03');
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,8 @@ CREATE TABLE `tbl_bookings` (
 --
 
 INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `course`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000931969, 10000726899, 10000604644, '2017-08-06', '2017-08-09', 'a:1:{i:0;s:11:\"10000340101\";}', 'a:1:{i:10000340101;i:1;}', 'a:1:{i:10000340101;i:1;}', 1, '2017-08-04 16:46:55');
+(10000506099, 10000726899, 10000546594, '2017-08-01', '2017-08-03', 'a:2:{i:0;s:11:\"10000340101\";i:1;s:11:\"10000603933\";}', 'a:2:{i:10000340101;i:1;i:10000603933;i:1;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-08-08 12:01:52'),
+(10000704570, 2147483647, 10000913885, '2017-08-07', '2017-08-09', 'a:2:{i:0;s:11:\"10000340101\";i:1;s:11:\"10000603933\";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 1, '2017-08-09 09:30:51');
 
 -- --------------------------------------------------------
 
@@ -221,7 +224,8 @@ CREATE TABLE `tbl_courses` (
 --
 
 INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `date_from`, `date_to`, `nurses`, `attendance`, `enroll`, `active`, `created_on`) VALUES
-(10000604644, 10000726899, 'TRIAL_testing_test', 'test', 'a:1:{i:0;s:11:\"10000950340\";}', 17, '2017-08-06', '2017-08-09', 'a:1:{i:0;s:11:\"10000340101\";}', 'a:1:{i:10000340101;i:0;}', 'a:1:{i:10000340101;i:0;}', 0, '2017-08-04 16:46:55');
+(10000546594, 10000726899, 'TRIAL_testing_test', 'test', 'a:1:{i:0;s:11:\"10000950352\";}', 20, '2017-08-01', '2017-08-03', 'a:2:{i:0;s:11:\"10000340101\";i:1;s:11:\"10000603933\";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 0, '2017-08-08 12:01:52'),
+(10000913885, 2147483647, 'TST_bob_54564', '213512', 'a:2:{i:0;s:11:\"10000950350\";i:1;s:11:\"10000950352\";}', 17, '2017-08-07', '2017-08-09', 'a:2:{i:0;s:11:\"10000340101\";i:1;s:11:\"10000603933\";}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 'a:2:{i:10000340101;i:0;i:10000603933;i:0;}', 0, '2017-08-09 09:30:51');
 
 -- --------------------------------------------------------
 
@@ -866,7 +870,44 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (457, 1, 'New course created', 'You have successfully created a new course (test).', 0, 0, '2017-08-04 16:46:55'),
 (458, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:48:29'),
 (459, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:48:52'),
-(460, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:49:11');
+(460, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_test).', 0, 0, '2017-08-04 16:49:11'),
+(461, 1, 'New course created', 'You have successfully created a new course (Test).', 0, 0, '2017-08-07 13:09:19'),
+(462, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-07 13:10:26'),
+(463, 1, 'Designation updated', 'You have successfully updated designation rule.', 0, 0, '2017-08-07 13:10:36'),
+(464, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 13:45:52'),
+(465, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:19:48'),
+(466, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:24:17'),
+(467, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:26:28'),
+(468, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:27:19'),
+(469, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:29:34'),
+(470, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:30:29'),
+(471, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:31:58'),
+(472, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-08-07 14:34:16'),
+(473, 1, 'New course created', 'You have successfully created a new course (ttt).', 0, 0, '2017-08-08 11:11:40'),
+(474, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_ttt) course.', 0, 0, '2017-08-08 11:11:53'),
+(475, 1, 'New course created', 'You have successfully created a new course (tt).', 0, 0, '2017-08-08 11:12:13'),
+(476, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_tt) course.', 0, 0, '2017-08-08 11:14:38'),
+(477, 1, 'New course created', 'You have successfully created a new course (tttt).', 0, 0, '2017-08-08 11:14:55'),
+(478, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_tttt) course.', 0, 0, '2017-08-08 11:15:39'),
+(479, 1, 'New course created', 'You have successfully created a new course (tttt).', 0, 0, '2017-08-08 11:15:55'),
+(480, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_tttt) course.', 0, 0, '2017-08-08 11:17:28'),
+(481, 1, 'New course created', 'You have successfully created a new course (tttt).', 0, 0, '2017-08-08 11:17:46'),
+(482, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_tttt).', 0, 0, '2017-08-08 11:20:07'),
+(483, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_tttt).', 0, 0, '2017-08-08 11:20:48'),
+(484, 1, 'Course updated', 'You have successfully updated course (TRIAL_testing_tttt).', 0, 0, '2017-08-08 11:59:12'),
+(485, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_tttt) course.', 0, 0, '2017-08-08 12:00:20'),
+(486, 1, 'Course deleted', 'You have successfully deleted (TRIAL_testing_test) course.', 0, 0, '2017-08-08 12:00:32'),
+(487, 1, 'Course deleted', 'You have successfully deleted (TST_bob_Test) course.', 0, 0, '2017-08-08 12:00:34'),
+(488, 1, 'New course created', 'You have successfully created a new course (test).', 0, 0, '2017-08-08 12:01:52'),
+(489, 1, 'New Account Created', 'You have successfully created a new account (Test Test).', 0, 0, '2017-08-08 14:10:50'),
+(490, 1, 'Account Details updated', 'You have successfully updated (Sandra Gomes) account details.', 0, 0, '2017-08-08 15:27:52'),
+(491, 1, 'New course created', 'You have successfully created a new course (54564).', 0, 0, '2017-08-09 09:30:51'),
+(492, 1, 'New Account Created', 'You have successfully created a new account (Test Ing).', 0, 0, '2017-08-10 14:40:00'),
+(493, 1, 'New Account Created', 'You have successfully created a new account (Test Ing).', 0, 0, '2017-08-10 14:40:00'),
+(494, 1, 'Account deleted', 'You have successfully deleted (Test Ing) account.', 0, 0, '2017-08-10 14:40:24'),
+(495, 1, 'Account Details updated', 'You have successfully updated (Testing Ing) account details.', 0, 0, '2017-08-10 15:10:30'),
+(496, 1, 'Account Details updated', 'You have successfully updated (Testing Ing) account details.', 0, 0, '2017-08-10 15:15:49'),
+(497, 1, 'Account Details updated', 'You have successfully updated (Sandra Gomes) account details.', 0, 0, '2017-08-10 15:16:55');
 
 -- --------------------------------------------------------
 
@@ -906,7 +947,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 
 CREATE TABLE `tbl_rules` (
   `ID` bigint(20) NOT NULL,
-  `designation` bigint(20) NOT NULL,
+  `user_ID` bigint(20) NOT NULL,
   `preceptorship` int(11) NOT NULL,
   `hca` int(11) NOT NULL,
   `fdap` int(11) NOT NULL,
@@ -918,9 +959,10 @@ CREATE TABLE `tbl_rules` (
 -- Dumping data for table `tbl_rules`
 --
 
-INSERT INTO `tbl_rules` (`ID`, `designation`, `preceptorship`, `hca`, `fdap`, `record`, `mentorship`) VALUES
-(10000571188, 10000641641, 0, 0, 0, 0, 0),
-(10000995409, 10000641612, 0, 0, 0, 0, 0);
+INSERT INTO `tbl_rules` (`ID`, `user_ID`, `preceptorship`, `hca`, `fdap`, `record`, `mentorship`) VALUES
+(10000511130, 10000653023, 0, 1, 0, 0, 1),
+(10000867939, 10000531054, 1, 1, 1, 1, 1),
+(10000995410, 10000603933, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1364,11 +1406,27 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (462, 10000603933, 'gender', 'Female'),
 (463, 10000603933, 'dob', '2017-07-01 12:00:00'),
 (464, 10000603933, 'user_phone', '123456798'),
-(465, 10000603933, 'profile_img', ''),
+(465, 10000603933, 'profile_img', '/content/assets/img/user.png'),
 (466, 10000603933, 'user_designation', '10000641616'),
 (467, 10000603933, 'work_extension', '123485687'),
 (468, 10000603933, 'beep', '555'),
-(469, 10000603933, 'band', '5');
+(469, 10000603933, 'band', '5'),
+(470, 10000395274, 'gender', 'Female'),
+(471, 10000395274, 'dob', '1995-08-12 12:00:00'),
+(472, 10000395274, 'user_phone', '0123456789'),
+(473, 10000395274, 'profile_img', ''),
+(474, 10000395274, 'user_designation', '10000641616'),
+(475, 10000395274, 'work_extension', '0123465789'),
+(476, 10000395274, 'beep', '0123456789'),
+(477, 10000395274, 'band', '5'),
+(478, 10000531054, 'gender', 'Female'),
+(479, 10000531054, 'dob', '2017-08-01 12:00:00'),
+(480, 10000531054, 'user_phone', '1234567'),
+(481, 10000531054, 'profile_img', '/content/assets/img/user.png'),
+(482, 10000531054, 'user_designation', '10000641629'),
+(483, 10000531054, 'work_extension', '4324234'),
+(484, 10000531054, 'beep', '234234'),
+(485, 10000531054, 'band', '5');
 
 -- --------------------------------------------------------
 
@@ -1421,8 +1479,10 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 (10000950352, NULL, 'sallywhitehouse@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sally', 'Whitehouse', 'course_admin', 'sallywhitehouse', 1, 1, NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950353, NULL, 'v.wilding@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Victoria', 'Wilding', 'course_admin', 'v.wilding', 1, 1, 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, NULL, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
-(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 0, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
-(10000603933, '', 's@g.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, NULL, '78cHgqMhLRJHz575WXy9uw==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015);
+(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 4, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
+(10000603933, NULL, 's@g.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 45, '78cHgqMhLRJHz575WXy9uw==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015),
+(10000395274, 'test_t_001', 'test@test.com', 'b73fb07dad65275de6ecff68fca52a8254ef6942fd4517a8cbb6d933350077f1', 'test', 'test', 'course_admin', 'Test', 1, 1, 4, 'fO3mruY++clu2TgcA7ttcg==', '2017-08-08 14:10:50', NULL, NULL, NULL, NULL, NULL),
+(10000531054, NULL, 'chin@gna.com', '8693af6a130793fa4da36296cfa324106c254fde57744a50ac6e01339e1cc700', 'Testing', 'Ing', 'nurse', 'test', 1, 1, 4, 'C89KOaQGeXZQXT87hx6VsQ==', '2017-08-10 14:39:59', 0, 2344, 1, 0, 2016);
 
 -- --------------------------------------------------------
 
@@ -1433,50 +1493,19 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 CREATE TABLE `tbl_user_info` (
   `ID` bigint(110) NOT NULL,
   `user_ID` bigint(100) DEFAULT NULL,
-  `prec_intro` date DEFAULT NULL,
-  `current_prec` int(11) DEFAULT NULL,
-  `pin` int(11) DEFAULT NULL,
-  `delay` int(11) DEFAULT NULL,
-  `prec_name` varchar(150) DEFAULT NULL,
-  `int_nurse` int(11) DEFAULT NULL,
-  `WTE` varchar(150) DEFAULT NULL,
-  `p_email` varchar(150) DEFAULT NULL,
-  `p_country` varchar(150) DEFAULT NULL,
-  `sign_off` int(11) DEFAULT NULL,
-  `awards` varchar(150) DEFAULT NULL,
-  `link` varchar(150) DEFAULT NULL,
-  `prec_trainer` bigint(110) DEFAULT NULL,
-  `prec_notes` text,
-  `hca_start` date DEFAULT NULL,
-  `hca_manager` varchar(150) DEFAULT NULL,
-  `hca_email` varchar(150) DEFAULT NULL,
-  `hca_new_care` int(11) DEFAULT NULL,
-  `hca_current_client` int(11) DEFAULT NULL,
-  `hca_fundamental_care` int(11) DEFAULT NULL,
-  `hca_care` int(11) DEFAULT NULL,
-  `hca_trainer` bigint(10) DEFAULT NULL,
-  `hca_notes` text,
-  `fd_start` date DEFAULT NULL,
-  `fd_graduate` date DEFAULT NULL,
-  `fd_inturrupt` int(11) DEFAULT NULL,
-  `fd_sd1` int(11) DEFAULT NULL,
-  `fd_sd2` int(11) DEFAULT NULL,
-  `fd_sd3` int(11) DEFAULT NULL,
-  `fd_other` text,
-  `fd_current` int(11) DEFAULT NULL,
-  `fd_trainer` bigint(10) DEFAULT NULL,
-  `fd_notes` text,
-  `mentor_current` int(11) DEFAULT NULL,
-  `mentor_renew` date DEFAULT NULL,
-  `mentor_sign_off` int(11) DEFAULT NULL,
-  `mentor_notes` text,
-  `stud_cohort` int(150) DEFAULT NULL,
-  `stud_cohort_date` int(150) DEFAULT NULL,
-  `stud_d1` date DEFAULT NULL,
-  `stud_d2` date DEFAULT NULL,
-  `stud_d3` date DEFAULT NULL,
-  `stud_notes` text
+  `preceptorship` varchar(10000) DEFAULT NULL,
+  `his` varchar(10000) DEFAULT NULL,
+  `flap` varchar(10000) DEFAULT NULL,
+  `student` varchar(10000) DEFAULT NULL,
+  `mentorship` varchar(10000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user_info`
+--
+
+INSERT INTO `tbl_user_info` (`ID`, `user_ID`, `preceptorship`, `his`, `flap`, `student`, `mentorship`) VALUES
+(10000115910, 10000340101, 's:383:\"a:14:{s:10:\"prec_intro\";s:19:\"2017-08-25 12:00:00\";s:12:\"current_prec\";i:1;s:3:\"pin\";i:0;s:5:\"delay\";i:1;s:9:\"prec_name\";s:4:\"test\";s:9:\"int_nurse\";i:1;s:3:\"WTE\";s:6:\"243214\";s:7:\"p_email\";s:13:\"test@test.com\";s:9:\"p_country\";s:4:\"test\";s:8:\"sign_off\";s:2:\"12\";s:6:\"awards\";s:4:\"test\";s:4:\"link\";s:4:\"test\";s:12:\"prec_trainer\";s:11:\"10000950338\";s:10:\"prec_notes\";s:10:\"testestset\";}\";', 's:296:\"a:9:{s:9:\"hca_start\";s:19:\"2017-08-08 12:00:00\";s:11:\"hca_manager\";s:4:\"test\";s:9:\"hca_email\";s:9:\"te@st.com\";s:12:\"hca_new_care\";i:1;s:18:\"hca_current_client\";i:0;s:20:\"hca_fundamental_care\";i:1;s:8:\"hca_care\";i:1;s:11:\"hca_trainer\";s:11:\"10000950354\";s:9:\"hca_notes\";s:18:\"testsetestestestes\";}\";', 's:285:\"a:10:{s:8:\"fd_start\";s:19:\"2017-08-04 12:00:00\";s:11:\"fd_graduate\";s:19:\"2017-08-08 12:00:00\";s:12:\"fd_inturrupt\";i:1;s:6:\"fd_sd1\";i:0;s:6:\"fd_sd2\";i:1;s:6:\"fd_sd3\";i:1;s:8:\"fd_other\";s:4:\"test\";s:10:\"fd_current\";i:1;s:10:\"fd_trainer\";s:11:\"10000950340\";s:8:\"fd_notes\";s:8:\"testtttt\";}\";', 's:211:\"a:6:{s:11:\"stud_cohort\";s:10:\"2147483647\";s:16:\"stud_cohort_date\";s:2:\"69\";s:8:\"$stud_d1\";s:11:\"May 02,2017\";s:8:\"$stud_d2\";s:11:\"May 11,2017\";s:8:\"$stud_d3\";s:11:\"May 24,2017\";s:10:\"stud_notes\";s:8:\"bobobobo\";}\";', 's:154:\"a:4:{s:14:\"mentor_current\";i:1;s:12:\"mentor_renew\";s:19:\"2017-08-09 12:00:00\";s:15:\"mentor_sign_off\";i:1;s:12:\"mentor_notes\";s:20:\"testetstsetsetsesetf\";}\";');
 
 -- --------------------------------------------------------
 
@@ -1668,12 +1697,12 @@ ALTER TABLE `tbl_work_area`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000931970;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000704571;
 --
 -- AUTO_INCREMENT for table `tbl_cohort_ext`
 --
@@ -1693,7 +1722,7 @@ ALTER TABLE `tbl_course_types`
 -- AUTO_INCREMENT for table `tbl_course_user`
 --
 ALTER TABLE `tbl_course_user`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000942987;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tbl_designations`
 --
@@ -1713,7 +1742,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=461;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -1723,12 +1752,12 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_rules`
 --
 ALTER TABLE `tbl_rules`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000995410;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000995411;
 --
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=470;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=494;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
@@ -1738,7 +1767,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000115911;
 --
 -- AUTO_INCREMENT for table `tbl_work_area`
 --
