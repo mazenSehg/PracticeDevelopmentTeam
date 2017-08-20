@@ -10,8 +10,7 @@
 	$contact_url_shortcode = '<a href="'.site_url().'/contact/" target="_blank" style="color:#26B99A;text-decoration:none;">click here</a>';
 	$current_time_shortcode = date('M d, Y h:i A');
 	$admin_email_shortcode = get_option('admin_email');
-	$no_reply_email_shortcode = 'no-reply@example.com';
-	
+	$no_reply_email_shortcode = 'no-reply@example.com';	
 	
 	if( isset($_POST['action']) ):
 		switch($_POST['action']):
@@ -42,6 +41,19 @@
 			case 'add_new_user':
 				echo $User->add__user__process();
 				break;
+			
+			case 'fetch_add_to_course_data':
+				echo $User->fetch__add__to__course__data__process();
+				break;
+			
+			case 'update_user_course':
+				echo $User->update__user__course__process();
+				break;
+			
+			case 'fetch_all_trainees':
+				echo $User->fetch__all__trainees__process();
+				break;	
+			
 				
 			/*ADDITIONAL FORMS FOR USER INFO*/				
 							
@@ -49,8 +61,8 @@
 				echo $User->update__preceptor__process();
 				break;
 				
-			case 'update_hca':
-				echo $User->update__hca__process();
+			case 'update_mca':
+				echo $User->update__mca__process();
 				break;
 				
 			case 'update_fdap':
@@ -99,15 +111,7 @@
 		
 			case 'add_new_course':
 				echo $Course->add__course__process();
-				break;
-
-			case 'add_to_course':
-				echo $User->add__to__course__process();
-				break;
-
-			case 'add_new_course_type':
-				echo $Course->add__course__type__process();
-				break;
+				break;			
 				
 			case 'add_new_cohort':
 				echo $Course->add__cohort__process();
@@ -115,18 +119,10 @@
 				
 			case 'update_course':
 				echo $Course->update__course__process();
-				break;			
-
-			case 'update_course_type':
-				echo $Course->update__course__type__process();
 				break;
 				
 			case 'delete_course':
 				echo $Course->delete__course__process();
-				break;			
-
-			case 'delete_course_type':
-				echo $Course->delete__course__type__process();
 				break;
 			
 			case 'update_cohort':
@@ -144,26 +140,13 @@
 			case 'add_new_designation':
 				echo $Designation->add__designation__process();
 				break;
-
-
-            case 'add_new_designation_rule':
-				echo $Designation->add__designation__rules__process();
-				break;
 				
 			case 'update_designation':
 				echo $Designation->update__designation__process();
 				break;
-
-			case 'update_designation_role':
-				echo $Designation->update__designation__role__process();
-				break;
 				
 			case 'delete_designation':
 				echo $Designation->delete__designation__process();
-				break;			
-
-            case 'delete_designation_rules':
-				echo $Designation->delete__designation__rules__process();
 				break;
 				
 			case 'add_new_location':
@@ -178,6 +161,18 @@
 				echo $Location->update__location__process();
 				break;			
 
+
+			case 'add_new_course_type':
+				echo $Course->add__course__type__process();
+				break;
+
+			case 'delete_course_type':
+				echo $Course->delete__course__type__process();
+				break;
+
+			case 'update_course_type':
+				echo $Course->update__course__type__process();
+				break;
 
 			case 'update_work_area':
 				echo $Location->update__work_area__process();
@@ -199,9 +194,13 @@
 				echo $Booking->update__booking__process();
 				break;
 				
+			case 'fetch_all_bookings':
+				echo $Booking->fetch__all__bookings__process();
+				break;
+				
 			case 'delete_booking':
 				echo $Booking->delete__booking__process();
-				break;
+				break;	
 				
 			case 'fetch_course_nurses_data':
 				echo $Booking->fetch__course__nurses__process();
@@ -214,15 +213,6 @@
 			case 'fetch_booking_nurses':
 				echo $Booking->fetch__booking__nurses__process();
 				break;
-
-
-			case 'fetch_form':
-				echo $Booking->fetch__form__process();
-				break;
-
-			case 'fetch_course_nurses':
-				echo $User->fetch__course__nurses__process();
-				break;
 			
 			case 'fetch_available_bookings':
 				echo $Booking->fetch__available__bookings__process();
@@ -232,16 +222,8 @@
 				echo $Booking->fetch__available__nurse__bookings__process();
 				break;
 				
-			case 'nurse_complete':
-				echo $Booking->nurse__complete__process();
-				break;
-				
-			case 'nurse_upload':
-				echo $Booking->fetch__nurses__upload__process();
-				break;
-
-			case 'attendance_complete':
-				echo $Booking->nurse__attendance__process();
+			case 'nurse_modal_approve':
+				echo $Booking->nurse__modal__approve__process();
 				break;
 				
 		endswitch;

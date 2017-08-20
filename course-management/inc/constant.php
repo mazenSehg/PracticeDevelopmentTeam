@@ -28,6 +28,6 @@ define( 'TBL_NOTES' , $db->prefix. 'notes' );
 define( 'TBL_COHORTS' , $db->prefix. 'cohort' );
 define( 'TBL_COHORTS_EXT' , $db->prefix. 'cohort_ext' );
 define( 'TBL_CHK' , $db->prefix. 'course_user' );
-define( 'TBL_COURSE_TYPE' , $db->prefix. 'course_types' );
 define( 'TBL_RULES' , $db->prefix. 'rules' );
+define( 'TBL_COURSE_TYPE' , $db->prefix. 'course_types' );
 ?>

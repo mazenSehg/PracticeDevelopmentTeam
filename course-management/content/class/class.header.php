@@ -64,7 +64,6 @@ if( !class_exists('Header') ):
 			<script>
 				var site_url = '<?php echo site_url();?>';
 				var ajax_url = '<?php echo PROCESS_URL;?>';
-				var table_ajax_url = '<?php echo TABLE_PROCESS_URL;?>';
 			</script>
 			<?php echo $this->scripts(); ?>
 			<?php
@@ -231,19 +230,16 @@ if( !class_exists('Header') ):
 									<a><i class="fa fa-user"></i><?php _e('Manage Users');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<?php if( user_can('view_user') ): ?>
+										<li><a href="<?php the_permalink('users');?>"><?php _e('All Users');?></a></li>
 										<li><a href="<?php the_permalink('trainers');?>"><?php _e('All Trainers');?></a></li>
 										<li><a href="<?php the_permalink('trainees');?>"><?php _e('All Trainees');?></a></li>
 										<?php endif;?>
 										
 										<?php if( user_can('edit_user') || user_can('add_user')): ?>
-										<li><a href="<?php the_permalink('add-new-user');?>"><?php _e('Add New Admin/Trainer');?></a></li>
+										<li><a href="<?php the_permalink('add-new-user');?>"><?php _e('Add New User');?></a></li>
 										<li class="hidden"><a href="<?php the_permalink('edit-user');?>"></a></li>
 										<?php endif;?>
 										
-										<?php if( user_can('edit_user') || user_can('add_user')): ?>
-										<li><a href="<?php the_permalink('new-trainees');?>"><?php _e('Add New Trainee');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
-										<?php endif;?>										
 										<?php if( user_can('view_user') ): ?>
 										<li class="hidden"><a href="<?php the_permalink('view-user');?>"></a></li>
 										<?php endif;?>
@@ -262,22 +258,7 @@ if( !class_exists('Header') ):
 								
 								<?php endif; ?>
 
-								<?php if( user_can('view_course') || user_can('edit_course') || user_can('add_course')): ?>
-								<li>
-									<a><i class="fa fa-book"></i><?php _e('Courses');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php if( user_can('view_course') ): ?>
-										<li><a href="<?php the_permalink('courses');?>"><?php _e('All Courses');?></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('edit_course') || user_can('add_course')): ?>
-										<li><a href="<?php the_permalink('add-new-course');?>"><?php _e('Add New Course');?></a></li>
-                                        <li><a href="<?php the_permalink('view-booking-calendar');?>"><?php _e('View Calendar');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-course');?>"></a></li>
-										<?php endif;?>
-									</ul>
-								</li>
-								<?php endif; ?>
+
 
 								<?php if(is_admin()): ?>
 								<li>
@@ -297,6 +278,27 @@ if( !class_exists('Header') ):
 								
 								
 								
+
+								
+								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
+								<li>
+									<a><i class="fa fa-book"></i><?php _e('Courses');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_booking') ): ?>
+										<li><a href="<?php the_permalink('bookings');?>"><?php _e('All Courses');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_booking') || user_can('add_booking')): ?>
+										<li><a href="<?php the_permalink('add-new-booking');?>"><?php _e('Add New Course');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-booking');?>"></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('view_booking') ): ?>
+										<li><a href="<?php the_permalink('view-booking-calendar');?>"><?php _e('View Calendar');?></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
 								<li>
 								<a>
 									<i class="fa fa-certificate">
@@ -310,6 +312,24 @@ if( !class_exists('Header') ):
 		if(is_admin()){ ?>
 									<li>
 <?php if(is_admin()): ?>
+                                        
+
+                                        
+									
+									
+																	<li>
+									<a><i class="fa fa-book"></i><?php _e('Course Types');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="<?php the_permalink('course-types');?>"><?php _e('All Course Types');?></a></li>
+										
+										<li><a href="<?php the_permalink('add-new-course-type');?>"><?php _e('Add New Course Type');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-course-type');?>"></a></li>
+									</ul>
+								</li>                                        
+                                        
+                                        
+                                        
+                                        
 								<li>
 									<a><i class="fa fa-book"></i><?php _e('Designations');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
@@ -325,33 +345,6 @@ if( !class_exists('Header') ):
 								</li>
 								<?php endif; ?>
 								
-									
-									<?php if(user_can('view_course')) : ?>
-									
-									
-																	<li>
-									<a><i class="fa fa-book"></i><?php _e('Course Types');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-																<?php if( user_can('view_course') ): ?>
-										<li><a href="<?php the_permalink('course-types');?>"><?php _e('All Course Types');?></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('edit_course') || user_can('add_course')): ?>
-										<li><a href="<?php the_permalink('add-new-course-type');?>"><?php _e('Add New Course Type');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-course-type');?>"></a></li>
-										<?php endif;?>
-									</ul>
-								</li>
-									
-									
-									
-		
-									
-									
-										<?php endif;?>
-									
-									
-									
 								<?php if( user_can('view_location') || user_can('edit_location') || user_can('add_location')): ?>
 								<li>
 									<a><i class="fa fa-book"></i><?php _e('Locations');?> <span class="fa fa-chevron-down"></span></a>
@@ -445,7 +438,14 @@ if( !class_exists('Header') ):
 				<div class="title_left"><h3><?php _e($title);?></h3></div>
 				<?php if($status === true): ?>
 					<div class="title_right">
-
+						<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search for...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button"><?php _e('Go!');?></button>
+								</span>
+							</div>
+						</div>
 					</div>
 				<?php endif; ?>
 			</div>

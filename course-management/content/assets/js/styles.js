@@ -68,7 +68,6 @@ $(document).ready(function() {
 	var ajaxhandleDataTableButtons = function() {
 		if ($(".ajax-datatable-buttons").length) {
 			$(".ajax-datatable-buttons").DataTable({
-				
 				order: [[ $(".ajax-datatable-buttons").data('order-column'), "desc" ]],
 				dom: "Bflrtip",
 				lengthMenu: [[10, 25, 50, 100,150,200,250,300,400,450,500], [10, 25, 50, 100,150,200,250,300,400,450,500]],
@@ -83,18 +82,13 @@ $(document).ready(function() {
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: table_ajax_url,
+					url: ajax_url,
 					type: 'POST',
 					data: function ( d ) {
 						d.action = $('.ajax-datatable-buttons').data('table');
-						d.centre = $('.custom-filters select[name="workarea"]').val();
-//						d.equipment_type = $('.custom-filters select[name="equipment_type"]').val();
-//						d.equipment = $('.custom-filters select[name="equipment"]').val();
-//						d.fault_type = $('.custom-filters select[name="fault_type"]').val();
-//						d.manufacturer = $('.custom-filters select[name="manufacturer"]').val();
-//						d.model = $('.custom-filters select[name="model"]').val();
-//						d.approved = $('.custom-filters select[name="approved"]').val();
-//						d.date_of_fault = $('.custom-filters select[name="date_of_fault"]').val();
+						d.user_designation = $('.custom-filters select[name="user_designation"]').val();
+						d.work_area = $('.custom-filters select[name="work_area"]').val();
+						d.course = $('.custom-filters select[name="course"]').val();
 					},
 					complete:function(r){
 						if ($("table .js-switch")[0]) {
@@ -108,7 +102,6 @@ $(document).ready(function() {
 					}
 				},
 			});
-			console.log($('.custom-filters select[name="workarea"]').val());
 		}
 	};
 
@@ -669,8 +662,7 @@ $(document).ready(function() {
 			}
 		});
 	});	
-	
-	
+		
 	$('.fetch-cohort-dates-data').change(function(e){
 		var _this = $(this);
 		console.log(_this.val());
@@ -683,13 +675,41 @@ $(document).ready(function() {
 			url: ajax_url,
 			dataType: 'json',
 			success: function(r){
-				console.log(r['nurses_html']);
 				$select_single.select2("destroy");
 				$('.select-dates').html(r['nurses_html']);
 				$select_single.select2({ allowClear: true });
 			}
 		});
 	});
+	
+	$('.custom-filters select').on('change',function(){
+		var attr_name = $(this).attr('name');
+		if(attr_name == 'centre' || attr_name == 'equipment_type'){
+			$.ajax({ 
+				type: 'POST',
+				data: {
+					action: 'fetch_equipment_data',
+					id: $('.custom-filters select[name="equipment_type"]').val(),
+					centre: $('.custom-filters select[name="centre"]').val(),
+				},
+				url : ajax_url,
+				dataType: 'json',
+				success: function(res){
+					console.log(res);
+					$select_multiple.select2("destroy");
+					$select_single.select2("destroy");
+					$('select[name="equipment"]').html(res['equipment_html']);
+					$('select[name="fault_type"]').html(res['fault_type_html']);
+					$select_single.select2({ allowClear: true });
+					$select_multiple.select2({ allowClear: true });
+					$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+				}
+			});
+		}else{
+			$('.ajax-datatable-buttons > thead > tr th:nth-child(1)').trigger('click');
+		}
+	});
+
 	
 });
 
@@ -750,26 +770,51 @@ function get_nurses(btn){
 		dataType: 'json',
 		success: function(r){
 			$('#nurse-data-modal-body').html(r['html']);
-			return false;
-		}
-	});
-}
-
-function get_form(btn){
-	var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
-	$('#nurse-data-modal-body').html('<h1 class="text-center green">'+spinner+'</h1>');
-	$('#edit-data-modal-body .modal-footer button[data-dismiss="modal"]').click();
-	console.log($(btn).data('booking'));
-	$.ajax({ 
-		type: 'POST',
-		data: {
-			action: 'fetch_form',
-			booking_id: $(btn).data('booking')
-		},
-		url: ajax_url,
-		dataType: 'json',
-		success: function(r){
-			$('#edit-data-modal-body').html(r['html']);
+			if ($("table .js-switch")[0]) {
+				var elems = Array.prototype.slice.call(document.querySelectorAll('table .js-switch'));
+				elems.forEach(function (html) {
+					var switchery = new Switchery(html, {
+						color: '#26B99A'
+					});
+				});
+			}
+			$('.nurse-modal-datepicker').daterangepicker({
+				format: 'MMMM DD,YYYY',
+				singleDatePicker: true,
+				showDropdowns: true,
+				calender_style: "picker_1"
+			});
+			
+			$('.nurse-modal-datepicker').on('apply.daterangepicker', function(ev, picker) {
+				var _this = $(this);
+				var _name = _this.attr('name')
+				var _val = _this.val();
+				var user_id = _this.data('user');
+				var booking_id = _this.data('booking');
+				$.ajax({ 
+					type: 'POST',
+					data: {
+						action: 'nurse_modal_approve',
+						type: _name,
+						booking_id: booking_id,
+						user_id: user_id,
+						status: _val,
+					},
+					url: ajax_url,
+					dataType: 'json',
+					success : function(res){
+						if(res['status'] == 0 ){
+							alert_notification(res['message_heading'],res['message'],'info');
+						}else if(res['status'] == 1 ){
+							alert_notification(res['message_heading'],res['message'],'success');
+						}
+						if(res['reload'] == 1){
+							$('#nurse-data-modal .modal-footer button[data-dismiss="modal"]').click();
+						}
+						return false;
+					}
+				});	
+			});
 			return false;
 		}
 	});
@@ -788,89 +833,6 @@ function get_available_bookings($date, $action){
 		dataType: 'json',
 		success : function(r){
 			$('#booking-data-modal-body').html(r['html']);
-		}
-	});	
-}
-
-function nurse_info(btn){
-
-	var btn = $(btn);
-	var user_id = btn.data('user');
-	var booking_id = btn.data('booking');
-	$.ajax({ 
-		type: 'POST',
-		data: {
-			action: 'nurse_upload',
-			booking_id: booking_id,
-			user_id: user_id,
-		},
-		url: ajax_url,
-		dataType: 'json',
-		success : function(r){
-			if(r['status'] == 1){					
-				alert_notification('Success !','Data has been uploaded for this trainee','success');
-				btn.parents('td').html(r['html']);
-			}else{
-				alert_notification('Fail !','Please try agin','info');
-			}
-		}
-	});	
-}
-
-
-function nurse_complete(btn){
-	var isDelete = confirm('Are you sure want to perform this action?');
-	if(isDelete == false){
-		return false;
-	}
-	
-	var btn = $(btn);
-	var user_id = btn.data('user');
-	var booking_id = btn.data('booking');
-	$.ajax({ 
-		type: 'POST',
-		data: {
-			action: 'nurse_complete',
-			booking_id: booking_id,
-			user_id: user_id,
-		},
-		url: ajax_url,
-		dataType: 'json',
-		success : function(r){
-			if(r['status'] == 1){					
-				alert_notification('Success !','Process has been successfully completed.','success');
-				btn.parents('td').html(r['html']);
-			}else{
-				alert_notification('Fail !','Please try agin','info');
-			}
-		}
-	});	
-}
-
-function attendance_complete(btn){
-	var isDelete = confirm('Mark this user as attended?');
-	if(isDelete == false){
-		return false;
-	}
-	var btn = $(btn);
-	var user_id = btn.data('user');
-	var booking_id = btn.data('booking');
-	$.ajax({ 
-		type: 'POST',
-		data: {
-			action: 'attendance_complete',
-			booking_id: booking_id,
-			user_id: user_id,
-		},
-		url: ajax_url,
-		dataType: 'json',
-		success : function(r){
-			if(r['status'] == 1){					
-				alert_notification('Success !','Process has been successfully done','success');
-				btn.parents('td').html(r['html']);
-			}else{
-				alert_notification('Fail !','Please try agin','info');
-			}
 		}
 	});	
 }
@@ -925,4 +887,67 @@ function approve_switch(btn){
 			return false;
 		}
 	});
+}
+
+function get_add_to_course_data(btn){
+	var _this = $(btn);
+	var _user_id = _this.data('user');
+	var _selector = $('#add-to-course-modal-body');
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'fetch_add_to_course_data',
+			user_id : _user_id
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success: function(r){
+			console.log(r);
+			$('.select-courses').select2("destroy");
+			_selector.find('input[name="user_id"]').val(_user_id);
+			_selector.find('input[name="first_name"]').val(r['first_name']);
+			_selector.find('input[name="last_name"]').val(r['last_name']);
+			_selector.find('.select-courses').html(r['courses']);
+			$('.select-courses').select2({ allowClear: true });
+			return false;
+		}
+	});
+}
+
+function nurse_modal_approve_switch(btn){
+	var is = confirm('Are you want to do this?');
+	if(is == false){
+		return false;
+	}
+	var btn = $(btn);
+	var status = 0;
+	if( btn.is(':checked') ){
+		var status = 1;
+	}
+	var user_id = btn.data('user');
+	var booking_id = btn.data('booking');
+	var action = btn.data('action');
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'nurse_modal_approve',
+			type: action,
+			booking_id: booking_id,
+			user_id: user_id,
+			status: status,
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success : function(res){
+			if(res['status'] == 0 ){
+				alert_notification(res['message_heading'],res['message'],'info');
+			}else if(res['status'] == 1 ){
+				alert_notification(res['message_heading'],res['message'],'success');
+			}
+			if(res['reload'] == 1){
+				$('#nurse-data-modal .modal-footer button[data-dismiss="modal"]').click();
+			}
+			return false;
+		}
+	});	
 }

@@ -8,7 +8,7 @@ login_check();
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php _e('Edit Booking');?> &mdash; <?php echo get_site_name();?></title>
+		<title><?php _e('Edit Course');?> &mdash; <?php echo get_site_name();?></title>
 		<?php echo $Header->head();?>
 	</head>
 	 <body class="nav-md">
@@ -18,7 +18,7 @@ login_check();
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
-					<?php echo $Header->page__header('Edit Booking'); ?>				
+					<?php echo $Header->page__header('Edit Course'); ?>				
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
