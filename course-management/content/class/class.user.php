@@ -1311,17 +1311,6 @@ public function add__trainee__page(){
 								<?php echo get_options_list(get_roles()); ?>
 							</select>
 						</div>
-						<div class="form-group col-sm-6 col-xs-12">
-							<label for="courses"><?php _e('Course(s)');?></label>
-							<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
-							<?php
-								$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID, name AS name');
-								$option_data = get_option_data($data,array('ID','name'));
-								echo get_options_list($option_data);
-							?>
-							</select> 
-							<small class="help-block"><?php _e('Use this option only for <strong>Trainee</strong> users');?></small>
-						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
@@ -1409,6 +1398,54 @@ public function add__trainee__page(){
 									<input type="text" name="support_since" class="form-control " />
 								</div>
 							</div>
+                            
+						<br><br>
+						<h2>Training information Required: </h2><br><br>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Preceptorship progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">HCA Induction Progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="hca" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="hca" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">FD/AP Training Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Student Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="record" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="record" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Mentorship
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="0" /> No</label>
+										</div>
 						</div>		
 					</div>		
 					<div class="row">
@@ -1429,6 +1466,7 @@ public function add__trainee__page(){
 			ob_start();
 			$user__id = $_GET['user_id'];
 			$user = get_userdata($user__id);
+            $designation = get_tabledata(TBL_RULES,true,array('user_ID'=> $user__id));
 			if(!user_can('edit_user')):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			elseif(!$user):
@@ -1480,17 +1518,6 @@ public function add__trainee__page(){
 							<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role">
 								<?php echo get_options_list(get_roles(),array($user->user_role)); ?>
 							</select>
-						</div>
-						<div class="form-group col-sm-6 col-xs-12">
-							<label for="courses"><?php _e('Course(s)');?></label>
-							<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
-							<?php
-								$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID, name AS name');
-								$option_data = get_option_data($data,array('ID','name'));
-								echo get_options_list($option_data,maybe_unserialize($user->courses));
-							?>
-							</select>
-							<span class="help-block"><?php _e('Use this option only for <strong>Nurse</strong> users');?></span>
 						</div>
 					</div>
 					<div class="row">
@@ -1598,6 +1625,54 @@ public function add__trainee__page(){
 							<input type="text" name="support_since" class="form-control " value="<?php echo $user->support_since;?>" />
 						</div>
 					</div>
+                    
+                    <div class="row">
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Preceptorship progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="1" <?php checked($designation->preceptorship , 1);?> /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="0" <?php checked($designation->preceptorship , 0);?> /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">HCA Induction Progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="hca" value="1" <?php checked($designation->hca , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="hca" value="0" <?php checked($designation->hca , 0);?>/> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">FD/AP Training Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="1" <?php checked($designation->flap , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="0" <?php checked($designation->flap , 0);?>/> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Student Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="record" value="1" <?php checked($designation->record , 1);?>/> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="record" value="0" <?php checked($designation->record , 0);?>/> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Mentorship
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="1" <?php checked($designation->mentorship , 1);?> /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="0"<?php checked($designation->mentorship , 0);?> /> No</label>
+										</div>
+									</div>
 					<div class="row">
 						<div class="form-group col-sm-12 col-xs-12">
 							<div class="ln_solid"></div>
@@ -1959,12 +2034,13 @@ public function add__trainee__page(){
 				$salt = base64_encode($salt);
 				$guid = get_guid(TBL_USERS);
 			
-				if($user_role!="trainer"&&$user_role!="nurse"){
-					$first = $first_name[0];
-					$trainer_ID = $last_name."_".$first."_001";
-					$result = $this->database->insert(TBL_USERS,
+if($user_role!="admin"&&$user_role!="nurse"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+				
+									$result = $this->database->insert(TBL_USERS,
 						array(
-							'ID' => $guid,
+											'ID' => $guid,
 							'trainer_ID' => $trainer_ID,
 							'first_name' => $first_name,
 							'last_name' => $last_name,
@@ -1975,13 +2051,15 @@ public function add__trainee__page(){
 							'user_status' => 1,
 							'user_pass' => set_password($user_pass),
 							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
-							'user_designation' => $user_designation
+							'created_by' => $this->current__user__id,																
 						)
 					);
-				}else{
-					$trainer_ID = NULL;
+			}else{
+							$trainer_ID = NULL;
+						
+
+			
+			
 					$result = $this->database->insert(TBL_USERS,
 						array(
 							'ID' => $guid,
@@ -1995,16 +2073,29 @@ public function add__trainee__page(){
 							'user_pass' => set_password($user_pass),
 							'user_salt' => $salt,
 							'created_by' => $this->current__user__id,
-							'courses' => isset($courses) ? $courses : '',
 							'currently_employed' => $current_employed,
 							'external_candidate' => $ex_cand,
+							'work_area_ID' => $work_area,
 							'rag_status' => $rag_status,
 							'extended_support' => $extended_support,
 							'support_since' => $support_since,
-							'user_designation' => $user_designation
+						
 						)
 					);
-				}
+				
+					$guid2 = get_guid(TBL_RULES);
+					$result = $this->database->insert(TBL_RULES,
+						array(
+							'ID' => $guid2,
+							'user_ID' => $guid,
+							'preceptorship' => $preceptorship,
+							'hca' => $hca,
+							'flap' => $fdap,
+							'record' => $record,
+							'mentorship' => $mentorship,
+						)
+					);
+			}
 				
 				if($result):
 					$user__id = $guid;
@@ -2372,7 +2463,6 @@ public function add__trainee__page(){
 
 		public function update__user__process(){
 			extract($_POST);
-
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
@@ -2383,70 +2473,85 @@ public function add__trainee__page(){
 			if(user_can('edit_user')):
 				$user = get_userdata($user_id);
 				if( is_value_exists(TBL_USERS,array('user_email' => $user_email),$user_id) ):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('Email address you entered is already exists, please try another email address.');
-					$return['fields'] = array('user_email');
-				else:
-					$check = false;
-					if(!isset($centre))
-						$centre = '';
+				$return['status'] = 2;
+				$return['message_heading'] = __('Email Already Exist');
+				$return['message'] = __('Email address you entered is already exists, please try another email address.');
+				$return['fields'] = array('user_email');
+			else:
+				$check = false;
+				if(!isset($centre))
+					$centre = '';
 
-					if($user_role=="trainer"){
-						$first = $first_name[0];
-						$trainer_ID = $last_name."_".$first."_001";
-					}else{
-						$trainer_ID = NULL;
-					}
+						if($user_role=="course_admin"){
+				$first = $first_name[0];
+				$trainer_ID = $last_name."_".$first."_001";
+			}else{
+							$trainer_ID = NULL;
+						}
 			
-					$result = $this->database->update(TBL_USERS,
+				$result = $this->database->update(TBL_USERS,
+					array(
+						'trainer_ID' => $trainer_ID,
+						'first_name' => $first_name,
+						'last_name' => $last_name,
+						'user_email' => $user_email,
+						'username' => $username,
+						'user_status'=> $user_status,
+						'work_area_ID' => $work_area,
+						'user_role' => $user_role,
+						
+					),
+					array('ID'=> $user_id)
+				);
+			
+					$result = $this->database->update(TBL_RULES,
 						array(
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'username' => $username,
-							'user_status'=> $user_status,
-							'work_area_ID' => $work_area,
-							'user_role' => $user_role,
-							'courses' => isset($courses) ? $courses : '',
-							'user_designation' => $user_designation
+							'preceptorship' => $preceptorship,
+							'hca' => $hca,
+							'flap' => $fdap,
+							'record' => $record,
+							'mentorship' => $mentorship,
 						),
-						array('ID'=> $user_id)
+						array(
+							'user_ID'=> $user_id,
+						)
+					);				
+			
+
+
+				$check = ($result) ? true : false;
+
+				$result1 = false;
+				if($user_pass != ''){
+					$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('ID'=> $user_id));
+				}
+				$check = ($result1) ? true : $check;
+				if($result1){
+					//update_user_meta($user_id,'reset_password',1);
+					$notification_args = array(
+						'title' => __('Account Password Reset'),
+						'notification'=> __('You have successfully changed').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
 					);
-					$check = ($result) ? true : false;
+					add_user_notification($notification_args);
+				}
 
-					$result1 = false;
-					if($user_pass != ''){
-						$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('ID'=> $user_id));
-					}
-					$check = ($result1) ? true : $check;
-					if($result1){
-						//update_user_meta($user_id,'reset_password',1);
-						$notification_args = array(
-							'title' => __('Account Password Reset'),
-							'notification'=> __('You have successfully changed').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
-						);
-						add_user_notification($notification_args);
-					}
-
-					if($check):
-						update_user_meta($user_id,'gender',$gender);
-						update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-						update_user_meta($user_id,'user_phone',$user_phone);
-						update_user_meta($user_id,'profile_img',$profile_img);
-						update_user_meta($user_id,'user_designation',$user_designation);
-						update_user_meta($user_id,'work_extension',$work_extension);
-						update_user_meta($user_id,'beep',$beep);
-						update_user_meta($user_id,'band',$band);
-						$notification_args = array(
-							'title' => __('Account Details updated'),
-							'notification'=> __('You have successfully updated').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
-						);
-						add_user_notification($notification_args);
-						$return['status'] = 1;
-						$return['message_heading'] = __('Success !');
-						$return['message'] = __('Account has been successfully updated.');
+				if($check):
+					update_user_meta($user_id,'gender',$gender);
+					update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
+					update_user_meta($user_id,'user_phone',$user_phone);
+					update_user_meta($user_id,'profile_img',$profile_img);
+					update_user_meta($user_id,'user_designation',$user_designation);
+					update_user_meta($user_id,'work_extension',$work_extension);
+					update_user_meta($user_id,'beep',$beep);
+					update_user_meta($user_id,'band',$band);
+					$notification_args = array(
+						'title' => __('Account Details updated'),
+						'notification'=> __('You have successfully updated').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
+					);
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = __('Success !');
+					$return['message'] = __('Account has been successfully updated.');
 					endif;
 				endif;
 			endif;
