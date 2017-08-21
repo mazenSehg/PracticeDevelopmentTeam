@@ -455,16 +455,12 @@ if( !class_exists('Booking') ):
 				'reset_form' => 0
 			);
 			if( user_can('add_booking') ):
-				$validation_args = array(
-					'course_ID' => $code,
-				);
 
-				if(is_value_exists(TBL_BOOKINGS,$validation_args)):
+
 					$return['status'] = 2;
 					$return['message_heading'] = __('Failed !');
 					$return['message'] = __('This booking is already exists, Please try different booking date or course');
 					$return['fields'] = array('name');
-				else:
 					$enroll = array();
 					foreach($nurses as $nurse){
 						$enroll[$nurse] = 0;
@@ -480,7 +476,11 @@ if( !class_exists('Booking') ):
 								'user_ID' => $nurse,
 								'course_ID' => $code,
 							)
-						);		  
+						);	
+                        
+                        
+
+                        
 					}
 					
 					$guid = get_guid(TBL_BOOKINGS);
@@ -521,7 +521,6 @@ if( !class_exists('Booking') ):
 						$return['reset_form'] = 1;
 						$return['reload'] = 1;
 					endif;
-				endif;
 			endif;
 			return json_encode($return);
 		}
@@ -549,12 +548,15 @@ if( !class_exists('Booking') ):
 					$old_enroll = maybe_unserialize($booking->enroll);
 					$old_attendance = maybe_unserialize($booking->attendance);
 					$enroll = array();
+
 					foreach($nurses as $nurse){
+
 						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
 						$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
 						$collected[$nurse] = isset($old_collected[$nurse]) ? $old_collected[$nurse] : 0;
 						$date_book_returned[$nurse] = isset($old_date_book_returned[$nurse]) ? $old_date_book_returned[$nurse] : '';
 						$date_book_received[$nurse] = isset($old_date_book_received[$nurse]) ? $old_date_book_received[$nurse] : '';
+
 					}
 					$result = $this->database->update(TBL_BOOKINGS,
 						array(
@@ -578,6 +580,8 @@ if( !class_exists('Booking') ):
 							'ID'=> $booking_id
 						)
 					);
+            
+            		
 
 					if($result):
 						$notification_args = array(

@@ -1025,6 +1025,230 @@ return $arg1['basename'];
 			$content = ob_get_clean();
 			return $content;
 		}
+        
+        
+        
+public function add__trainee__page(){
+			
+			ob_start();
+			if(!user_can('add_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: ?>
+							<form class="add-user user-form" method="post" autocomplete="off">
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="username"> Username <span class="required">*</span> </label>
+										<input type="text" name="username" class="form-control require" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="first_name">
+											<?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
+										<input type="text" name="first_name" class="form-control require" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="last_name">
+											<?php _e('Last Name');?>&nbsp;<span class="required">*</span></label>
+										<input type="text" name="last_name" class="form-control require" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="email">
+											<?php _e('Email');?>&nbsp;<span class="required">*</span></label>
+										<input type="text" name="user_email" class="form-control require" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="dob">
+											<?php _e('Date of birth');?>
+										</label>
+										<input type="text" name="dob" class="form-control input-datepicker-today" readonly="readonly" /> </div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="gender">
+											<?php _e('Gender');?>&nbsp;<span class="required">*</span></label>
+										<select name="gender" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
+											<option value=""></option>
+											<option value="Male">
+												<?php _e('Male');?>
+											</option>
+											<option value="Female">
+												<?php _e('Female');?>
+											</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="phone">
+											<?php _e('Phone');?>
+										</label>
+										<input type="text" name="user_phone" class="form-control" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="work_extension">
+											<?php _e('Work extension');?>
+										</label>
+										<input type="text" name="work_extension" class="form-control" /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="beep">
+											<?php _e('Beep');?>
+										</label>
+										<input type="text" name="beep" class="form-control" /> </div>
+								</div>
+								
+								<div class="form-group">
+										<input type="hidden" id="purpose" name="user_role" value = "nurse" class="form-control" tabindex="-1" data-placeholder="Choose role">
+									</div>
+								
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user_designation">
+											<?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
+										<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation">
+											<?php
+								$data = get_tabledata(TBL_DESIGNATIONS,false);
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+									
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="user_designation">
+											<?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
+										<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area">
+											<?php
+								$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
+								$option_data = get_option_data($data,array('ID','name'));
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="band">
+											<?php _e('Band');?>
+										</label>
+										<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band">
+											<?php
+								$option_data = $this->user_bands();
+								echo get_options_list($option_data);
+								?>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 form-goup">
+										<label>
+											<?php _e('Upload Profile Image');?>
+										</label>
+										<input type="text" name="profile_img" class="form-control" value="" placeholder="Uploaded image url" readonly="readonly" />
+										<br/> <a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#upload-image-modal"><i class="fa fa-camera"></i>&nbsp;<?php _e('Upload Image');?></a> </div>
+									<div class="col-xs-12 col-sm-6 form-group">
+										<div class="profile-image-preview-box"><img src="" class="img-responsive img-thumbnail" /></div>
+									</div>
+								</div>
+									<div class="row">
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Currently Employed?
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="current_employed" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="current_employed" value="0" /> No</label>
+										</div>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">External Candidate No.</label>
+										<input type="text" name="ex_cand" class="form-control " /> </div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="gender"> RAG Status</label>
+										<select name="rag_status" class="form-control select_single" tabindex="-1" data-placeholder="Choose a gender">
+											<option value=""> </option>
+											<option value="0"> Red </option>
+											<option value="1"> Amber </option>
+											<option value="2"> Green </option>
+										</select>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="current_employed">Extended support Underway
+											<br/>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="1" /> Yes</label>
+											<label>&nbsp;</label>
+											<label>
+												<input type="radio" class="flat" name="extended_support" value="0" /> No</label>
+									</div>
+									<div class="form-group col-sm-6 col-xs-12">
+										<label for="name">Extended Support Since: </label>
+										<input type="text" name="support_since" class="form-control " /> </div>
+										
+					<div class="row">
+						<br><br>
+						<h2>Training information Required: </h2><br><br>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Preceptorship progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="preceptorship" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">HCA Induction Progress
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="hca" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="hca" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">FD/AP Training Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="fdap" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Student Record
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="record" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="record" value="0" /> No</label>
+										</div>
+										<div class="form-group col-sm-6 col-xs-12">
+											<label for="current_employed">Mentorship
+												<br/>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="1" /> Yes</label>
+												<label>&nbsp;</label>
+												<label>
+													<input type="radio" class="flat" name="mentorship" value="0" /> No</label>
+										</div>
+									</div>
+								</div>
+								</div>
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<input type="hidden" name="action" value="add_new_user" />
+									<button class="btn btn-success btn-md" type="submit">
+										<?php _e('Add New User');?>
+									</button>
+								</div>
+							</form>
+							<?php echo $this->upload__image__section();
+			endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+        
+        
 		
 		public function add__user__page(){
 			ob_start();
@@ -1091,7 +1315,7 @@ return $arg1['basename'];
 							<label for="courses"><?php _e('Course(s)');?></label>
 							<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
 							<?php
-								$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+								$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID, name AS name');
 								$option_data = get_option_data($data,array('ID','name'));
 								echo get_options_list($option_data);
 							?>
@@ -1261,7 +1485,7 @@ return $arg1['basename'];
 							<label for="courses"><?php _e('Course(s)');?></label>
 							<select name="courses[]" class="form-control select_single" data-placeholder="Choose course(s)" multiple="multiple">
 							<?php
-								$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+								$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID, name AS name');
 								$option_data = get_option_data($data,array('ID','name'));
 								echo get_options_list($option_data,maybe_unserialize($user->courses));
 							?>
@@ -2361,7 +2585,7 @@ return $arg1['basename'];
 			extract($_POST);
 			$return = array();
 			$user = get_userdata($user_id);
-			$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+			$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID, name AS name');
 			$option_data = get_option_data($data,array('ID','name'));
 			$return['first_name'] = $user->first_name;
 			$return['last_name'] = $user->last_name;
