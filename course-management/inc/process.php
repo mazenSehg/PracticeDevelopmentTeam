@@ -41,7 +41,15 @@
 			case 'add_new_user':
 				echo $User->add__user__process();
 				break;
-			
+				
+            		case 'fetch_add_to_booking_data':
+				echo $User->fetch__add__to__booking__data__process();
+				break;
+
+			case 'update_user_booking':
+				echo $User->update__user__booking__process();
+				break;
+
 			case 'fetch_add_to_course_data':
 				echo $User->fetch__add__to__course__data__process();
 				break;
@@ -55,8 +63,7 @@
 				break;	
 			
 				
-			/*ADDITIONAL FORMS FOR USER INFO*/				
-							
+			/*ADDITIONAL FORMS FOR USER INFO*/			
 			case 'update_preceptorship':
 				echo $User->update__preceptor__process();
 				break;
@@ -159,9 +166,8 @@
 				
 			case 'update_location':
 				echo $Location->update__location__process();
-				break;			
-
-
+				break;
+				
 			case 'add_new_course_type':
 				echo $Course->add__course__type__process();
 				break;

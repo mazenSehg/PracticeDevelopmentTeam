@@ -914,6 +914,31 @@ function get_add_to_course_data(btn){
 	});
 }
 
+function get_add_to_booking_data(btn){
+	var _this = $(btn);
+	var _user_id = _this.data('user');
+	var _selector = $('#add-to-booking-modal-body');
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'fetch_add_to_booking_data',
+			user_id : _user_id
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success: function(r){
+			console.log(r);
+			$('.select-bookings').select2("destroy");
+			_selector.find('input[name="user_id"]').val(_user_id);
+			_selector.find('input[name="first_name"]').val(r['first_name']);
+			_selector.find('input[name="last_name"]').val(r['last_name']);
+			_selector.find('.select-bookings').html(r['bookings']);
+			$('.select-bookings').select2({ allowClear: true });
+			return false;
+		}
+	});
+}
+
 function nurse_modal_approve_switch(btn){
 	var is = confirm('Are you want to do this?');
 	if(is == false){

@@ -5,15 +5,16 @@ session_start();
 require_once('load.php');
 
 login_check();
-$sql = "SELECT * FROM tbl_users WHERE user_role = 'nurse'";
-$res = $db->get_results($sql);
 
-foreach($res as $a):
+//SET DEFAULT RULES FOR INFORMATION FOR ALL TRAINEES
+$sql1 = "SELECT * FROM tbl_users WHERE user_role='nurse'";
+$res1 = $db->get_results($sql1);
+foreach($res1 as $a):
 
+$sql2 = "INSERT INTO tbl_rules (ID, user_ID, preceptorship, hca, flap, record,mentorship) VALUES (NULL, $a->ID, 0,0,0,0,0)";
 
-$sql3 = "INSERT INTO tbl_rules SET user_ID='$a->ID', preceptorship=0,hca = 0 ,flap = 0 , record = 0, mentorship = 0";
-$res3 = $db->query($sql3);
+$res2 = $db->query($sql2);
+
 endforeach;
-
 
 ?>
