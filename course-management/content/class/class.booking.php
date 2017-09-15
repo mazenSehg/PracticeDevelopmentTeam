@@ -67,6 +67,15 @@ if( !class_exists('Booking') ):
 					<label for="date_to"><?php _e('Booking Date To');?>&nbsp;<span class="required">*</span></label>
 					<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" />
 				</div>
+                    
+                    
+				<div class="form-group">
+					<label for="max_trainee"><?php _e('Max Traniees');?>&nbsp;<span class="required">*</span></label>
+					<input type="number" name="max_trainee" class="form-control require" min="0" max = "100" value="0"/>
+				</div>
+                    
+                    
+                    
 				<div class="form-group">
 					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
 					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
@@ -141,6 +150,13 @@ if( !class_exists('Booking') ):
 						<label for="date_to"><?php _e('Booking Date To ');?>&nbsp;<span class="required">*</span></label>
 						<input type="text" name="date_to" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($booking->date_to) ? date('M d, Y', strtotime($booking->date_to)) : '';?>"/>
 					</div>
+                
+				    <div class="form-group">
+                        <label for="max_trainee"><?php _e('Max Traniees');?>&nbsp;<span class="required">*</span></label>
+                        <input type="number" name="max_trainee" class="form-control require" min="0" max = "100" value="<?php echo $booking->max_num; ?>"/>
+                    </div>
+                
+                
 					<div class="form-group">
 						<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
 						<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
@@ -196,6 +212,7 @@ if( !class_exists('Booking') ):
 					<tr>
 						<th><?php _e('Course Name');?></th>
 						<th><?php _e('Booking Date');?></th>
+						<th><?php _e('Attendance');?></th>
 						<th class="text-center"><?php _e('Actions');?></th>
 					</tr>
 				</thead>
@@ -478,6 +495,7 @@ if( !class_exists('Booking') ):
             
                 			$course = get_tabledata(TBL_COURSE_TYPE,true,array('ID' => $code));
 				$bb = $course->course_ID ." | ". $course->name  . " | ". $name;
+            
 				$result = $this->database->insert(TBL_BOOKINGS,
 					array(
 						'ID' => $guid,
@@ -487,6 +505,7 @@ if( !class_exists('Booking') ):
 						'description' => $description,
 						'location' => $location,
 						'nurses' => $nurses,
+                        'max_num' => $max_trainee,
 						'date_book_received' => $date_book_received,
 						'date_book_returned' => $date_book_returned,
 						'collected' => $collected,
@@ -526,12 +545,7 @@ if( !class_exists('Booking') ):
 					'course_ID' => $code,
 				);
 
-				if(is_value_exists(TBL_BOOKINGS,$validation_args,$booking_id)):
-					$return['status'] = 2;
-					$return['message_heading'] = __('Failed !');
-					$return['message'] = __('Booking name you entered is already exists, please try another name.');
-					$return['fields'] = array('name');
-				else:
+
                     $booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
 					$old_enroll = maybe_unserialize($booking->enroll);
 					$old_attendance = maybe_unserialize($booking->attendance);
@@ -558,6 +572,7 @@ if( !class_exists('Booking') ):
 							'location' => $location,
                         
 							'nurses' => $nurses,
+                            'max_num' => $max_trainee,
 							'date_book_received' => $date_book_received,
 							'date_book_returned' => $date_book_returned,
 							'collected' => $collected,
@@ -583,7 +598,6 @@ if( !class_exists('Booking') ):
 						$return['status'] = 1;
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Booking has been updated successfully.');
-					endif;
 				endif;
 			endif;
 			
@@ -659,9 +673,17 @@ if( !class_exists('Booking') ):
 					$course = get_tabledata(TBL_COURSE_TYPE,true,array('ID' => $booking->course_ID));
 					$row = array();
 					$booking_name = __('Booking (#').$booking->ID.')';
+                    $nurses = maybe_unserialize($booking->nurses);
+            $i = 0;
+            foreach($nurses as $nurse):
+            $i +=1;
+            endforeach;
+            $attend = $i."/".$booking->max_num;
+            
 					$booking_date = date('M d,Y',strtotime($booking->date_from)).' - '. date('M d,Y',strtotime($booking->date_to));
-					array_push($row, $course->name);
+					array_push($row, $booking->name);
 					array_push($row, $booking_date);
+					array_push($row, $attend);
 					ob_start();
 					?>
 					<div class="text-center">

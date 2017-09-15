@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 21, 2017 at 01:28 AM
+-- Generation Time: Sep 15, 2017 at 08:38 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -108,7 +108,13 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (66, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36', '2017-08-18 09:24:28'),
 (67, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.1 Safari/603.1.30', '2017-08-18 18:18:51'),
 (68, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8', '2017-08-20 13:41:21'),
-(69, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:54.0) Gecko/20100101 Firefox/54.0', '2017-08-20 20:49:03');
+(69, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:54.0) Gecko/20100101 Firefox/54.0', '2017-08-20 20:49:03'),
+(70, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0', '2017-08-22 17:43:39'),
+(71, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8', '2017-08-26 23:01:04'),
+(72, 1, '127.0.0.1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0', '2017-08-27 01:04:17'),
+(73, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8', '2017-08-31 13:13:03'),
+(74, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0', '2017-08-31 13:26:10'),
+(75, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8', '2017-09-14 14:02:03');
 
 -- --------------------------------------------------------
 
@@ -125,6 +131,7 @@ CREATE TABLE `tbl_bookings` (
   `location` bigint(20) DEFAULT NULL,
   `date_from` date DEFAULT NULL,
   `date_to` date DEFAULT NULL,
+  `max_num` int(11) DEFAULT '30',
   `nurses` text NOT NULL,
   `date_book_received` text NOT NULL,
   `collected` text NOT NULL,
@@ -139,8 +146,9 @@ CREATE TABLE `tbl_bookings` (
 -- Dumping data for table `tbl_bookings`
 --
 
-INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `name`, `admins`, `description`, `location`, `date_from`, `date_to`, `nurses`, `date_book_received`, `collected`, `date_book_returned`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000497225, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950339";}', 'test', 6, '2017-08-22', '2017-08-24', 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{i:10000603933;s:0:"";}', 'a:1:{i:10000603933;i:0;}', 'a:1:{i:10000603933;s:0:"";}', 'a:1:{i:10000603933;i:0;}', 'a:1:{i:10000603933;i:0;}', 1, '2017-08-20 23:17:55');
+INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `name`, `admins`, `description`, `location`, `date_from`, `date_to`, `max_num`, `nurses`, `date_book_received`, `collected`, `date_book_returned`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
+(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 9, 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000134207";}', 'a:2:{i:10000340101;s:0:"";i:10000134207;s:0:"";}', 'a:2:{i:10000340101;i:0;i:10000134207;i:0;}', 'a:2:{i:10000340101;s:0:"";i:10000134207;s:0:"";}', 'a:2:{i:10000340101;i:0;i:10000134207;i:0;}', 'a:2:{i:10000340101;i:0;i:10000134207;i:0;}', 1, '2017-08-31 13:14:22'),
+(10000736873, 10000690603, 'BOB | ayyy | QWERTY', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950342";}', 'test', 3, '2017-09-13', '2017-09-16', 10, 'a:3:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";i:2;s:11:"10000134207";}', 'a:3:{i:10000340101;s:0:"";i:10000603933;s:0:"";i:10000134207;s:0:"";}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 'a:3:{i:10000340101;s:0:"";i:10000603933;s:0:"";i:10000134207;s:0:"";}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 1, '2017-09-15 18:20:56');
 
 -- --------------------------------------------------------
 
@@ -221,6 +229,13 @@ CREATE TABLE `tbl_courses` (
   `active` int(11) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_courses`
+--
+
+INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `active`, `created_on`) VALUES
+(10000936951, '10000690603', 'BOB | ayyy | test', 'sdfsdf', 'a:1:{i:0;s:11:"10000950343";}', 2, 1, '2017-08-27 04:13:27');
 
 -- --------------------------------------------------------
 
@@ -826,7 +841,103 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (411, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-20 23:17:16'),
 (412, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-20 23:17:55'),
 (413, 1, 'Course deleted', 'You have successfully deleted (test) course.', 0, 0, '2017-08-20 23:27:12'),
-(414, 1, 'Course deleted', 'You have successfully deleted (another test) course.', 0, 0, '2017-08-20 23:27:14');
+(414, 1, 'Course deleted', 'You have successfully deleted (another test) course.', 0, 0, '2017-08-20 23:27:14'),
+(415, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:32:21'),
+(416, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:38:03'),
+(417, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:38:51');
+INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read`, `hide`, `date`) VALUES
+(418, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:39:45'),
+(419, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:40:18'),
+(420, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:41:57'),
+(421, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:42:06'),
+(422, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:44:21'),
+(423, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:44:49'),
+(424, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:45:48'),
+(425, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:47:16'),
+(426, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 00:48:03'),
+(427, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-21 01:06:53'),
+(428, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:07:12'),
+(429, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:08:48'),
+(430, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-21 01:10:13'),
+(431, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-21 01:10:15'),
+(432, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:10:37'),
+(433, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:11:03'),
+(434, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:11:42'),
+(435, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-21 01:12:29'),
+(436, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-21 01:12:31'),
+(437, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-21 01:12:33'),
+(438, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:13:16'),
+(439, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-21 01:14:01'),
+(440, 1, 'Account Details updated', 'You have successfully updated (James Leighs) account details.', 0, 0, '2017-08-21 01:23:27'),
+(441, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 01:30:50'),
+(442, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 01:32:21'),
+(443, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 01:32:36'),
+(444, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 01:33:43'),
+(445, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:40:56'),
+(446, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:42:34'),
+(447, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:44:23'),
+(448, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:45:24'),
+(449, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:45:52'),
+(450, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:46:39'),
+(451, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:47:53'),
+(452, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 01:56:03'),
+(453, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 01:56:24'),
+(454, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 01:56:32'),
+(455, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 01:56:50'),
+(456, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:09:21'),
+(457, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:30:49'),
+(458, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:30:56'),
+(459, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:34:06'),
+(460, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:37:47'),
+(461, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 02:39:04'),
+(462, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 02:39:10'),
+(463, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:40:52'),
+(464, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:41:45'),
+(465, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:42:08'),
+(466, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:46:02'),
+(467, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:46:44'),
+(468, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:47:09'),
+(469, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:49:09'),
+(470, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:50:07'),
+(471, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-08-21 02:52:23'),
+(472, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:53:23'),
+(473, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-21 02:54:37'),
+(474, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:56:16'),
+(475, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-21 02:58:09'),
+(476, 1, 'Account Details updated', 'You have successfully updated (Sandra Gomes) account details.', 0, 0, '2017-08-21 03:07:31'),
+(477, 1, 'Account Details updated', 'You have successfully updated (James Leighs) account details.', 0, 0, '2017-08-21 03:18:55'),
+(478, 1, 'Account Details updated', 'You have successfully updated (James Leighs) account details.', 0, 0, '2017-08-21 03:19:15'),
+(479, 1, 'New Account Created', 'You have successfully created a new account (Bbb Bbb).', 0, 0, '2017-08-21 03:22:39'),
+(480, 1, 'Nurse Account Enabled', 'You have successfully enabled (James Leighs) account.', 0, 0, '2017-08-21 03:22:48'),
+(481, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-26 23:08:08'),
+(482, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-26 23:16:47'),
+(483, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-27 00:58:02'),
+(484, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-27 01:06:05'),
+(485, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-27 01:06:24'),
+(486, 1, 'Account Details updated', 'You have successfully updated (Sandra Gomes) account details.', 0, 0, '2017-08-27 01:36:41'),
+(487, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-27 02:01:27'),
+(488, 1, 'User Course Details updated', 'You have successfully updated (Sandra Gomes) course details.', 0, 0, '2017-08-27 02:06:56'),
+(489, 1, 'User Booking Details updated', 'You have successfully updated (Sandra Gomes) booking details.', 0, 0, '2017-08-27 13:22:17'),
+(490, 1, 'User Course Details updated', 'You have successfully updated (James Leighs) course details.', 0, 0, '2017-08-27 13:26:43'),
+(491, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-27 13:27:16'),
+(492, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-30 19:52:30'),
+(493, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-31 13:13:37'),
+(494, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-31 13:13:43'),
+(495, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-08-31 13:13:45'),
+(496, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-08-31 13:14:22'),
+(497, 1, 'Nurse Account Disabled', 'You have successfully disbled (Bbb Bbb) account.', 0, 0, '2017-08-31 13:21:54'),
+(498, 1, 'Nurse Account Enabled', 'You have successfully enabled (Bbb Bbb) account.', 0, 0, '2017-08-31 13:21:57'),
+(499, 1, 'Nurse Account Disabled', 'You have successfully disbled (James Leighs) account.', 0, 0, '2017-08-31 13:21:58'),
+(500, 1, 'Nurse Account Enabled', 'You have successfully enabled (James Leighs) account.', 0, 0, '2017-08-31 13:21:59'),
+(501, 1, 'Nurse Account Disabled', 'You have successfully disbled (Sandra Gomes) account.', 0, 0, '2017-08-31 13:22:01'),
+(502, 1, 'Nurse Account Enabled', 'You have successfully enabled (Sandra Gomes) account.', 0, 0, '2017-08-31 13:22:03'),
+(503, 1, 'User Booking Details updated', 'You have successfully updated (Bbb Bbb) booking details.', 0, 0, '2017-08-31 14:00:07'),
+(504, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-09-15 18:09:51'),
+(505, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-09-15 18:17:43'),
+(506, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-09-15 18:18:03'),
+(507, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-09-15 18:20:37'),
+(508, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-09-15 18:20:56'),
+(509, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-09-15 18:36:03');
 
 -- --------------------------------------------------------
 
@@ -867,11 +978,11 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 CREATE TABLE `tbl_rules` (
   `ID` bigint(20) NOT NULL,
   `user_ID` bigint(20) NOT NULL,
-  `preceptorship` int(11) NOT NULL,
-  `hca` int(11) NOT NULL,
-  `flap` int(11) NOT NULL,
-  `record` int(11) NOT NULL,
-  `mentorship` int(11) NOT NULL
+  `preceptorship` int(11) NOT NULL DEFAULT '0',
+  `hca` int(11) NOT NULL DEFAULT '0',
+  `flap` int(11) NOT NULL DEFAULT '0',
+  `record` int(11) NOT NULL DEFAULT '0',
+  `mentorship` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -879,8 +990,9 @@ CREATE TABLE `tbl_rules` (
 --
 
 INSERT INTO `tbl_rules` (`ID`, `user_ID`, `preceptorship`, `hca`, `flap`, `record`, `mentorship`) VALUES
-(1, 10000340101, 0, 0, 0, 0, 0),
-(2, 10000603933, 0, 0, 0, 0, 0);
+(10000155175, 10000340101, 0, 0, 0, 0, 0),
+(10000155176, 10000603933, 1, 1, 1, 1, 1),
+(10000155177, 10000134207, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1325,10 +1437,18 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (463, 10000603933, 'dob', '2017-07-01 12:00:00'),
 (464, 10000603933, 'user_phone', '123456798'),
 (465, 10000603933, 'profile_img', '/content/assets/img/user.png'),
-(466, 10000603933, 'user_designation', '10000641616'),
+(466, 10000603933, 'user_designation', '10000641614'),
 (467, 10000603933, 'work_extension', '123485687'),
 (468, 10000603933, 'beep', '555'),
-(469, 10000603933, 'band', '5');
+(469, 10000603933, 'band', '5'),
+(470, 10000134207, 'gender', 'Male'),
+(471, 10000134207, 'dob', '2017-08-09 12:00:00'),
+(472, 10000134207, 'user_phone', '123456789'),
+(473, 10000134207, 'profile_img', ''),
+(474, 10000134207, 'user_designation', '10000641623'),
+(475, 10000134207, 'work_extension', '2161'),
+(476, 10000134207, 'beep', '2161'),
+(477, 10000134207, 'band', '8b');
 
 -- --------------------------------------------------------
 
@@ -1347,7 +1467,7 @@ CREATE TABLE `tbl_users` (
   `username` varchar(150) DEFAULT NULL,
   `user_status` int(11) DEFAULT NULL,
   `created_by` bigint(20) DEFAULT NULL,
-  `courses` text,
+  `courses` varchar(500) DEFAULT NULL,
   `work_area_ID` bigint(15) DEFAULT NULL,
   `user_designation` bigint(20) NOT NULL,
   `user_salt` varchar(250) DEFAULT NULL,
@@ -1383,8 +1503,9 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 (10000950352, NULL, 'sallywhitehouse@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sally', 'Whitehouse', 'course_admin', 'sallywhitehouse', 1, 1, '', NULL, 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950353, NULL, 'v.wilding@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Victoria', 'Wilding', 'course_admin', 'v.wilding', 1, 1, '', 0, 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, '', NULL, 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
-(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:1:{i:0;s:11:"10000936950";}', 6, 10000641641, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
-(10000603933, NULL, 's@g.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 'a:1:{i:0;s:11:"10000936950";}', 5, 10000641616, '78cHgqMhLRJHz575WXy9uw==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015);
+(10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:1:{i:0;s:11:"10000763106";}', 6, 10000641641, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
+(10000603933, NULL, 's@g.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 'a:1:{i:0;s:11:"10000763106";}', 5, 10000641614, '78cHgqMhLRJHz575WXy9uw==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015),
+(10000134207, '', 'bb@bb.com', '5387fce576015569e8595286f4ff6ca6e4c39dde4dc50d111d09eb15af7acf77', 'bbb', 'bbb', 'nurse', 'bbb', 1, 1, '', 10, 0, 'g+Mi5PJAxUyjaCwHNJTL5g==', '2017-08-21 03:22:39', 0, 1234, 1, 0, 2012);
 
 -- --------------------------------------------------------
 
@@ -1630,12 +1751,12 @@ ALTER TABLE `tbl_work_area`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000853536;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000736874;
 --
 -- AUTO_INCREMENT for table `tbl_cohort_ext`
 --
@@ -1645,12 +1766,12 @@ ALTER TABLE `tbl_cohort_ext`
 -- AUTO_INCREMENT for table `tbl_courses`
 --
 ALTER TABLE `tbl_courses`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000936951;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000936952;
 --
 -- AUTO_INCREMENT for table `tbl_course_types`
 --
 ALTER TABLE `tbl_course_types`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000956401;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000690604;
 --
 -- AUTO_INCREMENT for table `tbl_course_user`
 --
@@ -1675,7 +1796,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=415;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=510;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -1685,12 +1806,12 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_rules`
 --
 ALTER TABLE `tbl_rules`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000155178;
 --
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=470;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=478;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
