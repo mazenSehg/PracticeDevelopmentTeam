@@ -7,9 +7,12 @@ if( !class_exists('Settings') ):
 		public $user__id;
 		private $user;
 		private $user__class;
+		private $database;
+		
 
 		function __construct(){
 			global $db,$User;
+			$this->database = $db;
 			$this->user__class = $User;
 			$this->user__id = get_current_user_id();
 			$this->user = get_user_by( 'id' ,$this->user__id);
@@ -24,7 +27,10 @@ if( !class_exists('Settings') ):
 			ob_start();
 			if(!is_admin()):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
-			else: ?>
+			else: 
+                    $alert = get_tabledata(TBL_ALERT,true,array('ID'=> 1));
+                    echo $alert->attend;
+            ?>
 				<form class="general-setting submit-form" method="post" autocomplete="off">
 
 
@@ -33,15 +39,15 @@ if( !class_exists('Settings') ):
 					<div class="row">
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+							<input type="number" name="att_y" class="form-control require" min="0" max="10"value="0"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+							<input type="number" name="att_m" class="form-control require" min="0" max = "12"value="0"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+							<input type="number" name="att_d" class="form-control require" min="0" max = "31" value="0"/>
                                                     <div>before course date.</div>
 						</div>
 
@@ -52,15 +58,15 @@ if( !class_exists('Settings') ):
 					<div class="row">
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+							<input type="number" name="coll_y" class="form-control require" min="0" max="10"value="0"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+							<input type="number" name="coll_m" class="form-control require" min="0" max = "12"value="0"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+							<input type="number" name="coll_d" class="form-control require" min="0" max = "31" value="0"/>
                             <div>After a trainee has received their book.</div>
 						</div>
 					</div>
@@ -71,15 +77,15 @@ if( !class_exists('Settings') ):
 					<div class="row">
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+							<input type="number" name="ret_y" class="form-control require" min="0" max="10"value="0"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+							<input type="number" name="ret_m" class="form-control require" min="0" max = "12"value="0"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+							<input type="number" name="ret_d" class="form-control require" min="0" max = "31" value="0"/>
                         <div>After a trainee has collected their book.</div>
                             
 						</div>
@@ -209,7 +215,9 @@ if( !class_exists('Settings') ):
 				'message' => __('Could not saved settings, Please try again!'),
 				'reset_form' => 0
 			);
-
+            //coll
+            //ret
+            //att
 			if(is_admin()){
 				update_option('site_name',$site_name);
 				update_option('site_description',$site_description);
@@ -231,33 +239,40 @@ if( !class_exists('Settings') ):
 			return json_encode($return);
 		}
 
+
+        
         		public function update__alert__setting(){
 			extract($_POST);
+
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
-				'message' => __('Could not saved settings, Please try again!'),
+				'message' => __('Could not update Alert settings, Please try again'),
 				'reset_form' => 0
 			);
 
-			if(is_admin()){
-				update_option('site_name',$site_name);
-				update_option('site_description',$site_description);
-				update_option('admin_email',$admin_email);
-				update_option('site_contact_email',$site_contact_email);
-				update_option('site_contact_phone',$site_contact_phone);
-				update_option('site_domain',$site_domain);
-
-				$notification_args = array(
-					'title' => __('General Setting updated'),
-					'notification'=> __('You have successfully updated website general settings.'),
+                $collect = $coll_y."-".$coll_m."-".$coll_d;
+                $return = $ret_y."-".$ret_m."-".$ret_d;
+                $attend = $att_y."-".$att_m."-".$att_d;
+                    
+				$result = $this->database->update(TBL_ALERT,
+					array(
+						'attend' => $attend,
+						'collect' => $collect,
+						'return' => $return,
+					),
+					array('ID'=> 1)
 				);
 
-				add_user_notification($notification_args);
-				$return['status'] = 1;
-				$return['message_heading'] = __('Success !');
-				$return['message'] = __('Settings have been successfully updated.');
-			}
+                $notification_args = array(
+					'title' => __('Alert Setting updated'),
+					'notification'=> __('You have successfully updated the Alert settings.'),
+				);
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = __('Success !');
+					$return['message'] = __('Alert settings have been successfully updated.');
+
 			return json_encode($return);
 		}
 		public function update__manage__roles(){

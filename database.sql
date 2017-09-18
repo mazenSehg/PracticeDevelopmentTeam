@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 15, 2017 at 08:38 PM
+-- Generation Time: Sep 18, 2017 at 05:27 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -115,6 +115,26 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 (73, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8', '2017-08-31 13:13:03'),
 (74, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:55.0) Gecko/20100101 Firefox/55.0', '2017-08-31 13:26:10'),
 (75, 1, '::1', 'Desktop/Laptop', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8', '2017-09-14 14:02:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_alert`
+--
+
+CREATE TABLE `tbl_alert` (
+  `ID` int(11) NOT NULL,
+  `attend` varchar(100) NOT NULL,
+  `collect` varchar(100) NOT NULL,
+  `return` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_alert`
+--
+
+INSERT INTO `tbl_alert` (`ID`, `attend`, `collect`, `return`) VALUES
+(1, '1-0-0', '0-0-1', '0-1-0');
 
 -- --------------------------------------------------------
 
@@ -937,7 +957,12 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (506, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-09-15 18:18:03'),
 (507, 1, 'Booking deleted', 'You have successfully deleted booking.', 0, 0, '2017-09-15 18:20:37'),
 (508, 1, 'New booking created', 'You have successfully created a new booking.', 0, 0, '2017-09-15 18:20:56'),
-(509, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-09-15 18:36:03');
+(509, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-09-15 18:36:03'),
+(510, 1, 'General Setting updated', 'You have successfully updated website general settings.', 0, 0, '2017-09-18 15:08:39'),
+(511, 1, 'User Course Details updated', 'You have successfully updated Alert settings', 0, 0, '2017-09-18 15:18:08'),
+(512, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:21:09'),
+(513, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:22:19'),
+(514, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:23:47');
 
 -- --------------------------------------------------------
 
@@ -1646,6 +1671,12 @@ ALTER TABLE `tbl_access_log`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `tbl_alert`
+--
+ALTER TABLE `tbl_alert`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
@@ -1753,6 +1784,11 @@ ALTER TABLE `tbl_work_area`
 ALTER TABLE `tbl_access_log`
   MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
+-- AUTO_INCREMENT for table `tbl_alert`
+--
+ALTER TABLE `tbl_alert`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+--
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
@@ -1796,7 +1832,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=510;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=515;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --

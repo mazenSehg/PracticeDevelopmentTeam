@@ -179,6 +179,7 @@ if( !function_exists('update_option')) :
 	}
 endif;
 
+
 if( !function_exists('delete_option')) :
 	function delete_option( $option ) {
 		global $db;
