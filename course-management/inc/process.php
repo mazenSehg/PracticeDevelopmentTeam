@@ -24,6 +24,10 @@
 			
 			case 'update_general_setting':
 				echo $Settings->update__general__setting();
+				break;			
+
+            case 'update_alert_setting':
+				echo $Settings->update__alert__setting();
 				break;
 				
 			case 'update_manage_roles':

@@ -385,6 +385,7 @@ if( !class_exists('Header') ):
 									<ul class="nav child_menu">
 										<li><a href="<?php the_permalink('general-setting');?>"><?php _e('General');?></a></li>
 										<li><a href="<?php the_permalink('manage-roles');?>"><?php _e('Manage Roles');?></a></li>
+                                        <li><a href="<?php the_permalink('alerts');?>"><?php _e('Alert Settings');?></a></li>
 									</ul>
 								</li>
 								<?php endif; ?>

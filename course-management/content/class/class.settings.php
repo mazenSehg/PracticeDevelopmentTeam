@@ -15,6 +15,100 @@ if( !class_exists('Settings') ):
 			$this->user = get_user_by( 'id' ,$this->user__id);
 		}
 
+        
+        
+        
+        
+        
+        		public function all__alerts__page(){
+			ob_start();
+			if(!is_admin()):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: ?>
+				<form class="general-setting submit-form" method="post" autocomplete="off">
+
+
+					<div class="form-group">
+                        <label for="username">Alert to notify user to attend Course<span class="required">*</span></label>
+					<div class="row">
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+						</div>
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+						</div>
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+                                                    <div>before course date.</div>
+						</div>
+
+					</div>
+                        <br>
+                        <br>
+                        <label for="username">Reminder to Collect book<span class="required">*</span></label>
+					<div class="row">
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+						</div>
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+						</div>
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+                            <div>After a trainee has received their book.</div>
+						</div>
+					</div>
+                        
+                                            <br>
+                        <br>
+                        <label for="username">Reminder to Return book<span class="required">*</span></label>
+					<div class="row">
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+						</div>
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+						</div>
+						<div class="form-group col-sm-2 col-xs-12">
+							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
+							<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+                        <div>After a trainee has collected their book.</div>
+                            
+						</div>
+					</div>    
+                        
+					</div>
+
+
+
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="update_alert_setting"/>
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Save Alert Setting');?></button>
+					</div>
+				</form>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 		public function general__settings__page(){
 			ob_start();
 			if(!is_admin()):
@@ -137,6 +231,35 @@ if( !class_exists('Settings') ):
 			return json_encode($return);
 		}
 
+        		public function update__alert__setting(){
+			extract($_POST);
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not saved settings, Please try again!'),
+				'reset_form' => 0
+			);
+
+			if(is_admin()){
+				update_option('site_name',$site_name);
+				update_option('site_description',$site_description);
+				update_option('admin_email',$admin_email);
+				update_option('site_contact_email',$site_contact_email);
+				update_option('site_contact_phone',$site_contact_phone);
+				update_option('site_domain',$site_domain);
+
+				$notification_args = array(
+					'title' => __('General Setting updated'),
+					'notification'=> __('You have successfully updated website general settings.'),
+				);
+
+				add_user_notification($notification_args);
+				$return['status'] = 1;
+				$return['message_heading'] = __('Success !');
+				$return['message'] = __('Settings have been successfully updated.');
+			}
+			return json_encode($return);
+		}
 		public function update__manage__roles(){
 			extract($_POST);
 			$return = array(
