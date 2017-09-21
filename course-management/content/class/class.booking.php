@@ -749,6 +749,7 @@ if( !class_exists('Booking') ):
 								<th><?php _e('Date book Returned'); ?></th>
 								<th><?php _e('Attendance'); ?></th>
 								<th><?php _e('Complete'); ?></th>
+								<th><?php _e('Reminder'); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -769,6 +770,14 @@ if( !class_exists('Booking') ):
 								</td>
 								<td>
 									<label><input type="checkbox" class="js-switch" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="complete"/></label>
+								</td>
+								<td>
+									    
+                                    
+									<label><input type="button" value="send" class="btn btn-dark btn-xs" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="reminder"/></label>
+                                    
+                                
+                                   
 								</td>
 							</tr>
 							<?php endforeach; ?>
@@ -932,6 +941,12 @@ if( !class_exists('Booking') ):
 						$return['message'] = 'User booking attendance status is not complete yet.';
 						$return['reload'] = 1;
 					endif;
+				}
+            
+            	if($type == 'reminder'){
+							$return['status'] = 1;
+							$return['message_heading'] = __('Success !');
+							$return['message'] = 'Reminder has been sent.';
 				}
 			endif;
 			

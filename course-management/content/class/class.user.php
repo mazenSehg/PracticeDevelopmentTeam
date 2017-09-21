@@ -2003,7 +2003,7 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-2 col-xs-6">
 						<label for="courses"><?php _e('Course');?></label>
 						<select name="course" class="form-control select_single" data-placeholder="Choose course"><?php
-							$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+							$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID,name');
 							$option_data = get_option_data($data,array('ID','name'));
 							echo get_options_list($option_data);
 							?>
