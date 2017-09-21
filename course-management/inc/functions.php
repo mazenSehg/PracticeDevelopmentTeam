@@ -478,15 +478,15 @@ if ( !function_exists('send_email') ) :
 	function send_email($from,$name,$reply_email,$to,$subject,$body,$attachment_files = ''){	
 		require_once( ABSPATH . INC. '/phpmailer/PHPMailerAutoload.php');	
 		$mail = new PHPMailer();
-		if(SMTP_STATUS == '1'):
-			$mail->IsSMTP();
-			$mail->SMTPAuth = true;
-			$mail->SMTPSecure = SMTP_SECURE;
-			$mail->Host = SMTP_HOST;
-			$mail->Port = SMTP_PORT;
-			$mail->Username = SMTP_USER;
-			$mail->Password = SMTP_PASS;
-		endif;
+$mail->IsSMTP();
+$mail->Mailer = "smtp";
+$mail->Host = "smtp.live.com";
+$mail->Port = "25"; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
+$mail->SMTPAuth = true;
+$mail->SMTPSecure = 'tls';
+        //put your email address and password here...
+$mail->Username = "";
+$mail->Password = "";
 		$mail->CharSet = 'UTF-8';
 		$mail->SetFrom($from,$name,0);
 		$mail->AddReplyTo($reply_email);

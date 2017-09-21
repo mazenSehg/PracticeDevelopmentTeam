@@ -815,7 +815,7 @@ if( !class_exists('Booking') ):
 						<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
 						<td class="text-center">
 							<?php if( user_can('edit_booking') ): ?>
-							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_nurses(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('View Nurse(s)');?></button>
+							<button type="button" class="btn btn-success btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_nurses(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('View Trainee(s)');?></button>
 							<?php endif; ?>
 						</td>
 					</tr>
@@ -944,9 +944,26 @@ if( !class_exists('Booking') ):
 				}
             
             	if($type == 'reminder'){
+                    
+                    
+                    $user=get_userdata($user_id);
+                    
+           $from = "mazen_sehgal@hotmail.com";
+                    $name = "Mazen";
+                    $reply_email = "admin@admin.com";
+                    $to = $user->user_email;
+                    $subject = "REMINDER: course name";
+                    $body = "Dear ..., The following information has yet to be completed...";
+if(send_email($from,$name,$reply_email,$to,$subject,$body,$attachment_files = '')==true){
+                    
 							$return['status'] = 1;
 							$return['message_heading'] = __('Success !');
 							$return['message'] = 'Reminder has been sent.';
+}else{
+   							$return['message_heading'] = __('Nope !');
+							$return['message'] = 'Reminder not sent'; 
+    
+}
 				}
 			endif;
 			
