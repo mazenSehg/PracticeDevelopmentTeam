@@ -76,7 +76,7 @@ login_check();
 						<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 								<div class="icon"> <i class="fa fa-exclamation-circle"> </i> </div>
-								<div class="count"><?php echo count( get_tabledata(TBL_COURSES,false));?></div>
+								<div class="count"><?php echo count( get_tabledata(TBL_BOOKINGS,false));?></div>
 								<h3><?php _e('Total Courses');?></h3>
 							</div>
 						</div>

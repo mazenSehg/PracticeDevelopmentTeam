@@ -29,7 +29,10 @@ if( !class_exists('Settings') ):
 				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
 			else: 
                     $alert = get_tabledata(TBL_ALERT,true,array('ID'=> 1));
-                    echo $alert->attend;
+                    $attend = explode("-",$alert->attend);
+                    $collect = explode("-",$alert->collect);
+                    $return = explode("-",$alert->return);
+
             ?>
 				<form class="general-setting submit-form" method="post" autocomplete="off">
 
@@ -39,15 +42,15 @@ if( !class_exists('Settings') ):
 					<div class="row">
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="att_y" class="form-control require" min="0" max="10"value="0"/>
+							<input type="number" name="att_y" class="form-control require" min="0" max="10"value="<?php echo $attend[0]; ?>"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="att_m" class="form-control require" min="0" max = "12"value="0"/>
+							<input type="number" name="att_m" class="form-control require" min="0" max = "12"value="<?php echo $attend[1]; ?>"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="att_d" class="form-control require" min="0" max = "31" value="0"/>
+							<input type="number" name="att_d" class="form-control require" min="0" max = "31" value="<?php echo $attend[2]; ?>"/>
                                                     <div>before course date.</div>
 						</div>
 
@@ -58,15 +61,15 @@ if( !class_exists('Settings') ):
 					<div class="row">
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="coll_y" class="form-control require" min="0" max="10"value="0"/>
+							<input type="number" name="coll_y" class="form-control require" min="0" max="10"value="<?php echo $collect[0]; ?>"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="coll_m" class="form-control require" min="0" max = "12"value="0"/>
+							<input type="number" name="coll_m" class="form-control require" min="0" max = "12"value="<?php echo $collect[1]; ?>"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="coll_d" class="form-control require" min="0" max = "31" value="0"/>
+							<input type="number" name="coll_d" class="form-control require" min="0" max = "31" value="<?php echo $collect[2]; ?>"/>
                             <div>After a trainee has received their book.</div>
 						</div>
 					</div>
@@ -77,15 +80,15 @@ if( !class_exists('Settings') ):
 					<div class="row">
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="ret_y" class="form-control require" min="0" max="10"value="0"/>
+							<input type="number" name="ret_y" class="form-control require" min="0" max="10"value="<?php echo $return[0]; ?>"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="ret_m" class="form-control require" min="0" max = "12"value="0"/>
+							<input type="number" name="ret_m" class="form-control require" min="0" max = "12"value="<?php echo $return[1]; ?>"/>
 						</div>
 						<div class="form-group col-sm-2 col-xs-12">
 							<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-							<input type="number" name="ret_d" class="form-control require" min="0" max = "31" value="0"/>
+							<input type="number" name="ret_d" class="form-control require" min="0" max = "31" value="<?php echo $return[2]; ?>"/>
                         <div>After a trainee has collected their book.</div>
                             
 						</div>
