@@ -740,6 +740,8 @@ if( !class_exists('Booking') ):
 				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
 				if(!empty($nurses)):
 					ob_start(); ?>
+
+						<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Modify Trainee(s)');?></a>
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
 						<thead>
 							<tr>
