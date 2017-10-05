@@ -739,7 +739,17 @@ if( !class_exists('Booking') ):
 				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
 				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
 				if(!empty($nurses)):
-					ob_start(); ?>
+					ob_start(); 
+            //checks if the settings under 'course settings' contains the course which requires additional information
+            			$settings = get_tabledata(TBL_C_SET,true,array('ID' => 1));
+                        $c1 = unserialize($settings->course_type);
+            if(array_key_exists($booking->course_ID,$c1)){
+$found=1;
+            }else{
+$found=0;
+            }
+            
+?>
 
 						<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Modify Trainee(s)');?></a>
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
@@ -752,6 +762,9 @@ if( !class_exists('Booking') ):
 								<th><?php _e('Attendance'); ?></th>
 								<th><?php _e('Complete'); ?></th>
 								<th><?php _e('Reminder'); ?></th>
+                                <?php if($found==1){?>
+								<th><?php _e('Additional Information'); ?></th>
+                                <?php } ?>
 							</tr>
 						</thead>
 						<tbody>
@@ -781,6 +794,13 @@ if( !class_exists('Booking') ):
                                 
                                    
 								</td>
+                                                <?php if($found==1){?>
+                                <td>
+                                Special Modal
+                                
+                                </td>
+                                                <?php }?>
+                                
 							</tr>
 							<?php endforeach; ?>
 						</tbody>

@@ -29,7 +29,10 @@
             case 'update_alert_setting':
 				echo $Settings->update__alert__setting();
 				break;
-				
+
+            case 'update_course_setting':
+				echo $Settings->update__course__setting();
+				break;
 			case 'update_manage_roles':
 				echo $Settings->update__manage__roles();
 				break;

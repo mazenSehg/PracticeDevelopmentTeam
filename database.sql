@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
+-- version 4.4.12
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Sep 18, 2017 at 05:27 PM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Host: 127.0.0.1
+-- Generation Time: Oct 05, 2017 at 08:26 PM
+-- Server version: 5.6.25
+-- PHP Version: 5.6.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,14 +26,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `tbl_access_log`
 --
 
-CREATE TABLE `tbl_access_log` (
+CREATE TABLE IF NOT EXISTS `tbl_access_log` (
   `ID` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `ip_address` text COLLATE utf8_unicode_ci NOT NULL,
   `device` text COLLATE utf8_unicode_ci NOT NULL,
   `user_agent` text COLLATE utf8_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tbl_access_log`
@@ -122,12 +122,12 @@ INSERT INTO `tbl_access_log` (`ID`, `user_id`, `ip_address`, `device`, `user_age
 -- Table structure for table `tbl_alert`
 --
 
-CREATE TABLE `tbl_alert` (
+CREATE TABLE IF NOT EXISTS `tbl_alert` (
   `ID` int(11) NOT NULL,
   `attend` varchar(100) NOT NULL,
   `collect` varchar(100) NOT NULL,
   `return` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2147483648 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_alert`
@@ -142,7 +142,7 @@ INSERT INTO `tbl_alert` (`ID`, `attend`, `collect`, `return`) VALUES
 -- Table structure for table `tbl_bookings`
 --
 
-CREATE TABLE `tbl_bookings` (
+CREATE TABLE IF NOT EXISTS `tbl_bookings` (
   `ID` bigint(20) NOT NULL,
   `course_ID` bigint(20) NOT NULL,
   `name` varchar(120) DEFAULT NULL,
@@ -160,14 +160,14 @@ CREATE TABLE `tbl_bookings` (
   `enroll` text,
   `created_by` bigint(20) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000736874 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_bookings`
 --
 
 INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `name`, `admins`, `description`, `location`, `date_from`, `date_to`, `max_num`, `nurses`, `date_book_received`, `collected`, `date_book_returned`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 9, 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000134207";}', 'a:2:{i:10000340101;s:0:"";i:10000134207;s:0:"";}', 'a:2:{i:10000340101;i:0;i:10000134207;i:0;}', 'a:2:{i:10000340101;s:0:"";i:10000134207;s:0:"";}', 'a:2:{i:10000340101;i:0;i:10000134207;i:0;}', 'a:2:{i:10000340101;i:0;i:10000134207;i:0;}', 1, '2017-08-31 13:14:22'),
+(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 9, 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000134207";}', 'a:1:{s:11:"10000340101";s:10:"2017-10-13";}', 'a:1:{s:11:"10000340101";s:1:"1";}', 'a:2:{i:10000340101;s:0:"";i:10000134207;s:0:"";}', 'a:1:{s:11:"10000340101";s:1:"1";}', 'a:1:{s:11:"10000340101";s:1:"1";}', 1, '2017-08-31 13:14:22'),
 (10000736873, 10000690603, 'BOB | ayyy | QWERTY', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950342";}', 'test', 3, '2017-09-13', '2017-09-16', 10, 'a:3:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";i:2;s:11:"10000134207";}', 'a:3:{i:10000340101;s:0:"";i:10000603933;s:0:"";i:10000134207;s:0:"";}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 'a:3:{i:10000340101;s:0:"";i:10000603933;s:0:"";i:10000134207;s:0:"";}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 1, '2017-09-15 18:20:56');
 
 -- --------------------------------------------------------
@@ -176,7 +176,7 @@ INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `name`, `admins`, `description`, 
 -- Table structure for table `tbl_cohort`
 --
 
-CREATE TABLE `tbl_cohort` (
+CREATE TABLE IF NOT EXISTS `tbl_cohort` (
   `ID` bigint(12) NOT NULL,
   `name` varchar(150) DEFAULT NULL,
   `type` varchar(150) DEFAULT NULL,
@@ -200,12 +200,12 @@ INSERT INTO `tbl_cohort` (`ID`, `name`, `type`, `date`, `y`, `m`, `d`) VALUES
 -- Table structure for table `tbl_cohort_ext`
 --
 
-CREATE TABLE `tbl_cohort_ext` (
+CREATE TABLE IF NOT EXISTS `tbl_cohort_ext` (
   `ID` int(11) NOT NULL,
   `Cohort_ID` bigint(12) NOT NULL,
   `Cohort_date` date NOT NULL,
   `over` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_cohort_ext`
@@ -239,7 +239,7 @@ INSERT INTO `tbl_cohort_ext` (`ID`, `Cohort_ID`, `Cohort_date`, `over`) VALUES
 -- Table structure for table `tbl_courses`
 --
 
-CREATE TABLE `tbl_courses` (
+CREATE TABLE IF NOT EXISTS `tbl_courses` (
   `ID` bigint(20) NOT NULL,
   `course_ID` varchar(50) NOT NULL,
   `name` varchar(1024) NOT NULL,
@@ -248,14 +248,25 @@ CREATE TABLE `tbl_courses` (
   `location` bigint(20) NOT NULL,
   `active` int(11) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10000936952 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `tbl_courses`
+-- Table structure for table `tbl_course_settings`
 --
 
-INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `location`, `active`, `created_on`) VALUES
-(10000936951, '10000690603', 'BOB | ayyy | test', 'sdfsdf', 'a:1:{i:0;s:11:"10000950343";}', 2, 1, '2017-08-27 04:13:27');
+CREATE TABLE IF NOT EXISTS `tbl_course_settings` (
+  `ID` bigint(20) NOT NULL,
+  `course_type` text
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_course_settings`
+--
+
+INSERT INTO `tbl_course_settings` (`ID`, `course_type`) VALUES
+(1, 'a:2:{s:11:"10000012610";i:0;s:11:"10000690603";i:0;}');
 
 -- --------------------------------------------------------
 
@@ -263,11 +274,11 @@ INSERT INTO `tbl_courses` (`ID`, `course_ID`, `name`, `description`, `admins`, `
 -- Table structure for table `tbl_course_types`
 --
 
-CREATE TABLE `tbl_course_types` (
+CREATE TABLE IF NOT EXISTS `tbl_course_types` (
   `ID` bigint(20) NOT NULL,
   `course_ID` varchar(100) NOT NULL,
   `name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000690604 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_course_types`
@@ -283,7 +294,7 @@ INSERT INTO `tbl_course_types` (`ID`, `course_ID`, `name`) VALUES
 -- Table structure for table `tbl_course_user`
 --
 
-CREATE TABLE `tbl_course_user` (
+CREATE TABLE IF NOT EXISTS `tbl_course_user` (
   `ID` bigint(20) NOT NULL,
   `user_ID` bigint(20) NOT NULL,
   `course_ID` bigint(20) NOT NULL,
@@ -291,7 +302,7 @@ CREATE TABLE `tbl_course_user` (
   `attended` int(1) NOT NULL,
   `uploaded` int(1) NOT NULL,
   `passed` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000942987 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_course_user`
@@ -308,12 +319,12 @@ INSERT INTO `tbl_course_user` (`ID`, `user_ID`, `course_ID`, `booked`, `attended
 -- Table structure for table `tbl_designations`
 --
 
-CREATE TABLE `tbl_designations` (
+CREATE TABLE IF NOT EXISTS `tbl_designations` (
   `ID` bigint(20) NOT NULL,
   `code` varchar(150) NOT NULL,
   `name` varchar(1024) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000641647 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_designations`
@@ -362,7 +373,7 @@ INSERT INTO `tbl_designations` (`ID`, `code`, `name`, `created_on`) VALUES
 -- Table structure for table `tbl_locations`
 --
 
-CREATE TABLE `tbl_locations` (
+CREATE TABLE IF NOT EXISTS `tbl_locations` (
   `ID` bigint(20) NOT NULL,
   `location_code` varchar(50) DEFAULT NULL,
   `name` varchar(1024) DEFAULT NULL,
@@ -372,7 +383,7 @@ CREATE TABLE `tbl_locations` (
   `notes` text,
   `extras` text,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_locations`
@@ -407,14 +418,14 @@ INSERT INTO `tbl_locations` (`ID`, `location_code`, `name`, `phone`, `booking_co
 -- Table structure for table `tbl_notes`
 --
 
-CREATE TABLE `tbl_notes` (
+CREATE TABLE IF NOT EXISTS `tbl_notes` (
   `ID` int(11) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `to` bigint(10) NOT NULL,
   `from` bigint(10) NOT NULL,
   `note` text,
   `filepath` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_notes`
@@ -433,7 +444,7 @@ INSERT INTO `tbl_notes` (`ID`, `date`, `to`, `from`, `note`, `filepath`) VALUES
 -- Table structure for table `tbl_notifications`
 --
 
-CREATE TABLE `tbl_notifications` (
+CREATE TABLE IF NOT EXISTS `tbl_notifications` (
   `ID` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `title` text NOT NULL,
@@ -441,7 +452,7 @@ CREATE TABLE `tbl_notifications` (
   `read` int(1) NOT NULL DEFAULT '0',
   `hide` int(1) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=522 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_notifications`
@@ -962,7 +973,14 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (511, 1, 'User Course Details updated', 'You have successfully updated Alert settings', 0, 0, '2017-09-18 15:18:08'),
 (512, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:21:09'),
 (513, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:22:19'),
-(514, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:23:47');
+(514, 1, 'Alert Setting updated', 'You have successfully updated the Alert settings.', 0, 0, '2017-09-18 15:23:47'),
+(515, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 13:52:07'),
+(516, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 13:52:28'),
+(517, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 16:56:08'),
+(518, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 17:01:02'),
+(519, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 17:10:59'),
+(520, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 18:25:25'),
+(521, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 18:25:31');
 
 -- --------------------------------------------------------
 
@@ -970,11 +988,11 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 -- Table structure for table `tbl_options`
 --
 
-CREATE TABLE `tbl_options` (
+CREATE TABLE IF NOT EXISTS `tbl_options` (
   `ID` bigint(20) NOT NULL,
   `option_name` text NOT NULL,
   `option_value` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_options`
@@ -1000,7 +1018,7 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 -- Table structure for table `tbl_rules`
 --
 
-CREATE TABLE `tbl_rules` (
+CREATE TABLE IF NOT EXISTS `tbl_rules` (
   `ID` bigint(20) NOT NULL,
   `user_ID` bigint(20) NOT NULL,
   `preceptorship` int(11) NOT NULL DEFAULT '0',
@@ -1008,7 +1026,7 @@ CREATE TABLE `tbl_rules` (
   `flap` int(11) NOT NULL DEFAULT '0',
   `record` int(11) NOT NULL DEFAULT '0',
   `mentorship` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000155178 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_rules`
@@ -1025,12 +1043,12 @@ INSERT INTO `tbl_rules` (`ID`, `user_ID`, `preceptorship`, `hca`, `flap`, `recor
 -- Table structure for table `tbl_usermeta`
 --
 
-CREATE TABLE `tbl_usermeta` (
+CREATE TABLE IF NOT EXISTS `tbl_usermeta` (
   `ID` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `meta_key` text NOT NULL,
   `meta_value` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=478 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_usermeta`
@@ -1481,7 +1499,7 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 -- Table structure for table `tbl_users`
 --
 
-CREATE TABLE `tbl_users` (
+CREATE TABLE IF NOT EXISTS `tbl_users` (
   `ID` bigint(20) NOT NULL,
   `trainer_ID` varchar(150) DEFAULT NULL,
   `user_email` varchar(512) DEFAULT NULL,
@@ -1502,7 +1520,7 @@ CREATE TABLE `tbl_users` (
   `rag_status` int(11) DEFAULT NULL,
   `extended_support` int(11) DEFAULT NULL,
   `support_since` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10000989114 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_users`
@@ -1538,7 +1556,7 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 -- Table structure for table `tbl_user_info`
 --
 
-CREATE TABLE `tbl_user_info` (
+CREATE TABLE IF NOT EXISTS `tbl_user_info` (
   `ID` bigint(110) NOT NULL,
   `user_ID` bigint(100) DEFAULT NULL,
   `prec_intro` date DEFAULT NULL,
@@ -1592,7 +1610,7 @@ CREATE TABLE `tbl_user_info` (
 -- Table structure for table `tbl_work_area`
 --
 
-CREATE TABLE `tbl_work_area` (
+CREATE TABLE IF NOT EXISTS `tbl_work_area` (
   `ID` bigint(20) NOT NULL,
   `code` varchar(150) DEFAULT NULL,
   `name` varchar(150) DEFAULT NULL,
@@ -1603,7 +1621,7 @@ CREATE TABLE `tbl_work_area` (
   `last_name` varchar(150) DEFAULT NULL,
   `email` varchar(150) DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_work_area`
@@ -1701,6 +1719,12 @@ ALTER TABLE `tbl_courses`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `tbl_course_settings`
+--
+ALTER TABLE `tbl_course_settings`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `tbl_course_types`
 --
 ALTER TABLE `tbl_course_types`
@@ -1782,77 +1806,82 @@ ALTER TABLE `tbl_work_area`
 -- AUTO_INCREMENT for table `tbl_access_log`
 --
 ALTER TABLE `tbl_access_log`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `tbl_alert`
 --
 ALTER TABLE `tbl_alert`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2147483648;
 --
 -- AUTO_INCREMENT for table `tbl_bookings`
 --
 ALTER TABLE `tbl_bookings`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000736874;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000736874;
 --
 -- AUTO_INCREMENT for table `tbl_cohort_ext`
 --
 ALTER TABLE `tbl_cohort_ext`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT for table `tbl_courses`
 --
 ALTER TABLE `tbl_courses`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000936952;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000936952;
+--
+-- AUTO_INCREMENT for table `tbl_course_settings`
+--
+ALTER TABLE `tbl_course_settings`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_course_types`
 --
 ALTER TABLE `tbl_course_types`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000690604;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000690604;
 --
 -- AUTO_INCREMENT for table `tbl_course_user`
 --
 ALTER TABLE `tbl_course_user`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000942987;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000942987;
 --
 -- AUTO_INCREMENT for table `tbl_designations`
 --
 ALTER TABLE `tbl_designations`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000641647;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000641647;
 --
 -- AUTO_INCREMENT for table `tbl_locations`
 --
 ALTER TABLE `tbl_locations`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `tbl_notes`
 --
 ALTER TABLE `tbl_notes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=515;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=522;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
 ALTER TABLE `tbl_options`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tbl_rules`
 --
 ALTER TABLE `tbl_rules`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000155178;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000155178;
 --
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=478;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=478;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10000989114;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000989114;
 --
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
@@ -1862,7 +1891,7 @@ ALTER TABLE `tbl_user_info`
 -- AUTO_INCREMENT for table `tbl_work_area`
 --
 ALTER TABLE `tbl_work_area`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

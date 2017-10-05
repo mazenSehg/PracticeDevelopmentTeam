@@ -21,7 +21,67 @@ if( !class_exists('Settings') ):
         
         
         
-        
+        public function all__course__page(){
+			ob_start();
+			if(!is_admin()):
+				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			else: 
+                    $alert = get_tabledata(TBL_ALERT,true,array('ID'=> 1));
+                    $attend = explode("-",$alert->attend);
+                    $collect = explode("-",$alert->collect);
+                    $return = explode("-",$alert->return);
+
+            ?>
+				<form class="general-setting submit-form" method="post" autocomplete="off">
+                    <div class="form-group">
+                        Please select the courses which require the additional fields: 
+                        <li>Date book received</li>
+                        <li>Collected</li>
+                        <li>Date book returned</li>
+                        <li>Attendace</li>
+                        <li>Completed</li>
+                    </div>
+<?php
+            				$booking = get_tabledata(TBL_C_SET,true,array('ID'=> 1));
+//            print_r(unserialize(array_keys($booking->course_type)));
+        	$courses = unserialize($booking->course_type);
+            $good = array_keys($courses);
+            print_r($good);
+            
+//            foreach($num as $a);
+//            if($a==0){
+//                echo "---".$a;
+//                $a=rand(0,100);
+//            }
+//            $nom = array_flip($num);
+//            print_r($num);
+            
+?>
+					<div class="form-group">
+						<label for="admins"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="code[]" class="form-control select_single " data-placeholder="Choose course Type" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_COURSE_TYPE,false,array(),'',' ID, CONCAT_WS(" | ", course_ID , name) AS name ');
+							$option_data = get_option_data($data,array('ID','name'));
+				            echo get_options_list($option_data,maybe_unserialize($good));
+							?>
+						</select>
+  
+                        
+					</div>
+
+
+
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<input type="hidden" name="action" value="update_course_setting"/>
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Save Alert Setting');?></button>
+					</div>
+				</form>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;            
+        }
         
         		public function all__alerts__page(){
 			ob_start();
@@ -241,8 +301,50 @@ if( !class_exists('Settings') ):
 			}
 			return json_encode($return);
 		}
+        
+            //TBL_C_SET
+        	public function update__course__setting(){
+			extract($_POST);
+                
+			$return = array(
+				'status' => 0,
+				'message_heading'=> __('Failed !'),
+				'message' => __('Could not update Course Settings, Please try again.'),
+				'reset_form' => 0
+			);
+                
+			if( user_can('edit_booking') ):
+                    $booking = get_tabledata(TBL_C_SET,true,array('ID' => 1));
+					$old_enroll = maybe_unserialize($booking->course_type);
+					$enroll = array();
+					foreach($code as $nurse){
 
+						$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
+					}
+					$result = $this->database->update(TBL_C_SET,
+						array(
+							'course_type' => $enroll,
+						),
+						array(
+							'ID'=> 1
+						)
+					);
 
+					if($result):
+						$notification_args = array(
+							'title' => __('Booking updated'),
+							'notification'=> __('You have successfully updated Course settings.'),
+						);
+
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Course Settings has been updated successfully.');
+				endif;
+			endif;
+			
+			return json_encode($return);
+		}
         
         		public function update__alert__setting(){
 			extract($_POST);

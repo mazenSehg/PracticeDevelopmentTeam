@@ -31,4 +31,6 @@ define( 'TBL_CHK' , $db->prefix. 'course_user' );
 define( 'TBL_RULES' , $db->prefix. 'rules' );
 define( 'TBL_COURSE_TYPE' , $db->prefix. 'course_types' );
 define( 'TBL_ALERT' , $db->prefix. 'alert' );
+define( 'TBL_C_SET' , $db->prefix. 'course_settings');
+
 ?>
