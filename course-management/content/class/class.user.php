@@ -318,7 +318,10 @@ if( !class_exists('User') ):
 			ob_start();
 			$user = get_user_by('id',$user__id);
 			$courses = get_tabledata(TBL_USERS,false,array('ID'=>$user__id));
+			$courses = get_tabledata(TBL_USERS,false,array('ID'=>$user__id));
+            $rules = get_tabledata(TBL_RULES, false, array('user_ID'=>$user__id));
 
+            
 			if(!$courses):
 				echo page_not_found("Oops! There is no courses assigned to this user",' ',false);
 			else:
@@ -326,17 +329,27 @@ if( !class_exists('User') ):
 			?>
 
     <div class="row">
-    	<div class="col-md-8">
+    	<div class="col-md-7">
             <div class="panel with-nav-tabs panel-default">
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab1default" data-toggle="tab">Profile</a></li>
-                            <li><a href="#tab2default" data-toggle="tab">Course</a></li>
+                            <li><a href="#tab1default" data-toggle="tab">Profile</a></li>
+                            <li class="active"><a href="#tab2default" data-toggle="tab">Course</a></li>
+                            <?php if($rules[0]->preceptorship!=0){?>
                             <li><a href="#tab3default" data-toggle="tab">Preceptorship Progress</a></li>
+                            <?php  }?>
+                            <?php if($rules[0]->hca!=0){?>
                             <li><a href="#tab4default" data-toggle="tab">HCA Induction Progress</a></li>
+                            <?php }?>
+                            <?php if($rules[0]->flap!=0){ ?>
                             <li><a href="#tab5default" data-toggle="tab">FD/AP Training Record</a></li>
+                            <?php }?>
+                            <?php if($rules[0]->record!=0){?>
                             <li><a href="#tab6default" data-toggle="tab">Student Record</a></li>
+                            <?php }?>
+                            <?php if($rules[0]->mentorship!=0){?>
                             <li><a href="#tab7default" data-toggle="tab">Mentorship</a></li>
+                            <?php }?>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
@@ -348,17 +361,11 @@ if( !class_exists('User') ):
                 </div>
                 <div class="panel-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="tab1default">
+                        <div class="tab-pane fade" id="tab1default">
                         						<ul class="messages list-unstyled"><?php
 							$user = get_userdata($user__id);
 
 							?>
-							<br>
-							<br>
-							<h1>
-								Profile
-							</h1>
-							<br>
 							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
 								<div class="profile_img">
 									<div id="crop-avatar">
@@ -459,14 +466,10 @@ if( !class_exists('User') ):
 
 						</ul>
                         </div>
-                        <div class="tab-pane fade" id="tab2default">
+                        <div class="tab-pane fade in active" id="tab2default">
+                            
                         
                             						<ul class="messages list-unstyled">
-							<br>
-							<br>
-							<h1>
-								Courses
-							</h1>
 							<?php
 							$user = get_user_by('id',$user__id);
 
@@ -513,12 +516,6 @@ if( !class_exists('User') ):
                         
                         						<ul class="messages list-unstyled">
 						<form class="submit-form" method="post" autocomplete="off">
-							<br>
-							<br>
-							<h1>
-								Preceptor Progress
-							</h1>
-							<br>
 							<div class="row">
 								<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 								<div class="form-group col-sm-4 col-xs-12">
@@ -642,12 +639,6 @@ if( !class_exists('User') ):
                         
                         						<ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
-								<br>
-								<br>
-								<h1>
-									HCA Induction
-								</h1>
-								<br>
 								<?php
 								$data = get_tabledata(TBL_INFO,false,array('user_ID'=>$user__id));
 								?>
@@ -740,12 +731,6 @@ if( !class_exists('User') ):
                         
                         						<ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
-								<br>
-								<br>
-								<h1>
-									FDs / AP Training Record
-								</h1>
-								<br>
 								<div class="row">
 									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 									<div class="form-group col-sm-2 col-xs-12">
@@ -847,12 +832,6 @@ if( !class_exists('User') ):
                         
                         						<ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
-								<br>
-								<br>
-								<h1>
-									Student Progress
-								</h1>
-								<br>
 								<div class="row">
 									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 
@@ -922,12 +901,6 @@ if( !class_exists('User') ):
                         
                             <ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
-								<br>
-								<br>
-								<h1>
-									Mentor Progress
-								</h1>
-								<br>
 								<div class="row">
 									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
 									<div class="form-group col-sm-3 col-xs-12">
@@ -981,7 +954,7 @@ if( !class_exists('User') ):
                 
                 
                 
-            <div class="col-md-4">
+            <div class="col-md-5">
             <div class="panel with-nav-tabs panel-info">
                 <div class="panel-heading">
                         <ul class="nav nav-tabs">
@@ -993,12 +966,6 @@ if( !class_exists('User') ):
                         <div class="tab-pane fade in active" id="tab1info">
                         
                         						<ul class="messages list-unstyled">
-							<br>
-							<br>
-							<h1>
-								Notes
-							</h1>
-							<br>
 							<form class="submit-form" method="post" autocomplete="off">
 								<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
 									<thead>
