@@ -324,76 +324,194 @@ if( !class_exists('User') ):
 			else:
 				endif;
 			?>
-			<div class="" role="tabpanel" data-example-id="togglable-tabs">
-				<ul id="tab_content" class="nav nav-tabs bar_tabs" role="tablist">
 
-					<li role="presentation" class="">
-						<a href="#tab_content10" role="tab" data-toggle="tab" aria-expanded="false"><?php _e('Profile');?>
-						</a>
-					</li>
+    <div class="row">
+    	<div class="col-md-8">
+            <div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Profile</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">Course</a></li>
+                            <li><a href="#tab3default" data-toggle="tab">Preceptorship Progress</a></li>
+                            <li><a href="#tab4default" data-toggle="tab">HCA Induction Progress</a></li>
+                            <li><a href="#tab5default" data-toggle="tab">FD/AP Training Record</a></li>
+                            <li><a href="#tab6default" data-toggle="tab">Student Record</a></li>
+                            <li><a href="#tab7default" data-toggle="tab">Mentorship</a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#tab8default" data-toggle="tab">Dropdown 1</a></li>
+                                    <li><a href="#tab9default" data-toggle="tab">Default 5</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1default">
+                        						<ul class="messages list-unstyled"><?php
+							$user = get_userdata($user__id);
 
-					<li role="presentation" class="active">
-						<a href="#tab_content7" role="tab" data-toggle="tab" aria-expanded="false"><?php _e('Courses');?>
-						</a>
-					</li>
+							?>
+							<br>
+							<br>
+							<h1>
+								Profile
+							</h1>
+							<br>
+							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+								<div class="profile_img">
+									<div id="crop-avatar">
+										<img class="img-responsive avatar-view" src="<?php echo get_user_profile_image($user__id);?>" alt="Avatar">
+									</div></div>
+								<h3>
+									<?php echo $user->first_name.' '.$user->last_name;?>
+								</h3>
+								<strong>
+									Date of Birth:
+								</strong> <?php echo date('M d,Y',strtotime(get_user_meta($user->ID,'dob',true)));?><br>
 
-					<?php
-					$designation_ID = get_user_meta($user__id,'user_designation');
-					$rule = get_tabledata(TBL_RULES,false,array('user_ID'=>$user__id));
-					if($rule):
-					foreach($rule as $data):
 
-					if($data->preceptorship != 0){ ?>
-						<li role="presentation" class="">
-							<a href="#tab_content01" role="tab" data-toggle="tab" aria-expanded="false">
-								<?php _e('Preceptorship Progress');?>
-							</a>
-						</li>
-						<?php }
-					if($data->hca != 0){ ?>
-						<li role="presentation" class="">
-							<a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">
-								<?php _e('HCA Induction Progress');?>
-							</a>
-						</li>
-						<?php }
-					if($data->flap != 0){ ?>
-						<li role="presentation" class="">
-							<a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">
-								<?php _e('FD/AP Training Record');?>
-							</a>
-						</li>
-						<?php }
-					if($data->record != 0){ ?>
-						<li role="presentation" class="">
-							<a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">
-								<?php _e('Student Record');?>
-							</a>
-						</li>
-						<?php }
-					if($data->mentorship != 0){ ?>
-						<li role="presentation" class="">
-							<a href="#tab_content6" role="tab" data-toggle="tab" aria-expanded="false">
-								<?php _e('Mentorship');?>
-							</a>
-						</li>
-						<?php }
-					endforeach;
-					else:
+								<br />
+								<a class="btn btn-success btn-sm" href="<?php the_permalink('edit-user', array('user_id'=> $user__id));?>">
+									<i class="fa fa-edit m-right-xs"></i>&nbsp;<?php _e('Edit User Details');?>
+								</a>
+							</div>
 
-					// echo "No rule has been set.";
 
-					endif;
-					?>
+							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+								<div class="profile_img">
+	</div>
+								<h3>
+									Contact Details
+								</h3>
+								<strong>
+									Email
+								</strong>: <?php echo $user->user_email;?><br>
+								<strong>
+									Phone:
+								</strong><?php echo get_user_meta($user->ID,'user_phone',true);?><br>
+								<strong>
+									Work Extension:
+								</strong><?php echo get_user_meta($user->ID,'work_extension',true);?><br>
+								<strong>
+									Beep:
+								</strong><?php echo get_user_meta($user->ID,'beep',true);?><br>
 
-					<li role="presentation" class="">
-						<a href="#tab_content8" role="tab" data-toggle="tab" aria-expanded="false"><?php _e('Notes');?>
-						</a>
-					</li>
-				</ul>
-				<div id="myTabContent" class="tab-content">
-					<div role="tabpanel" class="tab-pane fade " id="tab_content01" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
+							</div>
+							<div class="col-md-3 col-sm-5 col-xs-12 profile_left">
+								<div class="profile_img"><?php
+
+									$w_area = get_tabledata(TBL_WORKS,true,array('ID'=> $user->work_area_ID));
+									$a = get_user_meta($user->ID,'user_designation',true);
+									$desig = get_tabledata(TBL_DESIGNATIONS,true,array('ID'=> $a));
+									?></div>
+								<h3>
+									Work Details
+								</h3>
+								<strong>
+									Currently Employed:
+								</strong><?php
+								if($user->currently_employed != 0){
+									echo "Yes";
+								}else{
+									echo "No";
+								};?><br>
+								<strong>
+									Work Area
+								</strong>: <?php echo $w_area->name;?><br>
+								<strong>
+									Designation:
+								</strong><?php echo $desig->name;?><br>
+								<strong>
+									Band:
+								</strong><?php echo get_user_meta($user->ID,'band',true);;?>
+								<br>
+								<br/>
+								<strong>
+									External Candidate Number:
+								</strong><?php echo $user->external_candidate;?><br>
+								<strong>
+									RAG Status:
+								</strong><?php echo $user->rag_status;?><br>
+								<strong>
+									RAG Status:
+								</strong><?php
+								if($user->extended_support == 0){
+									echo "Red";
+								} elseif($user->extended_support == 1){
+									echo "Amber";
+								} elseif($user->extended_support == 3){
+									echo "Green";
+								};?><br>
+								<strong>
+									Extended Support:
+								</strong><?php
+								if($user->extended_support != 0){
+									echo "Yes";
+								}else{
+									echo "No";
+								};?><br>
+								<strong>
+									Support Since:
+								</strong><?php echo $user->support_since;?><br>
+							</div>
+
+						</ul>
+                        </div>
+                        <div class="tab-pane fade" id="tab2default">
+                        
+                            						<ul class="messages list-unstyled">
+							<br>
+							<br>
+							<h1>
+								Courses
+							</h1>
+							<?php
+							$user = get_user_by('id',$user__id);
+
+							$bookings = get_tabledata(TBL_BOOKINGS,false,array());
+							if(!$bookings):
+							echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
+							else:
+							?>
+							<table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>				<?php _e('Course Name(s)');?>
+										</th>
+										<th>				<?php _e('Course Booked');?>
+										</th>
+										<th>				<?php _e('Attended');?>
+										</th>
+										<th>				<?php _e('Documents uploaded');?>
+										</th>
+										<th>				<?php _e('Course Completed');?>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									?>
+
+									<?php
+									?>
+									<tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+									</tr>
+								</tbody>
+							</table>
+							<?php endif; ?>
+						</ul>
+                            
+                        </div>
+                        <div class="tab-pane fade" id="tab3default">
+                        
+                        						<ul class="messages list-unstyled">
 						<form class="submit-form" method="post" autocomplete="off">
 							<br>
 							<br>
@@ -518,9 +636,11 @@ if( !class_exists('User') ):
 							</div>
 						</form>
 						</ul>
-					</div>
-					<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
+                            
+                        </div>
+                        <div class="tab-pane fade" id="tab4default">
+                        
+                        						<ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
 								<br>
 								<br>
@@ -614,278 +734,11 @@ if( !class_exists('User') ):
 									</button></div>
 							</form>
 						</ul>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade" id="tab_content10" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled"><?php
-							$user = get_userdata($user__id);
-
-							?>
-							<br>
-							<br>
-							<h1>
-								Profile
-							</h1>
-							<br>
-							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-								<div class="profile_img">
-									<div id="crop-avatar">
-										<img class="img-responsive avatar-view" src="<?php echo get_user_profile_image($user__id);?>" alt="Avatar">
-									</div></div>
-								<h3>
-									<?php echo $user->first_name.' '.$user->last_name;?>
-								</h3>
-								<strong>
-									Date of Birth:
-								</strong> <?php echo date('M d,Y',strtotime(get_user_meta($user->ID,'dob',true)));?><br>
-
-
-								<br />
-								<a class="btn btn-success btn-sm" href="<?php the_permalink('edit-user', array('user_id'=> $user__id));?>">
-									<i class="fa fa-edit m-right-xs"></i>&nbsp;<?php _e('Edit User Details');?>
-								</a>
-							</div>
-
-
-							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-								<div class="profile_img">
-	</div>
-								<h3>
-									Contact Details
-								</h3>
-								<strong>
-									Email
-								</strong>: <?php echo $user->user_email;?><br>
-								<strong>
-									Phone:
-								</strong><?php echo get_user_meta($user->ID,'user_phone',true);?><br>
-								<strong>
-									Work Extension:
-								</strong><?php echo get_user_meta($user->ID,'work_extension',true);?><br>
-								<strong>
-									Beep:
-								</strong><?php echo get_user_meta($user->ID,'beep',true);?><br>
-
-							</div>
-							<div class="col-md-3 col-sm-5 col-xs-12 profile_left">
-								<div class="profile_img"><?php
-
-									$w_area = get_tabledata(TBL_WORKS,true,array('ID'=> $user->work_area_ID));
-									$a = get_user_meta($user->ID,'user_designation',true);
-									$desig = get_tabledata(TBL_DESIGNATIONS,true,array('ID'=> $a));
-									?></div>
-								<h3>
-									Work Details
-								</h3>
-								<strong>
-									Currently Employed:
-								</strong><?php
-								if($user->currently_employed != 0){
-									echo "Yes";
-								}else{
-									echo "No";
-								};?><br>
-								<strong>
-									Work Area
-								</strong>: <?php echo $w_area->name;?><br>
-								<strong>
-									Designation:
-								</strong><?php echo $desig->name;?><br>
-								<strong>
-									Band:
-								</strong><?php echo get_user_meta($user->ID,'band',true);;?>
-								<br>
-								<br/>
-								<strong>
-									External Candidate Number:
-								</strong><?php echo $user->external_candidate;?><br>
-								<strong>
-									RAG Status:
-								</strong><?php echo $user->rag_status;?><br>
-								<strong>
-									RAG Status:
-								</strong><?php
-								if($user->extended_support == 0){
-									echo "Red";
-								} elseif($user->extended_support == 1){
-									echo "Amber";
-								} elseif($user->extended_support == 3){
-									echo "Green";
-								};?><br>
-								<strong>
-									Extended Support:
-								</strong><?php
-								if($user->extended_support != 0){
-									echo "Yes";
-								}else{
-									echo "No";
-								};?><br>
-								<strong>
-									Support Since:
-								</strong><?php echo $user->support_since;?><br>
-							</div>
-
-						</ul>
-					</div>
-					
-					<div role="tabpanel" class="tab-pane fade active in" id="tab_content7" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
-							<br>
-							<br>
-							<h1>
-								Courses
-							</h1>
-							<?php
-							$user = get_user_by('id',$user__id);
-
-							$bookings = get_tabledata(TBL_BOOKINGS,false,array());
-							if(!$bookings):
-							echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
-							else:
-							?>
-							<table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>				<?php _e('Course Name(s)');?>
-										</th>
-										<th>				<?php _e('Course Booked');?>
-										</th>
-										<th>				<?php _e('Attended');?>
-										</th>
-										<th>				<?php _e('Documents uploaded');?>
-										</th>
-										<th>				<?php _e('Course Completed');?>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									if($bookings):
-									foreach($bookings as $booking):
-									$data = unserialize($booking->nurses);
-									$data2= unserialize($booking->attendance);
-									$data3= unserialize($booking->enroll);
-									$match= 0;
-									$attended;
-									foreach($data as $i):
-									if($user->ID == $i){
-										$match = 1;
-										$attended = $data2[$user->ID];
-										$completed= $data3[$user->ID];
-
-									}
-									endforeach;
-
-									//$corse = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));
-									?>
-
-									<?php
-									?>
-									<tr bgcolor="<?php if($completed != 0):echo "#E0F8E0"; else: echo "#F78181"; endif; ?>">
-										<?php
-										if($match != 0):
-										$course = get_tabledata(TBL_COURSES,false,array('ID'=>$booking->course_ID));
-										?>
-										<td>				<?php echo $booking->name; ?>
-										</td>
-										<td>				<?php echo date('M d, Y', strtotime($booking->date_from)); ?>
-										</td>
-										<td>				<?php echo ($attended != 0) ? "yes" : "no."; ?>
-										</td>
-										<td>				<?php ?>
-										</td>
-										<td>				<?php echo ($completed != 0) ? "yes" :  "no."; ?>
-										</td>
-										<?php endif;?>
-									</tr>
-									<?php endforeach; endif; ?>
-								</tbody>
-							</table>
-							<?php endif; ?>
-						</ul>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade" id="tab_content8" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
-							<br>
-							<br>
-							<h1>
-								Notes
-							</h1>
-							<br>
-							<form class="submit-form" method="post" autocomplete="off">
-								<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
-									<thead>
-										<tr>
-											<th>					<?php _e('Date of Note');?>
-											</th>
-											<th>					<?php _e('Note');?>
-											</th>
-											<th>					<?php _e('Attachments');?>
-											</th>
-											<th>					<?php _e('Note Posted By');?>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-										$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
-										foreach($notez as $noty): ?>
-										<tr>
-											<td>					<?php echo $noty->date?>
-											</td>
-											<td>					<?php echo $noty->note?>
-											</td>
-											<td>					<?php
-
-												function filePathParts($arg1){
-													return $arg1['basename'];
-												}
-
-												$xmlFile = pathinfo($noty->filepath);
-												$name = filePathParts($xmlFile);
-
-												?>
-												<a href="<?php echo $noty->filepath; ?>" download>
-													download<br>(<?php echo $name;?>)
-												</a>
-											</td>
-											<td>					<?php $user = get_userdata($noty->from);
-												echo $user->first_name . " ". $user->last_name?>
-											</td>
-										</tr>
-										<?php
-										endforeach;
-										?>
-									</tbody>
-								</table>
-								<div class="row">
-									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-									<div class="form-group col-sm-8 col-xs-12">
-										<label for="description-of-fault">
-											Notes
-										</label>
-										<textarea name="note" class="form-control" rows="3">
-										</textarea>
-									</div></div>
-								<label for="description-of-fault">
-									Attachments
-								</label>
-								<input type="file" name="file" accept="">
-
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<input type="hidden" name="action" value="update_notes" />
-									<button class="btn btn-success btn-md" type="submit">
-										<?php _e('Add note');?>
-									</button>
-								</div>
-							</form>
-
-						</ul>
-					</div>
-					<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
+                            
+                        </div>
+                        <div class="tab-pane fade" id="tab5default">
+                        
+                        						<ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
 								<br>
 								<br>
@@ -987,9 +840,12 @@ if( !class_exists('User') ):
 									</button></div>
 							</form>
 						</ul>
-					</div>
-					<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
+                            
+                        </div>
+                        
+                        <div class="tab-pane fade" id="tab6default">
+                        
+                        						<ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
 								<br>
 								<br>
@@ -1059,9 +915,12 @@ if( !class_exists('User') ):
 									</button></div>
 							</form>
 						</ul>
-					</div>
-					<div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
-						<ul class="messages list-unstyled">
+                            
+                            
+                        </div>
+                        <div class="tab-pane fade" id="tab7default">
+                        
+                            <ul class="messages list-unstyled">
 							<form class="submit-form" method="post" autocomplete="off">
 								<br>
 								<br>
@@ -1110,9 +969,115 @@ if( !class_exists('User') ):
 									</button></div>
 							</form
 						</ul>
-					</div>
-				</div>
-			</div>
+                            
+                        </div>
+                        <div class="tab-pane fade" id="tab8default">Default 8</div>
+                        <div class="tab-pane fade" id="tab9default">Default 9</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+                
+                
+                
+            <div class="col-md-4">
+            <div class="panel with-nav-tabs panel-info">
+                <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1info" data-toggle="tab">Notes</a></li>
+                        </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1info">
+                        
+                        						<ul class="messages list-unstyled">
+							<br>
+							<br>
+							<h1>
+								Notes
+							</h1>
+							<br>
+							<form class="submit-form" method="post" autocomplete="off">
+								<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>					<?php _e('Date of Note');?>
+											</th>
+											<th>					<?php _e('Note');?>
+											</th>
+											<th>					<?php _e('Attachments');?>
+											</th>
+											<th>					<?php _e('Note Posted By');?>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+										$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
+										foreach($notez as $noty): ?>
+										<tr>
+											<td>					<?php echo $noty->date?>
+											</td>
+											<td>					<?php echo $noty->note?>
+											</td>
+											<td>					<?php
+
+												function filePathParts($arg1){
+													return $arg1['basename'];
+												}
+
+												$xmlFile = pathinfo($noty->filepath);
+												$name = filePathParts($xmlFile);
+
+												?>
+												<a href="<?php echo $noty->filepath; ?>" download>
+													download<br>(<?php echo $name;?>)
+												</a>
+											</td>
+											<td>					<?php $user = get_userdata($noty->from);
+												echo $user->first_name . " ". $user->last_name?>
+											</td>
+										</tr>
+										<?php
+										endforeach;
+										?>
+									</tbody>
+								</table>
+								<div class="row">
+									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+									<div class="form-group col-sm-8 col-xs-12">
+										<label for="description-of-fault">
+											Notes
+										</label>
+										<textarea name="note" class="form-control" rows="3">
+										</textarea>
+									</div></div>
+								<label for="description-of-fault">
+									Attachments
+								</label>
+								<input type="file" name="file" accept="">
+
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<input type="hidden" name="action" value="update_notes" />
+									<button class="btn btn-success btn-md" type="submit">
+										<?php _e('Add note');?>
+									</button>
+								</div>
+							</form>
+
+						</ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>            
+	</div>
+
+
 			<?php
 			$content = ob_get_clean();
 			return $content;
@@ -1169,10 +1134,11 @@ if( !class_exists('User') ):
 			$user__id = $_GET['user_id'];
 			$user = get_userdata($user__id);
 			?>
-			<div class="col-md-12 col-xs-12 profile_left">
 				<h3>
 					Progress review for: <?php echo $user->first_name.' '.$user->last_name;?>
 				</h3>
+                    <div class="col-md-12 col-xs-12 profile_left">
+
 			</div>
 			<?php
 			if(!user_can('view_user')):
