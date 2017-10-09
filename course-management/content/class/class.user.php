@@ -469,47 +469,105 @@ if( !class_exists('User') ):
                         <div class="tab-pane fade in active" id="tab2default">
                             
                         
-                            						<ul class="messages list-unstyled">
-							<?php
-							$user = get_user_by('id',$user__id);
 
-							$bookings = get_tabledata(TBL_BOOKINGS,false,array());
-							if(!$bookings):
-							echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
-							else:
-							?>
-							<table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>				<?php _e('Course Name(s)');?>
-										</th>
-										<th>				<?php _e('Course Booked');?>
-										</th>
-										<th>				<?php _e('Attended');?>
-										</th>
-										<th>				<?php _e('Documents uploaded');?>
-										</th>
-										<th>				<?php _e('Course Completed');?>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									?>
 
-									<?php
-									?>
-									<tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-									</tr>
-								</tbody>
-							</table>
-							<?php endif; ?>
-						</ul>
+<ul class="messages list-unstyled">
+   <br>
+   <br>
+   <h1>
+      Courses
+   </h1>
+   <?php
+      $user = get_user_by('id',$user__id);
+      
+      
+      $bookings = get_tabledata(TBL_BOOKINGS,false,array());
+      
+      if(!$bookings):
+      
+      echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
+      
+      else:
+      
+      ?>
+   <table class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+      <thead>
+         <tr>
+            <th><?php _e('Course Name(s)');?>
+            </th>
+            <th><?php _e('Course Booked');?>
+            </th>
+            <th> <?php _e('Attended');?>
+            </th>
+            <th><?php _e('Documents uploaded');?>
+            </th>
+            <th> <?php _e('Course Completed');?>
+            </th>
+         </tr>
+      </thead>
+      <tbody>
+         <?php
+            if($bookings):
+            
+            foreach($bookings as $booking):
+            
+            $data = unserialize($booking->nurses);
+            
+            $data2= unserialize($booking->attendance);
+            
+            $data3= unserialize($booking->enroll);
+            
+            $match= 0;
+            
+            $attended;
+            
+            foreach($data as $i):
+            
+            if($user->ID == $i){
+            
+            $match = 1;
+            
+            $attended = $data2[$user->ID];
+            
+            $completed= $data3[$user->ID];
+            
+            
+            }
+            
+            endforeach;
+            
+            
+            //$corse = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));
+            
+            ?>
+         <?php
+            ?>
+         <tr bgcolor="<?php if($completed != 0):echo "#E0F8E0"; else: echo "#F78181"; endif; ?>">
+            <?php
+               if($match != 0):
+               
+               $course = get_tabledata(TBL_COURSES,false,array('ID'=>$booking->course_ID));
+               
+               ?>
+            <td> <?php echo $booking->name; ?>
+            </td>
+            <td> <?php echo date('M d, Y', strtotime($booking->date_from)); ?>
+            </td>
+            <td> <?php echo ($attended != 0) ? "yes" : "no."; ?>
+            </td>
+            <td> <?php ?>
+            </td>
+            <td> <?php echo ($completed != 0) ? "yes" :  "no."; ?>
+            </td>
+            <?php endif;?>
+         </tr>
+         <?php endforeach; endif; ?>
+      </tbody>
+   </table>
+   <?php endif; ?>
+</ul>
+
+
                             
                         </div>
                         <div class="tab-pane fade" id="tab3default">
@@ -620,10 +678,7 @@ if( !class_exists('User') ):
 									<label for="description-of-fault">
 										Notes
 									</label>
-									<textarea name="p_notes" class="form-control" rows="3">
-										<?php echo
-										isset($fault->prec_notes) ? $fault->prec_notes : '';?>
-									</textarea></div>
+									<textarea name="p_notes" class="form-control" rows="3"><?php echo isset($fault->prec_notes) ? $fault->prec_notes : '';?></textarea></div>
 							</div>
 							<div class="ln_solid">
 							</div>
@@ -713,13 +768,11 @@ if( !class_exists('User') ):
 										<label for="description-of-fault">
 											Notes
 										</label>
-										<textarea name="hca_notes" class="form-control" rows="3">
-											<?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?>
-										</textarea>
+										<textarea name="hca_notes" class="form-control" rows="3"><?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?></textarea>
 									</div></div>
 								<div class="ln_solid"></div>
 								<div class="form-group">
-									<input type="hidden" name="action" value="update_hca" />
+									<input type="hidden" name="action" value="update_mca" />
 									<button class="btn btn-success btn-md" type="submit">
 										<?php _e('Update HCA Induction');?>
 									</button></div>
@@ -811,11 +864,7 @@ if( !class_exists('User') ):
 										<label for="description-of-fault">
 											Notes
 										</label>
-										<textarea name="fd_notes" class="form-control" rows="3">
-											<?php
-											echo isset($fault->fd_notes) ? $fault->fd_notes : '';
-											?>
-										</textarea>
+										<textarea name="fd_notes" class="form-control" rows="3"><?php echo isset($fault->fd_notes) ? $fault->fd_notes : '';?></textarea>
 									</div></div>
 								<div class="ln_solid"></div>
 								<div class="form-group">
@@ -883,8 +932,7 @@ if( !class_exists('User') ):
 										<label for="description-of-fault">
 											Notes
 										</label>
-										<textarea name="stud_notes" class="form-control" rows="3">
-										</textarea>
+										<textarea name="stud_notes" class="form-control" rows="3"></textarea>
 									</div></div>
 								<div class="ln_solid"></div>
 								<div class="form-group">
@@ -930,9 +978,7 @@ if( !class_exists('User') ):
 										<label for="description-of-fault">
 											Notes
 										</label>
-										<textarea name="mentor_notes" class="form-control" rows="3">
-											<?php echo isset($fault->mentor_notes) ? $fault->mentor_notes : '';?>
-										</textarea>
+										<textarea name="mentor_notes" class="form-control" rows="3"><?php echo isset($fault->mentor_notes) ? $fault->mentor_notes : '';?></textarea>
 									</div></div>
 								<div class="ln_solid"></div>
 								<div class="form-group">
@@ -2265,7 +2311,7 @@ if( !class_exists('User') ):
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'message' => __('Could not update training details, Please try again.'),
 				'reset_form' => 0
 			);
 
@@ -2274,49 +2320,43 @@ if( !class_exists('User') ):
 				$p_pin = ( isset($p_pin) ) ? 1 : 0;
 				$p_delay = ( isset($p_delay) ) ? 1 : 0;
 				$p_nurse = ( isset($p_nurse) ) ? 1 : 0;
-				$guid = get_guid(TBL_INFO);
-				if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
-					$result = $this->database->update(TBL_INFO,
+                                $age = array(							
+                            "prec_intro" => date("Y-m-d h:i:s",strtotime($p_intro)),
+							"current_prec"=> $p_current,
+							"pin" => $p_pin,
+							"delay" => $p_delay,
+							"prec_name" => $p_name,
+							"int_nurse" => $p_nurse,
+							"WTE" => $p_wte,
+							"p_email" => $p_email,
+							"p_country" => $p_country,
+							"sign_off" => $p_period,
+							"awards" => $p_awards,
+							"link" => $p_link,
+							"prec_trainer"=> $trainers,
+							"prec_notes" => $p_notes
+                    );
+                    $precep = serialize($age);
+            
+            $guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3) ){
+					$result = $this->database->update(TBL_PROG,
 						array(
-							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
-							'current_prec'=> $p_current,
-							'pin' => $p_pin,
-							'delay' => $p_delay,
-							'prec_name' => $p_name,
-							'int_nurse' => $p_nurse,
-							'WTE' => $p_wte,
-							'p_email' => $p_email,
-							'p_country' => $p_country,
-							'sign_off' => $p_period,
-							'awards' => $p_awards,
-							'link' => $p_link,
-							'prec_trainer'=> $trainers,
-							'prec_notes' => $p_notes,
+                            'prec'=>$precep,
 						),
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_INFO,
+					$result = $this->database->insert(TBL_PROG,
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'prec_intro' => date('Y-m-d h:i:s',strtotime($p_intro)),
-							'current_prec'=> $p_current,
-							'pin' => $p_pin,
-							'delay' => $p_delay,
-							'prec_name' => $p_name,
-							'int_nurse' => $p_nurse,
-							'WTE' => $p_wte,
-							'p_email' => $p_email,
-							'p_country' => $p_country,
-							'sign_off' => $p_period,
-							'awards' => $p_awards,
-							'link' => $p_link,
-							'prec_trainer'=> $trainers,
-							'prec_notes' => $p_notes,
+                            'prec'=>$precep,
 						)
 					);
 				}
+
+                
 				$notification_args = array(
 					'title' => __('Account Information'),
 					'notification'=> __('You have successfully updated preceptor progress'),
@@ -2325,7 +2365,7 @@ if( !class_exists('User') ):
 				add_user_notification($notification_args);
 				$return['status'] = 1;
 				$return['message_heading'] = __('Success !');
-				$return['message'] = __('Account has been successfully created.');
+				$return['message'] = __('Account details have been successfully update.');
 				$return['reset_form'] = 1;
 			endif;
 			return json_encode($return);
@@ -2336,7 +2376,7 @@ if( !class_exists('User') ):
 			$return = array(
 				'status' => 0,
 				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'message' => __('Could not create update account details, Please try again.'),
 				'reset_form' => 0
 			);
 
@@ -2345,49 +2385,47 @@ if( !class_exists('User') ):
 				$hca_current_client = ( isset($hca_current_client) ) ? 1 : 0;
 				$hca_fundamental_care = ( isset($hca_fundamental_care) ) ? 1 : 0;
 				$hca_care = ( isset($hca_care) ) ? 1 : 0;
-				$guid = get_guid(TBL_INFO);
-				if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
-					$result = $this->database->update(TBL_INFO,
+            
+                $age = array(
+                            "hca_start" => date("Y-m-d h:i:s",strtotime($hca_start)),
+							"hca_manager" => $hca_manager,
+							"hca_email" => $hca_email,
+							"hca_new_care" => $hca_new_care,
+							"hca_current_client" => $hca_current_client,
+							"hca_fundamental_care"=> $hca_fundamental_care,
+							"hca_care" => $hca_care,
+							"hca_trainer" => $hca_trainer,
+							"hca_notes" => $hca_notes
+                );
+            $hca = serialize($age);
+            
+            $guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3) ){
+					$result = $this->database->update(TBL_PROG,
 						array(
-							'hca_start' => date('Y-m-d h:i:s',strtotime($hca_start)),
-							'hca_manager' => $hca_manager,
-							'hca_email' => $hca_email,
-							'hca_new_care' => $hca_new_care,
-							'hca_current_client' => $hca_current_client,
-							'hca_fundamental_care'=> $hca_fundamental_care,
-							'hca_care' => $hca_care,
-							'hca_trainer' => $hca_trainer,
-							'hca_notes' => $hca_notes,
+                            'hca' =>$hca,
 						),
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_INFO,
+					$result = $this->database->insert(TBL_PROG,
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'hca_start' => date('Y-m-d h:i:s',strtotime($hca_start)),
-							'hca_manager' => $hca_manager,
-							'hca_email' => $hca_email,
-							'hca_new_care' => $hca_new_care,
-							'hca_current_client' => $hca_current_client,
-							'hca_fundamental_care'=> $hca_fundamental_care,
-							'hca_care' => $hca_care,
-							'hca_trainer' => $hca_trainer,
-							'hca_notes' => $hca_notes,
+                            'hca' => $hca
 						)
 					);
 				}
 
 				$notification_args = array(
 					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated preceptor progress'),
+					'notification'=> __('You have successfully updated HCA progress'),
 				);
 
 				add_user_notification($notification_args);
 				$return['status'] = 1;
 				$return['message_heading'] = __('Success !');
-				$return['message'] = __('Account has been successfully created.');
+				$return['message'] = __('Account has been successfully updated.');
 				$return['reset_form'] = 1;
 			endif;
 			return json_encode($return);
@@ -2408,38 +2446,35 @@ if( !class_exists('User') ):
 				$fd_sd2 = ( isset($fd_sd2) ) ? 1 : 0;
 				$fd_sd3 = ( isset($fd_sd3) ) ? 1 : 0;
 				$fd_current = ( isset($fd_current) ) ? 1 : 0;
-				$guid = get_guid(TBL_INFO);
-				if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3) ){
-					$result = $this->database->update(TBL_INFO,
+
+                $age = array(
+							"fd_start" => date("Y-m-d h:i:s",strtotime($fd_start)),
+							"fd_graduate" => date("Y-m-d h:i:s",strtotime($fd_graduate)),
+							"fd_inturrupt"=> $fd_inturrupt,
+							"fd_sd1" => $fd_sd1,
+							"fd_sd2" => $fd_sd2,
+							"fd_sd3" => $fd_sd3,
+							"fd_other" => $fd_other,
+							"fd_current" => $fd_current,
+							"fd_trainer" => $fd_trainer,
+							"fd_notes" => $fd_notes,
+						);
+            $fdap = serialize($age);
+            
+            $guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3) ){
+					$result = $this->database->update(TBL_PROG,
 						array(
-							'fd_start' => date('Y-m-d h:i:s',strtotime($fd_start)),
-							'fd_graduate' => date('Y-m-d h:i:s',strtotime($fd_graduate)),
-							'fd_inturrupt'=> $fd_inturrupt,
-							'fd_sd1' => $fd_sd1,
-							'fd_sd2' => $fd_sd2,
-							'fd_sd3' => $fd_sd3,
-							'fd_other' => $fd_other,
-							'fd_current' => $fd_current,
-							'fd_trainer' => $fd_trainer,
-							'fd_notes' => $fd_notes,
+                            'fdap' => $fdap,                            
 						),
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_INFO,
+					$result = $this->database->insert(TBL_PROG,
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'fd_start' => date('Y-m-d h:i:s',strtotime($fd_start)),
-							'fd_graduate' => date('Y-m-d h:i:s',strtotime($fd_graduate)),
-							'fd_inturrupt'=> $fd_inturrupt,
-							'fd_sd1' => $fd_sd1,
-							'fd_sd2' => $fd_sd2,
-							'fd_sd3' => $fd_sd3,
-							'fd_other' => $fd_other,
-							'fd_current' => $fd_current,
-							'fd_trainer' => $fd_trainer,
-							'fd_notes' => $fd_notes,
+                            'fdap' => $fdap,
 						)
 					);
 				}
@@ -2466,32 +2501,32 @@ if( !class_exists('User') ):
 				'message' => __('Could not create account, Please try again.'),
 				'reset_form' => 0
 			);
-
+$age = array(
+							"stud_cohort" => $stud_cohort,
+							"stud_cohort_date"=> $stud_cohort_date,
+							"stud_d1" => $stud_d1,
+							"stud_d2" => $stud_d2,
+							"stud_d3" => $stud_d3,
+							"stud_notes" => $stud_notes,
+						);
+            
+            $ages = serialize($age);
+    
 			if(user_can('add_user')):
-				$guid = get_guid(TBL_INFO);
-				if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
-					$result = $this->database->update(TBL_INFO,
+				$guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3)){
+					$result = $this->database->update(TBL_PROG,
 						array(
-							'stud_cohort' => $stud_cohort,
-							'stud_cohort_date'=> $stud_cohort_date,
-							'$stud_d1' => $stud_d1,
-							'$stud_d2' => $stud_d2,
-							'$stud_d3' => $stud_d3,
-							'stud_notes' => $stud_notes,
+                            'stud'=>$ages
 						),
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_INFO,
+					$result = $this->database->insert(TBL_PROG,
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'stud_cohort' => $stud_cohort,
-							'stud_cohort_date'=> $stud_cohort_date,
-							'$stud_d1' => date('Y-m-d h:i:s',strtotime($stud_d1)),
-							'$stud_d2' => date('Y-m-d h:i:s',strtotime($stud_d2)),
-							'$stud_d3' => date('Y-m-d h:i:s',strtotime($stud_d3)),
-							'stud_notes' => $stud_notes,
+                            'stud'=>$ages,
 						)
 					);
 				}
@@ -2521,26 +2556,28 @@ if( !class_exists('User') ):
 			if(user_can('add_user')):
 				$mentor_current = ( isset($mentor_current) ) ? 1 : 0;
 				$mentor_sign_off = ( isset($mentor_sign_off) ) ? 1 : 0;
-				$guid = get_guid(TBL_INFO);
-				if( is_value_exists(TBL_INFO,array('user_ID' => $user_id3),$user_id3)){
-					$result = $this->database->update(TBL_INFO,
-						array(
+            $age =						array(
 							'mentor_current' => $mentor_current,
 							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
 							'mentor_sign_off'=> $mentor_sign_off,
 							'mentor_notes' => $mentor_notes,
+						);
+            
+            $ages = serialize($age);
+				$guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3)){
+					$result = $this->database->update(TBL_PROG,
+						array(
+                            'ment'=>$ages,
 						),
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_INFO,
+					$result = $this->database->insert(TBL_PROG,
 						array(
 							'ID' => $guid,
 							'user_ID' => $user_id3,
-							'$mentor_current'=> $mentor_current,
-							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
-							'mentor_sign_off'=> $mentor_sign_off,
-							'mentor_notes' => $mentor_notes,
+                            'ment'=>$ages,
 						)
 					);
 				}

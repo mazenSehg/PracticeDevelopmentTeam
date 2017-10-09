@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2017 at 08:26 PM
+-- Generation Time: Oct 09, 2017 at 02:27 AM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -167,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `tbl_bookings` (
 --
 
 INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `name`, `admins`, `description`, `location`, `date_from`, `date_to`, `max_num`, `nurses`, `date_book_received`, `collected`, `date_book_returned`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 9, 'a:2:{i:0;s:11:"10000340101";i:1;s:11:"10000134207";}', 'a:1:{s:11:"10000340101";s:10:"2017-10-13";}', 'a:1:{s:11:"10000340101";s:1:"1";}', 'a:2:{i:10000340101;s:0:"";i:10000134207;s:0:"";}', 'a:1:{s:11:"10000340101";s:1:"1";}', 'a:1:{s:11:"10000340101";s:1:"1";}', 1, '2017-08-31 13:14:22'),
-(10000736873, 10000690603, 'BOB | ayyy | QWERTY', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950342";}', 'test', 3, '2017-09-13', '2017-09-16', 10, 'a:3:{i:0;s:11:"10000340101";i:1;s:11:"10000603933";i:2;s:11:"10000134207";}', 'a:3:{i:10000340101;s:0:"";i:10000603933;s:0:"";i:10000134207;s:0:"";}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 'a:3:{i:10000340101;s:0:"";i:10000603933;s:0:"";i:10000134207;s:0:"";}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 'a:3:{i:10000340101;i:0;i:10000603933;i:0;i:10000134207;i:0;}', 1, '2017-09-15 18:20:56');
+(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 2, 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";i:0;}', 1, '2017-08-31 13:14:22'),
+(10000736873, 10000690603, 'BOB | ayyy | QWERTY', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950342";}', 'test', 3, '2017-09-13', '2017-09-16', 10, 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";i:0;}', 1, '2017-09-15 18:20:56');
 
 -- --------------------------------------------------------
 
@@ -452,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `tbl_notifications` (
   `read` int(1) NOT NULL DEFAULT '0',
   `hide` int(1) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM AUTO_INCREMENT=522 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=544 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_notifications`
@@ -980,7 +980,29 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (518, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 17:01:02'),
 (519, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 17:10:59'),
 (520, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 18:25:25'),
-(521, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 18:25:31');
+(521, 1, 'Booking updated', 'You have successfully updated Course settings.', 0, 0, '2017-10-05 18:25:31'),
+(522, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-06 15:58:41'),
+(523, 1, 'Account Details updated', 'You have successfully updated (James Leighs) account details.', 0, 0, '2017-10-06 16:35:50'),
+(524, 1, 'Account Details updated', 'You have successfully updated (James Leighs) account details.', 0, 0, '2017-10-06 16:37:34'),
+(525, 1, 'Account Details updated', 'You have successfully updated (Bbb Bbb) account details.', 0, 0, '2017-10-06 16:38:55'),
+(526, 1, 'New Account Created', 'You have successfully created a new account (Test Account).', 0, 0, '2017-10-06 16:40:53'),
+(527, 1, 'Account Details updated', 'You have successfully updated (Test Account) account details.', 0, 0, '2017-10-06 16:41:11'),
+(528, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-06 18:04:06'),
+(529, 1, 'Booking updated', 'You have successfully updated booking.', 0, 0, '2017-10-06 18:13:25'),
+(530, 1, 'User Booking Details updated', 'You have successfully updated (Sandra Gomes) booking details.', 0, 0, '2017-10-08 22:10:21'),
+(531, 1, 'User Booking Details updated', 'You have successfully updated (James Leighs) booking details.', 0, 0, '2017-10-08 22:10:31'),
+(532, 1, 'User Booking Details updated', 'You have successfully updated (Bbb Bbb) booking details.', 0, 0, '2017-10-08 22:10:47'),
+(533, 1, 'User Booking Details updated', 'You have successfully updated (Sandra Gomes) booking details.', 0, 0, '2017-10-08 22:15:36'),
+(534, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-08 23:46:38'),
+(535, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-08 23:48:19'),
+(536, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-08 23:49:39'),
+(537, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-08 23:50:51'),
+(538, 1, 'Account Information', 'You have successfully updated HCA progress', 0, 0, '2017-10-09 00:14:00'),
+(539, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:14:49'),
+(540, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:19:08'),
+(541, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:22:40'),
+(542, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:24:42'),
+(543, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:25:02');
 
 -- --------------------------------------------------------
 
@@ -1026,16 +1048,17 @@ CREATE TABLE IF NOT EXISTS `tbl_rules` (
   `flap` int(11) NOT NULL DEFAULT '0',
   `record` int(11) NOT NULL DEFAULT '0',
   `mentorship` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=10000155178 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000302711 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_rules`
 --
 
 INSERT INTO `tbl_rules` (`ID`, `user_ID`, `preceptorship`, `hca`, `flap`, `record`, `mentorship`) VALUES
-(10000155175, 10000340101, 0, 0, 0, 0, 0),
+(10000155175, 10000340101, 1, 1, 1, 1, 1),
 (10000155176, 10000603933, 1, 1, 1, 1, 1),
-(10000155177, 10000134207, 0, 0, 0, 0, 0);
+(10000155177, 10000134207, 1, 0, 1, 0, 0),
+(10000302710, 10000978730, 1, 0, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1048,7 +1071,7 @@ CREATE TABLE IF NOT EXISTS `tbl_usermeta` (
   `user_id` bigint(20) NOT NULL,
   `meta_key` text NOT NULL,
   `meta_value` text NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=478 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=486 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_usermeta`
@@ -1487,11 +1510,19 @@ INSERT INTO `tbl_usermeta` (`ID`, `user_id`, `meta_key`, `meta_value`) VALUES
 (470, 10000134207, 'gender', 'Male'),
 (471, 10000134207, 'dob', '2017-08-09 12:00:00'),
 (472, 10000134207, 'user_phone', '123456789'),
-(473, 10000134207, 'profile_img', ''),
+(473, 10000134207, 'profile_img', '/content/assets/img/user.png'),
 (474, 10000134207, 'user_designation', '10000641623'),
 (475, 10000134207, 'work_extension', '2161'),
 (476, 10000134207, 'beep', '2161'),
-(477, 10000134207, 'band', '8b');
+(477, 10000134207, 'band', '8b'),
+(478, 10000978730, 'gender', 'Male'),
+(479, 10000978730, 'dob', '2001-10-17 12:00:00'),
+(480, 10000978730, 'user_phone', '123456789'),
+(481, 10000978730, 'profile_img', '/content/assets/img/user.png'),
+(482, 10000978730, 'user_designation', '10000641615'),
+(483, 10000978730, 'work_extension', '4321'),
+(484, 10000978730, 'beep', '23423'),
+(485, 10000978730, 'band', '4');
 
 -- --------------------------------------------------------
 
@@ -1548,7 +1579,8 @@ INSERT INTO `tbl_users` (`ID`, `trainer_ID`, `user_email`, `user_pass`, `first_n
 (10000950354, NULL, 'judithwilliamson@nhs.net', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Judith', 'Williamson', 'course_admin', 'judithwilliamson', 1, 1, '', NULL, 0, '78cHgqMhLRJHz575WXy9uw==', '0000-00-00 00:00:00', 0, 0, 0, 0, 0),
 (10000340101, NULL, 'j@leeno.com', 'b3bcbfdad52d9dca7de6f232a9e8275dfb63ce72d462e5b742a61ab5f2dae871', 'James', 'Leighs', 'nurse', 'jleighs', 1, 1, 'a:1:{i:0;s:11:"10000763106";}', 6, 10000641641, 'SDKFEzYt62K+TdnJKZkOQg==', '2017-07-14 13:52:41', 1, 123456, 1, 1, 2010),
 (10000603933, NULL, 's@g.com', 'fab2b43cce5966b03432607b71fde4b298ec2f79a4f5a76eb6eed0c339cb0ce6', 'Sandra', 'Gomes', 'nurse', 'sGomes', 1, 1, 'a:1:{i:0;s:11:"10000763106";}', 5, 10000641614, '78cHgqMhLRJHz575WXy9uw==', '2017-07-20 12:14:46', 0, 555, 2, 1, 2015),
-(10000134207, '', 'bb@bb.com', '5387fce576015569e8595286f4ff6ca6e4c39dde4dc50d111d09eb15af7acf77', 'bbb', 'bbb', 'nurse', 'bbb', 1, 1, '', 10, 0, 'g+Mi5PJAxUyjaCwHNJTL5g==', '2017-08-21 03:22:39', 0, 1234, 1, 0, 2012);
+(10000134207, NULL, 'bb@bb.com', '5387fce576015569e8595286f4ff6ca6e4c39dde4dc50d111d09eb15af7acf77', 'bbb', 'bbb', 'nurse', 'bbb', 1, 1, '', 10, 0, 'g+Mi5PJAxUyjaCwHNJTL5g==', '2017-08-21 03:22:39', 0, 1234, 1, 0, 2012),
+(10000978730, NULL, 't@ac.com', '825e4a2edd65ffcffe9582d0d6976837302d6acba371290e44192b938feb6861', 'Test', 'Account', 'nurse', 'testing', 1, 1, NULL, 4, 0, '1gVeW/0JTW3+XRpkQQjrBg==', '2017-10-06 16:40:53', 0, 12346, 1, 0, 2001);
 
 -- --------------------------------------------------------
 
@@ -1602,7 +1634,31 @@ CREATE TABLE IF NOT EXISTS `tbl_user_info` (
   `stud_d2` date DEFAULT NULL,
   `stud_d3` date DEFAULT NULL,
   `stud_notes` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000162990 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user_info`
+--
+
+INSERT INTO `tbl_user_info` (`ID`, `user_ID`, `prec_intro`, `current_prec`, `pin`, `delay`, `prec_name`, `int_nurse`, `WTE`, `p_email`, `p_country`, `sign_off`, `awards`, `link`, `prec_trainer`, `prec_notes`, `hca_start`, `hca_manager`, `hca_email`, `hca_new_care`, `hca_current_client`, `hca_fundamental_care`, `hca_care`, `hca_trainer`, `hca_notes`, `fd_start`, `fd_graduate`, `fd_inturrupt`, `fd_sd1`, `fd_sd2`, `fd_sd3`, `fd_other`, `fd_current`, `fd_trainer`, `fd_notes`, `mentor_current`, `mentor_renew`, `mentor_sign_off`, `mentor_notes`, `stud_cohort`, `stud_cohort_date`, `stud_d1`, `stud_d2`, `stud_d3`, `stud_notes`) VALUES
+(10000020817, 10000603933, '2017-10-07', 1, 0, 1, 'Name', 0, '23', 'm@s.com', 'test', 6, 'sdfdsf', 'www.google.co.uk', 10000950339, 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10000162989, 10000978730, '2017-10-12', 1, 1, 0, 'Test', 0, '1245', 'm@s.com', 'Uk', 6, 'None', 'Test', 10000950340, 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_progress`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_user_progress` (
+  `ID` bigint(20) NOT NULL,
+  `user_ID` bigint(20) NOT NULL,
+  `prec` text NOT NULL,
+  `hca` text NOT NULL,
+  `fdap` text NOT NULL,
+  `stud` text NOT NULL,
+  `ment` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10000583417 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1793,6 +1849,12 @@ ALTER TABLE `tbl_user_info`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `tbl_user_progress`
+--
+ALTER TABLE `tbl_user_progress`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `tbl_work_area`
 --
 ALTER TABLE `tbl_work_area`
@@ -1861,7 +1923,7 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=522;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=544;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
@@ -1871,12 +1933,12 @@ ALTER TABLE `tbl_options`
 -- AUTO_INCREMENT for table `tbl_rules`
 --
 ALTER TABLE `tbl_rules`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000155178;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000302711;
 --
 -- AUTO_INCREMENT for table `tbl_usermeta`
 --
 ALTER TABLE `tbl_usermeta`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=478;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=486;
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
@@ -1886,7 +1948,12 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_user_info`
 --
 ALTER TABLE `tbl_user_info`
-  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` bigint(110) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000162990;
+--
+-- AUTO_INCREMENT for table `tbl_user_progress`
+--
+ALTER TABLE `tbl_user_progress`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10000583417;
 --
 -- AUTO_INCREMENT for table `tbl_work_area`
 --

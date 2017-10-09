@@ -48,13 +48,7 @@ if( !class_exists('Settings') ):
             $good = array_keys($courses);
             print_r($good);
             
-//            foreach($num as $a);
-//            if($a==0){
-//                echo "---".$a;
-//                $a=rand(0,100);
-//            }
-//            $nom = array_flip($num);
-//            print_r($num);
+
             
 ?>
 					<div class="form-group">
