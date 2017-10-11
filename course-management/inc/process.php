@@ -26,11 +26,11 @@
 				echo $Settings->update__general__setting();
 				break;			
 
-            case 'update_alert_setting':
+           		case 'update_alert_setting':
 				echo $Settings->update__alert__setting();
 				break;
 
-            case 'update_course_setting':
+            		case 'update_course_setting':
 				echo $Settings->update__course__setting();
 				break;
 			case 'update_manage_roles':
@@ -225,6 +225,10 @@
 				
 			case 'fetch_booking_nurses':
 				echo $Booking->fetch__booking__nurses__process();
+				break;
+				
+			case 'fetch_booking_additional_information':
+				echo $Booking->fetch__booking__additional__information__process();
 				break;
 			
 			case 'fetch_available_bookings':

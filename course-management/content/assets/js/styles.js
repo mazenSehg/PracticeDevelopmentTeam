@@ -760,6 +760,7 @@ function get_nurses(btn){
 	var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
 	$('#nurse-data-modal-body').html('<h1 class="text-center green">'+spinner+'</h1>');
 	$('#booking-data-modal .modal-footer button[data-dismiss="modal"]').click();
+	$('#additional-information-data-modal .modal-footer button[data-dismiss="modal"]').click();
 	$.ajax({ 
 		type: 'POST',
 		data: {
@@ -778,6 +779,35 @@ function get_nurses(btn){
 					});
 				});
 			}
+			return false;
+		}
+	});
+}
+
+function get_additional_information(btn){
+	var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+	$('#nurse-data-modal-body').html('<h1 class="text-center green">'+spinner+'</h1>');
+	$('#booking-data-modal .modal-footer button[data-dismiss="modal"]').click();
+	$('#nurse-data-modal .modal-footer button[data-dismiss="modal"]').click();
+	$.ajax({ 
+		type: 'POST',
+		data: {
+			action: 'fetch_booking_additional_information',
+			booking_id: $(btn).data('booking')
+		},
+		url: ajax_url,
+		dataType: 'json',
+		success: function(r){
+			$('#additional-information-data-modal-body').html(r['html']);
+			if ($("table .js-switch")[0]) {
+				var elems = Array.prototype.slice.call(document.querySelectorAll('table .js-switch'));
+				elems.forEach(function (html) {
+					var switchery = new Switchery(html, {
+						color: '#26B99A'
+					});
+				});
+			}
+			
 			$('.nurse-modal-datepicker').daterangepicker({
 				format: 'MMMM DD,YYYY',
 				singleDatePicker: true,
@@ -809,7 +839,7 @@ function get_nurses(btn){
 							alert_notification(res['message_heading'],res['message'],'success');
 						}
 						if(res['reload'] == 1){
-							$('#nurse-data-modal .modal-footer button[data-dismiss="modal"]').click();
+							$('#additional-information-data-modal .modal-footer button[data-dismiss="modal"]').click();
 						}
 						return false;
 					}

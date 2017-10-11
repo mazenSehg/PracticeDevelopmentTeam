@@ -247,6 +247,29 @@ if( !class_exists('Booking') ):
 			return ob_get_clean();
 		}
 		
+		public function additional__information__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="additional-information-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Additional Information');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="additional-information-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			return ob_get_clean();
+		}
+		
 		public function booking__data__modal(){
 			ob_start(); ?>
 			<!-- calendar modal -->
@@ -317,6 +340,7 @@ if( !class_exists('Booking') ):
 			echo $this->view__calendar__scripts();
 			echo $this->booking__data__modal();
 			echo $this->nurses__data__modal();
+			echo $this->additional__information__data__modal();
 			echo $this->add__booking__modal();
 			return ob_get_clean();
 		}
@@ -505,7 +529,7 @@ if( !class_exists('Booking') ):
 						'description' => $description,
 						'location' => $location,
 						'nurses' => $nurses,
-                        'max_num' => $max_trainee,
+                        			'max_num' => $max_trainee,
 						'date_book_received' => $date_book_received,
 						'date_book_returned' => $date_book_returned,
 						'collected' => $collected,
@@ -546,10 +570,10 @@ if( !class_exists('Booking') ):
 				);
 
 
-                    $booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
+                    			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
 					$old_enroll = maybe_unserialize($booking->enroll);
 					$old_attendance = maybe_unserialize($booking->attendance);
-                    $old_collected = maybe_unserialize($booking->collected);
+                    			$old_collected = maybe_unserialize($booking->collected);
 					$old_date_book_returned = maybe_unserialize($booking->date_book_returned);
 					$old_date_book_received = maybe_unserialize($booking->date_book_received);
 					$enroll = array();
@@ -565,14 +589,13 @@ if( !class_exists('Booking') ):
 					$result = $this->database->update(TBL_BOOKINGS,
 						array(
 							'course_ID' => $code,
-                        
 							'name' => $name,
-                        	'admins' => $admins,
+                        				'admins' => $admins,
 							'description' => $description,
 							'location' => $location,
                         
 							'nurses' => $nurses,
-                            'max_num' => $max_trainee,
+                            				'max_num' => $max_trainee,
 							'date_book_received' => $date_book_received,
 							'date_book_returned' => $date_book_returned,
 							'collected' => $collected,
@@ -673,12 +696,12 @@ if( !class_exists('Booking') ):
 					$course = get_tabledata(TBL_COURSE_TYPE,true,array('ID' => $booking->course_ID));
 					$row = array();
 					$booking_name = __('Booking (#').$booking->ID.')';
-                    $nurses = maybe_unserialize($booking->nurses);
-            $i = 0;
-            foreach($nurses as $nurse):
-            $i +=1;
-            endforeach;
-            $attend = $i."/".$booking->max_num;
+                    			$nurses = maybe_unserialize($booking->nurses);
+           				 $i = 0;
+            				foreach($nurses as $nurse):
+            					$i +=1;
+            				endforeach;
+            				$attend = $i."/".$booking->max_num;
             
 					$booking_date = date('M d,Y',strtotime($booking->date_from)).' - '. date('M d,Y',strtotime($booking->date_to));
 					array_push($row, $booking->name);
@@ -740,18 +763,77 @@ if( !class_exists('Booking') ):
 				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
 				if(!empty($nurses)):
 					ob_start(); 
-            //checks if the settings under 'course settings' contains the course which requires additional information
-            			$settings = get_tabledata(TBL_C_SET,true,array('ID' => 1));
-                        $c1 = unserialize($settings->course_type);
-            if(array_key_exists($booking->course_ID,$c1)){
-$found=1;
-            }else{
-$found=0;
-            }
-            
-?>
-
-						<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Modify Trainee(s)');?></a>
+					//checks if the settings under 'course settings' contains the course which requires additional information
+	            			$settings = get_tabledata(TBL_C_SET,true,array('ID' => 1));
+					$c1 = unserialize($settings->course_type);
+					if(array_key_exists($booking->course_ID,$c1)){
+						$found=1;
+					}else{
+						$found=0;
+					}
+					?>
+					<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Modify Trainee(s)');?></a>
+					<button type="button" class="btn btn-info btn-xs additional-information" data-toggle="modal" data-target="#additional-information-data-modal" data-booking="<?php echo$booking->ID;?>" onclick="get_additional_information(this);"><?php _e('Additional Information');?></button>
+					<div>&nbsp;</div>
+					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th><?php _e('Trainee Name'); ?></th>
+								<th><?php _e('Attendance'); ?></th>
+								<th><?php _e('Complete'); ?></th>
+								<th><?php _e('Reminder'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($nurses as $nurse): ?>
+							<tr>
+								<td><?php echo get_user_name($nurse);?></td>
+								<td>
+									<label><input type="checkbox" class="js-switch" <?php if(isset($attendance[$nurse] )) checked($attendance[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="attendance"/></label>
+								</td>
+								<td>
+									<label><input type="checkbox" class="js-switch" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="complete"/></label>
+								</td>
+								<td>
+									<label><input type="button" value="send" class="btn btn-dark btn-xs" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="reminder"/></label>
+								</td>
+							</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php
+					$return['html'] = ob_get_clean();
+				endif;
+			endif;
+			return json_encode($return);
+		}
+		
+		public function fetch__booking__additional__information__process(){
+			extract($_POST);
+			$booking_id = trim($booking_id);
+			$return['html'] = '';
+			$booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
+			if($booking):
+				$nurses = maybe_unserialize($booking->nurses);
+				$date_book_received = isset($booking->date_book_received) ? maybe_unserialize($booking->date_book_received) : array();
+				$collected = isset($booking->collected) ? maybe_unserialize($booking->collected) : array();
+				$date_book_returned = isset($booking->date_book_returned) ? maybe_unserialize($booking->date_book_returned) : array();
+				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
+				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
+				if(!empty($nurses)):
+					ob_start(); 
+					//checks if the settings under 'course settings' contains the course which requires additional information
+	            			$settings = get_tabledata(TBL_C_SET,true,array('ID' => 1));
+					$c1 = unserialize($settings->course_type);
+					if(array_key_exists($booking->course_ID,$c1)){
+						$found=1;
+					}else{
+						$found=0;
+					}
+					?>
+					<a href="<?php the_permalink('edit-booking',array('id' => $booking->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Modify Trainee(s)');?></a>
+					<button type="button" class="btn btn-info btn-xs view-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" onclick="get_nurses(this);"><?php _e('View Trainee(s)');?></button>
+					<div>&nbsp;</div>
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
 						<thead>
 							<tr>
@@ -759,12 +841,6 @@ $found=0;
 								<th><?php _e('Date Book Received'); ?></th>
 								<th><?php _e('Collected'); ?></th>
 								<th><?php _e('Date book Returned'); ?></th>
-								<th><?php _e('Attendance'); ?></th>
-								<th><?php _e('Complete'); ?></th>
-								<th><?php _e('Reminder'); ?></th>
-                                <?php if($found==1){?>
-								<th><?php _e('Additional Information'); ?></th>
-                                <?php } ?>
 							</tr>
 						</thead>
 						<tbody>
@@ -780,27 +856,6 @@ $found=0;
 								<td>
 									<input type="text" readonly="readonly" name="date_book_returned" class="form-control nurse-modal-datepicker" value="<?php echo (isset($date_book_returned[$nurse]) && $date_book_returned[$nurse] != '') ? date('M d,Y',strtotime($date_book_returned[$nurse])) : '';?>" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"/>
 								</td>
-								<td>
-									<label><input type="checkbox" class="js-switch" <?php if(isset($attendance[$nurse] )) checked($attendance[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="attendance"/></label>
-								</td>
-								<td>
-									<label><input type="checkbox" class="js-switch" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="complete"/></label>
-								</td>
-								<td>
-									    
-                                    
-									<label><input type="button" value="send" class="btn btn-dark btn-xs" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> onclick="javascript:nurse_modal_approve_switch(this);" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="reminder"/></label>
-                                    
-                                
-                                   
-								</td>
-                                                <?php if($found==1){?>
-                                <td>
-                                Special Modal
-                                
-                                </td>
-                                                <?php }?>
-                                
 							</tr>
 							<?php endforeach; ?>
 						</tbody>
