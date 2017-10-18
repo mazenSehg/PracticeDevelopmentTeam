@@ -70,7 +70,7 @@ if( !class_exists('Booking') ):
                     
                     
 				<div class="form-group">
-					<label for="max_trainee"><?php _e('Max Traniees');?>&nbsp;<span class="required">*</span></label>
+					<label for="max_trainee"><?php _e('Max Trainees');?>&nbsp;<span class="required">*</span></label>
 					<input type="number" name="max_trainee" class="form-control require" min="0" max = "100" value="0"/>
 				</div>
                     
@@ -86,6 +86,13 @@ if( !class_exists('Booking') ):
 							?>
 						</select>
 					</div>
+                    
+                    <div class="form-group">
+                        <label for="colour"><?php _e('Assigned Colour');?>&nbsp;</label>
+	                   <input name = "colour" class="jscolor" value="ab2567">
+                    </div>
+                    
+                    
 				<div class="form-group">
 					<div class="ln_solid"></div>
 					<input type="hidden" name="action" value="add_new_booking" />
@@ -167,6 +174,14 @@ if( !class_exists('Booking') ):
 								?>
 						</select>
 					</div>
+                
+                                    <div class="form-group">
+                        <label for="colour"><?php _e('Assigned Colour');?>&nbsp;</label>
+	                   <input name = "colour" class="jscolor" value="<?php echo  $booking->colour_ID; ?>">
+                    </div>
+                
+                
+                
 					<div class="form-group">
 						<div class="ln_solid"></div>
 						<input type="hidden" name="action" value="update_booking" />
@@ -326,7 +341,7 @@ if( !class_exists('Booking') ):
 						<label for="courses"><?php _e('Course Types');?></label>
 						<select name="course" class="form-control select_single" data-placeholder="Choose course" onchange="this.form.submit();">
 						<?php
-							$data = get_tabledata(TBL_COURSE_TYPES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+							$data = get_tabledata(TBL_COURSE_TYPES,false,array(),'',' ID, course_ID AS name');
 							$option_data = get_option_data($data,array('ID','name'));
 							$selected = isset($_GET['course']) ? $_GET['course'] : '';
 							echo get_options_list($option_data, $selected);
@@ -525,6 +540,7 @@ if( !class_exists('Booking') ):
 						'ID' => $guid,
 						'course_ID' => $code,
 						'name' => $bb,
+                        'colour_ID' => $colour,
 						'admins' => $admins,
 						'description' => $description,
 						'location' => $location,
@@ -593,7 +609,7 @@ if( !class_exists('Booking') ):
                         				'admins' => $admins,
 							'description' => $description,
 							'location' => $location,
-                        
+                            'colour_ID'=> $colour,
 							'nurses' => $nurses,
                             				'max_num' => $max_trainee,
 							'date_book_received' => $date_book_received,
@@ -880,6 +896,7 @@ if( !class_exists('Booking') ):
 			<table class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
+						<th><?php _e('Course Colour');?></th>
 						<th><?php _e('Course Name');?></th>
 						<th><?php _e('Created On');?></th>
 						<th class="text-center"><?php _e('Actions');?></th>
@@ -888,6 +905,7 @@ if( !class_exists('Booking') ):
 				<tbody>
 					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSE_TYPE,true,array('ID' => $booking->course_ID));?>
 					<tr>
+						<td width ="1" bgcolor="<?php echo $booking->colour_ID;?>"></td>
 						<td><?php _e($course->course_ID .' | '. $booking->name);?></td>
 						<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
 						<td class="text-center">
@@ -916,6 +934,7 @@ if( !class_exists('Booking') ):
 			<table class="table table-striped table-bordered" cellspacing="0" width="100%">
 				<thead>
 					<tr>
+						<th><?php _e('Course colour');?></th>
 						<th><?php _e('#Booking');?></th>
 						<th><?php _e('Course Name');?></th>
 						<th><?php _e('Created On');?></th>
@@ -923,7 +942,8 @@ if( !class_exists('Booking') ):
 				</thead>
 				<tbody>
 					<?php foreach($bookings as $booking): $course = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));?>
-					<tr>
+                    <tr>
+						<td width ="1" bgcolor="<?php echo $booking->colour_ID;?>"></td>
 						<td><?php echo __('Booking (#').$booking->ID.')';?></td>
 						<td><?php _e($course->name);?></td>
 						<td><?php echo date('M d,Y',strtotime($booking->created_on));?></td>
