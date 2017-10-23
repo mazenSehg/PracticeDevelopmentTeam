@@ -33,5 +33,6 @@ define( 'TBL_COURSE_TYPE' , $db->prefix. 'course_types' );
 define( 'TBL_ALERT' , $db->prefix. 'alert' );
 define( 'TBL_C_SET' , $db->prefix. 'course_settings');
 define( 'TBL_PROG' , $db->prefix. 'user_progress');
+define( 'TBL_REMOVED_USERS' , $db->prefix. 'removed_users');
 
 ?>

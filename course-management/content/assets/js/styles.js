@@ -1006,3 +1006,18 @@ function nurse_modal_approve_switch(btn){
 		}
 	});	
 }
+
+function nurse_remove_switch(btn){
+	var is = confirm('Are you sure want to do this?');
+	if(is == false){
+		return false;
+	}
+	var btn = $(btn);
+	var user_id = btn.data('user');
+	var booking_id = btn.data('booking');
+	$('#nurse-data-modal .modal-footer button[data-dismiss="modal"]').click();
+	$('.remove-trainee-modal-btn').click();
+	var form = $(".remove-trainee-modal-form");
+	form.find("input[name=booking_id]").val(booking_id);
+	form.find("input[name=user_id]").val(user_id);
+}

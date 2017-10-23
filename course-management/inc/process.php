@@ -49,26 +49,25 @@
 				echo $User->add__user__process();
 				break;
 				
-            		case 'fetch_add_to_booking_data':
+			case 'fetch_add_to_booking_data':
 				echo $User->fetch__add__to__booking__data__process();
 				break;
 
 			case 'update_user_booking':
 				echo $User->update__user__booking__process();
 				break;
-
+				
 			case 'fetch_add_to_course_data':
 				echo $User->fetch__add__to__course__data__process();
 				break;
-			
+				
 			case 'update_user_course':
 				echo $User->update__user__course__process();
 				break;
-			
+				
 			case 'fetch_all_trainees':
 				echo $User->fetch__all__trainees__process();
-				break;	
-			
+				break;
 				
 			/*ADDITIONAL FORMS FOR USER INFO*/			
 			case 'update_preceptorship':
@@ -243,6 +242,9 @@
 				echo $Booking->nurse__modal__approve__process();
 				break;
 				
+			case 'nurse_modal_remove':
+				echo $Booking->nurse__modal__remove__process();
+				break;
 		endswitch;
 	else:
 		print_r($_POST);

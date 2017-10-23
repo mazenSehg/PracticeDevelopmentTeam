@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2017 at 02:27 AM
+-- Generation Time: Oct 23, 2017 at 04:00 PM
 -- Server version: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -167,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `tbl_bookings` (
 --
 
 INSERT INTO `tbl_bookings` (`ID`, `course_ID`, `name`, `admins`, `description`, `location`, `date_from`, `date_to`, `max_num`, `nurses`, `date_book_received`, `collected`, `date_book_returned`, `attendance`, `enroll`, `created_by`, `created_on`) VALUES
-(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 2, 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";i:0;}', 1, '2017-08-31 13:14:22'),
-(10000736873, 10000690603, 'BOB | ayyy | QWERTY', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950342";}', 'test', 3, '2017-09-13', '2017-09-16', 10, 'a:1:{i:0;s:11:"10000603933";}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";s:0:"";}', 'a:1:{s:11:"10000603933";i:0;}', 'a:1:{s:11:"10000603933";i:0;}', 1, '2017-09-15 18:20:56');
+(10000389261, 10000690603, 'BOB | ayyy | test', 'a:1:{i:0;s:11:"10000950338";}', 'test', 3, '2017-09-01', '2017-09-03', 2, 'a:3:{i:0;s:11:"10000603933";i:1;s:11:"10000340101";i:2;s:11:"10000134207";}', 'a:3:{s:11:"10000603933";s:0:"";s:11:"10000340101";s:0:"";s:11:"10000134207";s:0:"";}', 'a:3:{s:11:"10000603933";i:0;s:11:"10000340101";i:0;s:11:"10000134207";i:0;}', 'a:3:{s:11:"10000603933";s:0:"";s:11:"10000340101";s:0:"";s:11:"10000134207";s:0:"";}', 'a:3:{s:11:"10000603933";i:0;s:11:"10000340101";i:0;s:11:"10000134207";i:0;}', 'a:3:{s:11:"10000603933";i:0;s:11:"10000340101";i:0;s:11:"10000134207";i:0;}', 1, '2017-08-31 13:14:22'),
+(10000736873, 10000690603, 'BOB | ayyy | QWERTY', 'a:2:{i:0;s:11:"10000950343";i:1;s:11:"10000950342";}', 'test', 3, '2017-09-13', '2017-09-16', 10, 'a:2:{i:0;s:11:"10000603933";i:1;s:11:"10000340101";}', 'a:2:{s:11:"10000603933";s:0:"";s:11:"10000340101";s:0:"";}', 'a:2:{s:11:"10000603933";i:0;s:11:"10000340101";i:0;}', 'a:2:{s:11:"10000603933";s:0:"";s:11:"10000340101";s:0:"";}', 'a:2:{s:11:"10000603933";i:0;s:11:"10000340101";i:0;}', 'a:2:{s:11:"10000603933";i:0;s:11:"10000340101";i:0;}', 1, '2017-09-15 18:20:56');
 
 -- --------------------------------------------------------
 
@@ -452,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `tbl_notifications` (
   `read` int(1) NOT NULL DEFAULT '0',
   `hide` int(1) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM AUTO_INCREMENT=544 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=546 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_notifications`
@@ -1002,7 +1002,9 @@ INSERT INTO `tbl_notifications` (`ID`, `user_id`, `title`, `notification`, `read
 (540, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:19:08'),
 (541, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:22:40'),
 (542, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:24:42'),
-(543, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:25:02');
+(543, 1, 'Account Information', 'You have successfully updated preceptor progress', 0, 0, '2017-10-09 00:25:02'),
+(544, 1, 'User Booking Details updated', 'You have successfully updated (James Leighs) booking details.', 0, 0, '2017-10-23 13:58:30'),
+(545, 1, 'User Booking Details updated', 'You have successfully updated (Bbb Bbb) booking details.', 0, 0, '2017-10-23 13:58:39');
 
 -- --------------------------------------------------------
 
@@ -1033,6 +1035,28 @@ INSERT INTO `tbl_options` (`ID`, `option_name`, `option_value`) VALUES
 (10, 'site_contact_phone', '07784256012'),
 (11, 'site_domain', 'coursemanagement.com'),
 (12, 'users_capabilities', 's:1352:"a:3:{s:5:"admin";a:18:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:0;s:12:"add_location";i:0;s:13:"edit_location";i:0;s:14:"view_work_area";i:0;s:13:"add_work_area";i:0;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}s:12:"course_admin";a:18:{s:9:"view_user";i:1;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:1;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:1;s:12:"add_location";i:1;s:13:"edit_location";i:0;s:14:"view_work_area";i:1;s:13:"add_work_area";i:1;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:1;s:11:"add_booking";i:1;s:12:"edit_booking";i:1;s:14:"delete_booking";i:0;}s:5:"nurse";a:18:{s:9:"view_user";i:0;s:8:"add_user";i:0;s:9:"edit_user";i:0;s:11:"view_course";i:0;s:10:"add_course";i:0;s:11:"edit_course";i:0;s:13:"delete_course";i:0;s:13:"view_location";i:0;s:12:"add_location";i:0;s:13:"edit_location";i:0;s:14:"view_work_area";i:0;s:13:"add_work_area";i:0;s:14:"edit_work_area";i:0;s:15:"delete_location";i:0;s:12:"view_booking";i:0;s:11:"add_booking";i:0;s:12:"edit_booking";i:0;s:14:"delete_booking";i:0;}}";');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_removed_users`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_removed_users` (
+  `ID` bigint(20) NOT NULL,
+  `course_ID` bigint(20) NOT NULL,
+  `user_ID` bigint(20) NOT NULL,
+  `booking_ID` bigint(20) NOT NULL,
+  `reason` text NOT NULL,
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_removed_users`
+--
+
+INSERT INTO `tbl_removed_users` (`ID`, `course_ID`, `user_ID`, `booking_ID`, `reason`, `created_on`) VALUES
+(1, 10000690603, 10000134207, 10000736873, 'Blah', '2017-10-23 13:59:16');
 
 -- --------------------------------------------------------
 
@@ -1825,6 +1849,12 @@ ALTER TABLE `tbl_options`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `tbl_removed_users`
+--
+ALTER TABLE `tbl_removed_users`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `tbl_rules`
 --
 ALTER TABLE `tbl_rules`
@@ -1923,12 +1953,17 @@ ALTER TABLE `tbl_notes`
 -- AUTO_INCREMENT for table `tbl_notifications`
 --
 ALTER TABLE `tbl_notifications`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=544;
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=546;
 --
 -- AUTO_INCREMENT for table `tbl_options`
 --
 ALTER TABLE `tbl_options`
   MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `tbl_removed_users`
+--
+ALTER TABLE `tbl_removed_users`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_rules`
 --
