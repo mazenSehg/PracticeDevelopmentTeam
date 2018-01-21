@@ -163,7 +163,7 @@ if( !function_exists('update_option')) :
 			return false;
 		$serialized_value = maybe_serialize( $value );
 		$update_args = array(
-			'option_value' => $serialized_value,
+			'option_value' => $serialized_value, 
 		);
 		$check = get_tabledata(TBL_OPTION, false, array( 'option_name' => $option ));
 		if($check):
@@ -178,7 +178,6 @@ if( !function_exists('update_option')) :
 		return false;
 	}
 endif;
-
 
 if( !function_exists('delete_option')) :
 	function delete_option( $option ) {
@@ -240,7 +239,7 @@ if( !function_exists('is_serialized')) :
 			}
 		} else {
 			$semicolon = strpos( $data, ';' );
-			$brace     = strpos( $data, '}' );
+			$brace = strpos( $data, '}' );
 			// Either ; or } must exist.
 			if ( false === $semicolon && false === $brace )
 				return false;
@@ -293,7 +292,7 @@ endif;
 if( !function_exists('password_generator')) :
 	function password_generator(){
 		if( function_exists('uniqid')) :
-			return md5(uniqid(rand(),true));
+			return md5(uniqid(rand(), true));
 		else:				
 			$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWVXYZ01234567890!@#$%^&*~';
 			$token = '';					
@@ -368,7 +367,7 @@ if( !function_exists('createThumb')) :
 			elseif (($orig_w <= $orig_h)) {
 				$adjusted_height = $orig_h / $wm;
 				$half_height = $adjusted_height / 2;
-				imagecopyresampled($virtual_image, $source_image, 0,0, 0, 0, $squareSize, $adjusted_height, $orig_w, $orig_h);
+				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $squareSize, $adjusted_height, $orig_w, $orig_h);
 			} else {
 				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $squareSize, $squareSize, $orig_w, $orig_h);
 			}
@@ -395,35 +394,35 @@ if( !function_exists('paginate')) :
 		$out = "";
 		// previous
 		if ($page == 1) {
-			$out.= "<li class=\"disabled\"  aria-label=\"Previous\"><a href='javascript:void(0);'><span aria-hidden=\"true\">". $first. "</span></a></li>\n";
-			$out.= "<li class=\"disabled\"  aria-label=\"Previous\"><a href='javascript:void(0);'><span aria-hidden=\"true\">" . $prevlabel . "</span></a></li>\n";
+			$out.= "<li class=\"disabled\" aria-label=\"Previous\"><a href='javascript:void(0);'><span aria-hidden=\"true\">". $first. "</span></a></li>\n";
+			$out.= "<li class=\"disabled\" aria-label=\"Previous\"><a href='javascript:void(0);'><span aria-hidden=\"true\">" . $prevlabel . "</span></a></li>\n";
 		} elseif ($page == 2) {
-			$out.= "<li><a  href=\"" . $url . "/?page=1" . "\">". $first. "</a></li>";
-			$out.= "<li><a  href=\"" . $url . "/?page=" . ($page - 1) .  "\">" . $prevlabel . "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=1" . "\">". $first. "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=" . ($page - 1) . "\">" . $prevlabel . "</a></li>";
 		} else {
-			$out.= "<li><a  href=\"" . $url . "/?page=1" . "\">". $first. "</a></li>";
-			$out.= "<li><a  href=\"" . $url . "/?page=" . ($page - 1) .  "\">" . $prevlabel . "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=1" . "\">". $first. "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=" . ($page - 1) . "\">" . $prevlabel . "</a></li>";
 		}
-	  
+	 
 		$pmin = ($page > $adjacents) ? ($page - $adjacents) : 1;
 		$pmax = ($page < ($tpages - $adjacents)) ? ($page + $adjacents) : $tpages;
 		for ($i = $pmin; $i <= $pmax; $i++) {
 			if ($i == $page) {
-				$out.= "<li  class=\"active\"><a href='javascript:void(0);'>" . $i . "</a></li>";
+				$out.= "<li class=\"active\"><a href='javascript:void(0);'>" . $i . "</a></li>";
 			} elseif ($i == 1) {
-				$out.= "<li><a  href=\"" . $url . "/?page=" . $i . "\">" . $i . "</a></li>";
+				$out.= "<li><a href=\"" . $url . "/?page=" . $i . "\">" . $i . "</a></li>";
 			} else {
-				$out.= "<li><a  href=\"" . $url . "/?page=" . $i .  "\">" . $i . "</a></li>";
+				$out.= "<li><a href=\"" . $url . "/?page=" . $i . "\">" . $i . "</a></li>";
 			}
 		}
-	    
+	 
 		if ($page < ($tpages - $adjacents)) {
-			$out.= "<li><a href=\"" . $url . "/?page=" . $tpages .  "\">" . $tpages . "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=" . $tpages . "\">" . $tpages . "</a></li>";
 		}
 		// next
 		if ($page < $tpages) {
-			$out.= "<li><a  href=\"" . $url . "/?page=" . ($page + 1) .  "\">" . $nextlabel . "</a></li>";
-			$out.= "<li><a  href=\"" . $url . "/?page=" .$tpages. "\">". $last. "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=" . ($page + 1) . "\">" . $nextlabel . "</a></li>";
+			$out.= "<li><a href=\"" . $url . "/?page=" .$tpages. "\">". $last. "</a></li>";
 		} else {
 			$out.= "<li class=\"disabled\" aria-label=\"Next\"><a href='javascript:void(0);' ><span aria-hidden=\"true\">" . $nextlabel . "</span></a></li>";
 			$out.= "<li class=\"disabled\" aria-label=\"Next\"><a href='javascript:void(0);' ><span aria-hidden=\"true\">". $last. "</span></a></li>";
@@ -432,7 +431,6 @@ if( !function_exists('paginate')) :
 		return $out;
 	}
 endif;
-
 
 if ( !function_exists('login_check') ) :
 	function login_check(){
@@ -445,7 +443,7 @@ if ( !function_exists('login_check') ) :
 endif;
 
 if ( !function_exists('page_not_found') ) :
-	function page_not_found($msg1='', $msg2= '',$btn_status = true){
+	function page_not_found($msg1='', $msg2= '', $btn_status = true){
 		
 		if($msg1 == ''){
 			$msg1 = 'Oops ! Something Went Wrong.';
@@ -474,28 +472,72 @@ if ( !function_exists('page_not_found') ) :
 	}
 endif;
 
+if(!function_exists('parse_args')):
+	function parse_args( $args, $defaults = '' ) {
+		if ( is_object( $args ) )
+			$r = get_object_vars( $args );
+		elseif ( is_array( $args ) )
+			$r =& $args;
+		else
+			parse_str( $args, $r );
+	 
+		if ( is_array( $defaults ) )
+			return array_merge( $defaults, $r );
+		
+		return $r;
+	}
+endif;
+
 if ( !function_exists('send_email') ) :
-	function send_email($from,$name,$reply_email,$to,$subject,$body,$attachment_files = ''){	
+	function send_email($to, $subject, $body , $args = array() ){
+		$defaults = array(
+			'from' => get_option('admin_email'),
+			'name' => get_site_name(),
+			'reply_to' => '',
+			'attachments' => array(),
+		);
+		
+		$args = parse_args( $args, $defaults);
+		
 		require_once( ABSPATH . INC. '/phpmailer/PHPMailerAutoload.php');	
 		$mail = new PHPMailer();
-$mail->IsSMTP();
-$mail->Mailer = "smtp";
-$mail->Host = "smtp.live.com";
-$mail->Port = "25"; // 8025, 587 and 25 can also be used. Use Port 465 for SSL.
-$mail->SMTPAuth = true;
-$mail->SMTPSecure = 'tls';
-        //put your email address and password here...
-$mail->Username = "";
-$mail->Password = "";
+		
+		if( defined('SMTP_ENABLE') && SMTP_ENABLE === true ){
+			$mail->IsSMTP();
+			
+			if( defined('SMTP_MAILER') && SMTP_MAILER != '' )
+				$mail->Mailer = SMTP_MAILER;
+				
+			if( defined('SMTP_HOST') && SMTP_HOST != '' )
+				$mail->Host = SMTP_HOST;
+				
+			if( defined('SMTP_PORT') && SMTP_PORT != '' )
+				$mail->Port = SMTP_PORT;
+				
+			if( defined('SMTP_AUTH') && SMTP_AUTH === true )
+				$mail->SMTPAuth = SMTP_AUTH;
+				
+			if( defined('SMTP_SECURE') && SMTP_SECURE != '' )
+				$mail->SMTPSecure = SMTP_SECURE;
+				
+			if( defined('SMTP_USER') && SMTP_USER != '' )
+				$mail->Username = SMTP_USER;
+				
+			if( defined('SMTP_PASS') && SMTP_PASS != '' )
+				$mail->Password = SMTP_PASS;
+		}
+		
 		$mail->CharSet = 'UTF-8';
-		$mail->SetFrom($from,$name,0);
-		$mail->AddReplyTo($reply_email);
+		$mail->SetFrom($args['from'], $args['name'], 0);
+		
+		if( $args['reply_to'] != '' )
+			$mail->AddReplyTo($args['reply_to']);
+			
 		$mail->AddAddress($to);
 		
-		if($attachment_files != '' || !empty($attachment_files)){
-			foreach($attachment_files as $name=>$file){
-				$file_to_attach = $attachment_files['tmp_name'][$name];
-				$mail->AddAttachment($file_to_attach);
+		if(!empty($args['attachments'])){
+			foreach($attachment_files as $name => $file){
+				$mail->AddAttachment($file);
 			}
 		}
 		$mail->Subject = $subject;
@@ -513,9 +555,9 @@ if ( !function_exists('get_unread_notification_count') ) :
 	function get_unread_notification_count(){
 		global $db;
 		$current_user_id = get_current_user_id();
-		$result = get_tabledata(TBL_NOTIFICATIONS,false,array(
-			'user_id' => $current_user_id,
-			'hide' => 0,
+		$result = get_tabledata(TBL_NOTIFICATIONS, false, array(
+			'user_id' => $current_user_id, 
+			'hide' => 0, 
 			'read' => 0
 		));
 		return count($result);
@@ -543,25 +585,30 @@ if ( !function_exists('add_user_notification') ) :
 		if(!empty($args)){
 			$current_user_id = get_current_user_id();
 			$args['user_id'] = $current_user_id;
-			$db->insert(TBL_NOTIFICATIONS,$args);
+			$db->insert(TBL_NOTIFICATIONS, $args);
 		}
 	}
 endif;
 
 if ( !function_exists('get_replaced_string') ) :
-	function get_replaced_string($short_code,$hash,$text){
-		return str_replace($short_code,$hash,$text);
+	function get_replaced_string($text = '', $args = array() ){
+		if( ! empty($args) && $text != ''){
+			foreach($args as $key => $value){
+				$text = str_replace( $key, $value, $text);
+			}
+		}
+		return $text;
 	}
 endif;
 
 if ( !function_exists('get_tabledata') ) :
-	function get_tabledata($table,$single = true, $where = array() , $extra = '', $select = '*'){
+	function get_tabledata($table, $single = true, $where = array() , $extra = '', $select = '*'){
 		global $db;
 		if($table == null || $table == null)
 			return false;
 		
 		if(is_array($select)){
-			$select = implode(',',$select);
+			$select = implode(', ', $select);
 		}
 		
 		$query = "SELECT ".$select." FROM $table ";
@@ -588,6 +635,38 @@ if ( !function_exists('get_tabledata') ) :
 	}
 endif;
 
+if ( !function_exists('get_table_column_data') ) :
+	function get_table_column_data($table, $select = 'ID', $where = array() , $extra = ''){
+		global $db;
+		if($table == null || $table == null)
+			return false;	
+		
+		if($select == '' || $select == NULL) return false;
+		
+		$query = "SELECT ".$select." FROM $table ";
+		
+		if(!empty($where) ){
+			foreach ( $where as $field => $value ) {
+				if ( is_null( $value ) ) {
+					$conditions[] = "`$field` IS NULL";
+					continue;
+				}
+				$conditions[] = "`$field` = '". $value ."' ";
+			}
+			$conditions = implode( ' AND ', $conditions );
+			$query .= " WHERE ".$conditions ." " ;
+		}
+		
+		if($extra != '')
+			$query .= $extra;
+			
+		
+		$row = $db->get_row($query);
+		
+		return $row->$select;
+	}
+endif;
+
 if ( !function_exists('get_option_data') ) :
 	function get_option_data($data, $args){
 		if($data == null || empty($data))
@@ -596,10 +675,11 @@ if ( !function_exists('get_option_data') ) :
 			return false;
 		
 		$return = array();
-		
-		foreach($data as $val){	
-			$return[$val->$args[0]] = $val->$args[1];
-		}	
+		$first = $args[0];
+		$second = $args[1];
+		foreach($data as $val){
+			$return[$val->$first] = $val->$second;
+		}
 		return $return;
 	}	
 endif;
@@ -615,7 +695,7 @@ if ( !function_exists('short_text') ) :
 			$len = 100;
 			
 		if(strlen($value) > $len){
-			$value = substr($value,0,70) . '...';
+			$value = substr($value, 0, 70) . '...';
 		}
 		
 		return $value;
@@ -629,20 +709,20 @@ if ( !function_exists('get_guid') ) :
 					
 		do{
 			$pass = '';			
-			$allowed_characters = array(1,2,3,4,5,6,7,8,9,0);
+			$allowed_characters = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
 			for($i = 1;$i <= $length; $i++){
 				$pass .= $allowed_characters[rand(0, count($allowed_characters) - 1)];
 			}
 			$pass = '10000' . $pass;
-			if(!is_in_table($table_name,$pass))
+			if(!is_in_table($table_name, $pass))
 				break;				
 		}while (true);				
-		return $pass;    		
+		return $pass; 		
 	}
 endif;
 
 if ( !function_exists('is_in_table') ) :
-	function is_in_table($table_name,$id){
+	function is_in_table($table_name, $id){
 		$data = get_tabledata($table_name, false, array('ID' => $id));
 		if($data)
 			return true;
@@ -653,37 +733,21 @@ endif;
 
 if(!function_exists('text_editor')):
 	//function for getting text editor
-	function text_editor($id,$value=''){
+	function text_editor($id, $value=''){
 		ob_start();
 		?>
 		<div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#<?php echo$id;?>-box">
 			<div class="btn-group">
-				<a class="btn dropdown-toggle" data-toggle="dropdown" title="Font">
-					<i class="fa fa-font"></i><b class="caret"></b>
-				</a>
+				<a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
 				<ul class="dropdown-menu"></ul>
 			</div>
 
 			<div class="btn-group">
-				<a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height">
-					</i>&nbsp;<b class="caret"></b>
-				</a>
+				<a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li>
-						<a data-edit="fontSize 5">
-							<p style="font-size:17px">Huge</p>
-						</a>
-					</li>
-					<li>
-						<a data-edit="fontSize 3">
-							<p style="font-size:14px">Normal</p>
-						</a>
-					</li>
-					<li>
-						<a data-edit="fontSize 1">
-							<p style="font-size:11px">Small</p>
-						</a>
-					</li>
+					<li><a data-edit="fontSize 5"><p style="font-size:17px">Huge</p></a></li>
+					<li><a data-edit="fontSize 3"><p style="font-size:14px">Normal</p></a></li>
+					<li><a data-edit="fontSize 1"><p style="font-size:11px">Small</p></a></li>
 				</ul>
 			</div>
 
@@ -725,16 +789,13 @@ if(!function_exists('text_editor')):
 			<div class="btn-group">
 				<a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
 				<a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+				<a class="btn" data-edit="html" title="Html"><i class="fa fa-code"></i></a>
 			</div>
 		</div>
 
 		<div id="<?php echo $id;?>-box" class="editor-box editor-wrapper" data-id="<?php echo $id;?>"><?php echo $value;?></div>
 
 		<textarea name="<?php echo $id;?>" id="<?php echo $id;?>" style="display:none;"><?php echo $value;?></textarea>
-
-		<br />
-
-		<div class="ln_solid"></div>
 		<?php
 		$content = ob_get_clean();
 		return $content;
@@ -757,7 +818,7 @@ if( !function_exists('get_options_list')):
 			}
 		}
 		foreach($data as $key => $val):
-			$selected = (!empty($value) && in_array($key,$value) ) ? 'selected' : '';
+			$selected = (!empty($value) && in_array($key, $value) ) ? 'selected' : '';
 				$return .= '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
 		endforeach;
 		

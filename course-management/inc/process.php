@@ -24,13 +24,17 @@
 			
 			case 'update_general_setting':
 				echo $Settings->update__general__setting();
-				break;			
-
-           		case 'update_alert_setting':
+				break;
+				
+			case 'update_email_templates':
+				echo $Settings->update__email__templates();
+				break;
+				
+			case 'update_alert_setting':
 				echo $Settings->update__alert__setting();
 				break;
 
-            		case 'update_course_setting':
+			case 'update_course_setting':
 				echo $Settings->update__course__setting();
 				break;
 			case 'update_manage_roles':
@@ -57,16 +61,20 @@
 				echo $User->update__user__booking__process();
 				break;
 				
-			case 'fetch_add_to_course_data':
-				echo $User->fetch__add__to__course__data__process();
-				break;
-				
-			case 'update_user_course':
-				echo $User->update__user__course__process();
-				break;
-				
 			case 'fetch_all_trainees':
 				echo $User->fetch__all__trainees__process();
+				break;
+			
+			case 'add_new_mentor':
+				echo $User->add__mentor__teach__process();
+				break;
+			
+			case 'edit_mentor':
+				echo $User->update__mentor__teach__process();
+				break;
+			
+			case 'delete_mentor':
+				echo $User->delete__mentor__teach__process();
 				break;
 				
 			/*ADDITIONAL FORMS FOR USER INFO*/			
@@ -212,12 +220,8 @@
 				
 			case 'delete_booking':
 				echo $Booking->delete__booking__process();
-				break;	
-				
-			case 'fetch_course_nurses_data':
-				echo $Booking->fetch__course__nurses__process();
-				break;			
-
+				break;
+			
 			case 'fetch_cohort_date_data':
 				echo $User->fetch__cohort__date__process();
 				break;
@@ -245,6 +249,39 @@
 			case 'nurse_modal_remove':
 				echo $Booking->nurse__modal__remove__process();
 				break;
+				
+			case 'add_new_pending_booking':
+				echo $Pending_Bookings->add__booking__process();
+				break;
+				
+			case 'update_pending_booking':
+				echo $Pending_Bookings->update__booking__process();
+				break;
+				
+			case 'delete_pending_booking':
+				echo $Pending_Bookings->delete__booking__process();
+				break;
+
+			case 'accept_pending_booking':
+				echo $Pending_Bookings->accept__booking__process();
+				break;
+
+			case 'reject_pending_booking':
+				echo $Pending_Bookings->reject__booking__process();
+				break;
+			
+			case 'add_new_template':
+				echo $Template->add__template__process();
+				break;
+				
+			case 'edit_template':
+				echo $Template->update__template__process();
+				break;
+			
+			case 'delete_template':
+				echo $Template->delete__template__process();
+				break;
+				
 		endswitch;
 	else:
 		print_r($_POST);

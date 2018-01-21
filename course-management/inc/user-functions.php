@@ -44,6 +44,9 @@ endif;
 if ( !function_exists('get_currentuserinfo') ) :
 	function get_currentuserinfo() {
 		global $db;
+		
+		if( !is_user_logged_in() ) return false;
+		
 		$id = $_SESSION['current_user_id'];
 		$email = $_SESSION['current_user_email'];
 		$password = $_SESSION['current_user_password'];
@@ -80,7 +83,7 @@ endif;
 if ( !function_exists('is_user_logged_in') ) :
 	function is_user_logged_in(){
 		global $con;
-		if(isset($_SESSION['current_user_id'])  && $_SESSION['current_user_id'] != ''):
+		if(isset($_SESSION['current_user_id']) && $_SESSION['current_user_id'] != ''):
 			$user = get_user_by('id',$_SESSION['current_user_id']);
 			if($user):
 				set_current_user($user->ID,$user->user_email,$user->user_pass);
@@ -489,6 +492,9 @@ endif;
 
 if ( !function_exists('user_can') ) :
 	function user_can($key = ''){
+		
+		if( !is_user_logged_in() ) return false;
+		
 		if( is_admin() ) return true;
 		
 		if($key == '' || $key == NULL) return false;
@@ -601,72 +607,83 @@ if ( !function_exists('check_password') ) :
 	}
 endif;
 
-function encrypt($str, $iv = 'null')
-{
-    $key = "supersecretkey00"; # Change this
-    if($iv == 'null') {
-       $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-           $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-    }
-        $str = pad($str);
-    return chunk_split(base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv)));
-}
+if(!function_exists('encrypt')):
+	function encrypt($str, $iv = 'null'){
+		$key = "supersecretkey00"; # Change this
+		if($iv == 'null') {
+			$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+			$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+		}
+		$str = pad($str);
+		return chunk_split(base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv)));
+	}
+endif;
 
-function generateSalt() {
-   $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-   $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-   return $iv;
-}
+if(!function_exists('generateSalt')):
+	function generateSalt() {
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+		return $iv;
+	}
+endif;
 
-function encrypt_salt($str, $iv) {
-    $key = "supersecretkey00"; # Change this
-    $str = pad($str);
-    return chunk_split(base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv)));
-}
+if(!function_exists('encrypt_salt')):
+	function encrypt_salt($str, $iv) {
+		$key = "supersecretkey00"; # Change this
+		$str = pad($str);
+		return chunk_split(base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv)));
+	}
+endif;
 
-function decrypt($str)
-{
-    $str = base64_decode($str);
-    $key = "supersecretkey00"; # Change this
-    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-    $iv = substr($str, 0, $iv_size);
-    $str = substr($str, $iv_size);
-    $str = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv);
-    // remove padding
-    return unpad($str);
-}
+if(!function_exists('decrypt')):
+	function decrypt($str){
+		$str = base64_decode($str);
+		$key = "supersecretkey00"; # Change this
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+		$iv = substr($str, 0, $iv_size);
+		$str = substr($str, $iv_size);
+		$str = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv);
+		// remove padding
+		return unpad($str);
+	}
+endif;
 
-function encrypt_const($str)
-{
-    if(strlen($str) == 0) {
-        throw new Exception("Attempted to encrypt a 0 length string!");
-    }
-    $key = "supersecretkey00"; # Change this
-    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-    $iv = '9xh8' .substr($str, 0, 1) . 'a0801kf84zp';
-    $str = pad($str);
-    return chunk_split(base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv)));
-}
+if(!function_exists('encrypt_const')):
+	function encrypt_const($str){
+		if(strlen($str) == 0) {
+			throw new Exception("Attempted to encrypt a 0 length string!");
+		}
+		$key = "supersecretkey00"; # Change this
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+		$iv = '9xh8' .substr($str, 0, 1) . 'a0801kf84zp';
+		$str = pad($str);
+		return chunk_split(base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $str, MCRYPT_MODE_CBC, $iv)));
+	}
+endif;
 
-function pad($str) {
-        $padvals = array(0 => 0x01);
-    $blocksize = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-    $length = strlen($str);
-    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-    $paddingToAdd = $blocksize - ($length % $blocksize);
-    $str = $str . str_repeat(chr($paddingToAdd), $paddingToAdd);
-    return $str;
-}
+if(!function_exists('pad')):
+	function pad($str) {
+		$padvals = array(0 => 0x01);
+		$blocksize = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+		$length = strlen($str);
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+		$paddingToAdd = $blocksize - ($length % $blocksize);
+		$str = $str . str_repeat(chr($paddingToAdd), $paddingToAdd);
+		return $str;
+	}
+endif;
 
-function unpad($str) {
-    $bytes = unpack('C*', $str);
-    $length = count($bytes);
-    $numToRemove = $bytes[$length - 1];
-    $bytes = array_splice($bytes, 0, $length - $numToRemove);
-    $response = '';
-    foreach ($bytes as $byte) {
-        $response .= pack('C*', $byte);
-    }
-    return $response;
-}
+if(!function_exists('unpad')):
+	function unpad($str) {
+		$bytes = unpack('C*', $str);
+		$length = count($bytes);
+		$numToRemove = $bytes[$length - 1];
+		$bytes = array_splice($bytes, 0, $length - $numToRemove);
+		$response = '';
+		foreach ($bytes as $byte) {
+			$response .= pack('C*', $byte);
+		}
+		return $response;
+	}
+endif;
 ?>
