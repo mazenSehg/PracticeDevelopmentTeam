@@ -17,22 +17,22 @@ if( !class_exists('User') ):
 			$this->current__user = get_userdata($this->current__user__id);
 		}
 
-		public function user_bands(){
+		public function user__bands(){
 			return array(
-				'1' => '1',
-				'2' => '2',
-				'3' => '3',
-				'4' => '4',
-				'5' => '5',
-				'6 '=> '6',
-				'7' => '7',
-				'8' => '8',
-				'a' => 'a',
-				'8b'=> '8b',
-				'8c'=> '8c',
-				'8d'=> '8d',
-				'8e'=> '8e',
-				'9' => '9',
+				'1' => '1', 
+				'2' => '2', 
+				'3' => '3', 
+				'4' => '4', 
+				'5' => '5', 
+				'6 '=> '6', 
+				'7' => '7', 
+				'8' => '8', 
+				'a' => 'a', 
+				'8b'=> '8b', 
+				'8c'=> '8c', 
+				'8d'=> '8d', 
+				'8e'=> '8e', 
+				'9' => '9', 
 			);
 		}
 
@@ -54,8 +54,7 @@ if( !class_exists('User') ):
 							<div class="form-group">
 								<label for="user_name">
 									email address:
-									<span class="required">*</span>
-								</label>
+									<span class="required">*</span></label>
 								<input type="text" name="user_name" class="form-control input-sm" placeholder="" />
 							</div>
 							<span style="height:5px;display: block;">
@@ -95,11 +94,47 @@ if( !class_exists('User') ):
 			return $content;
 		}
 
-		public function login__page(){
+		public function browse__page(){
 			ob_start();
 			?>
 			<div class="row">
 				<div class=" main-box">
+					<div class="col-md-12 text-center">
+						<h1 class=" big-title"><?php _e('Resusitation course booking and management');?>&nbsp;</h1>
+						<div class="ln_solid"></div>
+					</div>
+				</div>
+			</div>
+			<?php
+			$content = ob_get_clean();
+			return $content;
+		}
+			
+		public function login__page(){
+			ob_start();
+			?>
+			<div class="row">
+				<div class="main-box">
+					<div class="col-md-12 text-center">
+						<h1 class=" big-title"><?php _e('Resusitation course booking and management');?>&nbsp;</h1>
+						<div class="ln_solid"></div>
+					</div>
+					<div class="col-md-4 col-xs-12 pull-left">
+						<form class="browse-form" method="get" autocomplete="off">
+							<h3 class="form-title">
+								<?php _e('Browse Courses');?>&nbsp;
+								<i class="fa fa-search"></i>
+							</h3>
+							<span style="height:5px;display: block;">&nbsp;</span>
+							<div class="form-group">
+								<a class="btn btn-block btn-success btn-sm" href="<?php the_permalink('browse-courses');?>"><?php _e('Browse Courses');?></a>
+							</div>
+							<div class="form-group">
+								<div class="alert alert-success"><?php _e('Loading course, please wait...');?></div>
+								<div class="alert alert-danger"></div>
+							</div>
+						</form>
+					</div>
 					<div class="col-md-4 col-xs-12 pull-right">
 						<form class="login-form" method="get" autocomplete="off">
 							<h3 class="form-title">
@@ -108,14 +143,12 @@ if( !class_exists('User') ):
 							</h3>
 							<div class="form-group">
 								<label for="user_name"><?php _e('User name');?>&nbsp;
-									<span class="required">*</span>
-								</label>
+									<span class="required">*</span></label>
 								<input type="text" name="user_name" class="form-control input-sm" placeholder="" />
 							</div>
 							<div class="form-group">
 								<label for="user_pass"><?php _e('Password');?>&nbsp;
-									<span class="required">*</span>
-								</label>
+									<span class="required">*</span></label>
 								<input type="password" name="user_pass" class="form-control input-sm" placeholder="" />
 							</div>
 							<span style="height:5px;display: block;">
@@ -142,12 +175,6 @@ if( !class_exists('User') ):
 							</div>
 						</form>
 					</div>
-					<div class="col-md-7 col-xs-12 text-center hidden-xs ">
-						<h1 class=" big-title"><?php _e('Do More with Online Management');?>&nbsp;
-						</h1>
-						<div class="ln_solid"></div>
-					</div>
-					<div class="col-md-1"></div>
 				</div>
 			</div>
 			<?php
@@ -172,23 +199,17 @@ if( !class_exists('User') ):
 						<form class="upload-profile-image" method="post" autocomplete="off">
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="question">
-										<?php _e('Choose an image for upload');?>&nbsp;
-										<span class="required">*</span>
-									</label>
+									<label for="question"><?php _e('Choose an image for upload');?>&nbsp;<span class="required">*</span></label>
 									<input type="file" name="photo" accept="image/*" />
-									<span class="help-block green">
-										<?php _e('Supported image formats: jpeg, png, jpg');?>
-									</span>
-									<span class="help-block green">
-										<?php _e('Recommended profile image size: 300 x 300 pixels');?>
-									</span></div>
+									<span class="help-block green"><?php _e('Supported image formats: jpeg, png, jpg');?></span>
+									<span class="help-block green"><?php _e('Recommended profile image size: 300 x 300 pixels');?></span>
+								</div>
 								<div class="form-group">
 									<div class="alert alert-success">
-										<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true">
-										</i>&nbsp;
+										<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>&nbsp;
 										<?php _e('Image is being upload, please do not close upload box ..');?>
-									</div></div>
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer">
 								<input type="hidden" name="action" value="upload_profile_image" />
@@ -206,16 +227,16 @@ if( !class_exists('User') ):
 
 		public function activity__and__access__log__section( $user__id ){
 			ob_start();
-			$user = get_user_by('id',$user__id);
+			$user = get_user_by('id', $user__id);
 			/*Notifications Query*/
 			$notifications__query = " ORDER BY `ID` DESC LIMIT 0, 5";
 			$notifications__args = array('user_id'=> $user__id);
-			$notifications__result = get_tabledata(TBL_NOTIFICATIONS,false,$notifications__args,$notifications__query);
+			$notifications__result = get_tabledata(TBL_NOTIFICATIONS, false, $notifications__args, $notifications__query);
 
 			/*Access Log Query*/
 			$access__log__query = " ORDER BY `ID` DESC LIMIT 0, 10";
 			$access__log__args = array('user_id'=> $user__id);
-			$access__log__result = get_tabledata(TBL_ACCESS_LOG,false,$access__log__args,$access__log__query);
+			$access__log__result = get_tabledata(TBL_ACCESS_LOG, false, $access__log__args, $access__log__query);
 			?>
 			<div class="col-md-9 col-sm-9 col-xs-12">
 				<div class="profile_title">
@@ -247,17 +268,17 @@ if( !class_exists('User') ):
 									<img src="<?php echo get_user_profile_image($user__notifications->user_id);?>" class="avatar" alt="Avatar">
 									<div class="message_date">
 										<h3 class="date text-info">
-											<?php echo date('d',strtotime($user__notifications->date));?>
+											<?php echo date('d', strtotime($user__notifications->date));?>
 										</h3>
 										<p class="month">
-											<?php echo date('M',strtotime($user__notifications->date));?>
+											<?php echo date('M', strtotime($user__notifications->date));?>
 										</p>
 									</div>
 									<div class="message_wrapper">
 										<h4 class="heading">
 											<?php echo $user__notifications->title;?>
 											<small>
-												<?php echo date('M d, Y h:i a',strtotime($user__notifications->date));?>
+												<?php echo date('M d, Y h:i a', strtotime($user__notifications->date));?>
 											</small>
 										</h4>
 										<blockquote class="message">
@@ -266,12 +287,9 @@ if( !class_exists('User') ):
 										<br/>
 									</div>
 								</li>
-								<?php endforeach;
-								else: ?>
+								<?php endforeach; else: ?>
 								<li>
-									<h5>
-										<?php _e('There is no recent activity details');?>
-									</h5>
+									<h5><?php _e('There is no recent activity details');?></h5>
 								</li>
 								<?php endif; ?>
 							</ul>
@@ -281,26 +299,17 @@ if( !class_exists('User') ):
 							<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
 								<thead>
 									<tr>
-										<th>				<?php _e('Last Login');?>
-										</th>
-										<th>				<?php _e('Location');?>
-										</th>
-										<th>				<?php _e('Device');?>
-										</th>
+										<th><?php _e('Last Login');?></th>
+										<th><?php _e('Location');?></th>
+										<th><?php _e('Device');?></th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php
-									if($access__log__result):
-									foreach($access__log__result as $access__log__row): ?>
+									<?php if($access__log__result): foreach($access__log__result as $access__log__row): ?>
 									<tr>
-										<td>				<?php echo date('M d, Y h:i A',strtotime($access__log__row->date));?>
-										</td>
-										<td>				<?php echo $access__log__row->ip_address;?>
-										</td>
-										<td>				<a href="#" data-toggle="tooltip" title="<?php echo $access__log__row->user_agent;?>"><?php echo $access__log__row->device;?>
-											</a>
-										</td>
+										<td><?php echo date('M d, Y h:i A', strtotime($access__log__row->date));?></td>
+										<td><?php echo $access__log__row->ip_address;?></td>
+										<td><a href="#" data-toggle="tooltip" title="<?php echo $access__log__row->user_agent;?>"><?php echo $access__log__row->device;?></a></td>
 									</tr>
 									<?php endforeach; endif; ?>
 								</tbody>
@@ -316,781 +325,533 @@ if( !class_exists('User') ):
 
 		public function activity__and__progress__log__section( $user__id ){
 			ob_start();
-			$user = get_user_by('id',$user__id);
-			$courses = get_tabledata(TBL_USERS,false,array('ID'=>$user__id));
-			$courses = get_tabledata(TBL_USERS,false,array('ID'=>$user__id));
-            $rules = get_tabledata(TBL_RULES, false, array('user_ID'=>$user__id));
-
-            
+			$user = get_user_by('id', $user__id);
+			$courses = get_tabledata(TBL_USERS, false, array('ID'=>$user__id));
+			$courses = get_tabledata(TBL_USERS, false, array('ID'=>$user__id));
+			$rules = get_tabledata(TBL_RULES, false, array('user_ID'=>$user__id));
 			if(!$courses):
-				echo page_not_found("Oops! There is no courses assigned to this user",' ',false);
-			else:
-				endif;
+				echo page_not_found("Oops! There is no courses assigned to this user", ' ', false);
+			endif;
 			?>
-
-    <div class="row">
-    	<div class="col-md-7">
-            <div class="panel with-nav-tabs panel-default">
-                <div class="panel-heading">
-                        <ul class="nav nav-tabs">
-                            <li><a href="#tab1default" data-toggle="tab">Profile</a></li>
-                            <li class="active"><a href="#tab2default" data-toggle="tab">Course</a></li>
-                            <?php if($rules[0]->preceptorship!=0){?>
-                            <li><a href="#tab3default" data-toggle="tab">Preceptorship Progress</a></li>
-                            <?php  }?>
-                            <?php if($rules[0]->hca!=0){?>
-                            <li><a href="#tab4default" data-toggle="tab">HCA Induction Progress</a></li>
-                            <?php }?>
-                            <?php if($rules[0]->flap!=0){ ?>
-                            <li><a href="#tab5default" data-toggle="tab">FD/AP Training Record</a></li>
-                            <?php }?>
-                            <?php if($rules[0]->record!=0){?>
-                            <li><a href="#tab6default" data-toggle="tab">Student Record</a></li>
-                            <?php }?>
-                            <?php if($rules[0]->mentorship!=0){?>
-                            <li><a href="#tab7default" data-toggle="tab">Mentorship</a></li>
-                            <?php }?>
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#tab8default" data-toggle="tab">Dropdown 1</a></li>
-                                    <li><a href="#tab9default" data-toggle="tab">Default 5</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                </div>
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div class="tab-pane fade" id="tab1default">
-                        						<ul class="messages list-unstyled"><?php
-							$user = get_userdata($user__id);
-
-							?>
-							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-								<div class="profile_img">
-									<div id="crop-avatar">
-										<img class="img-responsive avatar-view" src="<?php echo get_user_profile_image($user__id);?>" alt="Avatar">
-									</div></div>
-								<h3>
-									<?php echo $user->first_name.' '.$user->last_name;?>
-								</h3>
-								<strong>
-									Date of Birth:
-								</strong> <?php echo date('M d,Y',strtotime(get_user_meta($user->ID,'dob',true)));?><br>
-
-
-								<br />
-								<a class="btn btn-success btn-sm" href="<?php the_permalink('edit-user', array('user_id'=> $user__id));?>">
-									<i class="fa fa-edit m-right-xs"></i>&nbsp;<?php _e('Edit User Details');?>
-								</a>
-							</div>
-
-
-							<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-								<div class="profile_img">
-	</div>
-								<h3>
-									Contact Details
-								</h3>
-								<strong>
-									Email
-								</strong>: <?php echo $user->user_email;?><br>
-								<strong>
-									Phone:
-								</strong><?php echo get_user_meta($user->ID,'user_phone',true);?><br>
-								<strong>
-									Work Extension:
-								</strong><?php echo get_user_meta($user->ID,'work_extension',true);?><br>
-								<strong>
-									Beep:
-								</strong><?php echo get_user_meta($user->ID,'beep',true);?><br>
-
-							</div>
-							<div class="col-md-3 col-sm-5 col-xs-12 profile_left">
-								<div class="profile_img"><?php
-
-									$w_area = get_tabledata(TBL_WORKS,true,array('ID'=> $user->work_area_ID));
-									$a = get_user_meta($user->ID,'user_designation',true);
-									$desig = get_tabledata(TBL_DESIGNATIONS,true,array('ID'=> $a));
-									?></div>
-								<h3>
-									Work Details
-								</h3>
-								<strong>
-									Currently Employed:
-								</strong><?php
-								if($user->currently_employed != 0){
-									echo "Yes";
-								}else{
-									echo "No";
-								};?><br>
-								<strong>
-									Work Area
-								</strong>: <?php echo $w_area->name;?><br>
-								<strong>
-									Designation:
-								</strong><?php echo $desig->name;?><br>
-								<strong>
-									Band:
-								</strong><?php echo get_user_meta($user->ID,'band',true);;?>
-								<br>
-								<br/>
-								<strong>
-									External Candidate Number:
-								</strong><?php echo $user->external_candidate;?><br>
-								<strong>
-									RAG Status:
-								</strong><?php echo $user->rag_status;?><br>
-								<strong>
-									RAG Status:
-								</strong><?php
-								if($user->extended_support == 0){
-									echo "Red";
-								} elseif($user->extended_support == 1){
-									echo "Amber";
-								} elseif($user->extended_support == 3){
-									echo "Green";
-								};?><br>
-								<strong>
-									Extended Support:
-								</strong><?php
-								if($user->extended_support != 0){
-									echo "Yes";
-								}else{
-									echo "No";
-								};?><br>
-								<strong>
-									Support Since:
-								</strong><?php echo $user->support_since;?><br>
-							</div>
-
-						</ul>
-                        </div>
-                        <div class="tab-pane fade in active" id="tab2default">
-                            
-                        
-
-
-<ul class="messages list-unstyled">
-   <br>
-   <br>
-   <h1>
-      Courses
-   </h1>
-   <?php
-      $user = get_user_by('id',$user__id);
-      
-      
-      $bookings = get_tabledata(TBL_BOOKINGS,false,array());
-      
-      if(!$bookings):
-      
-      echo page_not_found("Thia user is not currently booked for any courses.",' ',false);
-      
-      else:
-      
-      ?>
-   <table class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
-      <thead>
-         <tr>
-            <th><?php _e('Course Name(s)');?>
-            </th>
-            <th><?php _e('Course Booked');?>
-            </th>
-            <th> <?php _e('Attended');?>
-            </th>
-            <th><?php _e('Documents uploaded');?>
-            </th>
-            <th> <?php _e('Course Completed');?>
-            </th>
-         </tr>
-      </thead>
-      <tbody>
-         <?php
-            if($bookings):
-            
-            foreach($bookings as $booking):
-            
-            $data = unserialize($booking->nurses);
-            
-            $data2= unserialize($booking->attendance);
-            
-            $data3= unserialize($booking->enroll);
-            
-            $match= 0;
-            
-            $attended;
-            
-            foreach($data as $i):
-            
-            if($user->ID == $i){
-            
-            $match = 1;
-            
-            $attended = $data2[$user->ID];
-            
-            $completed= $data3[$user->ID];
-            
-            
-            }
-            
-            endforeach;
-            
-            
-            //$corse = get_tabledata(TBL_COURSES,true,array('ID' => $booking->course_ID));
-            
-            ?>
-         <?php
-            ?>
-         <tr bgcolor="<?php if($completed != 0):echo "#E0F8E0"; else: echo "#F78181"; endif; ?>">
-            <?php
-               if($match != 0):
-               
-               $course = get_tabledata(TBL_COURSES,false,array('ID'=>$booking->course_ID));
-               
-               ?>
-            <td> <?php echo $booking->name; ?>
-            </td>
-            <td> <?php echo date('M d, Y', strtotime($booking->date_from)); ?>
-            </td>
-            <td> <?php echo ($attended != 0) ? "yes" : "no."; ?>
-            </td>
-            <td> <?php ?>
-            </td>
-            <td> <?php echo ($completed != 0) ? "yes" :  "no."; ?>
-            </td>
-            <?php endif;?>
-         </tr>
-         <?php endforeach; endif; ?>
-      </tbody>
-   </table>
-   <?php endif; ?>
-</ul>
-
-
-                            
-                        </div>
-                        <div class="tab-pane fade" id="tab3default">
-                        
-                        						<ul class="messages list-unstyled">
-						<form class="submit-form" method="post" autocomplete="off">
-							<div class="row">
-								<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="date-of-fault">
-										Precptorship Intro
-									</label>
-									<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" /></div>
-								<div class="form-group col-sm-2 col-xs-12">
-									<label for="decommed">
-										<?php _e('Current Preceptee');?>
-									</label>
-									<br/>
-									<label>		<input type="checkbox" name="p_current" class="js-switch" <?php isset($fault->current_prec) ? checked($fault->current_prec,1) : '';?> />
-									</label></div>
-								<div class="form-group col-sm-2 col-xs-12">
-									<label for="decommed">
-										<?php _e('Awaiting Pin');?>
-									</label>
-									<br/>
-									<label>		<input type="checkbox" name="p_pin" class="js-switch" <?php isset($fault->pin) ? checked($fault->pin,1) : '';?>/>
-									</label></div>
-								<div class="form-group col-sm-2 col-xs-12">
-									<label for="decommed">
-										<?php _e('Academic Delay');?>
-									</label>
-									<br/>
-									<label>		<input type="checkbox" name="p_delay" class="js-switch" <?php isset($fault->delay) ? checked($fault->delay,1) : '';?>/>
-									</label></div>
-							</div>
-							<div class="row">
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="date-of-fault">
-										Precptorship Name
-									</label>
-									<input type="text" name="p_name" class="form-control" value="<?php echo isset($fault->prec_name) ? $fault->prec_name : '';?>" /></div>
-								<div class="form-group col-sm-2 col-xs-12">
-									<label for="decommed">
-										<?php _e('International Nurse');?>
-									</label>
-									<br/>
-									<label>		<input type="checkbox" name="p_nurse" class="js-switch" <?php ; isset($fault->int_nurse) ? checked($fault->int_nurse,1) : ''; ?> />
-									</label></div>
-								<div class="form-group col-sm-2 col-xs-12">
-									<label for="date-of-fault">
-										WTE
-									</label>
-									<input type="text" name="p_wte" class="form-control " value="<?php echo isset($fault->WTE) ? $fault->WTE : '';?>" /></div>
-							</div>
-							<div class="row">
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="date-of-fault">
-										Precptorship Email
-									</label>
-									<input type="text" name="p_email" class="form-control " value="<?php echo isset($fault->p_email) ? $fault->p_email : '';?>" /></div>
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="date-of-fault">
-										Country of First Registeration
-									</label>
-									<input type="text" name="p_country" class="form-control" value="<?php echo isset($fault->p_country) ? $fault->p_country : '';?>" /></div>
-							</div>
-							<div class="row">
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="">
-										Sign off Period
-									</label>
-									<br/>
-									<label>		<input type="radio" class="flat" name="p_period" value="6" <?php isset($fault->sign_off) ? checked($fault->sign_off,'6') : ''; ?> /> 6 Months
-									</label>
-									<label>		&nbsp;
-									</label>
-									<label>		<input type="radio" class="flat" name="p_period" value="12" <?php isset($fault->sign_off) ? checked($fault->sign_off,'12') : ''; ?> /> 12 Months
-									</label></div>
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="date-of-fault">
-										Awards
-									</label>
-									<input type="text" name="p_awards" class="form-control" value="<?php echo isset($fault->awards) ? $fault->awards : '';?>" /></div>
-							</div>
-							<div class="row">
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="date-of-fault">
-										Links
-									</label>
-									<input type="text" name="p_link" class="form-control " value="<?php echo
-									isset($fault->link) ? $fault->link : '';?>" /></div>
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="admins">
-										<?php _e('Allocated trainer');?>&nbsp;
-										<span class="required">*</span>
-									</label>
-									<select name="trainers" class="form-control select_single require">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="panel with-nav-tabs panel-default">
+						<div class="panel-heading">
+							<ul class="nav nav-tabs">
+								<li><a href="#tab1default" data-toggle="tab">Profile</a></li>
+								<li class="active"><a href="#tab2default" data-toggle="tab">Course</a></li>
+								<?php if($rules[0]->preceptorship != 0) ?>
+								<li><a href="#tab3default" data-toggle="tab">Preceptorship Progress</a></li>
+								<?php if($rules[0]->hca != 0) ?>
+								<li><a href="#tab4default" data-toggle="tab">HCA Induction Progress</a></li>
+								<?php if($rules[0]->flap != 0) ?>
+								<li><a href="#tab5default" data-toggle="tab">FD/AP Training Record</a></li>
+								<?php if($rules[0]->record != 0) ?>
+								<li><a href="#tab6default" data-toggle="tab">Student Record</a></li>
+								<?php if($rules[0]->mentorship != 0) ?>
+								<li><a href="#tab7default" data-toggle="tab">Mentorship</a></li>
+							</ul>
+						</div>
+						<div class="panel-body">
+							<div class="tab-content">
+								<div class="tab-pane fade" id="tab1default">
+									<ul class="messages list-unstyled">
 										<?php
-										//							$data = get_tabledata(TBL_USERS,false,array('user_role' => 'trainer'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-										$data = get_tabledata(TBL_USERS,false,array('user_role'=> 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-										$option_data = get_option_data($data,array('ID','name'));
-										echo get_options_list($option_data, maybe_unserialize($fault->prec_trainer));
+										$user = get_userdata($user__id);
 										?>
-									</select></div>
-							</div>
-							<div class="row">
-								<div class="form-group col-sm-8 col-xs-12">
-									<label for="description-of-fault">
-										Notes
-									</label>
-									<textarea name="p_notes" class="form-control" rows="3"><?php echo isset($fault->prec_notes) ? $fault->prec_notes : '';?></textarea></div>
-							</div>
-							<div class="ln_solid">
-							</div>
-							<div class="form-group">
-								<input type="hidden" name="action" value="update_preceptorship" />
-								<button class="btn btn-success btn-md" type="submit"><?php _e('Update Preceptor Progress');?></button>
-							</div>
-						</form>
-						</ul>
-                            
-                        </div>
-                        <div class="tab-pane fade" id="tab4default">
-                        
-                        						<ul class="messages list-unstyled">
-							<form class="submit-form" method="post" autocomplete="off">
-								<?php
-								$data = get_tabledata(TBL_INFO,false,array('user_ID'=>$user__id));
-								?>
-								<div class="row">
-									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Course Start Date
-										</label>
-										<input type="text" name="hca_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->hca_start) ? date('M d, Y', strtotime($fault->hca_start)) : '';?>" />
-									</div>
-									<div class="form-group col-sm-3 col-xs-12">
-										<label for="date-of-fault">
-											Manager Name
-										</label>
-										<input type="text" name="hca_manager" class="form-control" value="<?php echo isset($fault->hca_manager) ? $fault->hca_manager : '';?>" />
-									</div>
-									<div class="form-group col-sm-3 col-xs-12">
-										<label for="date-of-fault">
-											Manager Email
-										</label>
-										<input type="text" name="hca_email" class="form-control " value="<?php echo isset($fault->hca_email) ? $fault->hca_email : '';?>" />
-									</div></div>
-								<div class="row">
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="decommed">
-											<?php _e('New to care');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="hca_new_care" class="js-switch" <?php isset($fault->hca_new_care) ? checked($fault->hca_new_care,'1') : ''; ?>/>
-										</label>
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="decommed">
-											<?php _e('Current PD Team Clinet');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="hca_current_client" class="js-switch" <?php isset($fault->hca_current_client) ? checked($fault->hca_current_client,'1') : ''; ?>/>
-										</label>
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="decommed">
-											<?php _e('Fundamental Adult Care Cluster Book complete');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="hca_fundamental_care" class="js-switch" <?php isset($fault->hca_fundamental_care) ? checked($fault->hca_fundamental_care,'1') : ''; ?>/>
-										</label>
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="decommed">
-											<?php _e('Care certificate Complete');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="hca_care" class="js-switch" <?php isset($fault->hca_care) ? checked($fault->hca_care,'1') : ''; ?> />
-										</label>
-									</div></div>
-								<div class="form-group col-sm-4 col-xs-12"></div>
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="admins">
-										<?php _e('Allocated trainer');?>&nbsp;
-										<span class="required">*</span>
-									</label>
-									<select name="hca_trainer" class="form-control select_single require">
-										<?php
-										$data = get_tabledata(TBL_USERS,false,array('user_role'=> 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-										$option_data = get_option_data($data,array('ID','name'));
-										echo get_options_list($option_data,maybe_unserialize($fault->hca_trainer));
-										?>
-									</select></div>
-								<div class="row">
-									<div class="form-group col-sm-8 col-xs-12">
-										<label for="description-of-fault">
-											Notes
-										</label>
-										<textarea name="hca_notes" class="form-control" rows="3"><?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?></textarea>
-									</div></div>
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<input type="hidden" name="action" value="update_mca" />
-									<button class="btn btn-success btn-md" type="submit">
-										<?php _e('Update HCA Induction');?>
-									</button></div>
-							</form>
-						</ul>
-                            
-                        </div>
-                        <div class="tab-pane fade" id="tab5default">
-                        
-                        						<ul class="messages list-unstyled">
-							<form class="submit-form" method="post" autocomplete="off">
-								<div class="row">
-									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											FD Course Start Date
-										</label>
-										<input type="text" name="fd_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_start) ? date('M d, Y', strtotime($fault->fd_start)) : '';?>" />
-									</div>
-									<div class="form-group col-sm-3 col-xs-12">
-										<label for="date-of-fault">
-											Graduation Date
-										</label>
-										<input type="text" name="fd_graduate" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_graduate) ? date('M d, Y', strtotime($fault->fd_graduate)) : '';?>" />
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="decommed">
-											<?php _e('Course Interrupt');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="fd_inturrupt" class="js-switch" <?php isset($fault->fd_inturrupt) ? checked($fault->fd_inturrupt,'1') : ''; ?>/>
-										</label>
-									</div></div>
-								<div class="row">
-									<div class="form-group col-sm-1 col-xs-12">
-										<label for="decommed">
-											<?php _e('Study Day 1');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="fd_sd1" class="js-switch" <?php isset($fault->fd_sd1) ? checked($fault->fd_sd1,'1') : ''; ?>/>
-										</label>
-									</div>
-									<div class="form-group col-sm-1 col-xs-12">
-										<label for="decommed">
-											<?php _e('Study Day 2');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="fd_sd2" class="js-switch" <?php isset($fault->fd_sd2) ? checked($fault->fd_sd2,'1') : ''; ?>/>
-										</label>
-									</div>
-									<div class="form-group col-sm-1 col-xs-12">
-										<label for="decommed">
-											<?php _e('Study Day 3');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="fd_sd3" class="js-switch" <?php isset($fault->fd_sd3) ? checked($fault->fd_sd3,'1') : ''; ?>/>
-										</label>
-									</div>
-									<div class="form-group col-sm-5 col-xs-12">
-										<label for="description-of-fault">
-											Other Study
-										</label>
-										<textarea name="fd_other" class="form-control" rows="3">
-											<?php echo
-											isset($fault->fd_other) ? $fault->fd_other : '';?>
-										</textarea>
-									</div></div>
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="decommed">
-										<?php _e('CURRENT FD');?>
-									</label>
-									<br/>
-									<label>		<input type="checkbox" name="fd_current" class="js-switch" <?php isset($fault->fd_current) ? checked($fault->fd_current,'1') : ''; ?>/>
-									</label></div>
-								<div class="form-group col-sm-4 col-xs-12">
-									<label for="admins">
-										<?php _e('Allocated trainer');?>&nbsp;
-										<span class="required">*</span>
-									</label>
-									<select name="fd_trainer" class="form-control select_single require">
-										<?php
-										$data = get_tabledata(TBL_USERS,false,array('user_role'=> 'course_admin'),'',' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-										$option_data = get_option_data($data,array('ID','name'));
-										echo get_options_list($option_data, maybe_unserialize($fault->fd_trainer));
-										?>
-									</select></div>
-								<div class="row">
-									<div class="form-group col-sm-8 col-xs-12">
-										<label for="description-of-fault">
-											Notes
-										</label>
-										<textarea name="fd_notes" class="form-control" rows="3"><?php echo isset($fault->fd_notes) ? $fault->fd_notes : '';?></textarea>
-									</div></div>
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<input type="hidden" name="action" value="update_fdap" />
-									<button class="btn btn-success btn-md" type="submit">
-										<?php _e('Update FD/AP Training Records');?>
-									</button></div>
-							</form>
-						</ul>
-                            
-                        </div>
-                        
-                        <div class="tab-pane fade" id="tab6default">
-                        
-                        						<ul class="messages list-unstyled">
-							<form class="submit-form" method="post" autocomplete="off">
-								<div class="row">
-									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Cohort
-										</label>
-										<select name="stud_cohort" class="form-control fetch-cohort-dates-data select_single require">
-											<?php
-											$data = get_tabledata(TBL_COHORTS,false,array());
-											$option_data = get_option_data($data,array('ID','name'));
-											echo get_options_list($option_data);
-											?>
-										</select>
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Cohort date
-										</label>
-										<select name="stud_cohort_date" class="form-control select_single select-dates require">
-											<?php
-											$data = get_tabledata(TBL_COHORTS_EXT,false,array());
-											$option_data = get_option_data($data,array('ID','Cohort_date'));
-											echo get_options_list($option_data);
-											?>
-										</select>
-									</div></div>
-								<div class="row">
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Study Day 1
-										</label>
-										<input id = "stud_d1" type="text" name="stud_d1" class="form-control input-datepicker" readonly="readonly" value="" />
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Study Day 2
-										</label>
-										<input id = "stud_d2" type="text" name="stud_d2" class="form-control input-datepicker" readonly="readonly" value="" />
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Study Day 3
-										</label>
-										<input id = "stud_d3" type="text" name="stud_d3" class="form-control input-datepicker" readonly="readonly" value="" />
-									</div></div>
-								<div class="row">
-									<div class="form-group col-sm-8 col-xs-12">
-										<label for="description-of-fault">
-											Notes
-										</label>
-										<textarea name="stud_notes" class="form-control" rows="3"></textarea>
-									</div></div>
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<input type="hidden" name="action" value="update_student_prog" />
-									<button class="btn btn-success btn-md" type="submit">
-										<?php _e('Update student Progress');?>
-									</button></div>
-							</form>
-						</ul>
-                            
-                            
-                        </div>
-                        <div class="tab-pane fade" id="tab7default">
-                        
-                            <ul class="messages list-unstyled">
-							<form class="submit-form" method="post" autocomplete="off">
-								<div class="row">
-									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-									<div class="form-group col-sm-3 col-xs-12">
-										<label for="decommed">
-											<?php _e('Current Mentor');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="mentor_current" class="js-switch" <?php isset($fault->mentor_current) ? checked($fault->mentor_current,'1') : ''; ?> />
-										</label>
-									</div>
-									<div class="form-group col-sm-2 col-xs-12">
-										<label for="date-of-fault">
-											Update Renewal Due
-										</label>
-										<input type="text" name="mentor_renew" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->mentor_renew) ? date('M d, Y', strtotime($fault->mentor_renew)) : '';?>" />
-									</div>
-									<div class="form-group col-sm-3 col-xs-12">
-										<label for="decommed">
-											<?php _e('Sign off Mentor');?>
-										</label>
-										<br/>
-										<label>			<input type="checkbox" name="mentor_sign_off" class="js-switch" <?php isset($fault->mentor_sign_off) ? checked($fault->mentor_sign_off,'1') : ''; ?>/>
-										</label>
-									</div></div>
-								<div class="row">
-									<div class="form-group col-sm-8 col-xs-12">
-										<label for="description-of-fault">
-											Notes
-										</label>
-										<textarea name="mentor_notes" class="form-control" rows="3"><?php echo isset($fault->mentor_notes) ? $fault->mentor_notes : '';?></textarea>
-									</div></div>
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<input type="hidden" name="action" value="update_mentor_prog" />
-									<button class="btn btn-success btn-md" type="submit">
-										<?php _e('Update Mentor Progress');?>
-									</button></div>
-							</form
-						</ul>
-                            
-                        </div>
-                        <div class="tab-pane fade" id="tab8default">Default 8</div>
-                        <div class="tab-pane fade" id="tab9default">Default 9</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-                
-                
-                
-                
-            <div class="col-md-5">
-            <div class="panel with-nav-tabs panel-info">
-                <div class="panel-heading">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab1info" data-toggle="tab">Notes</a></li>
-                        </ul>
-                </div>
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="tab1info">
-                        
-                        						<ul class="messages list-unstyled">
-							<form class="submit-form" method="post" autocomplete="off">
-								<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
-									<thead>
-										<tr>
-											<th>					<?php _e('Date of Note');?>
-											</th>
-											<th>					<?php _e('Note');?>
-											</th>
-											<th>					<?php _e('Attachments');?>
-											</th>
-											<th>					<?php _e('Note Posted By');?>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-										$notez = get_tabledata(TBL_NOTES,false,array('to'=>$user__id));
-										foreach($notez as $noty): ?>
-										<tr>
-											<td>					<?php echo $noty->date?>
-											</td>
-											<td>					<?php echo $noty->note?>
-											</td>
-											<td>					<?php
-
-												function filePathParts($arg1){
-													return $arg1['basename'];
-												}
-
-												$xmlFile = pathinfo($noty->filepath);
-												$name = filePathParts($xmlFile);
-
+										<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+											<div class="profile_img">
+												<div id="crop-avatar">
+													<img class="img-responsive avatar-view" src="<?php echo get_user_profile_image($user__id);?>" alt="Avatar">
+												</div>
+											</div>
+											<h3><?php echo $user->first_name.' '.$user->last_name;?></h3>
+											<strong>Date of Birth:</strong> <?php echo date('M d, Y', strtotime(get_user_meta($user->ID, 'dob', true)));?><br><br />
+											<a class="btn btn-success btn-sm" href="<?php the_permalink('edit-user', array('user_id'=> $user__id));?>">
+												<i class="fa fa-edit m-right-xs"></i>&nbsp;<?php _e('Edit User Details');?></a>
+										</div>
+										<div class="col-sm-4 col-xs-12 profile_left">
+											<div class="profile_img"></div>
+											<h3>Contact Details</h3>
+											<strong>Email</strong>: <?php echo $user->user_email;?><br>
+											<strong>Phone:</strong><?php echo get_user_meta($user->ID, 'user_phone', true);?><br>
+											<strong>Work Extension:</strong><?php echo get_user_meta($user->ID, 'work_extension', true);?><br>
+											<strong>Beep:</strong><?php echo get_user_meta($user->ID, 'beep', true);?><br>
+										</div>
+										<div class="col-sm-5 col-xs-12 profile_left">
+											<div class="profile_img">
+												<?php
+												$w_area = get_tabledata(TBL_WORKS, true, array('ID'=> $user->work_area_ID));
+												$a = get_user_meta($user->ID, 'user_designation', true);
+												$desig = get_tabledata(TBL_DESIGNATIONS, true, array('ID'=> $a));
 												?>
-												<a href="<?php echo $noty->filepath; ?>" download>
-													download<br>(<?php echo $name;?>)
-												</a>
-											</td>
-											<td>					<?php $user = get_userdata($noty->from);
-												echo $user->first_name . " ". $user->last_name?>
-											</td>
-										</tr>
-										<?php
-										endforeach;
-										?>
-									</tbody>
-								</table>
-								<div class="row">
-									<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
-									<div class="form-group col-sm-8 col-xs-12">
-										<label for="description-of-fault">
-											Notes
-										</label>
-										<textarea name="note" class="form-control" rows="3">
-										</textarea>
-									</div></div>
-								<label for="description-of-fault">
-									Attachments
-								</label>
-								<input type="file" name="file" accept="">
-
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<input type="hidden" name="action" value="update_notes" />
-									<button class="btn btn-success btn-md" type="submit">
-										<?php _e('Add note');?>
-									</button>
+											</div>
+												
+											<h3>Work Details</h3>
+											<strong>Currently Employed:</strong>
+											<?php echo $user->currently_employed != 0 ?"Yes" : "No";?>
+											<br>
+											<strong>Work Area</strong>: <?php echo $w_area->name;?><br>
+											<strong>Designation:</strong><?php echo $desig->name;?><br>
+											<strong>Band:</strong><?php echo get_user_meta($user->ID, 'band', true);;?>
+											<br>
+											<br/>
+											<strong>External Candidate Number:</strong><?php echo $user->external_candidate;?><br>
+											<strong>RAG Status:</strong><?php echo $user->rag_status;?><br>
+											<strong>RAG Status:</strong><?php
+											if($user->extended_support == 0){
+												echo "Red";
+											}elseif($user->extended_support == 1){
+												echo "Amber";
+											}elseif($user->extended_support == 3){
+												echo "Green";
+											};?>
+											<br>
+											<strong>Extended Support:</strong><?php
+											if($user->extended_support != 0){
+												echo "Yes";
+											}else{
+												echo "No";
+											};?><br>
+											<strong>Support Since:</strong><?php echo $user->support_since;?><br>
+										</div>
+									</ul>
 								</div>
-							</form>
-
-						</ul>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>            
-	</div>
-
-
+								<div class="tab-pane fade in active" id="tab2default">
+									<ul class="messages list-unstyled">
+										<h1>Courses</h1>
+										<?php
+										$user = get_user_by('id', $user__id);
+										$bookings = get_tabledata(TBL_BOOKINGS, false, array());
+										if(!$bookings):
+											echo page_not_found("Thia user is not currently booked for any courses.", ' ', false);
+										else:
+										?>
+										<table class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th><?php _e('Course Name(s)');?></th>
+													<th><?php _e('Course Booked');?></th>
+													<th><?php _e('Attended');?></th>
+													<th><?php _e('Documents uploaded');?></th>
+													<th><?php _e('Course Completed');?></th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+												if($bookings):
+												foreach($bookings as $booking):
+													$data = unserialize($booking->nurses);
+													$data2 = unserialize($booking->attendance);
+													$data3 = unserialize($booking->enroll);
+													$match = 0;
+													$attended;
+													foreach($data as $i):
+														if($user->ID == $i){
+															$match = 1;
+															$attended = $data2[$user->ID];
+															$completed= $data3[$user->ID];
+														}
+													endforeach;
+												//$corse = get_tabledata(TBL_COURSES, true, array('ID' => $booking->course_ID));
+												?>
+												<tr bgcolor="<?php if($completed != 0): echo "#E0F8E0"; else: echo "#F78181"; endif; ?>">
+													<?php if($match != 0):
+													$course = get_tabledata(TBL_COURSES, false, array('ID'=>$booking->course_ID)); ?>
+													<td><?php echo $booking->name; ?></td>
+													<td><?php echo date('M d, Y', strtotime($booking->date_from)); ?></td>
+													<td><?php echo ($attended != 0) ? "yes" : "no."; ?></td>
+													<td></td>
+													<td><?php echo ($completed != 0) ? "yes" : "no."; ?></td>
+													<?php endif;?>
+												</tr>
+												<?php endforeach; endif; ?>
+											</tbody>
+										</table>
+										<?php endif; ?>
+									</ul>
+								</div>
+								<div class="tab-pane fade" id="tab3default">
+									<form class="submit-form" method="post" autocomplete="off">
+										<div class="row">
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Precptorship Intro');?></label>
+												<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Precptorship Name');?></label>
+												<input type="text" name="p_name" class="form-control" value="<?php echo isset($fault->prec_name) ? $fault->prec_name : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Precptorship Email');?></label>
+												<input type="text" name="p_email" class="form-control " value="<?php echo isset($fault->p_email) ? $fault->p_email : '';?>" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-3 col-xs-12">
+												<label for="decommed"><?php _e('Current Preceptee');?></label>
+												<br/>
+												<label><input type="checkbox" name="p_current" class="js-switch" <?php isset($fault->current_prec) ? checked($fault->current_prec, 1) : '';?> /></label>
+											</div>
+											
+											<div class="form-group col-sm-3 col-xs-12">
+												<label for="decommed"><?php _e('Awaiting Pin');?></label>
+												<br/>
+												<label><input type="checkbox" name="p_pin" class="js-switch" <?php isset($fault->pin) ? checked($fault->pin, 1) : '';?>/></label>
+											</div>
+											<div class="form-group col-sm-3 col-xs-12">
+												<label for="decommed"><?php _e('Academic Delay');?></label>
+												<br/>
+												<label><input type="checkbox" name="p_delay" class="js-switch" <?php isset($fault->delay) ? checked($fault->delay, 1) : '';?>/></label>
+											</div>
+											<div class="form-group col-sm-3 col-xs-12">
+												<label for="decommed"><?php _e('International Nurse');?></label>
+												<br/>
+												<label><input type="checkbox" name="p_nurse" class="js-switch" <?php ; isset($fault->int_nurse) ? checked($fault->int_nurse, 1) : ''; ?> /></label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('WTE');?></label>
+												<input type="text" name="p_wte" class="form-control " value="<?php echo isset($fault->WTE) ? $fault->WTE : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Country of First Registeration');?></label>
+												<input type="text" name="p_country" class="form-control" value="<?php echo isset($fault->p_country) ? $fault->p_country : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Awards');?></label>
+												<input type="text" name="p_awards" class="form-control" value="<?php echo isset($fault->awards) ? $fault->awards : '';?>" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for=""><?php _e('Sign off Period');?></label>
+												<br/>
+												<label><input type="radio" class="flat" name="p_period" value="6" <?php isset($fault->sign_off) ? checked($fault->sign_off, '6') : ''; ?> /> <?php _e('6 Months');?></label>
+												<label>&nbsp;</label>
+												<label><input type="radio" class="flat" name="p_period" value="12" <?php isset($fault->sign_off) ? checked($fault->sign_off, '12') : ''; ?> /> <?php _e('12 Months');?></label>
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Links');?></label>
+												<input type="text" name="p_link" class="form-control " value="<?php echo isset($fault->link) ? $fault->link : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="admins"><?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+												<select name="trainers" class="form-control select_single require">
+													<?php
+													$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+													$option_data = get_option_data($data, array('ID', 'name'));
+													echo get_options_list($option_data, maybe_unserialize($fault->prec_trainer));
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="description-of-fault">Notes</label>
+												<textarea name="p_notes" class="form-control" rows="4"><?php echo isset($fault->prec_notes) ? $fault->prec_notes : '';?></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="ln_solid"></div>
+											<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+											<input type="hidden" name="action" value="update_preceptorship" />
+											<button class="btn btn-success btn-md" type="submit"><?php _e('Update Preceptor Progress');?></button>
+										</div>
+									</form>
+								</div>
+								<div class="tab-pane fade" id="tab4default">
+									<form class="submit-form" method="post" autocomplete="off">
+										<?php $data = get_tabledata(TBL_INFO, false, array('user_ID'=>$user__id)); ?>
+										<div class="row">
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Course Start Date');?></label>
+												<input type="text" name="hca_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->hca_start) ? date('M d, Y', strtotime($fault->hca_start)) : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Manager Name');?></label>
+												<input type="text" name="hca_manager" class="form-control" value="<?php echo isset($fault->hca_manager) ? $fault->hca_manager : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Manager Email');?></label>
+												<input type="text" name="hca_email" class="form-control " value="<?php echo isset($fault->hca_email) ? $fault->hca_email : '';?>" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-6 col-xs-12">
+												<label for="decommed"><?php _e('New to care');?></label>
+												<br/>
+												<label><input type="checkbox" name="hca_new_care" class="js-switch" <?php isset($fault->hca_new_care) ? checked($fault->hca_new_care, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-6 col-xs-12">
+												<label for="decommed"><?php _e('Current PD Team Clinet');?></label>
+												<br/>
+												<label><input type="checkbox" name="hca_current_client" class="js-switch" <?php isset($fault->hca_current_client) ? checked($fault->hca_current_client, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-6 col-xs-12">
+												<label for="decommed"><?php _e('Fundamental Adult Care Cluster Book complete');?></label>
+												<br/>
+												<label><input type="checkbox" name="hca_fundamental_care" class="js-switch" <?php isset($fault->hca_fundamental_care) ? checked($fault->hca_fundamental_care, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-6 col-xs-12">
+												<label for="decommed"><?php _e('Care certificate Complete');?></label>
+												<br/>
+												<label><input type="checkbox" name="hca_care" class="js-switch" <?php isset($fault->hca_care) ? checked($fault->hca_care, '1') : ''; ?> /></label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="admins"><?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+												<select name="hca_trainer" class="form-control select_single require">
+													<?php
+													$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+													$option_data = get_option_data($data, array('ID', 'name'));
+													echo get_options_list($option_data, maybe_unserialize($fault->hca_trainer));
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="description-of-fault"><?php _e('Notes');?></label>
+												<textarea name="hca_notes" class="form-control" rows="3"><?php echo isset($fault->hca_notes) ? ($fault->hca_notes) : ''; ?></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="ln_solid"></div>
+											<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+											<input type="hidden" name="action" value="update_mca" />
+											<button class="btn btn-success btn-md" type="submit"><?php _e('Update HCA Induction');?></button>
+										</div>
+									</form>
+								</div>
+								<div class="tab-pane fade" id="tab5default">
+									<form class="submit-form" method="post" autocomplete="off">
+										<div class="row">
+											
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('FD Course Start Date');?></label>
+												<input type="text" name="fd_start" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_start) ? date('M d, Y', strtotime($fault->fd_start)) : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Graduation Date');?></label>
+												<input type="text" name="fd_graduate" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->fd_graduate) ? date('M d, Y', strtotime($fault->fd_graduate)) : '';?>" />
+											</div>
+											
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-2 col-xs-12">
+												<label for="decommed"><?php _e('Course Interrupt');?></label>
+												<br/>
+												<label><input type="checkbox" name="fd_inturrupt" class="js-switch" <?php isset($fault->fd_inturrupt) ? checked($fault->fd_inturrupt, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-2 col-xs-12">
+												<label for="decommed"><?php _e('Study Day 1');?></label>
+												<br/>
+												<label><input type="checkbox" name="fd_sd1" class="js-switch" <?php isset($fault->fd_sd1) ? checked($fault->fd_sd1, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-2 col-xs-12">
+												<label for="decommed"><?php _e('Study Day 2');?></label>
+												<br/>
+												<label><input type="checkbox" name="fd_sd2" class="js-switch" <?php isset($fault->fd_sd2) ? checked($fault->fd_sd2, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-2 col-xs-12">
+												<label for="decommed"><?php _e('Study Day 3');?></label>
+												<br/>
+												<label><input type="checkbox" name="fd_sd3" class="js-switch" <?php isset($fault->fd_sd3) ? checked($fault->fd_sd3, '1') : ''; ?>/></label>
+											</div>
+											<div class="form-group col-sm-2 col-xs-12">
+												<label for="decommed"><?php _e('CURRENT FD');?></label>
+												<br/>
+												<label><input type="checkbox" name="fd_current" class="js-switch" <?php isset($fault->fd_current) ? checked($fault->fd_current, '1') : ''; ?>/></label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="description-of-fault"><?php _e('Other Study');?></label>
+												<textarea name="fd_other" class="form-control" rows="3"><?php echo isset($fault->fd_other) ? $fault->fd_other : '';?></textarea>
+											</div>
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="admins"><?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
+												<select name="fd_trainer" class="form-control select_single require">
+													<?php
+													$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+													$option_data = get_option_data($data, array('ID', 'name'));
+													echo get_options_list($option_data, maybe_unserialize($fault->fd_trainer));
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="description-of-fault"><?php _e('Notes');?></label>
+												<textarea name="fd_notes" class="form-control" rows="4"><?php echo isset($fault->fd_notes) ? $fault->fd_notes : '';?></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="ln_solid"></div>
+											<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+											<input type="hidden" name="action" value="update_fdap" />
+											<button class="btn btn-success btn-md" type="submit"><?php _e('Update FD/AP Training Records');?></button>
+										</div>
+									</form>
+								</div>
+								<div class="tab-pane fade" id="tab6default">
+									<form class="submit-form" method="post" autocomplete="off">
+										<div class="row">
+											<div class="form-group col-sm-6 col-xs-12">
+												<label for="date-of-fault"><?php _e('Cohort');?></label>
+												<select name="stud_cohort" class="form-control fetch-cohort-dates-data select_single require">
+													<?php
+													$data = get_tabledata(TBL_COHORTS, false, array());
+													$option_data = get_option_data($data, array('ID', 'name'));
+													echo get_options_list($option_data);
+													?>
+												</select>
+											</div>
+											<div class="form-group col-sm-6 col-xs-12">
+												<label for="date-of-fault"><?php _e('Cohort date');?></label>
+												<select name="stud_cohort_date" class="form-control select_single select-dates require">
+													<?php
+													$data = get_tabledata(TBL_COHORTS_EXT, false, array());
+													$option_data = get_option_data($data, array('ID', 'Cohort_date'));
+													echo get_options_list($option_data);
+													?>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Study Day 1');?></label>
+												<input id = "stud_d1" type="text" name="stud_d1" class="form-control input-datepicker" readonly="readonly" value="" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Study Day 2');?></label>
+												<input id = "stud_d2" type="text" name="stud_d2" class="form-control input-datepicker" readonly="readonly" value="" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Study Day 3');?></label>
+												<input id = "stud_d3" type="text" name="stud_d3" class="form-control input-datepicker" readonly="readonly" value="" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="description-of-fault"><?php _e('Notes');?></label>
+												<textarea name="stud_notes" class="form-control" rows="4"></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="ln_solid"></div>
+											<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+											<input type="hidden" name="action" value="update_student_prog" />
+											<button class="btn btn-success btn-md" type="submit"><?php _e('Update student Progress');?></button>
+										</div>
+									</form>
+								</div>									
+								<div class="tab-pane fade" id="tab7default">
+									<form class="submit-form" method="post" autocomplete="off">
+										<div class="row">
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="decommed"><?php _e('Current Mentor');?></label>
+												<br/>
+												<label><input type="checkbox" name="mentor_current" class="js-switch" <?php isset($fault->mentor_current) ? checked($fault->mentor_current, '1') : ''; ?> /></label>
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="date-of-fault"><?php _e('Update Renewal Due');?></label>
+												<input type="text" name="mentor_renew" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->mentor_renew) ? date('M d, Y', strtotime($fault->mentor_renew)) : '';?>" />
+											</div>
+											<div class="form-group col-sm-4 col-xs-12">
+												<label for="decommed"><?php _e('Sign off Mentor');?></label>
+												<br/>
+												<label><input type="checkbox" name="mentor_sign_off" class="js-switch" <?php isset($fault->mentor_sign_off) ? checked($fault->mentor_sign_off, '1') : ''; ?>/></label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-sm-12 col-xs-12">
+												<label for="description-of-fault"><?php _e('Notes');?></label>
+												<textarea name="mentor_notes" class="form-control" rows="3"><?php echo isset($fault->mentor_notes) ? $fault->mentor_notes : '';?></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="ln_solid"></div>
+											<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+											<input type="hidden" name="action" value="update_mentor_prog" />
+											<button class="btn btn-success btn-md" type="submit"><?php _e('Update Mentor Progress');?></button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="panel with-nav-tabs panel-info">
+						<div class="panel-heading">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#tab1info" data-toggle="tab">Notes</a></li>
+							</ul>
+						</div>
+						<div class="panel-body">
+							<div class="tab-content">
+								<div class="tab-pane fade in active" id="tab1info">
+									<ul class="messages list-unstyled">
+										<form class="submit-form" method="post" autocomplete="off">
+											<table id="datatable-buttons" class="table table-striped table-bordered" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th><?php _e('Date of Note');?></th>
+														<th><?php _e('Note');?></th>
+														<th><?php _e('Attachments');?></th>
+														<th><?php _e('Note Posted By');?></th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php
+													$notez = get_tabledata(TBL_NOTES, false, array('to'=>$user__id));
+													foreach($notez as $noty): ?>
+													<tr>
+														<td>	<?php echo $noty->date?></td>
+														<td>	<?php echo $noty->note?></td>
+														<td>	<?php
+															function filePathParts($arg1){
+																return $arg1['basename'];
+															}
+															$xmlFile = pathinfo($noty->filepath);
+															$name = filePathParts($xmlFile);
+															?>
+															<a href="<?php echo $noty->filepath; ?>" download>Download<br>(<?php echo $name;?>)</a></td>
+														<td>	<?php $user = get_userdata($noty->from);echo $user->first_name . " ". $user->last_name?></td>
+													</tr>
+													<?php endforeach; ?>
+												</tbody>
+											</table>
+											<div class="row">
+												<div class="form-group col-sm-12 col-xs-12">
+													<label for="description-of-fault"><?php _e('Notes');?></label>
+													<textarea name="note" class="form-control" rows="4"></textarea>
+												</div>
+												<div class="form-group col-sm-12 col-xs-12">
+													<label for="description-of-fault"><?php _e('Attachments');?></label>
+													<input type="file" name="file" accept="">
+												</div>
+											</div>
+											
+											
+											<div class="form-group">
+												<div class="ln_solid"></div>
+												<input type="hidden" name="user_id3" class="form-control require" value="<?php echo $user__id;?>" readonly="readonly" />
+												<input type="hidden" name="action" value="update_notes" />
+												<button class="btn btn-success btn-md" type="submit"><?php _e('Add note');?></button>
+											</div>
+										</form>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<?php
 			$content = ob_get_clean();
 			return $content;
@@ -1101,9 +862,9 @@ if( !class_exists('User') ):
 			$user__id = $_GET['user_id'];
 			$user = get_userdata($user__id);
 			if(!user_can('view_user')):
-			echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			elseif(!$user):
-			echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
+				echo page_not_found('Oops ! User Details Not Found.', 'Please go back and check again !');
 			else: ?>
 			<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
 				<div class="profile_img">
@@ -1119,16 +880,16 @@ if( !class_exists('User') ):
 						<i class="fa fa-envelope-o"></i>&nbsp;<?php _e($user->user_email);?>
 					</li>
 					<li>
-						<i class="fa fa-<?php echo strtolower(get_user_meta($user->ID,'gender',true));?>"></i>&nbsp;<?php _e(get_user_meta($user->ID,'gender',true));?>
+						<i class="fa fa-<?php echo strtolower(get_user_meta($user->ID, 'gender', true));?>"></i>&nbsp;<?php _e(get_user_meta($user->ID, 'gender', true));?>
 					</li>
 					<?php
-					if(get_user_meta($user->ID,'user_phone',true) != ''): ?>
+					if(get_user_meta($user->ID, 'user_phone', true) != ''): ?>
 					<li>
-						<i class="fa fa-phone"></i><?php echo get_user_meta($user->ID,'user_phone',true);?>
+						<i class="fa fa-phone"></i><?php echo get_user_meta($user->ID, 'user_phone', true);?>
 					</li>
 					<?php endif; ?>
 					<li class="m-top-xs">
-						<i class="fa fa-child"></i>&nbsp;<?php echo date('M d,Y',strtotime(get_user_meta($user->ID,'dob',true)));?>
+						<i class="fa fa-child"></i>&nbsp;<?php echo date('M d, Y', strtotime(get_user_meta($user->ID, 'dob', true)));?>
 					</li>
 				</ul>
 				<br/>
@@ -1147,18 +908,15 @@ if( !class_exists('User') ):
 			$user__id = $_GET['user_id'];
 			$user = get_userdata($user__id);
 			?>
-				<h3>
-					Progress review for: <?php echo $user->first_name.' '.$user->last_name;?>
-				</h3>
-                    <div class="col-md-12 col-xs-12 profile_left">
-
-			</div>
+			<h3>Progress review for: <?php echo $user->first_name.' '.$user->last_name;?></h3>
+			<div class="col-md-12 col-xs-12 profile_left"></div>
 			<?php
 			if(!user_can('view_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			elseif(!$user):
-				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
-			else:  echo $this->activity__and__progress__log__section( $user->ID );
+				echo page_not_found('Oops ! User Details Not Found.', 'Please go back and check again !');
+			else:
+				echo $this->activity__and__progress__log__section( $user->ID );
 			endif;
 			$content = ob_get_clean();
 			return $content;
@@ -1167,7 +925,7 @@ if( !class_exists('User') ):
 		public function add__trainee__page(){
 			ob_start();
 			if(!user_can('add_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+			echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			else: ?>
 			<form class="add-user user-form" method="post" autocomplete="off">
 				<div class="row">
@@ -1199,10 +957,8 @@ if( !class_exists('User') ):
 						<label for="gender"><?php _e('Gender');?>&nbsp;<span class="required">*</span></label>
 						<select name="gender" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
 							<option value=""></option>
-							<option value="Male">
-								<?php _e('Male');?></option>
-							<option value="Female">
-								<?php _e('Female');?></option>
+							<option value="Male"><?php _e('Male');?></option>
+							<option value="Female"><?php _e('Female');?></option>
 						</select>
 					</div>
 				</div>
@@ -1229,8 +985,8 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="user_designation"><?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
 						<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation"><?php
-							$data = get_tabledata(TBL_DESIGNATIONS,false);
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_DESIGNATIONS, false);
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1239,8 +995,8 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="user_designation"><?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
 						<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area"><?php
-							$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_WORKS, false, array(), '', ' ID, CONCAT_WS(" | ", code, name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1250,7 +1006,7 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="band"><?php _e('Band');?></label>
 						<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band"><?php
-							$option_data = $this->user_bands();
+							$option_data = $this->user__bands();
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1273,7 +1029,7 @@ if( !class_exists('User') ):
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current_employed">Currently Employed?
+						<label for="current_employed">Currently Employed?</label>
 						<br/>
 						<label><input type="radio" class="flat" name="current_employed" value="1" /> Yes</label>
 						<label>&nbsp;</label>
@@ -1281,27 +1037,17 @@ if( !class_exists('User') ):
 					</div>
 				</div>
 				<div class="form-group col-sm-6 col-xs-12">
-					<label for="name">
-						External Candidate No.
-					</label>
+					<label for="name">External Candidate No.</label>
 					<input type="text" name="ex_cand" class="form-control " />
 				</div>
 				<div class="form-group col-sm-6 col-xs-12">
-					<label for="gender">
-						RAG Status
-					</label>
+					<label for="gender">RAG Status</label>
 					<select name="rag_status" class="form-control select_single" tabindex="-1" data-placeholder="Choose a gender">
 						<option value="">
 						</option>
-						<option value="0">
-							Red
-						</option>
-						<option value="1">
-							Amber
-						</option>
-						<option value="2">
-							Green
-						</option>
+						<option value="0">Red</option>
+						<option value="1">Amber</option>
+						<option value="2">Green</option>
 					</select>
 				</div>
 				<div class="form-group col-sm-6 col-xs-12">
@@ -1311,17 +1057,13 @@ if( !class_exists('User') ):
 					<label><input type="radio" class="flat" name="extended_support" value="0" /> No</label>
 				</div>
 				<div class="form-group col-sm-6 col-xs-12">
-					<label for="name">
-						Extended Support Since:
-					</label>
+					<label for="name">Extended Support Since:</label>
 					<input type="text" name="support_since" class="form-control " />
 				</div>
 
 				<div class="row">
 					<br><br>
-					<h2>
-						Training information Required:
-					</h2><br><br>
+					<h2>Training information Required:</h2><br><br>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="current_employed">Preceptorship progress</label><br/>
 						<label><input type="radio" class="flat" name="preceptorship" value="1" /> Yes</label>
@@ -1361,7 +1103,8 @@ if( !class_exists('User') ):
 					</button>
 				</div>
 			</form>
-			<?php echo $this->upload__image__section();
+			<?php
+			echo $this->upload__image__section();
 			endif;
 			$content = ob_get_clean();
 			return $content;
@@ -1370,7 +1113,7 @@ if( !class_exists('User') ):
 		public function add__user__page(){
 			ob_start();
 			if(!user_can('add_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			else: ?>
 			<form class="add-user user-form" method="post" autocomplete="off">
 				<div class="row">
@@ -1402,10 +1145,8 @@ if( !class_exists('User') ):
 						<label for="gender"><?php _e('Gender');?>&nbsp;<span class="required">*</span></label>
 						<select name="gender" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
 							<option value=""></option>
-							<option value="Male">
-								<?php _e('Male');?></option>
-							<option value="Female">
-								<?php _e('Female');?></option>
+							<option value="Male"><?php _e('Male');?></option>
+							<option value="Female"><?php _e('Female');?></option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
@@ -1434,8 +1175,8 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="user_designation"><?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
 						<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation"><?php
-							$data = get_tabledata(TBL_DESIGNATIONS,false);
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_DESIGNATIONS, false);
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1443,8 +1184,8 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="work_area"><?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
 						<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area"><?php
-							$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_WORKS, false, array(), '', ' ID, CONCAT_WS(" | ", code, name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1454,7 +1195,7 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="band"><?php _e('Band');?></label>
 						<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band"><?php
-							$option_data = $this->user_bands();
+							$option_data = $this->user__bands();
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1478,63 +1219,42 @@ if( !class_exists('User') ):
 				<div class="row nav-sub-wrapper" style="display: none;">
 					<div class="col-xs-12 col-sm-12 form-goup">
 						<script>
-							$(document).ready(function(){$("#purpose").on("change",function(){"nurse"==this.value?$(".nav-sub-wrapper").toggle():$(".nav-sub-wrapper").hide()})});
+							$(document).ready(function(){$("#purpose").on("change", function(){"nurse"==this.value?$(".nav-sub-wrapper").toggle():$(".nav-sub-wrapper").hide()})});
 						</script>
 						<div class="row">
 							<div class="form-group col-sm-6 col-xs-12">
-								<label for="current_employed">
-									Currently Employed?
-								</label>
+								<label for="current_employed">Currently Employed?</label>
 								<br/>
-								<label>	<input type="radio" class="flat" name="current_employed" value="1" /> Yes
-								</label>
+								<label><input type="radio" class="flat" name="current_employed" value="1" /> Yes</label>
 								<label>&nbsp;</label>
-								<label>	<input type="radio" class="flat" name="current_employed" value="0" /> No
-								</label>
+								<label><input type="radio" class="flat" name="current_employed" value="0" /> No</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group col-sm-6 col-xs-12">
-								<label for="name">
-									External Candidate No.
-								</label>
+								<label for="name">External Candidate No.</label>
 								<input type="text" name="ex_cand" class="form-control " />
 							</div>
 							<div class="form-group col-sm-6 col-xs-12">
-								<label for="gender">
-									RAG Status
-								</label>
+								<label for="gender">RAG Status</label>
 								<select name="rag_status" class="form-control select_single" tabindex="-1" data-placeholder="Choose a gender">
-									<option value="">
-									</option>
-									<option value="0">
-										Red
-									</option>
-									<option value="1">
-										Amber
-									</option>
-									<option value="2">
-										Green
-									</option>
+									<option value=""></option>
+									<option value="0">Red</option>
+									<option value="1">Amber</option>
+									<option value="2">Green</option>
 								</select>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group col-sm-6 col-xs-12">
-								<label for="current_employed">
-									Extended support Underway
-								</label>
+								<label for="current_employed">Extended support Underway</label>
 								<br/>
-								<label>	<input type="radio" class="flat" name="extended_support" value="1" /> Yes
-								</label>
+								<label><input type="radio" class="flat" name="extended_support" value="1" /> Yes</label>
 								<label>&nbsp;</label>
-								<label>	<input type="radio" class="flat" name="extended_support" value="0" /> No
-								</label>
+								<label><input type="radio" class="flat" name="extended_support" value="0" /> No</label>
 							</div>
 							<div class="form-group col-sm-6 col-xs-12">
-								<label for="name">
-									Extended Support Since:
-								</label>
+								<label for="name">Extended Support Since:</label>
 								<input type="text" name="support_since" class="form-control " />
 							</div>
 						</div>
@@ -1581,7 +1301,8 @@ if( !class_exists('User') ):
 					</div>
 				</div>
 			</form>
-			<?php echo $this->upload__image__section();
+			<?php
+			echo $this->upload__image__section();
 			endif;
 			$content = ob_get_clean();
 			return $content;
@@ -1591,11 +1312,11 @@ if( !class_exists('User') ):
 			ob_start();
 			$user__id = $_GET['user_id'];
 			$user = get_userdata($user__id);
-			$designation = get_tabledata(TBL_RULES,true,array('user_ID'=> $user__id));
+			$designation = get_tabledata(TBL_RULES, true, array('user_ID'=> $user__id));
 			if(!user_can('edit_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			elseif(!$user):
-				echo page_not_found('Oops ! User Details Not Found.','Please go back and check again !');
+				echo page_not_found('Oops ! User Details Not Found.', 'Please go back and check again !');
 			else: ?>
 			<form class="edit-user user-form" method="post" autocomplete="off">
 				<div class="row">
@@ -1619,7 +1340,7 @@ if( !class_exists('User') ):
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="dob"><?php _e('Date of birth');?></label>
-						<?php $dob = (get_user_meta($user->ID,'dob') != '') ? date('M d, Y', strtotime(trim(get_user_meta($user->ID,'dob')))) : ''; ?>
+						<?php $dob = (get_user_meta($user->ID, 'dob') != '') ? date('M d, Y', strtotime(trim(get_user_meta($user->ID, 'dob')))) : ''; ?>
 						<input type="text" name="dob" class="form-control input-datepicker-today" readonly="readonly" value="<?php echo $dob;?>" />
 					</div>
 				</div>
@@ -1628,19 +1349,19 @@ if( !class_exists('User') ):
 						<label for="gender"><?php _e('Gender');?>&nbsp;<span class="required">*</span></label>
 						<select name="gender" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
 							<option value=""></option>
-							<option value="Male" <?php selected(get_user_meta($user->ID,'gender'), 'Male');?>>Male</option>
-							<option value="Female" <?php selected(get_user_meta($user->ID,'gender'),'Female');?>>Female</option>
+							<option value="Male" <?php selected(get_user_meta($user->ID, 'gender'), 'Male');?>>Male</option>
+							<option value="Female" <?php selected(get_user_meta($user->ID, 'gender'), 'Female');?>>Female</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="phone"><?php _e('Phone');?></label>
-						<input type="text" name="user_phone" class="form-control" value="<?php echo get_user_meta($user__id,'user_phone');?>" />
+						<input type="text" name="user_phone" class="form-control" value="<?php echo get_user_meta($user__id, 'user_phone');?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="company"><?php _e('Role');?>&nbsp;<span class="required">*</span></label>
-						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role"><?php echo get_options_list(get_roles(),array($user->user_role)); ?>
+						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role"><?php echo get_options_list(get_roles(), array($user->user_role)); ?>
 						</select>
 					</div>
 				</div>
@@ -1648,36 +1369,36 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="user_designation"><?php _e('Designation');?>&nbsp;<span class="required">*</span></label>
 						<select name="user_designation" class="form-control select_single require" tabindex="-1" data-placeholder="Choose designation"><?php
-							$data = get_tabledata(TBL_DESIGNATIONS,false);
-							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data, get_user_meta($user->ID,'user_designation'));
+							$data = get_tabledata(TBL_DESIGNATIONS, false);
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data, get_user_meta($user->ID, 'user_designation'));
 							?>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="work_extension"><?php _e('Work extension');?></label>
-						<input type="text" name="work_extension" class="form-control" value="<?php echo get_user_meta($user->ID,'work_extension');?>" />
+						<input type="text" name="work_extension" class="form-control" value="<?php echo get_user_meta($user->ID, 'work_extension');?>" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="user_designation"><?php _e('Work Area');?>&nbsp;<span class="required">*</span></label>
 						<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area"><?php
-							$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
-							$option_data = get_option_data($data,array('ID','name'));
-							echo get_options_list($option_data,maybe_unserialize($user->work_area_ID));
+							$data = get_tabledata( TBL_WORKS, false, array(), '', ' ID, CONCAT_WS(" | ", code, name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data, maybe_unserialize($user->work_area_ID));
 							?>
 						</select>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="beep"><?php _e('Beep');?></label>
-						<input type="text" name="beep" class="form-control" value="<?php echo get_user_meta($user->ID,'beep');?>" />
+						<input type="text" name="beep" class="form-control" value="<?php echo get_user_meta($user->ID, 'beep');?>" />
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="band"><?php _e('Band');?></label>
 						<select name="band" class="form-control select_single" tabindex="-1" data-placeholder="Choose band"><?php
-							$option_data = $this->user_bands();
-							echo get_options_list($option_data,get_user_meta($user->ID,'band'));
+							$option_data = $this->user__bands();
+							echo get_options_list($option_data, get_user_meta($user->ID, 'band'));
 							?>
 						</select>
 					</div>
@@ -1685,7 +1406,7 @@ if( !class_exists('User') ):
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 form-goup">
 						<label><?php _e('Upload Profile Image');?></label>
-							<input type="text" name="profile_img" class="form-control" value="<?php echo get_user_profile_image($user->ID,false);?>" placeholder="Uploaded image url" readonly="readonly" />
+						<input type="text" name="profile_img" class="form-control" value="<?php echo get_user_profile_image($user->ID, false);?>" placeholder="Uploaded image url" readonly="readonly" />
 						<br/>
 						<a href="#" class="btn btn-default btn-sm" data-toggle="modal" data-target="#upload-image-modal">
 							<i class="fa fa-camera"></i>&nbsp;<?php _e('Upload Image');?>
@@ -1733,9 +1454,9 @@ if( !class_exists('User') ):
 							RAG Status</label>
 						<select name="rag_status" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a gender">
 							<option value=""></option>
-							<option value="0" <?php selected($user->rag_status,'0');?>>Red</option>
-							<option value="1" <?php selected($user->rag_status,'1');?>>Amber</option>
-							<option value="2" <?php selected($user->rag_status,'2');?>>Green</option>
+							<option value="0" <?php selected($user->rag_status, '0');?>>Red</option>
+							<option value="1" <?php selected($user->rag_status, '1');?>>Amber</option>
+							<option value="2" <?php selected($user->rag_status, '2');?>>Green</option>
 						</select>
 					</div>
 				</div>
@@ -1752,37 +1473,36 @@ if( !class_exists('User') ):
 						<input type="text" name="support_since" class="form-control " value="<?php echo $user->support_since;?>" />
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current_employed">Preceptorship progress</label><br/>
-						<label><input type="radio" class="flat" name="preceptorship" value="1" <?php checked($designation->preceptorship , 1);?> /> Yes</label>
+						<label for="current_employed"><?php _e('Preceptorship progress');?></label><br/>
+						<label><input type="radio" class="flat" name="preceptorship" value="1" <?php checked($designation->preceptorship, 1);?> /> <?php _e('Yes');?></label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="preceptorship" value="0" <?php checked($designation->preceptorship , 0);?> /> No</label>
+						<label><input type="radio" class="flat" name="preceptorship" value="0" <?php checked($designation->preceptorship, 0);?> /> <?php _e('No');?></label>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current_employed">HCA Induction Progress</label><br/>
-						<label><input type="radio" class="flat" name="hca" value="1" <?php checked($designation->hca , 1);?>/> Yes</label>
+						<label for="current_employed"><?php _e('HCA Induction Progress');?></label><br/>
+						<label><input type="radio" class="flat" name="hca" value="1" <?php checked($designation->hca , 1);?>/> <?php _e('Yes');?></label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="hca" value="0" <?php checked($designation->hca , 0);?>/> No</label>
+						<label><input type="radio" class="flat" name="hca" value="0" <?php checked($designation->hca , 0);?>/> <?php _e('No');?></label>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current_employed">FD/AP Training Record</label><br/>
-						<label><input type="radio" class="flat" name="fdap" value="1" <?php checked($designation->flap , 1);?>/> Yes</label>
+						<label for="current_employed"><?php _e('FD/AP Training Record');?></label><br/>
+						<label><input type="radio" class="flat" name="fdap" value="1" <?php checked($designation->flap , 1);?>/> <?php _e('Yes');?></label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="fdap" value="0" <?php checked($designation->flap , 0);?>/> No</label>
+						<label><input type="radio" class="flat" name="fdap" value="0" <?php checked($designation->flap , 0);?>/> <?php _e('No');?></label>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current_employed">Student Record</label><br/>
-						<label><input type="radio" class="flat" name="record" value="1" <?php checked($designation->record , 1);?>/> Yes</label>
+						<label for="current_employed"><?php _e('Student Record');?></label><br/>
+						<label><input type="radio" class="flat" name="record" value="1" <?php checked($designation->record , 1);?>/> <?php _e('Yes');?></label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="record" value="0" <?php checked($designation->record , 0);?>/> No</label>
+						<label><input type="radio" class="flat" name="record" value="0" <?php checked($designation->record , 0);?>/> <?php _e('No');?></label>
 					</div>
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="current_employed">Mentorship</label><br/>
-						<label><input type="radio" class="flat" name="mentorship" value="1" <?php checked($designation->mentorship , 1);?> /> Yes</label>
+						<label for="current_employed"><?php _e('Mentorship');?></label><br/>
+						<label><input type="radio" class="flat" name="mentorship" value="1" <?php checked($designation->mentorship , 1);?> /> <?php _e('Yes');?></label>
 						<label>&nbsp;</label>
-						<label><input type="radio" class="flat" name="mentorship" value="0"<?php checked($designation->mentorship , 0);?> /> No</label>
+						<label><input type="radio" class="flat" name="mentorship" value="0"<?php checked($designation->mentorship , 0);?> /> <?php _e('No');?></label>
 					</div>
 				</div>
 				<div class="row">
@@ -1794,20 +1514,24 @@ if( !class_exists('User') ):
 					</div>
 				</div>
 			</form>
-			<?php echo $this->upload__image__section();
+			<?php
+			echo $this->upload__image__section();
 			endif;
 			$content = ob_get_clean();
 			return $content;
 		}
 
-		public function all__users__page(){
+		public function all__users__page( $role = ''){
 			ob_start();
-			$args = (!is_admin()) ? array('created_by'=> $this->current__user__id) : array();
-			$users_list = get_tabledata(TBL_USERS,false,$args);
+			$args = !is_admin() ? array( 'created_by'=> $this->current__user__id ) : array();
+			if( $role != '' ){
+				$args['user_role'] = $role;
+			}
+			$users_list = get_tabledata(TBL_USERS, false, $args);
 			if(!user_can('view_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			elseif(!$users_list):
-				echo page_not_found("Oops! There is no New Users in website",' ',false);
+				echo page_not_found("Oops! There is no New Users in website", ' ', false);
 			else: ?>
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 				<thead>
@@ -1832,10 +1556,10 @@ if( !class_exists('User') ):
 							<img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
 						<td><?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?></td>
 						<td><?php _e($single_user->user_email);?></td>
-						<td><?php echo date('M d,Y',strtotime($single_user->registered_at));?></td>
+						<td><?php echo date('M d, Y', strtotime($single_user->registered_at));?></td>
 						<?php if(is_admin()): ?>
 						<td class="text-center">
-							<label><input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label></td>
+							<label><input type="checkbox" class="js-switch approve-switch" <?php checked($single_user->user_status , 1);?> data-id="<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label></td>
 						<?php endif; ?>
 						<td class="text-center">
 							<a href="<?php the_permalink('view-user', array('user_id'=> $single_user->ID));?>" class="btn btn-success btn-xs">
@@ -1844,117 +1568,7 @@ if( !class_exists('User') ):
 							<a href="<?php the_permalink('edit-user', array('user_id'=> $single_user->ID));?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
 							</a>
-							<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $single_user->ID;?>" data-action="delete_user">
-								<i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?>
-							</a>
-						</td>
-					</tr>
-					<?php endforeach; endif; ?>
-				</tbody>
-			</table>
-			<?php endif;
-			$content = ob_get_clean();
-			return $content;
-		}
-
-		public function all__trainers__page(){
-			ob_start();
-			$users_list = get_tabledata(TBL_USERS,false,array('user_role'=>'course_admin'));
-			if(!user_can('view_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
-			elseif(!$users_list):
-				echo page_not_found("Oops! There is no New Users in website",' ',false);
-			else: ?>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th></th>
-						<th><?php _e('Name');?></th>
-						<th><?php _e('Email');?></th>
-						<th><?php _e('Registered On');?></th>
-						<?php if(is_admin()): ?>
-						<th class="text-center"><?php _e('Status');?></th>
-						<?php endif; ?>
-						<th class="text-center"><?php _e('Actions');?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					if($users_list):
-					foreach($users_list as $single_user):
-					$admin_label = ($single_user->user_role == 'admin') ? '<label class="label label-success">admin</label>' : '';?>
-					<tr>
-						<td class="text-center">
-							<img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
-						<td><?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?></td>
-						<td><?php _e($single_user->user_email);?></td>
-						<td><?php echo date('M d,Y',strtotime($single_user->registered_at));?></td>
-						<?php if(is_admin()): ?>
-						<td class="text-center">
-							<label><input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label></td>
-						<?php endif; ?>
-						<td class="text-center">
-							<a href="<?php the_permalink('view-user', array('user_id'=> $single_user->ID));?>" class="btn btn-success btn-xs">
-								<i class="fa fa-eye"></i>&nbsp;<?php _e('View');?>
-							</a>
-							<a href="<?php the_permalink('edit-user', array('user_id'=> $single_user->ID));?>" class="btn btn-dark btn-xs">
-								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
-							</a>
-							<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $single_user->ID;?>" data-action="delete_user">
-								<i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?>
-							</a></td>
-					</tr>
-					<?php endforeach; endif; ?>
-				</tbody>
-			</table>
-			<?php endif;
-			$content = ob_get_clean();
-			return $content;
-		}
-
-		public function all__trainees__page(){
-			ob_start();
-			$users_list = get_tabledata(TBL_USERS,false,array('user_role'=>'nurse'));
-			if(!user_can('view_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
-			elseif(!$users_list):
-				echo page_not_found("Oops! There is no New Users in website",' ',false);
-			else: ?>
-			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th></th>
-						<th><?php _e('Name');?></th>
-						<th><?php _e('Email');?></th>
-						<th><?php _e('Registered On');?></th>
-						<?php if(is_admin()): ?>
-						<th class="text-center"><?php _e('Status');?></th>
-						<?php endif; ?>
-						<th class="text-center"><?php _e('Actions');?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php if($users_list):
-					foreach($users_list as $single_user):
-					$admin_label = ($single_user->user_role == 'admin') ? '<label class="label label-success">admin</label>' : '';?>
-					<tr>
-						<td class="text-center">
-							<img src="<?php echo get_user_profile_image($single_user->ID);?>" class="avatar center-block" alt="Avatar"></td>
-						<td><?php echo __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label);?></td>
-						<td><?php _e($single_user->user_email);?></td>
-						<td><?php echo date('M d,Y',strtotime($single_user->registered_at));?></td>
-						<?php if(is_admin()): ?>
-						<td class="text-center">
-							<label><input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onClick="javascript:approve_switch(this);" data-id="<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label></td>
-						<?php endif; ?>
-						<td class="text-center">
-							<a href="<?php the_permalink('view-user', array('user_id'=> $single_user->ID));?>" class="btn btn-success btn-xs">
-								<i class="fa fa-eye"></i>&nbsp;<?php _e('View');?>
-							</a>
-							<a href="<?php the_permalink('edit-user', array('user_id'=> $single_user->ID));?>" class="btn btn-dark btn-xs">
-								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
-							</a>
-							<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $single_user->ID;?>" data-action="delete_user">
+							<a href="#" class="btn btn-danger btn-xs delete-record" data-id="<?php echo $single_user->ID;?>" data-action="delete_user">
 								<i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?>
 							</a>
 						</td>
@@ -1970,20 +1584,19 @@ if( !class_exists('User') ):
 		public function all__progress__page(){
 			ob_start();
 			$args = array('user_role'=>'nurse');
-			$users_list = get_tabledata(TBL_USERS,false,$args);
+			$users_list = get_tabledata(TBL_USERS, false, $args);
 			if(!user_can('view_user')):
-				echo page_not_found('Oops ! You are not allowed to view this page.','Please check other pages !');
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			elseif(!$users_list):
-				echo page_not_found("Oops! There is no New Users in website",' ',false);
+				echo page_not_found("Oops! There is no New Users in website", ' ', false);
 			else: ?>
-
 			<form action="<?php echo site_url();?>/progress/" method="POST">
 				<div class="row custom-filters">
 					<div class="form-group col-sm-2 col-xs-6">
 						<label for="courses"><?php _e('Course');?></label>
 						<select name="course" class="form-control select_single" data-placeholder="Choose course"><?php
-							$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID,name');
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_BOOKINGS, false, array(), '', ' ID, name');
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -1992,8 +1605,8 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-2 col-xs-6">
 						<label for="user_designation"><?php _e('Designation');?></label>
 						<select name="user_designation" class="form-control select_single" tabindex="-1" data-placeholder="Choose designation"><?php
-							$data = get_tabledata(TBL_DESIGNATIONS,false);
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_DESIGNATIONS, false);
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -2002,8 +1615,8 @@ if( !class_exists('User') ):
 					<div class="form-group col-sm-2 col-xs-6">
 						<label for="work_area"><?php _e('Work Area');?></label>
 						<select name="work_area" class="form-control select_single" tabindex="-1" data-placeholder="Choose Work Area"><?php
-							$data = get_tabledata(TBL_WORKS,false,array(),'',' ID, CONCAT_WS(" | ", code, name) as name');
-							$option_data = get_option_data($data,array('ID','name'));
+							$data = get_tabledata(TBL_WORKS, false, array(), '', ' ID, CONCAT_WS(" | ", code, name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
 							echo get_options_list($option_data);
 							?>
 						</select>
@@ -2027,51 +1640,46 @@ if( !class_exists('User') ):
 
 			</table>
 			<?php endif;
-			echo $this->add__to__course__modal();
 			echo $this->add__to__booking__modal();
 			$content = ob_get_clean();
 			return $content;
 		}
-
-		public function add__to__course__modal(){
+			
+		public function add__to__booking__modal(){
 			ob_start(); ?>
 			<!-- calendar modal -->
-			<div id="add-to-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			<div id="add-to-booking-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h1 class="modal-title text-center text-uppercase">
-								<?php _e('Trainees Details');?>
-							</h1>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Trainees Details');?></h1>
 						</div>
-						<form class="update-courses submit-form" method="post" autocomplete="off">
+						<form class="update-bookings submit-form" method="post" autocomplete="off">
 							<div class="modal-body">
-								<div id="add-to-course-modal-body">
+								<div id="add-to-booking-modal-body">
 									<div class="row">
 										<div class="form-group col-sm-6 col-xs-12">
-											<label for="first_name"><?php _e('First Name');?>&nbsp;
-												<span class="required">*</span></label>
-												<input type="text" name="first_name" class="form-control require" />
+											<label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
+											<input type="text" name="first_name" class="form-control require" />
 										</div>
 										<div class="form-group col-sm-6 col-xs-12">
-											<label for="last_name"><?php _e('Last Name');?>&nbsp;
-												<span class="required">*</span></label>
+											<label for="last_name"><?php _e('Last Name');?>&nbsp;<span class="required">*</span></label>
 											<input type="text" name="last_name" class="form-control require" />
 										</div>
 									</div>
 									<div class="row">
 										<div class="form-group col-sm-12 col-xs-12">
-											<label for="courses"><?php _e('Course(s)');?></label>
-											<select name="courses[]" class="form-control select_single select-courses" data-placeholder="Choose course(s)" multiple="multiple"></select>
-											<input type="hidden" name="action" value="update_user_course" />
+											<label for="bookings"><?php _e('Booking(s)');?></label>
+											<select name="bookings[]" class="form-control select_single select-bookings" data-placeholder="Choose booking(s)" multiple="multiple"></select> 
+											<input type="hidden" name="action" value="update_user_booking" />
 											<input type="hidden" name="user_id" value="" />
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button class="btn btn-success btn-md" type="submit"><?php _e('Update Courses');?></button>
+								<button class="btn btn-success btn-md" type="submit"><?php _e('Update Bookings');?></button>
 								<button type="button" class="btn btn-dark btn-md" data-dismiss="modal"><?php _e('Cancel');?></button>
 							</div>
 						</form>
@@ -2082,126 +1690,248 @@ if( !class_exists('User') ):
 			return ob_get_clean();
 		}
 		
-		public function add__to__booking__modal(){
-				ob_start(); ?>
-				<!-- calendar modal -->
-				<div id="add-to-booking-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h1 class="modal-title text-center text-uppercase"><?php _e('Trainees Details');?></h1>
-							</div>
-							<form class="update-bookings submit-form" method="post" autocomplete="off">
-								<div class="modal-body">
-									<div id="add-to-booking-modal-body">
-										<div class="row">
-											<div class="form-group col-sm-6 col-xs-12">
-												<label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
-												<input type="text" name="first_name" class="form-control require" />
-											</div>
-											<div class="form-group col-sm-6 col-xs-12">
-												<label for="last_name"><?php _e('Last Name');?>&nbsp;<span class="required">*</span></label>
-												<input type="text" name="last_name" class="form-control require" />
-											</div>
-										</div>
-										<div class="row">
-											<div class="form-group col-sm-12 col-xs-12">
-												<label for="bookings"><?php _e('Booking(s)');?></label>
-												<select name="bookings[]" class="form-control select_single select-bookings" data-placeholder="Choose booking(s)" multiple="multiple"></select> 
-												<input type="hidden" name="action" value="update_user_booking" />
-												<input type="hidden" name="user_id" value="" />
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button class="btn btn-success btn-md" type="submit"><?php _e('Update Bookings');?></button>
-									<button type="button" class="btn btn-dark btn-md" data-dismiss="modal"><?php _e('Cancel');?></button>
-								</div>
-							</form>
-						</div>
+		public function all__mentors__page(){
+			ob_start();
+			$args = array();
+			$selected = $query = $where = '';
+			$selected = isset($_GET['course']) ? $_GET['course'] : '';
+			
+			if( get_current_user_role() == 'course_admin'){
+				$args['user_ID'] = get_current_user_id();
+			}else{
+				$where = ' WHERE ';
+			}
+				
+			$query = $where . " `course_type_ID` LIKE '%" . $selected . "%' ";
+			
+			$users_list = get_tabledata(TBL_MENTORS , false, $args );
+			
+			if(!( is_admin() || get_current_user_role() == 'course_admin') ):
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
+			elseif(!$users_list):
+				echo page_not_found("Oops! There is no mentors in website", ' ', false);
+			else:
+				$query = $where . " `course_type_ID` LIKE '%" . $selected . "%' ";
+				$users_list = get_tabledata(TBL_MENTORS , false, $args, $query);
+			?>
+			
+			<form action="<?php the_permalink('mentors');?>" method="GET">
+				<div class="row calendar-custom-filters">
+					<div class="form-group col-sm-2 col-xs-6">
+						<label for="courses"><?php _e('Course Types');?></label>
+						<select name="course" class="form-control select_single" data-placeholder="Choose course" onchange="this.form.submit();">
+							<?php
+							$data = get_tabledata(TBL_COURSE_TYPES, false, array(), '', ' ID, name');
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data, $selected);
+							?>
+						</select>
 					</div>
 				</div>
-				<?php
-				return ob_get_clean();
-			}
+			</form>
 			
+			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th><?php _e('Name');?></th>
+						<th><?php _e('Courses');?></th>
+						<th><?php _e('Updated On');?></th>
+						<th class="text-center"><?php _e('Actions');?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					if($users_list): foreach($users_list as $single_user):
+						$user = get_userdata($single_user->user_ID);
+						$course_types = maybe_unserialize($single_user->course_type_ID);
+						$course_types = !empty($course_types) ? implode(', ', $course_types) : '';
+						$courses = get_tabledata( TBL_COURSE_TYPE, false, array(), ' WHERE `ID` IN ('. $course_types . ')', 'name');
+						$course_arr = array();
+						if($courses):
+							foreach($courses as $course):
+								$course_arr[] = $course->name;
+							endforeach;
+						endif;
+					?>
+					<tr>
+						<td><?php _e($user->first_name.' '.$user->last_name);?></td>
+						<td><?php echo !empty($course_arr) ? implode(', ', $course_arr) : '-'; ?></td>
+						<td><?php echo date('M d, Y h:i:s A', strtotime($single_user->date_modified));?></td>
+						<td class="text-center">
+							<a href="<?php the_permalink('edit-mentor', array('id'=> $single_user->ID));?>" class="btn btn-dark btn-xs">
+								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
+							</a>
+							<a href="#" class="btn btn-danger btn-xs delete-record" data-id="<?php echo $single_user->ID;?>" data-action="delete_mentor">
+								<i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?>
+							</a>
+						</td>
+					</tr>
+					<?php endforeach; endif; ?>
+				</tbody>
+			</table>
+			<?php endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		public function add__mentor__page(){
+			ob_start();
+			if(!user_can('add_user')):
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
+			else: ?>
+			<form class="add-mentor submit-form" method="post" autocomplete="off">
+				<div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="user"><?php _e('User');?>&nbsp;<span class="required">*</span></label>
+						<select name="user" class="form-control select_single require" tabindex="-1" data-placeholder="Choose an User">
+							<?php
+							$data = get_tabledata(TBL_USERS, false, array( 'user_role' => 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name, last_name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="course_type"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="course_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose Course Type" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_COURSE_TYPE, false, array(), '', ' ID, CONCAT_WS(" | ", course_ID, name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data);
+							?>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 form-goup">
+						<div class="ln_solid"></div>
+						<input type="hidden" name="action" value="add_new_mentor" />
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Add New mentor');?></button>
+					</div>
+				</div>
+			</form>
+			<?php
+			endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
+		public function edit__mentor__page(){
+			ob_start();
+			$mentor__id = $_GET['id'];
+			$mentor = get_tabledata(TBL_MENTORS, true, array('ID'=> $mentor__id));
+			if( !( is_admin() || ( get_current_user_role() == 'course_admin' && $mentor && $mentor->user_ID == get_current_user_id()) ) ):
+				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
+			elseif(!$mentor):
+				echo page_not_found('Oops ! Mentor Details Not Found.', 'Please go back and check again !');
+			else: ?>
+			<form class="edit-mentor submit-form" method="post" autocomplete="off">
+				<div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="user"><?php _e('User');?>&nbsp;<span class="required">*</span></label>
+						<select name="user" class="form-control select_single require" tabindex="-1" data-placeholder="Choose an User">
+							<?php
+							$data = get_tabledata(TBL_USERS, false, array( 'user_role' => 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name, last_name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data, $mentor->user_ID);
+							?>
+						</select>
+					</div>
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="course_type"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="course_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose Course Type" multiple="multiple">
+							<?php
+							$data = get_tabledata(TBL_COURSE_TYPE, false, array(), '', ' ID, CONCAT_WS(" | ", course_ID, name) as name');
+							$option_data = get_option_data($data, array('ID', 'name'));
+							echo get_options_list($option_data, maybe_unserialize($mentor->course_type_ID));
+							?>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-sm-12 col-xs-12">
+						<div class="ln_solid"></div>
+						<input type="hidden" name="action" value="edit_mentor" />
+						<input type="hidden" name="mentor_id" value="<?php echo $mentor__id;?>" />
+						<button class="btn btn-success btn-md" type="submit"><?php _e('Update Mentor');?></button>
+					</div>
+				</div>
+			</form>
+			<?php
+			echo $this->upload__image__section();
+			endif;
+			$content = ob_get_clean();
+			return $content;
+		}
+		
 		//Process functions starts here
 		public function user__login__process(){
 			global $device;
 			extract($_POST);
-			if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $user_name)){
+			$return = 0;
+				
+			if(preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2, 3})$^", $user_name)){
 				if(email_exists($user_name)){
-					$user = get_user_by('email',$user_name);
+					$user = get_user_by('email', $user_name);
 					error_log($user_pass." : ".$user->ID);
-					if(check_password($user_pass,$user->ID)){
+					if(check_password($user_pass, $user->ID)){
 						if(!is_user_active($user->ID)){
-							return 2;
-						} else {
+							$return = 2;
+						} else{
 							set_current_user($user->ID);
-							$this->database->insert(TBL_ACCESS_LOG,
+							$this->database->insert(TBL_ACCESS_LOG, 
 								array(
-									'user_id' => $user->ID,
-									'ip_address'=> $_SERVER['REMOTE_ADDR'],
-									'device' => $device,
+									'user_id' => $user->ID, 
+									'ip_address'=> $_SERVER['REMOTE_ADDR'], 
+									'device' => $device, 
 									'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
 								)
 							);
-							return 1;
+							$return = 1;
 						}
-					} else {
-						return 0;
 					}
-				}
-				else{
-					return 0;
 				}
 			}else{
 				if(username_exists($user_name)){
-					$user = get_user_by('username',$user_name);
-					if(check_password($user_pass,$user->ID)){
+					$user = get_user_by('username', $user_name);
+					if(check_password($user_pass, $user->ID)){
 						if(!is_user_active($user->ID)){
-							return 2;
-						} else {
+							$return = 2;
+						} else{
 							set_current_user($user->ID);
-							$this->database->insert(TBL_ACCESS_LOG,
+							$this->database->insert(TBL_ACCESS_LOG, 
 								array(
-									'user_id' => $user->ID,
-									'ip_address'=> $_SERVER['REMOTE_ADDR'],
-									'device' => $device,
+									'user_id' => $user->ID, 
+									'ip_address'=> $_SERVER['REMOTE_ADDR'], 
+									'device' => $device, 
 									'user_agent'=> $_SERVER ['HTTP_USER_AGENT']
 								)
 							);
-							return 1;
+							$return = 1;
 						}
-					} else {
-						return 0;
 					}
 				}
-				else{
-					return 0;
-				}
 			}
+				
+			return $return;
 		}
 
 		public function reset__login__process(){
 			global $device;
 			extract($_POST);
 			if(email_exists($user_name)){
-				$user = get_user_by('email',$user_name);
+				$user = get_user_by('email', $user_name);
 				$user_pass = password_generator();
 				$record_pass = $user_pass;
 				$salt = generateSalt();
 				$user_pass = hash('SHA256', encrypt($user_pass, $salt));
 				$salt = base64_encode($salt);
 				//$pword = set_password($user_pass);
-				$result1 = $this->database->update(TBL_USERS,array('user_pass'=> $user_pass,'user_salt'=> $salt),array('user_email'=> $user_name));
+				$result1 = $this->database->update(TBL_USERS, array('user_pass'=> $user_pass, 'user_salt'=> $salt), array('user_email'=> $user_name));
 				//MAILER
 				$subject = "NCCPM Fault Management System - Login Details";
 				$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $record_pass . ". The password can be changed once logged in.";
-				$admn = "admin@admin.com";
-				send_email($admn,$user_name,$user_name, $subject, $body);
+				send_email($user_name, $subject, $body);
 				return 1;
 			}else{
 				return 0;
@@ -2211,92 +1941,111 @@ if( !class_exists('User') ):
 		public function add__user__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create account, Please try again.'), 
 				'reset_form' => 0
 			);
 
 			if(user_can('add_user')):
-				$user_pass = password_generator();
+				$temp_user_pass = password_generator();
 				$salt = generateSalt();
-				$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+				$user_pass = hash('SHA256', encrypt($temp_user_pass, $salt));
 				$salt = base64_encode($salt);
 				$guid = get_guid(TBL_USERS);
 
-				if($user_role != "admin"&&$user_role != "nurse"){
+				if($user_role != "admin" && $user_role != "nurse"){
 					$first = $first_name[0];
 					$trainer_ID = $last_name."_".$first."_001";
 
-					$result = $this->database->insert(TBL_USERS,
+					$result = $this->database->insert(TBL_USERS, 
 						array(
-							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'work_area_ID'=> $work_area,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
+							'ID' => $guid, 
+							'trainer_ID' => $trainer_ID, 
+							'first_name' => $first_name, 
+							'last_name' => $last_name, 
+							'user_email' => $user_email, 
+							'user_role' => $user_role, 
+							'username' => $username, 
+							'work_area_ID'=> $work_area, 
+							'user_status' => 1, 
+							'user_pass' => set_password($user_pass), 
+							'user_salt' => $salt, 
+							'created_by' => $this->current__user__id, 
 						)
 					);
 				}else{
 					$trainer_ID = NULL;
-					$result = $this->database->insert(TBL_USERS,
+					$result = $this->database->insert(TBL_USERS, 
 						array(
-							'ID' => $guid,
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'user_role' => $user_role,
-							'username' => $username,
-							'user_status' => 1,
-							'user_pass' => set_password($user_pass),
-							'user_salt' => $salt,
-							'created_by' => $this->current__user__id,
-							'currently_employed'=> $current_employed,
-							'external_candidate'=> $ex_cand,
-							'work_area_ID' => $work_area,
-							'rag_status' => $rag_status,
-							'extended_support' => $extended_support,
-							'support_since' => $support_since,
+							'ID' => $guid, 
+							'trainer_ID' => $trainer_ID, 
+							'first_name' => $first_name, 
+							'last_name' => $last_name, 
+							'user_email' => $user_email, 
+							'user_role' => $user_role, 
+							'username' => $username, 
+							'user_status' => 1, 
+							'user_pass' => set_password($user_pass), 
+							'user_salt' => $salt, 
+							'created_by' => $this->current__user__id, 
+							'currently_employed'=> $current_employed, 
+							'external_candidate'=> $ex_cand, 
+							'work_area_ID' => $work_area, 
+							'rag_status' => $rag_status, 
+							'extended_support' => $extended_support, 
+							'support_since' => $support_since, 
 						)
 					);
 
 					$guid2 = get_guid(TBL_RULES);
-					$result= $this->database->insert(TBL_RULES,
+					$result= $this->database->insert(TBL_RULES, 
 						array(
-							'ID' => $guid2,
-							'user_ID' => $guid,
-							'preceptorship'=> $preceptorship,
-							'hca' => $hca,
-							'flap' => $fdap,
-							'record' => $record,
-							'mentorship' => $mentorship,
+							'ID' => $guid2, 
+							'user_ID' => $guid, 
+							'preceptorship'=> $preceptorship, 
+							'hca' => $hca, 
+							'flap' => $fdap, 
+							'record' => $record, 
+							'mentorship' => $mentorship, 
 						)
 					);
 				}
 
 				if($result):
 					$user__id = $guid;
-					update_user_meta($user__id,'gender',$gender);
-					update_user_meta($user__id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-					update_user_meta($user__id,'user_phone',$user_phone);
-					update_user_meta($user__id,'profile_img',$profile_img);
-					update_user_meta($user__id,'user_designation',$user_designation);
-					update_user_meta($user__id,'work_extension',$work_extension);
-					update_user_meta($user__id,'beep',$beep);
-					update_user_meta($user__id,'band',$band);
+					update_user_meta($user__id, 'gender', $gender);
+					update_user_meta($user__id, 'dob', date('Y-m-d h:i:s', strtotime($dob) ) );
+					update_user_meta($user__id, 'user_phone', $user_phone);
+					update_user_meta($user__id, 'profile_img', $profile_img);
+					update_user_meta($user__id, 'user_designation', $user_designation);
+					update_user_meta($user__id, 'work_extension', $work_extension);
+					update_user_meta($user__id, 'beep', $beep);
+					update_user_meta($user__id, 'band', $band);
 					$notification_args = array(
-						'title' => __('New Account Created'),
-						'notification'=> __('You have successfully created a new account').' ('.ucfirst($first_name).' '.ucfirst($last_name).').',
+						'title' => __('New Account Created'), 
+						'notification'=> __('You have successfully created a new account').' ('.ucfirst($first_name).' '.ucfirst($last_name).').', 
 					);
 					add_user_notification($notification_args);
+					
+					/*============= Send email to user =============*/
+					$template_id = get_option('after_account_created');
+					if( $template_id != ''){
+						$email_subject = get_table_column_data( TBL_TEMPLATES, 'subject', array( 'ID' => $template_id) );
+						$email_body = get_table_column_data( TBL_TEMPLATES, 'body', array( 'ID' => $template_id) );
+						if($email_body && $email_subject){
+							$email_body = get_replaced_string( $email_body, 
+								array(
+									'{{first_name}}' => $first_name, 
+									'{{last_name}}' => $last_name,
+									'{{user_email}}' => $user_email,
+									'{{user_password}}' => $temp_user_pass
+								)
+							);
+							$email_sent = send_email($user_email, $email_subject, $email_body);
+						}
+					}
+					/*============= Send email to user =============*/
 					$return['status'] = 1;
 					$return['message_heading'] = __('Success !');
 					$return['message'] = __('Account has been successfully created.');
@@ -2309,9 +2058,9 @@ if( !class_exists('User') ):
 		public function update__preceptor__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not update training details, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update training details, Please try again.'), 
 				'reset_form' => 0
 			);
 
@@ -2320,46 +2069,43 @@ if( !class_exists('User') ):
 				$p_pin = ( isset($p_pin) ) ? 1 : 0;
 				$p_delay = ( isset($p_delay) ) ? 1 : 0;
 				$p_nurse = ( isset($p_nurse) ) ? 1 : 0;
-                                $age = array(							
-                            "prec_intro" => date("Y-m-d h:i:s",strtotime($p_intro)),
-							"current_prec"=> $p_current,
-							"pin" => $p_pin,
-							"delay" => $p_delay,
-							"prec_name" => $p_name,
-							"int_nurse" => $p_nurse,
-							"WTE" => $p_wte,
-							"p_email" => $p_email,
-							"p_country" => $p_country,
-							"sign_off" => $p_period,
-							"awards" => $p_awards,
-							"link" => $p_link,
-							"prec_trainer"=> $trainers,
-							"prec_notes" => $p_notes
-                    );
-                    $precep = serialize($age);
-            
-            $guid = get_guid(TBL_PROG);
-				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3) ){
-					$result = $this->database->update(TBL_PROG,
+				$age = array(							
+					"prec_intro" => date("Y-m-d h:i:s", strtotime($p_intro)), 
+					"current_prec"=> $p_current, 
+					"pin" => $p_pin, 
+					"delay" => $p_delay, 
+					"prec_name" => $p_name, 
+					"int_nurse" => $p_nurse, 
+					"WTE" => $p_wte, 
+					"p_email" => $p_email, 
+					"p_country" => $p_country, 
+					"sign_off" => $p_period, 
+					"awards" => $p_awards, 
+					"link" => $p_link, 
+					"prec_trainer"=> $trainers, 
+					"prec_notes" => $p_notes
+				);
+				$precep = serialize($age);$guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG, array('user_ID' => $user_id3), $user_id3) ){
+					$result = $this->database->update(TBL_PROG, 
 						array(
-                            'prec'=>$precep,
-						),
+							'prec'=>$precep, 
+						), 
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_PROG,
+					$result = $this->database->insert(TBL_PROG, 
 						array(
-							'ID' => $guid,
-							'user_ID' => $user_id3,
-                            'prec'=>$precep,
+							'ID' => $guid, 
+							'user_ID' => $user_id3, 
+							'prec'=>$precep, 
 						)
 					);
 				}
-
-                
+				
 				$notification_args = array(
-					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated preceptor progress'),
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated preceptor progress'), 
 				);
 
 				add_user_notification($notification_args);
@@ -2374,9 +2120,9 @@ if( !class_exists('User') ):
 		public function update__mca__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create update account details, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create update account details, Please try again.'), 
 				'reset_form' => 0
 			);
 
@@ -2385,41 +2131,39 @@ if( !class_exists('User') ):
 				$hca_current_client = ( isset($hca_current_client) ) ? 1 : 0;
 				$hca_fundamental_care = ( isset($hca_fundamental_care) ) ? 1 : 0;
 				$hca_care = ( isset($hca_care) ) ? 1 : 0;
-            
-                $age = array(
-                            "hca_start" => date("Y-m-d h:i:s",strtotime($hca_start)),
-							"hca_manager" => $hca_manager,
-							"hca_email" => $hca_email,
-							"hca_new_care" => $hca_new_care,
-							"hca_current_client" => $hca_current_client,
-							"hca_fundamental_care"=> $hca_fundamental_care,
-							"hca_care" => $hca_care,
-							"hca_trainer" => $hca_trainer,
-							"hca_notes" => $hca_notes
-                );
-            $hca = serialize($age);
-            
-            $guid = get_guid(TBL_PROG);
-				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3) ){
-					$result = $this->database->update(TBL_PROG,
+				$age = array(
+					"hca_start" => date("Y-m-d h:i:s", strtotime($hca_start)), 
+					"hca_manager" => $hca_manager, 
+					"hca_email" => $hca_email, 
+					"hca_new_care" => $hca_new_care, 
+					"hca_current_client" => $hca_current_client, 
+					"hca_fundamental_care"=> $hca_fundamental_care, 
+					"hca_care" => $hca_care, 
+					"hca_trainer" => $hca_trainer, 
+					"hca_notes" => $hca_notes
+				);
+				$hca = serialize($age);
+				$guid = get_guid(TBL_PROG);
+				if( is_value_exists(TBL_PROG, array('user_ID' => $user_id3), $user_id3) ){
+					$result = $this->database->update(TBL_PROG, 
 						array(
-                            'hca' =>$hca,
-						),
+							'hca' =>$hca, 
+						), 
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_PROG,
+					$result = $this->database->insert(TBL_PROG, 
 						array(
-							'ID' => $guid,
-							'user_ID' => $user_id3,
-                            'hca' => $hca
+							'ID' => $guid, 
+							'user_ID' => $user_id3, 
+							'hca' => $hca
 						)
 					);
 				}
 
 				$notification_args = array(
-					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated HCA progress'),
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated HCA progress'), 
 				);
 
 				add_user_notification($notification_args);
@@ -2434,9 +2178,9 @@ if( !class_exists('User') ):
 		public function update__fdap__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create account, Please try again.'), 
 				'reset_form' => 0
 			);
 
@@ -2446,42 +2190,42 @@ if( !class_exists('User') ):
 				$fd_sd2 = ( isset($fd_sd2) ) ? 1 : 0;
 				$fd_sd3 = ( isset($fd_sd3) ) ? 1 : 0;
 				$fd_current = ( isset($fd_current) ) ? 1 : 0;
-
-                $age = array(
-							"fd_start" => date("Y-m-d h:i:s",strtotime($fd_start)),
-							"fd_graduate" => date("Y-m-d h:i:s",strtotime($fd_graduate)),
-							"fd_inturrupt"=> $fd_inturrupt,
-							"fd_sd1" => $fd_sd1,
-							"fd_sd2" => $fd_sd2,
-							"fd_sd3" => $fd_sd3,
-							"fd_other" => $fd_other,
-							"fd_current" => $fd_current,
-							"fd_trainer" => $fd_trainer,
-							"fd_notes" => $fd_notes,
-						);
-            $fdap = serialize($age);
-            
-            $guid = get_guid(TBL_PROG);
-				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3) ){
-					$result = $this->database->update(TBL_PROG,
+				$age = array(
+					"fd_start" => date("Y-m-d h:i:s", strtotime($fd_start)), 
+					"fd_graduate" => date("Y-m-d h:i:s", strtotime($fd_graduate)), 
+					"fd_inturrupt"=> $fd_inturrupt, 
+					"fd_sd1" => $fd_sd1, 
+					"fd_sd2" => $fd_sd2, 
+					"fd_sd3" => $fd_sd3, 
+					"fd_other" => $fd_other, 
+					"fd_current" => $fd_current, 
+					"fd_trainer" => $fd_trainer, 
+					"fd_notes" => $fd_notes, 
+				);
+								
+				$fdap = serialize($age);
+				$guid = get_guid(TBL_PROG);
+						
+				if( is_value_exists(TBL_PROG, array('user_ID' => $user_id3), $user_id3) ){
+					$result = $this->database->update(TBL_PROG, 
 						array(
-                            'fdap' => $fdap,                            
-						),
+							'fdap' => $fdap, 
+						), 
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_PROG,
+					$result = $this->database->insert(TBL_PROG, 
 						array(
-							'ID' => $guid,
-							'user_ID' => $user_id3,
-                            'fdap' => $fdap,
+							'ID' => $guid, 
+							'user_ID' => $user_id3, 
+							'fdap' => $fdap, 
 						)
 					);
 				}
 
 				$notification_args = array(
-					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated preceptor progress'),
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated preceptor progress'), 
 				);
 
 				add_user_notification($notification_args);
@@ -2496,44 +2240,45 @@ if( !class_exists('User') ):
 		public function update__student__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create account, Please try again.'), 
 				'reset_form' => 0
 			);
-$age = array(
-							"stud_cohort" => $stud_cohort,
-							"stud_cohort_date"=> $stud_cohort_date,
-							"stud_d1" => $stud_d1,
-							"stud_d2" => $stud_d2,
-							"stud_d3" => $stud_d3,
-							"stud_notes" => $stud_notes,
-						);
-            
-            $ages = serialize($age);
-    
+				
+			$age = array(
+				"stud_cohort" => $stud_cohort, 
+				"stud_cohort_date"=> $stud_cohort_date, 
+				"stud_d1" => $stud_d1, 
+				"stud_d2" => $stud_d2, 
+				"stud_d3" => $stud_d3, 
+				"stud_notes" => $stud_notes, 
+			);
+				
+			$ages = serialize($age);
+	 
 			if(user_can('add_user')):
 				$guid = get_guid(TBL_PROG);
-				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3)){
-					$result = $this->database->update(TBL_PROG,
+				if( is_value_exists(TBL_PROG, array('user_ID' => $user_id3), $user_id3)){
+					$result = $this->database->update(TBL_PROG, 
 						array(
-                            'stud'=>$ages
-						),
+							'stud'=>$ages
+						), 
 						array('user_ID'=> $user_id3)
 					);
 				}else{
-					$result = $this->database->insert(TBL_PROG,
+					$result = $this->database->insert(TBL_PROG, 
 						array(
-							'ID' => $guid,
-							'user_ID' => $user_id3,
-                            'stud'=>$ages,
+							'ID' => $guid, 
+							'user_ID' => $user_id3, 
+							'stud'=>$ages, 
 						)
 					);
 				}
 
 				$notification_args = array(
-					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated preceptor progress'),
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated preceptor progress'), 
 				);
 				add_user_notification($notification_args);
 				$return['status'] = 1;
@@ -2547,44 +2292,45 @@ $age = array(
 		public function update__mentor__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create account, Please try again.'), 
 				'reset_form' => 0
 			);
 
 			if(user_can('add_user')):
 				$mentor_current = ( isset($mentor_current) ) ? 1 : 0;
 				$mentor_sign_off = ( isset($mentor_sign_off) ) ? 1 : 0;
-            $age =						array(
-							'mentor_current' => $mentor_current,
-							'mentor_renew' => date('Y-m-d h:i:s',strtotime($mentor_renew)),
-							'mentor_sign_off'=> $mentor_sign_off,
-							'mentor_notes' => $mentor_notes,
-						);
-            
-            $ages = serialize($age);
+				$age = array(
+					'mentor_current' => $mentor_current, 
+					'mentor_renew' => date('Y-m-d h:i:s', strtotime($mentor_renew)), 
+					'mentor_sign_off'=> $mentor_sign_off, 
+					'mentor_notes' => $mentor_notes, 
+				);
+				$ages = serialize($age);
 				$guid = get_guid(TBL_PROG);
-				if( is_value_exists(TBL_PROG,array('user_ID' => $user_id3),$user_id3)){
-					$result = $this->database->update(TBL_PROG,
+				if( is_value_exists(TBL_PROG, array('user_ID' => $user_id3), $user_id3)){
+					$result = $this->database->update(TBL_PROG, 
 						array(
-                            'ment'=>$ages,
-						),
-						array('user_ID'=> $user_id3)
+							'ment'=>$ages, 
+						), 
+						array(
+							'user_ID' => $user_id3
+						)
 					);
 				}else{
-					$result = $this->database->insert(TBL_PROG,
+					$result = $this->database->insert(TBL_PROG, 
 						array(
-							'ID' => $guid,
-							'user_ID' => $user_id3,
-                            'ment'=>$ages,
+							'ID' => $guid, 
+							'user_ID' => $user_id3, 
+							'ment'=>$ages, 
 						)
 					);
 				}
 
 				$notification_args = array(
-					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated preceptor progress'),
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated preceptor progress'), 
 				);
 
 				add_user_notification($notification_args);
@@ -2600,9 +2346,9 @@ $age = array(
 		public function update__notes__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not create account, Please try again.'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create account, Please try again.'), 
 				'reset_form' => 0
 			);
 
@@ -2615,18 +2361,18 @@ $age = array(
 				$full_dir = $target_dir."/".$user_id3;
 				if(!file_exists($full_dir)) mkdir($full_dir, 0755, true);
 				move_uploaded_file($_FILES["file"]["name"], $full_dir);
-				$result = $this->database->insert(TBL_NOTES,
+				$result = $this->database->insert(TBL_NOTES, 
 					array(
-						'to' => $user_id3,
-						'from' => $this->current__user__id,
-						'note' => $note,
+						'to' => $user_id3, 
+						'from' => $this->current__user__id, 
+						'note' => $note, 
 						'filepath'=> $target_file
 					)
 				);
 
 				$notification_args = array(
-					'title' => __('Account Information'),
-					'notification'=> __('You have successfully updated preceptor progress'),
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated preceptor progress'), 
 				);
 				add_user_notification($notification_args);
 				$return['status'] = 1;
@@ -2640,15 +2386,17 @@ $age = array(
 		public function update__user__process(){
 			extract($_POST);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not update account details, Please try again'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update account details, Please try again'), 
 				'reset_form' => 0
 			);
 
 			if(user_can('edit_user')):
 				$user = get_userdata($user_id);
-				if( is_value_exists(TBL_USERS,array('user_email' => $user_email),$user_id) ):
+				$designation = get_tabledata(TBL_RULES, true, array('user_ID'=> $user_id));
+						
+				if( is_value_exists(TBL_USERS, array('user_email' => $user_email), $user_id) ):
 					$return['status'] = 2;
 					$return['message_heading'] = __('Email Already Exist');
 					$return['message'] = __('Email address you entered is already exists, please try another email address.');
@@ -2665,62 +2413,83 @@ $age = array(
 						$trainer_ID = NULL;
 					}
 
-					$result = $this->database->update(TBL_USERS,
+					$result = $this->database->update(TBL_USERS, 
 						array(
-							'trainer_ID' => $trainer_ID,
-							'first_name' => $first_name,
-							'last_name' => $last_name,
-							'user_email' => $user_email,
-							'username' => $username,
-							'user_status' => $user_status,
-							'work_area_ID'=> $work_area,
-							'user_role' => $user_role,
-
-						),
+							'trainer_ID' => $trainer_ID, 
+							'first_name' => $first_name, 
+							'last_name' => $last_name, 
+							'user_email' => $user_email, 
+							'username' => $username, 
+							'user_status' => $user_status, 
+							'work_area_ID'=> $work_area, 
+							'user_role' => $user_role, 
+						), 
 						array('ID'=> $user_id)
 					);
-
-					$result = $this->database->update(TBL_RULES,
-						array(
-							'preceptorship'=> $preceptorship,
-							'hca' => $hca,
-							'flap' => $fdap,
-							'record' => $record,
-							'mentorship' => $mentorship,
-						),
-						array(
-							'user_ID'=> $user_id,
-						)
-					);
+								
+					if($designation):
+						$d_result = $this->database->update(TBL_RULES, 
+							array(
+								'preceptorship'=> isset($preceptorship) ? 1 : 0, 
+								'hca' => isset($hca) ? 1 : 0, 
+								'flap' => isset($fdap) ? 1 : 0, 
+								'record' => isset($record) ? 1 : 0, 
+								'mentorship' => isset($mentorship) ? 1 : 0, 
+							), 
+							array(
+								'user_ID'=> $user_id, 
+							)
+						);
+					else:
+						$d_result = $this->database->insert(TBL_RULES, 
+							array(
+								'preceptorship'=> isset($preceptorship) ? 1 : 0, 
+								'hca' => isset($hca) ? 1 : 0, 
+								'flap' => isset($fdap) ? 1 : 0, 
+								'record' => isset($record) ? 1 : 0, 
+								'mentorship' => isset($mentorship) ? 1 : 0, 
+								'user_ID'=> $user_id, 
+							)
+						);
+					endif;
 
 					$check = ($result) ? true : false;
 
 					$result1 = false;
 					if($user_pass != ''){
-						$result1 = $this->database->update(TBL_USERS,array('user_pass'=> set_password($user_pass)),array('ID'=> $user_id));
+						$result1 = $this->database->update(TBL_USERS, array('user_pass'=> set_password($user_pass)), array('ID'=> $user_id));
 					}
+								
 					$check = ($result1) ? true : $check;
+								
 					if($result1){
-						//update_user_meta($user_id,'reset_password',1);
+						//update_user_meta($user_id, 'reset_password', 1);
 						$notification_args = array(
-							'title' => __('Account Password Reset'),
-							'notification'=> __('You have successfully changed').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.',
+							'title' => __('Account Password Reset'), 
+							'notification'=> __('You have successfully changed').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account password.', 
 						);
 						add_user_notification($notification_args);
 					}
 
 					if($check):
-						update_user_meta($user_id,'gender',$gender);
-						update_user_meta($user_id,'dob',date('Y-m-d h:i:s',strtotime($dob) ) );
-						update_user_meta($user_id,'user_phone',$user_phone);
-						update_user_meta($user_id,'profile_img',$profile_img);
-						update_user_meta($user_id,'user_designation',$user_designation);
-						update_user_meta($user_id,'work_extension',$work_extension);
-						update_user_meta($user_id,'beep',$beep);
-						update_user_meta($user_id,'band',$band);
+						if( $user->work_area_ID != $work_area){
+							$notification_args = array(
+								'title' => __('WorkArea Changed'), 
+								'notification'=> sprintf( __('(%s) workarea has been changed from %s to %s.'), ucfirst($first_name).' '.ucfirst($last_name), get_table_column_data( TBL_WORKS , 'name', array( 'ID' => $user->work_area_ID) ), get_table_column_data( TBL_WORKS , 'name', array( 'ID' => $work_area) ) ), 
+							);
+							add_user_notification($notification_args);
+						}
+						update_user_meta($user_id, 'gender', $gender);
+						update_user_meta($user_id, 'dob', date('Y-m-d h:i:s', strtotime($dob) ) );
+						update_user_meta($user_id, 'user_phone', $user_phone);
+						update_user_meta($user_id, 'profile_img', $profile_img);
+						update_user_meta($user_id, 'user_designation', $user_designation);
+						update_user_meta($user_id, 'work_extension', $work_extension);
+						update_user_meta($user_id, 'beep', $beep);
+						update_user_meta($user_id, 'band', $band);
 						$notification_args = array(
-							'title' => __('Account Details updated'),
-							'notification'=> __('You have successfully updated').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.',
+							'title' => __('Account Details updated'), 
+							'notification'=> __('You have successfully updated').' ('.ucfirst($first_name).' '.ucfirst($last_name).') account details.', 
 						);
 						add_user_notification($notification_args);
 						$return['status'] = 1;
@@ -2745,56 +2514,20 @@ $age = array(
 				$file = pathinfo($_FILES['photo']['name']);
 				$fileType = $file["extension"];
 				$full_img = 'profile-img-'.time().'.'.$fileType;
-				createThumb($sourcePath, $upload_img.$full_img,$fileType,300,300,300);
+				createThumb($sourcePath, $upload_img.$full_img, $fileType, 300, 300, 300);
 				return $upload_url.$full_img;
 			}else{
 				return 0;
 			}
 		}
 
-		public function update__user__course__process(){
-			extract($_POST);
-
-			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not update courses details, Please try again'),
-				'reset_form' => 0
-			);
-
-			if(user_can('edit_user')):
-				$user = get_userdata($user_id);
-				$check= false;
-				$result = $this->database->update(TBL_USERS,
-					array(
-						'courses'=> isset($courses) ? $courses : ''
-					),
-					array('ID'=> $user_id)
-				);
-				$check = ($result) ? true : false;
-
-				if($check):
-					$notification_args = array(
-						'title' => __('User Course Details updated'),
-						'notification'=> __('You have successfully updated').' ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') course details.',
-					);
-					add_user_notification($notification_args);
-					$return['status'] = 1;
-					$return['message_heading'] = __('Success !');
-					$return['message'] = __('User Courses has been successfully updated.');
-				endif;
-			endif;
-
-			return json_encode($return);
-		}
-		
 		public function update__user__booking__process(){
 			extract($_POST);
 
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not update booking details, Please try again'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update booking details, Please try again'), 
 				'reset_form' => 0
 			);
 
@@ -2802,19 +2535,19 @@ $age = array(
 				$user = get_userdata($user_id);
 				$check = false;
 				$bookings = isset($bookings) ? $bookings : array();
-				
+						
 				$data = get_tabledata(TBL_BOOKINGS, false, array() , '' );
 				foreach($data as $booking_data):
 					$booking_id = $booking_data->ID;
-					$_booking = get_tabledata(TBL_BOOKINGS,true,array('ID' => $booking_id));
+					$_booking = get_tabledata(TBL_BOOKINGS, true, array('ID' => $booking_id));
 					$nurses = ($_booking->nurses != '') ? maybe_unserialize($_booking->nurses) : array();
 					$enroll = ($_booking->enroll != '') ? maybe_unserialize($_booking->enroll) : array();
-					$attendance  = ($_booking->attendance  != '') ? maybe_unserialize($_booking->attendance ) : array();
+					$attendance = ($_booking->attendance != '') ? maybe_unserialize($_booking->attendance ) : array();
 					$collected = ($_booking->collected != '') ? maybe_unserialize($_booking->collected) : array();
-					$date_book_returned  = ($_booking->date_book_returned  != '') ? maybe_unserialize($_booking->date_book_returned ) : array();
-					$date_book_received = ($_booking->date_book_received != '') ? maybe_unserialize($_booking->date_book_received) : array();						
+					$date_book_returned = ($_booking->date_book_returned != '') ? maybe_unserialize($_booking->date_book_returned ) : array();
+					$date_book_received = ($_booking->date_book_received != '') ? maybe_unserialize($_booking->date_book_received) : array();		
 					if(!empty($bookings) && in_array($booking_id, $bookings)):
-						if(($key = array_search($user_id, $nurses)) === false):
+						if( ( $key = array_search($user_id, $nurses) ) === false):
 							$nurses[] = $user_id;
 							$enroll[$user_id] = 0;
 							$attendance[$user_id] = 0;
@@ -2823,7 +2556,7 @@ $age = array(
 							$date_book_received[$user_id] = '';
 						endif;
 					else:
-						if(($key = array_search($user_id, $nurses)) !== false):
+						if( ( $key = array_search($user_id, $nurses) ) !== false):
 							unset($nurses[$key]);
 							unset($enroll[$user_id]);
 							unset($attendance[$user_id]);
@@ -2832,64 +2565,85 @@ $age = array(
 							unset($date_book_received[$user_id]);
 						endif;
 					endif;
-					
-					$result = $this->database->update(TBL_BOOKINGS,
+								
+					$result = $this->database->update(TBL_BOOKINGS, 
 						array(
-							'nurses' => array_unique($nurses),
-							'date_book_received' => $date_book_received,
-							'date_book_returned' => $date_book_returned,
-							'collected' => $collected,
-							'enroll' => $enroll,
-							'attendance' => $attendance,
-						),
+							'nurses' => array_unique($nurses), 
+							'date_book_received' => $date_book_received, 
+							'date_book_returned' => $date_book_returned, 
+							'collected' => $collected, 
+							'enroll' => $enroll, 
+							'attendance' => $attendance, 
+						), 
 						array(
 							'ID'=> $booking_id
 						)
 					);
 				endforeach;
-				
+						
 				$check = true;
-				
+						
 				if($check):
 					$notification_args = array(
-						'title' => __('User Booking Details updated'),
-						'notification'=> __('You have successfully updated').' ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') booking details.',
+						'title' => __('User Booking Details updated'), 
+						'notification'=> __('You have successfully updated').' ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') booking details.', 
 					);
 					add_user_notification($notification_args);
+					
+					/*============= Send email to user =============*/
+					$template_id = get_option('after_user_added_to_course_booking');
+					if( $template_id != ''){
+						$email_subject = get_table_column_data( TBL_TEMPLATES, 'subject', array( 'ID' => $template_id) );
+						$email_body = get_table_column_data( TBL_TEMPLATES, 'body', array( 'ID' => $template_id) );
+						if($email_body && $email_subject){
+							$user_data = get_userdata( $user_id );
+							$email_body = get_replaced_string( $email_body, 
+								array(
+									'{{first_name}}' => $user_data->first_name, 
+									'{{last_name}}' => $user_data->last_name,
+									'{{user_email}}' => $user_data->user_email,
+								)
+							);
+							$email_sent = send_email($user_data->user_email, $email_subject, $email_body);
+						}
+					}
+					/*============= Send email to user =============*/
+					
 					$return['status'] = 1;
 					$return['message_heading'] = __('Success !');
 					$return['message'] = __('User Bookings has been successfully updated.');
+					
 				endif;
 			endif;
 
 			return json_encode($return);
 		}
-		
+			
 		public function account__status__change__process(){
 			extract($_POST);
 			$id = trim($id);
 			$return = array(
-				'status' => 0,
-				'message_heading'=> __('Failed !'),
-				'message' => __('Could not update user account details, Please try again'),
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update user account details, Please try again'), 
 				'reset_form' => 0
 			);
 			if(is_admin() && $this->current__user__id != $id):
 				$user = get_userdata($id);
 				$args = array('ID'=> $id);
-				$result = $this->database->update(TBL_USERS,array('user_status'=> $status),$args);
+				$result = $this->database->update(TBL_USERS, array('user_status'=> $status), $args);
 
 				if($result):
 					if($status == 0){
 						$notification_args = array(
-							'title' => ucfirst($user->user_role).' Account Disabled',
-							'notification'=> 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+							'title' => ucfirst($user->user_role).' Account Disabled', 
+							'notification'=> 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.', 
 						);
 						$return['message'] = 'You have successfully disbled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
 					}else{
 						$notification_args = array(
-							'title' => ucfirst($user->user_role).' Account Enabled',
-							'notification'=> 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+							'title' => ucfirst($user->user_role).' Account Enabled', 
+							'notification'=> 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.', 
 						);
 						$return['message'] = 'You have successfully enabled ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.';
 					}
@@ -2908,7 +2662,7 @@ $age = array(
 			$select = ' ID, Cohort_date AS name';
 			$query = " WHERE `Cohort_ID` = '".$course_id."' AND `over` = '0' ";
 			$data = get_tabledata(TBL_COHORTS_EXT, false, array() , $query , $select);
-			$option_data = get_option_data($data,array('ID','name'));
+			$option_data = get_option_data($data, array('ID', 'name'));
 			$return['nurses_html'] = get_options_list($option_data);
 			return json_encode($return);
 		}
@@ -2919,12 +2673,12 @@ $age = array(
 			if(is_admin() && $this->current__user__id != $id):
 				$user = get_userdata($id);
 				$args = array('ID'=> $id);
-				$result = $this->database->delete(TBL_USERS,$args);
+				$result = $this->database->delete(TBL_USERS, $args);
 				if($result):
-					$this->database->delete(TBL_USERMETA,array('user_id'=> $id));
+					$this->database->delete(TBL_USERMETA, array('user_id'=> $id));
 					$notification_args = array(
-						'title' => __('Account deleted'),
-						'notification'=> 'You have successfully deleted ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.',
+						'title' => __('Account deleted'), 
+						'notification'=> 'You have successfully deleted ('.ucfirst($user->first_name).' '.ucfirst($user->last_name).') account.', 
 					);
 					add_user_notification($notification_args);
 					return 1;
@@ -2935,29 +2689,17 @@ $age = array(
 				return 0;
 			endif;
 		}
-
-		public function fetch__add__to__course__data__process(){
-			extract($_POST);
-			$return = array();
-			$user = get_userdata($user_id);
-			$data = get_tabledata(TBL_BOOKINGS,false,array(),'',' ID, name AS name');
-			$option_data = get_option_data($data,array('ID','name'));
-			$return['first_name'] = $user->first_name;
-			$return['last_name'] = $user->last_name;
-			$return['courses'] = get_options_list($option_data,maybe_unserialize($user->courses));
-			return json_encode($return);
-		}
-		
+			
 		public function fetch__add__to__booking__data__process(){
 			extract($_POST);
 			$return = array();
 			$user = get_userdata($user_id);
-			$data = get_tabledata(TBL_COURSES,false,array(),'',' ID, CONCAT_WS(" | ", course_ID, name) AS name');
-			$option_data = get_option_data($data,array('ID','name'));
+			$data = get_tabledata(TBL_COURSES, false, array(), '', ' ID, CONCAT_WS(" | ", course_ID, name) AS name');
+			$option_data = get_option_data($data, array('ID', 'name'));
 			$return['first_name'] = $user->first_name;
 			$return['last_name'] = $user->last_name;
 			$return['bookings'] = '';
-			
+				
 			$select = ' ID , name , nurses';
 			$data = get_tabledata(TBL_BOOKINGS, false, array() , '' , $select);
 			$selected = array();
@@ -2969,24 +2711,24 @@ $age = array(
 					endif;
 				endforeach;
 			endif;
-			$option_data = get_option_data($data,array('ID','name'));
+			$option_data = get_option_data($data, array('ID', 'name'));
 			$return['bookings'] = get_options_list($option_data, maybe_unserialize($selected));
 			return json_encode($return);
 		}
-		
+			
 		public function fetch__all__trainees__process(){
 			if(is_admin()){
 				$orders_columns = array(
-					0=> 'first_name',
-					1=> 'user_email',
-					2=> 'registered_at',
-					3=> 'user_status',
+					0=> 'first_name', 
+					1=> 'user_email', 
+					2=> 'registered_at', 
+					3=> 'user_status', 
 				);
 			}else{
 				$orders_columns = array(
-					0=> 'first_name',
-					1=> 'user_email',
-					2=> 'registered_at',
+					0=> 'first_name', 
+					1=> 'user_email', 
+					2=> 'registered_at', 
 				);
 			}
 
@@ -3000,10 +2742,10 @@ $age = array(
 
 			$query = "WHERE `user_role` = 'nurse' ";
 
-			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy, $orderType ,$start , $length);
+			$sql = sprintf(" ORDER BY %s %s LIMIT %d , %d ", $orderBy, $orderType , $start , $length);
 			$data = array();
 			if(!empty($_POST['search']['value'])){
-				$columns = array('ID','first_name','last_name','user_email');
+				$columns = array('ID', 'first_name', 'last_name', 'user_email');
 				for($i = 0 ; $i < count($columns);$i++){
 					$column = $columns[$i];
 					$where[] = "$column LIKE '%".$_POST['search']['value']."%'";
@@ -3028,9 +2770,9 @@ $age = array(
 				$query .= " `work_area_ID` = '".$_POST['work_area']."' ";
 			}
 
-			$recordsTotal = get_tabledata(TBL_USERS,true,array(), $query, 'COUNT(ID) as count');
+			$recordsTotal = get_tabledata(TBL_USERS, true, array(), $query, 'COUNT(ID) as count');
 			$recordsTotal = $recordsTotal->count;
-			$data_list = get_tabledata(TBL_USERS,false,array(),$query.$sql);
+			$data_list = get_tabledata(TBL_USERS, false, array(), $query.$sql);
 			$recordsFiltered = $recordsTotal;
 
 			if($data_list):
@@ -3041,12 +2783,12 @@ $age = array(
 					array_push($row, $img);
 					array_push($row, __($single_user->first_name.' '.$single_user->last_name.' '.$admin_label));
 					array_push($row, __($single_user->user_email));
-					array_push($row, date('M d,Y',strtotime($single_user->registered_at)));
+					array_push($row, date('M d, Y', strtotime($single_user->registered_at)));
 					if(is_admin()):
 						ob_start();
 						?>
 						<div class="text-center">
-							<label><input type="checkbox" class="js-switch" <?php checked($single_user->user_status , 1);?> onclick="javascript:approve_switch(this);" data-id="<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
+							<label><input type="checkbox" class="js-switch approve-switch" <?php checked($single_user->user_status , 1);?> data-id="<?php echo $single_user->ID;?>" data-action="user_account_status_change"/></label>
 						</div>
 						<?php
 						$checkbox = ob_get_clean();
@@ -3055,10 +2797,10 @@ $age = array(
 
 					ob_start();
 					?>
-					<div class="text-center">
-						<a href="<?php the_permalink('view-progress', array('user_id'=> $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a>
-						<button type="button" class="btn btn-success btn-xs add-to-courses" data-toggle="modal" data-target="#add-to-booking-modal" data-user="<?php echo $single_user->ID;?>" onclick="get_add_to_booking_data(this);"><i class="fa fa-view"></i>&nbsp;<?php _e('Add to Booking');?></button>
-					</div>
+						<div class="text-center">
+							<a href="<?php the_permalink('view-progress', array('user_id'=> $single_user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('Manage Training');?></a>
+							<button type="button" class="btn btn-success btn-xs add-to-courses-btn" data-toggle="modal" data-target="#add-to-booking-modal" data-user="<?php echo $single_user->ID;?>"><i class="fa fa-view"></i>&nbsp;<?php _e('Add to Booking');?></button>
+						</div>
 					<?php
 					$action = ob_get_clean();
 					array_push($row, $action);
@@ -3068,13 +2810,115 @@ $age = array(
 
 			/* Response to client before JSON encoding */
 			$response = array(
-				'draw' => intval($draw),
-				'recordsTotal' => $recordsTotal,
-				'recordsFiltered'=> $recordsFiltered,
-				'data' => $data,
+				'draw' => intval($draw), 
+				'recordsTotal' => $recordsTotal, 
+				'recordsFiltered'=> $recordsFiltered, 
+				'data' => $data, 
 			);
 			return json_encode($response);
 		}
+		
+		public function add__mentor__teach__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not add mentor teach, Please try again.'), 
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				if( is_value_exists(TBL_MENTORS, array('user_ID' => $user) ) ):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Mentor record already exists.');
+					$return['message'] = __('The user you selected already exists in mentor record.');
+				else:
+					$guid = get_guid(TBL_MENTORS);
+					$result = $this->database->insert(TBL_MENTORS, 
+						array(
+							'ID' => $guid, 
+							'user_ID' => $user, 
+							'course_type_ID'=> $course_type, 
+						)
+					);
+					if($result):
+						$notification_args = array(
+							'title' => __('Mentor Teach Record Created'), 
+							'notification'=> sprintf( __('You have successfully created a mentor teach record for user %s'), get_table_column_data( TBL_USERS, 'first_name', array( 'ID' => $user) ) . get_table_column_data( TBL_USERS, 'last_name', array( 'ID' => $user) ) ), 
+						);
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Mentor Teach successfully created.');
+						$return['reset_form'] = 1;
+					endif;
+				endif;
+			endif;
+			return json_encode($return);
+		}
+		
+		public function update__mentor__teach__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update mentor teach, Please try again.'), 
+				'reset_form' => 0
+			);
+
+			if(user_can('edit_user')):
+				if( is_value_exists(TBL_MENTORS, array('user_ID' => $user), $mentor_id) ):
+					$return['status'] = 2;
+					$return['message_heading'] = __('Mentor record already exists.');
+					$return['message'] = __('The user you selected already exists in mentor record.');
+				else:
+					$result = $this->database->update(TBL_MENTORS, 
+						array(
+							'user_ID' => $user, 
+							'course_type_ID'=> $course_type, 
+						), 
+						array(
+							'ID' => $mentor_id, 
+						)
+					);
+					if($result):
+						$notification_args = array(
+							'title' => __('Mentor Teach Record Updated'), 
+							'notification'=> sprintf( __('You have successfully updated a mentor teach record for user %s'), get_table_column_data( TBL_USERS, 'first_name', array( 'ID' => $user) ) . get_table_column_data( TBL_USERS, 'last_name', array( 'ID' => $user) ) ), 
+						);
+						add_user_notification($notification_args);
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = __('Mentor Teach successfully updated.');
+					endif;
+				endif;
+			endif;
+			return json_encode($return);
+		}
+		
+		public function delete__mentor__teach__process(){
+			extract($_POST);
+			$id = trim($id);
+			if( is_admin() ):
+				$mentor = get_tabledata(TBL_MENTORS, true, array( 'ID' => $id ) );
+				$user = get_userdata($mentor->user_ID);
+				$args = array( 'ID'=> $id );
+				$result = $this->database->delete(TBL_MENTORS, $args);
+				if($result):
+					$notification_args = array(
+						'title' => __('Mentor record deleted'), 
+						'notification'=> sprintf( __( 'You have successfully deleted (%) mentor record.'), ucfirst($user->first_name).' '.ucfirst($user->last_name) ), 
+					);
+					add_user_notification($notification_args);
+					return 1;
+				else:
+					return 0;
+				endif;
+			else:
+				return 0;
+			endif;
+		}
 	}
+	$User = new User();
 endif;
 ?>

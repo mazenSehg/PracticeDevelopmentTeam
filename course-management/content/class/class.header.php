@@ -3,7 +3,6 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Header') ):
-
 	class Header{
 		
 		private $database;
@@ -152,8 +151,7 @@ if( !class_exists('Header') ):
 			<!-- starrr -->
 			<script src="<?php echo JS_URL;?>starrr.js"></script>
 			<!-- p notify -->
-			<script src="<?php echo JS_URL;?>pnotify.js">
-			</script>
+			<script src="<?php echo JS_URL;?>pnotify.js"></script>
 			<script src="<?php echo JS_URL;?>pnotify.buttons.js"></script>
 			<script src="<?php echo JS_URL;?>pnotify.nonblock.js"></script>
 			<?php
@@ -168,7 +166,7 @@ if( !class_exists('Header') ):
 			$content = ob_get_clean();
 			return $content;
 		}
-
+		
 		public function sidebar(){
 			ob_start();
 			?>
@@ -229,7 +227,7 @@ if( !class_exists('Header') ):
 
 								<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
 								<li>
-									<a><i class="fa fa-user"></i><?php _e('Manage Users');?> <span class="fa fa-chevron-down"></span></a>
+									<a><i class="fa fa-users"></i><?php _e('Manage Users');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<?php if( user_can('view_user') ): ?>
 										<li><a href="<?php the_permalink('users');?>"><?php _e('All Users');?></a></li>
@@ -249,19 +247,28 @@ if( !class_exists('Header') ):
 								</li>
 								<?php endif; ?>
 								
+								<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
+								<li>
+									<a><i class="fa fa-users"></i><?php _e('Manage Mentors');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_user') ): ?>
+										<li><a href="<?php the_permalink('mentors');?>"><?php _e('All Mentors');?></a></li>
+										<?php endif;?>
+										
+										<?php if( user_can('edit_user') || user_can('add_user')): ?>
+										<li><a href="<?php the_permalink('add-new-mentor');?>"><?php _e('Add New Mentor');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-mentor');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
 								
 								<?php if( user_can('view_user') || user_can('edit_user') || user_can('add_user')): ?>
-								
-                                <li>
-									<a href="<?php the_permalink('progress');?>"><i class="fa fa-user"></i><?php _e('Manage Training');?></a>
-								<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
-								</li>
+								<li><a href="<?php the_permalink('progress');?>"><i class="fa fa-user"></i><?php _e('Manage Training');?></a></li>
 								<li class="hidden"><a href="<?php the_permalink('new-trainees');?>"></a></li>
 								
 								<?php endif; ?>
-
-
-
+								
 								<?php if(is_admin()): ?>
 								<li>
 									<a><i class="fa fa-book"></i><?php _e('Cohort');?> <span class="fa fa-chevron-down"></span></a>
@@ -278,13 +285,23 @@ if( !class_exists('Header') ):
 								</li>
 								<?php endif; ?>
 								
-								
-								
-
+								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
+								<li>
+									<a><i class="fa fa-exclamation-circle"></i><?php _e('Requests');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<?php if( user_can('view_booking') ): ?>
+										<li><a href="<?php the_permalink('pending-bookings');?>"><?php _e('Course Booking Requests');?></a></li>
+										<?php endif;?>
+										<?php if( user_can('edit_booking') ): ?>
+										<li class="hidden"><a href="<?php the_permalink('edit-pending-booking');?>"></a></li>
+										<?php endif;?>
+									</ul>
+								</li>
+								<?php endif; ?>
 								
 								<?php if( user_can('view_booking') || user_can('edit_booking') || user_can('add_booking')): ?>
 								<li>
-									<a><i class="fa fa-book"></i><?php _e('Courses');?> <span class="fa fa-chevron-down"></span></a>
+									<a><i class="fa fa-graduation-cap"></i><?php _e('Courses');?> <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<?php if( user_can('view_booking') ): ?>
 										<li><a href="<?php the_permalink('bookings');?>"><?php _e('All Courses');?></a></li>
@@ -301,100 +318,85 @@ if( !class_exists('Header') ):
 									</ul>
 								</li>
 								<?php endif; ?>
-								<li>
-								<a>
-									<i class="fa fa-certificate">
-									</i>General Management
-									<span class="fa fa-chevron-down">
-									</span>
-								</a>
-								<ul class="nav child_menu">
-									<?php
-		
-		if(is_admin()){ ?>
-									<li>
-<?php if(is_admin()): ?>
-                                        
-
-                                        
-									
-									
-																	<li>
-									<a><i class="fa fa-book"></i><?php _e('Course Types');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="<?php the_permalink('course-types');?>"><?php _e('All Course Types');?></a></li>
-										
-										<li><a href="<?php the_permalink('add-new-course-type');?>"><?php _e('Add New Course Type');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-course-type');?>"></a></li>
-									</ul>
-								</li>                                        
-                                        
-                                        
-                                        
-                                        
-								<li>
-									<a><i class="fa fa-book"></i><?php _e('Designations');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php if( user_can('view_designation') ): ?>
-										<li><a href="<?php the_permalink('designations');?>"><?php _e('All Designations');?></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('edit_designation') || user_can('add_designation')): ?>
-										<li><a href="<?php the_permalink('add-new-designation');?>"><?php _e('Add New Designation');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-designation');?>"></a></li>
-										<?php endif;?>
-									</ul>
-								</li>
-								<?php endif; ?>
 								
-								<?php if( user_can('view_location') || user_can('edit_location') || user_can('add_location')): ?>
-								<li>
-									<a><i class="fa fa-book"></i><?php _e('Locations');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php if( user_can('view_location') ): ?>
-										<li><a href="<?php the_permalink('locations');?>"><?php _e('All Locations');?></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('edit_location') || user_can('add_location')): ?>
-										<li><a href="<?php the_permalink('add-new-location');?>"><?php _e('Add New Location');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-location');?>"></a></li>
-										<?php endif;?>
-									</ul>
-								</li>
-																<li>
-									<a><i class="fa fa-book"></i><?php _e('Work Area');?> <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<?php if( user_can('view_work_area') ): ?>
-										<li><a href="<?php the_permalink('work-area');?>"><?php _e('All Work Areas');?></a></li>
-										<?php endif;?>
-										
-										<?php if( user_can('edit_work_area') || user_can('add_work_area')): ?>
-										<li><a href="<?php the_permalink('add-new-work-area');?>"><?php _e('Add New Work Area');?></a></li>
-										<li class="hidden"><a href="<?php the_permalink('edit-work-area');?>"></a></li>
-										<?php endif;?>
-									</ul>
-								</li>
-								<?php endif; ?>
-									</li>
-							</ul>
-									<?php
-					   
-							}?>
-							</li>
 								<?php if(is_admin()): ?>
+								<li>
+									<a><i class="fa fa-certificate"></i><?php _e('General Management');?><span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li>
+											<a><i class="fa fa-book"></i><?php _e('Course Types');?><span class="fa fa-chevron-down"></span></a>
+											<ul class="nav child_menu">
+												<li><a href="<?php the_permalink('course-types');?>"><?php _e('All Course Types');?></a></li>
+												
+												<li><a href="<?php the_permalink('add-new-course-type');?>"><?php _e('Add New Course Type');?></a></li>
+												<li class="hidden"><a href="<?php the_permalink('edit-course-type');?>"></a></li>
+											</ul>
+										</li>
+										<li>
+											<a><i class="fa fa-book"></i><?php _e('Designations');?> <span class="fa fa-chevron-down"></span></a>
+											<ul class="nav child_menu">
+												<?php if( user_can('view_designation') ): ?>
+												<li><a href="<?php the_permalink('designations');?>"><?php _e('All Designations');?></a></li>
+												<?php endif;?>
+												
+												<?php if( user_can('edit_designation') || user_can('add_designation')): ?>
+												<li><a href="<?php the_permalink('add-new-designation');?>"><?php _e('Add New Designation');?></a></li>
+												<li class="hidden"><a href="<?php the_permalink('edit-designation');?>"></a></li>
+												<?php endif;?>
+											</ul>
+										</li>
+
+										<?php if( user_can('view_location') || user_can('edit_location') || user_can('add_location')): ?>
+										<li>
+											<a><i class="fa fa-book"></i><?php _e('Locations');?> <span class="fa fa-chevron-down"></span></a>
+											<ul class="nav child_menu">
+												<?php if( user_can('view_location') ): ?>
+												<li><a href="<?php the_permalink('locations');?>"><?php _e('All Locations');?></a></li>
+												<?php endif;?>
+												
+												<?php if( user_can('edit_location') || user_can('add_location')): ?>
+												<li><a href="<?php the_permalink('add-new-location');?>"><?php _e('Add New Location');?></a></li>
+												<li class="hidden"><a href="<?php the_permalink('edit-location');?>"></a></li>
+												<?php endif;?>
+											</ul>
+										</li>
+										<li>
+											<a><i class="fa fa-book"></i><?php _e('Work Area');?> <span class="fa fa-chevron-down"></span></a>
+											<ul class="nav child_menu">
+												<?php if( user_can('view_work_area') ): ?>
+												<li><a href="<?php the_permalink('work-area');?>"><?php _e('All Work Areas');?></a></li>
+												<?php endif;?>
+												
+												<?php if( user_can('edit_work_area') || user_can('add_work_area')): ?>
+												<li><a href="<?php the_permalink('add-new-work-area');?>"><?php _e('Add New Work Area');?></a></li>
+												<li class="hidden"><a href="<?php the_permalink('edit-work-area');?>"></a></li>
+												<?php endif;?>
+											</ul>
+										</li>
+                                <li>
+									<a><i class="fa fa-envelope"></i><?php _e('Email Templates');?> <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="<?php the_permalink('templates');?>"><?php _e('All Templates');?></a></li>
+										<li><a href="<?php the_permalink('add-new-template');?>"><?php _e('Add New Template');?></a></li>
+										<li class="hidden"><a href="<?php the_permalink('edit-template');?>"></a></li>
+									</ul>
+								</li>
+										<?php endif; ?>
+									</ul>
+								</li>
+								
 								<li>
 									<a><i class="fa fa-cog"></i><?php _e('Setting');?><span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="<?php the_permalink('general-setting');?>"><?php _e('General');?></a></li>
+										<li><a href="<?php the_permalink('email-templates');?>"><?php _e('Email Templates');?></a></li>
 										<li><a href="<?php the_permalink('manage-roles');?>"><?php _e('Manage Roles');?></a></li>
-                                        <li><a href="<?php the_permalink('alerts');?>"><?php _e('Alert Settings');?></a></li>
-                                        <li><a href="<?php the_permalink('fields');?>"><?php _e('Additional course');?></a></li>
+										<li><a href="<?php the_permalink('alerts');?>"><?php _e('Alert Settings');?></a></li>
+										<li><a href="<?php the_permalink('fields');?>"><?php _e('Additional course');?></a></li>
 									</ul>
 								</li>
 								<?php endif; ?>
-								
-								
-
+							</ul>
 						</div>
 					</div>
 					<!-- /sidebar menu -->
@@ -442,14 +444,7 @@ if( !class_exists('Header') ):
 				<div class="title_left"><h3><?php _e($title);?></h3></div>
 				<?php if($status === true): ?>
 					<div class="title_right">
-						<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search for...">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button"><?php _e('Go!');?></button>
-								</span>
-							</div>
-						</div>
+						
 					</div>
 				<?php endif; ?>
 			</div>
@@ -477,5 +472,6 @@ if( !class_exists('Header') ):
 			return $content;
 		}
 	}
+	$Header = new Header();
 endif;
 ?>

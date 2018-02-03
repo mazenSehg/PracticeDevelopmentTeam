@@ -3,7 +3,6 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Designation') ):
-
 	class Designation{
 		private $database;
 		function __construct(){
@@ -97,7 +96,7 @@ if( !class_exists('Designation') ):
 								<?php endif; ?>
 								
 								<?php if( user_can('delete_designation') ): ?>
-								<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $designation->ID;?>" data-action="delete_designation"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
+								<a href="#" class="btn btn-danger btn-xs delete-record" data-id="<?php echo $designation->ID;?>" data-action="delete_designation"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -224,6 +223,6 @@ if( !class_exists('Designation') ):
 		}
 		
 	}
-
+	$Designation = new Designation();
 endif;
 ?>

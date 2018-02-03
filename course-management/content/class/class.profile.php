@@ -3,9 +3,7 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Profile') ):
-
-	class Profile{
-		
+	class Profile{	
 		public $user__id;
 		private $user;
 		private $user__class;
@@ -368,6 +366,6 @@ if( !class_exists('Profile') ):
 			return ($result) ? 1 : 0 ;
 		}
 	}
-	
-	endif;
+	$Profile = new Profile();
+endif;
 ?>

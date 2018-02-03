@@ -7,10 +7,10 @@ login_check();
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php _e('Add New Course');?> &mdash; <?php echo get_site_name();?></title>
+		<title><?php echo sprintf('Add New Course &mdash; %s', get_site_name()); ?></title>
 		<?php echo $Header->head();?>
 	</head>
-	 <body class="nav-md">
+	<body class="nav-md">
 		<div class="container body">
 			<div class="main_container">
 				<?php echo $Header->header();?>
@@ -30,9 +30,9 @@ login_check();
 					</div>
 				</div>
 				<!-- /page content -->
-			        <!-- footer content -->
+				<!-- footer content -->
 				<?php echo $Footer->footer();?>
-			        <!-- /footer content -->
+				<!-- /footer content -->
 			</div>
 		</div>
 	</body>

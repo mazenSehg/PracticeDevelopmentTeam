@@ -3,13 +3,14 @@
 if(!defined('ABSPATH')) exit;
 
 if( !class_exists('Location') ):
-
 	class Location{
 		private $database;
+		
 		function __construct(){
 			global $db;
 			$this->database = $db;
 		}
+		
 		public function extras_options(){
 			return array(
 				'chairs' => 'Chairs',
@@ -121,11 +122,11 @@ if( !class_exists('Location') ):
 							<label for="name"><?php _e('Ward Manager First Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="first" class="form-control require" />
 						</div>
-												<div class="col-xs-12 col-sm-12 form-group">
+						<div class="col-xs-12 col-sm-12 form-group">
 							<label for="name"><?php _e('Ward Manager Last Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="last" class="form-control require" />
 						</div>
-												<div class="col-xs-12 col-sm-12 form-group">
+						<div class="col-xs-12 col-sm-12 form-group">
 							<label for="name"><?php _e('Ward Manager email');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="email" class="form-control require" />
 						</div>
@@ -254,11 +255,11 @@ if( !class_exists('Location') ):
 							<label for="name"><?php _e('Ward Manager First Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="first" class="form-control require" value="<?php _e($location->first_name);?>"/>
 						</div>
-												<div class="col-xs-12 col-sm-12 form-group">
+						<div class="col-xs-12 col-sm-12 form-group">
 							<label for="name"><?php _e('Ward Manager Last Name');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="last" class="form-control require" value="<?php _e($location->last_name);?>"/>
 						</div>
-												<div class="col-xs-12 col-sm-12 form-group">
+						<div class="col-xs-12 col-sm-12 form-group">
 							<label for="name"><?php _e('Ward Manager email');?>&nbsp;<span class="required">*</span></label>
 							<input type="text" name="email" class="form-control require" value="<?php _e($location->email);?>"/>
 						</div>
@@ -312,7 +313,7 @@ if( !class_exists('Location') ):
 								<?php endif; ?>
 								
 								<?php if( user_can('delete_location') ): ?>
-								<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $location->ID;?>" data-action="delete_location"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
+								<a href="#" class="btn btn-danger btn-xs delete-record" data-id="<?php echo $location->ID;?>" data-action="delete_location"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -360,7 +361,7 @@ if( !class_exists('Location') ):
 								<?php endif; ?>
 								
 								<?php if( user_can('delete_location') ): ?>
-								<a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="javascript:delete_function(this);" data-id="<?php echo $location->ID;?>" data-action="delete_work_area"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
+								<a href="#" class="btn btn-danger btn-xs delete-record" data-id="<?php echo $location->ID;?>" data-action="delete_work_area"><i class="fa fa-trash"></i>&nbsp;<?php _e('Delete');?></a>
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -618,6 +619,6 @@ if( !class_exists('Location') ):
 		}
 		
 	}
-
+	$Location = new Location();
 endif;
 ?>
