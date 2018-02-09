@@ -1928,10 +1928,13 @@ if( !class_exists('User') ):
 				$salt = base64_encode($salt);
 				//$pword = set_password($user_pass);
 				$result1 = $this->database->update(TBL_USERS, array('user_pass'=> $user_pass, 'user_salt'=> $salt), array('user_email'=> $user_name));
+                
 				//MAILER
 				$subject = "NCCPM Fault Management System - Login Details";
 				$body = "Welcome, your login email address is: ". $user_name . " and your password is: " . $record_pass . ". The password can be changed once logged in.";
-				send_email($user_name, $subject, $body);
+                $admn = "admin@admin.com";
+			send_email($admn,$user_name,$user_name, $subject, $body);
+				
 				return 1;
 			}else{
 				return 0;
@@ -2396,7 +2399,7 @@ if( !class_exists('User') ):
 				$user = get_userdata($user_id);
 				$designation = get_tabledata(TBL_RULES, true, array('user_ID'=> $user_id));
 						
-				if( is_value_exists(TBL_USERS, array('user_email' => $user_email), $user_id) ):
+				if(1==0 ):
 					$return['status'] = 2;
 					$return['message_heading'] = __('Email Already Exist');
 					$return['message'] = __('Email address you entered is already exists, please try another email address.');
@@ -2457,7 +2460,21 @@ if( !class_exists('User') ):
 
 					$result1 = false;
 					if($user_pass != ''){
-						$result1 = $this->database->update(TBL_USERS, array('user_pass'=> set_password($user_pass)), array('ID'=> $user_id));
+                        				        $salt = generateSalt();
+                        				        $user_pass = hash('SHA256', encrypt($user_pass, $salt));
+                                                $salt = base64_encode($salt);
+						$result1 = $this->database->update(TBL_USERS, array('user_pass'=> $user_pass,'user_salt'=>$salt), array('ID'=> $user_id));
+                /**
+                        
+                        
+                $user_pass = password_generator();
+				$record_pass = $user_pass;
+				$salt = generateSalt();
+				$user_pass = hash('SHA256', encrypt($user_pass, $salt));
+				$salt = base64_encode($salt);
+				//$pword = set_password($user_pass);
+				$result1 = $this->database->update(TBL_USERS, array('user_pass'=> $user_pass, 'user_salt'=> $salt), array('user_email'=> $user_name));
+                        **/
 					}
 								
 					$check = ($result1) ? true : $check;
