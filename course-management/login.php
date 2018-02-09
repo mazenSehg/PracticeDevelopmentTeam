@@ -16,6 +16,9 @@ endif;
 		<title><?php _e('Login');?> &mdash; <?php echo get_site_name();?></title>
 		<?php echo $Header->head();?>
 	</head>
+    <script type = "text/javascript">
+    alert("Connection: " );
+    </script>
 	<body class="home-page main">
 		<section class="">
 			<div class="canvas-block">

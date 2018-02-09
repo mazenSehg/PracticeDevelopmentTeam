@@ -143,7 +143,7 @@ if( !class_exists('Booking') ):
 				</div>
 				
 				<div class="form-group">
-					<label for="location"><?php _e('Location');?>&nbsp;<span class="required">*</span></label>
+					<label for="location"><?php _e('Location(s)');?>&nbsp;<span class="required">*</span></label>
 					<select name="location" class="form-control select_single require" data-placeholder="Choose location">
 						<?php
 						$data = get_tabledata(TBL_LOCATIONS, false);
@@ -151,6 +151,10 @@ if( !class_exists('Booking') ):
 						echo get_options_list($option_data, maybe_unserialize($booking->location));
 						?>
 					</select>
+                    <div id="go">
+                    </div>
+                    <button id="another" onclick="anotherLink()" type="button">Add new Location</button>
+                    
 				</div>
 
 				<div class="form-group">
@@ -165,7 +169,7 @@ if( !class_exists('Booking') ):
 
 				<div class="form-group">
 					<label for="max_trainee">
-						<?php _e('Max Traniees');?>&nbsp;<span class="required">*</span>
+						<?php _e('Max Trainees');?>&nbsp;<span class="required">*</span>
 					</label>
 					<input type="number" name="max_trainee" class="form-control require" min="0" max = "100" value="<?php echo $booking->max_num; ?>"/>
 				</div>

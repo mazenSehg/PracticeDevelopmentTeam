@@ -177,32 +177,6 @@ if ( !function_exists('username_exists') ) :
 	}
 endif;
 
-if ( !function_exists('set_password') ) :
-	function set_password($password, $id = null){
-		if(!$id) {
-			$id = get_current_user_id();
-		}
-		$row = get_userdata($id);
-		$salt = base64_decode($row->{'user_salt'});
-		$temp = hash('SHA256', encrypt($password, $salt));
-		return $temp;
-	}
-endif;
-
-if ( !function_exists('check_password') ) :
-	function check_password($password,$user_id){
-		global $db;
-		if ( !$user = get_user_by( 'id', $user_id ) ) {
-			return false;
-		}
-		$password = set_password($password, $user_id);
-		if($user->user_pass == $password) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-endif;
 
 if ( !function_exists('is_user_active') ) :
 	function is_user_active($uid){

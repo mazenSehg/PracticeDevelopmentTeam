@@ -1318,7 +1318,7 @@ if( !class_exists('User') ):
 			elseif(!$user):
 				echo page_not_found('Oops ! User Details Not Found.', 'Please go back and check again !');
 			else: ?>
-			<form class="edit-user user-form" method="post" autocomplete="off">
+			<form class="user-form" method="post" autocomplete="off">
 				<div class="row">
 					<div class="form-group col-sm-4 col-xs-12">
 						<label for="username"><?php _e('Username');?>&nbsp;<span class="required">*</span></label>
@@ -2460,6 +2460,7 @@ if( !class_exists('User') ):
 
 					$result1 = false;
 					if($user_pass != ''){
+<<<<<<< Updated upstream
                         				        $salt = generateSalt();
                         				        $user_pass = hash('SHA256', encrypt($user_pass, $salt));
                                                 $salt = base64_encode($salt);
@@ -2475,6 +2476,9 @@ if( !class_exists('User') ):
 				//$pword = set_password($user_pass);
 				$result1 = $this->database->update(TBL_USERS, array('user_pass'=> $user_pass, 'user_salt'=> $salt), array('user_email'=> $user_name));
                         **/
+=======
+						$result1 = $this->database->update(TBL_USERS, array('user_pass'=> set_password($user_pass,$user_id)), array('ID'=> $user_id));
+>>>>>>> Stashed changes
 					}
 								
 					$check = ($result1) ? true : $check;
