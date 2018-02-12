@@ -18,9 +18,9 @@ var MainJs = {
 
     reInit: function() {
         t = this;
-        if (t.doc.find("table .js-switch")[0]) {
+        if (t.doc.find(".js-switch")[0]) {
             setTimeout(function() {
-                var elems = Array.prototype.slice.call(document.querySelectorAll('table input.js-switch:not([data-switchery=true])'));
+                var elems = Array.prototype.slice.call(document.querySelectorAll('input.js-switch:not([data-switchery=true])'));
                 elems.forEach(function(html) {
                     var switchery = new Switchery(html, {
                         color: '#26B99A'
@@ -812,6 +812,34 @@ var MainJs = {
                 }
             });
         });
+        
+        t.doc.on('click', '.get-note', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#note-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#note-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'edit_note',
+                    note_id: _this.data('note')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    /*alert(r['html']);*/
+                    t.doc.find('#note-data-modal-body').html(r['html']);
+                    
+
+                    t.reInit();
+                    var elem = $('.js-switch');
+                    var init = new Switchery(elem);
+                    return false;
+                }
+            });
+        });
+        
+        
     },
 
     CohortFunctions: function() {

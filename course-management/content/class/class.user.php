@@ -821,7 +821,9 @@ if( !class_exists('User') ):
 															$name = filePathParts($xmlFile);
 															?>
 															<a href="<?php echo $noty->filepath; ?>" download>Download<br>(<?php echo $name;?>)</a></td>
-														<td>	<?php $user = get_userdata($noty->from);echo $user->first_name . " ". $user->last_name?></td>
+                                                        <td>	<?php $user = get_userdata($noty->from);echo $user->first_name . " ". $user->last_name?></td>
+                                                        <td><button type="button" class="get-note btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#note-data-modal" data-note="<?php echo $noty->ID;?>"><span class="glyphicon glyphicon-pencil"></span></button></td>
+
 													</tr>
 													<?php endforeach; ?>
 												</tbody>
@@ -918,6 +920,7 @@ if( !class_exists('User') ):
 			else:
 				echo $this->activity__and__progress__log__section( $user->ID );
 			endif;
+            echo $this->note__data__modal();
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -2346,6 +2349,76 @@ if( !class_exists('User') ):
 			return json_encode($return);
 		}
 
+        
+        public function edit__note__process(){
+			extract($_POST);
+			$note_id = trim($note_id);
+			$return['html'] = '';
+			$note = get_tabledata(TBL_NOTES, true, array('ID'=> $note_id));
+            $text = $note->note;
+            $active = $note->active;
+			/*if($note):
+				
+					ob_start();
+					?>
+<!--					<a href="<?/*php the_permalink('edit-note', array('id'=> $booking->ID));?>" class="btn btn-dark btn-xs">
+						<i class="fa fa-edit"></i>&nbsp;<?php _e('Modify Trainee(s)');*/?>
+					<!--</a>-->
+                    
+					<form class="submit-form" method="post" autocomplete="off">
+											<div class="row">
+												<div class="form-group col-sm-12 col-xs-12">
+													<label for="description-of-fault"><?php _e('Notes');?></label>
+													<textarea name="note" class="form-control" rows="4"><?php echo $text; ?></textarea>
+												</div>
+												<div class="form-group col-sm-12 col-xs-12">
+													<label for="description-of-fault"><?php _e('Attachments');?></label>
+													<input type="file" name="file" accept="">
+												</div>
+                                                <div class="form-group col-sm-12 col-xs-12">
+                                                    <label><input id="active" name="active" type="checkbox" class="js-switch" <?php checked($note->active, 1);?>/></label>
+                                                </div>
+											</div>
+											
+											<input type="hidden" name="note_id" value="<?php echo $note_id?>">
+											<div class="form-group">
+												<div class="ln_solid"></div>
+												<input type="hidden" name="action" value="update_note" />
+												<button class="btn btn-success btn-md" type="submit"><?php _e('Update note');?></button>
+											</div>
+										</form>
+
+					<?php
+					$return['html'] = ob_get_clean();
+				/*endif;*/
+			/*endif;*/
+			return json_encode($return);
+		}
+        
+        public function note__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="note-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Note Details');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="note-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			return ob_get_clean();
+		}
+        
+        
 		public function update__notes__process(){
 			extract($_POST);
 			$return = array(
@@ -2369,7 +2442,8 @@ if( !class_exists('User') ):
 						'to' => $user_id3, 
 						'from' => $this->current__user__id, 
 						'note' => $note, 
-						'filepath'=> $target_file
+						'filepath'=> $target_file,
+                        'active'=>'1'
 					)
 				);
 
@@ -2381,6 +2455,48 @@ if( !class_exists('User') ):
 				$return['status'] = 1;
 				$return['message_heading'] = __('Success !');
 				$return['message'] = __('Account has been successfully created.');
+				$return['reset_form'] = 1;
+			endif;
+			return json_encode($return);
+		}
+        
+        
+        public function update__note__process(){
+			extract($_POST);
+            error_log(json_encode($_POST));
+			$return = array(
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not create account, Please try again.'), 
+				'reset_form' => 0
+			);
+
+			if(user_can('add_user')):
+				$actv = (isset($_POST['active'])) ? 1 : 0;
+				/*$target_dir = ABSPATH . CONTENT . "/uploads/user_info/";
+				$target_file= $target_dir . basename($_FILES["file"]["name"]);
+				$uploadOk = 1;
+				$target_file= str_replace(' ', '_', $target_file);
+				$full_dir = $target_dir."/".$user_id3;
+				if(!file_exists($full_dir)) mkdir($full_dir, 0755, true);
+				move_uploaded_file($_FILES["file"]["name"], $full_dir);*/
+				$result = $this->database->update(TBL_NOTES, 
+					array(
+						'note' => $note, 
+						'active' => $actv,
+					),array(
+                        'ID' => $note_id
+                    )
+				);
+
+				$notification_args = array(
+					'title' => __('Account Information'), 
+					'notification'=> __('You have successfully updated note'), 
+				);
+				add_user_notification($notification_args);
+				$return['status'] = 1;
+				$return['message_heading'] = __('Success !');
+				$return['message'] = __('Note has been successfully updated.');
 				$return['reset_form'] = 1;
 			endif;
 			return json_encode($return);
@@ -2460,7 +2576,7 @@ if( !class_exists('User') ):
 
 					$result1 = false;
 					if($user_pass != ''){
-<<<<<<< Updated upstream
+/*<<<<<<< Updated upstream*/
                         				        $salt = generateSalt();
                         				        $user_pass = hash('SHA256', encrypt($user_pass, $salt));
                                                 $salt = base64_encode($salt);
@@ -2476,9 +2592,9 @@ if( !class_exists('User') ):
 				//$pword = set_password($user_pass);
 				$result1 = $this->database->update(TBL_USERS, array('user_pass'=> $user_pass, 'user_salt'=> $salt), array('user_email'=> $user_name));
                         **/
-=======
+/*=======*/
 						$result1 = $this->database->update(TBL_USERS, array('user_pass'=> set_password($user_pass,$user_id)), array('ID'=> $user_id));
->>>>>>> Stashed changes
+/*>>>>>>> Stashed changes*/
 					}
 								
 					$check = ($result1) ? true : $check;

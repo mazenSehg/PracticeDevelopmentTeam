@@ -98,8 +98,16 @@
 				echo $User->update__mentor__process();
 				break;
 
+            case 'edit_note':
+                echo $User->edit__note__process();
+                break;
+
 			case 'update_notes':
 				echo $User->update__notes__process();
+				break;
+
+            case 'update_note':
+				echo $User->update__note__process();
 				break;
 				
 			case 'edit_user':
