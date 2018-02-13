@@ -28,6 +28,9 @@ var MainJs = {
                 });
             }, 500);
         }
+        if (t.doc.find(".select_single")[0]) {
+            $(".select_single").select2();
+        }
     },
 
     globalFunctions: function() {
@@ -888,6 +891,27 @@ var MainJs = {
                 }
             });
         });
+        
+        t.doc.on('click', '.enrol-nurses', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#enrol-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#enrol-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'enrol_nurses',
+                    booking_id: _this.data('booking')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#enrol-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
+                }
+            });
+        });
 
         t.doc.on('click', '.add-pending-bookings', function(e) {
             e.preventDefault();
@@ -1065,6 +1089,41 @@ var MainJs = {
                 }
             });
         });
+        
+        
+        t.doc.on('click', '.print-register', function(e) {
+            e.preventDefault();
+            $_this = $(this), spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            var booking_id = (this.getAttribute("booking_id"));
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'get_register',
+                    booking_id: booking_id,
+                },
+                url: t.ajax_url,
+                dataType: 'json',
+                success: function(res) {
+                    var doc = new jsPDF();
+                    var specialElementHandlers = {
+                        '#editor': function(element, renderer){
+                            return true;
+                        },
+                        '.controls': function(element, renderer){
+                            return true;
+                        }
+                    };
+                    doc.fromHTML(res.html, 15, 15, {
+                        'width': 170, 
+                        'elementHandlers': specialElementHandlers
+                    });
+                    doc.save('a4.pdf');
+                }
+            });
+            
+        });
+        
+        
 
         t.doc.on('focus', '.nurse-modal-datepicker', function() {
             t.doc.find('.nurse-modal-datepicker').daterangepicker({

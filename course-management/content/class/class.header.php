@@ -85,11 +85,12 @@ if( !class_exists('Header') ):
 			<script src="<?php echo JS_URL;?>fastclick.js"></script>
 			<!-- NProgress -->
 			<script src="<?php echo JS_URL;?>nprogress.js"></script>
-
 			<script src="<?php echo JS_URL;?>jscolor.js"></script>
 			<!-- morris.js -->
 			<script src="<?php echo JS_URL;?>raphael.min.js"></script>
 			<script src="<?php echo JS_URL;?>morris.min.js"></script>
+            <!-- jsPDF -->
+			<script src="<?php echo JS_URL;?>jspdf.min.js"></script>
 			<!-- Chart.js -->
 			<script src="<?php echo JS_URL;?>Chart.min.js"></script>
 			<!-- gauge.js -->

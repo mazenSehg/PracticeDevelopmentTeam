@@ -217,6 +217,10 @@
 			case 'add_new_booking':
 				echo $Booking->add__booking__process();
 				break;
+
+            case 'update_attendees':
+                echo $Booking->update__attendees__process();
+                break;
 				
 			case 'update_booking':
 				echo $Booking->update__booking__process();
@@ -237,6 +241,14 @@
 			case 'fetch_booking_nurses':
 				echo $Booking->fetch__booking__nurses__process();
 				break;
+
+            case 'enrol_nurses':
+				echo $Booking->enrol__nurses__process();
+				break;
+
+            case 'get_register':
+                echo $Booking->get__register__process();
+                break;
 				
 			case 'fetch_booking_additional_information':
 				echo $Booking->fetch__booking__additional__information__process();

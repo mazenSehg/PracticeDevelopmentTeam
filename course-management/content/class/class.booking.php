@@ -244,6 +244,7 @@ if( !class_exists('Booking') ):
 			<?php
 			echo $this->booking__data__modal();
 			echo $this->nurses__data__modal();
+            echo $this->enrol__data__modal();
 			echo $this->additional__information__data__modal();
 			echo $this->add__booking__modal();
 			echo $this->remove__trainee__modal();
@@ -264,6 +265,29 @@ if( !class_exists('Booking') ):
 						</div>
 						<div class="modal-body">
 							<div id="nurse-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			return ob_get_clean();
+		}
+        
+        public function enrol__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="enrol-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Add Attendees');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="enrol-data-modal-body"></div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
@@ -717,6 +741,64 @@ if( !class_exists('Booking') ):
 
 			return json_encode($return);
 		}
+        
+        public function update__attendees__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update booking, Please try again.'), 
+				'reset_form' => 0
+			);
+            
+            error_log(json_encode($nurses));
+            
+			/*if( user_can('edit_booking') ):
+				$validation_args = array(
+					'course_ID'=> $code, 
+				);
+
+				$booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=> $booking_id));
+				$old_enroll = maybe_unserialize($booking->enroll);
+				$old_attendance = maybe_unserialize($booking->attendance);
+				$old_collected = maybe_unserialize($booking->collected);
+				$old_date_book_returned = maybe_unserialize($booking->date_book_returned);
+				$old_date_book_received = maybe_unserialize($booking->date_book_received);
+				$enroll = array();
+				foreach($nurses as $nurse){
+					$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
+					$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
+					$collected[$nurse] = isset($old_collected[$nurse]) ? $old_collected[$nurse] : 0;
+					$date_book_returned[$nurse] = isset($old_date_book_returned[$nurse]) ? $old_date_book_returned[$nurse] : '';
+					$date_book_received[$nurse] = isset($old_date_book_received[$nurse]) ? $old_date_book_received[$nurse] : '';
+				}*/
+            
+				$result = $this->database->update(TBL_BOOKINGS, 
+					array(
+						'nurses' => $nurses, 
+					), 
+					array(
+						'ID'=> $booking_id
+					)
+				);
+				
+				if($result):
+					$notification_args = array(
+						'title' => __('Booking updated'), 
+						'notification'=> __('You have successfully updated attendees.'), 
+					);
+
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = __('Success !');
+					$return['message'] = __('Attendees has been updated successfully.');
+				endif;
+
+			return json_encode($return);
+		}
+        
+        
+        
 
 		public function delete__booking__process(){
 			extract($_POST);
@@ -804,6 +886,12 @@ if( !class_exists('Booking') ):
 						<?php if( user_can('edit_booking') ): ?>
 						<button type="button" class="btn btn-success btn-xs get-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>">
 							<i class="fa fa-view"></i>&nbsp;<?php _e('View Trainee(s)');?>
+						</button>
+                        <button type="button" class="btn btn-success btn-xs enrol-nurses" data-toggle="modal" data-target="#enrol-data-modal" data-booking="<?php echo $booking->ID;?>">
+							<i class="fa fa-view"></i>&nbsp;<?php _e('Enrol Trainee(s)');?>
+						</button>
+                        <button type="button" class="btn btn-success btn-xs print-register" booking_id="<?php echo $booking->ID;?>">
+							<i class="fa fa-view"></i>&nbsp;<?php _e('Print Register');?>
 						</button>
 						<a href="<?php the_permalink('edit-booking', array('id'=> $booking->ID));?>" class="btn btn-dark btn-xs">
 							<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
@@ -905,6 +993,84 @@ if( !class_exists('Booking') ):
 			endif;
 			return json_encode($return);
 		}
+        
+        public function enrol__nurses__process(){
+			extract($_POST);
+			$booking_id = trim($booking_id);
+			$return['html'] = '';
+			$booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=> $booking_id));
+			if($booking):
+				$nurses = maybe_unserialize($booking->nurses);
+                $admins = maybe_unserialize($booking->admins);
+				$date_book_received = isset($booking->date_book_received) ? maybe_unserialize($booking->date_book_received) : array();
+				$collected = isset($booking->collected) ? maybe_unserialize($booking->collected) : array();
+				$date_book_returned = isset($booking->date_book_returned) ? maybe_unserialize($booking->date_book_returned) : array();
+				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
+				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
+					ob_start();
+            ?>
+                <form class="update-attendees submit-form" method="post" autocomplete="off">
+                    <div class="form-group">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
+					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+						$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+						$option_data = get_option_data($data, array('ID', 'name'));
+						echo get_options_list($option_data, maybe_unserialize($booking->nurses));
+						?>
+					</select>
+				</div>
+
+                <div class="form-group">
+					<div class="ln_solid"></div>
+					<input type="hidden" name="action" value="update_attendees" />
+					<input type="hidden" name="booking_id" value="<?php echo $booking->ID;?>" />
+					<button class="btn btn-success btn-md" type="submit"><?php _e('Update Attendees');?></button>
+				</div>
+			</form>
+					<?php
+					$return['html'] = ob_get_clean();
+			endif;
+			return json_encode($return);
+		}
+        
+        
+        public function get__register__process(){
+            extract($_POST);
+			$booking_id = trim($booking_id);
+			$return['html'] = '';
+			$booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=> $booking_id));
+			if($booking):
+				$nurses = maybe_unserialize($booking->nurses);
+                $name = $booking->name;
+				if(!empty($nurses)):
+					ob_start();
+                    ?>
+                    <h1><?php echo $name; ?></h1>
+					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($nurses as $nurse): echo "<tr>
+                                <td>".get_user_name($nurse)."</td>
+                                <td></td>
+                                </tr>";
+                            endforeach;?>
+                        </tbody>
+                    </table>
+                    <br>
+					<?php
+					$return['html'] = ob_get_clean();
+				endif;
+			endif;
+			return json_encode($return);
+		}
+        
+        
 
 		public function fetch__booking__additional__information__process(){
 			extract($_POST);
