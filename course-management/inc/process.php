@@ -142,9 +142,21 @@
 				echo $Course->add__course__process();
 				break;			
 				
-			case 'add_new_cohort':
+            case 'add_new_cohort':
 				echo $Course->add__cohort__process();
 				break;
+
+			case 'get_cohort':
+				echo $Course->get__cohort__process();
+				break;
+
+            case 'add-to-cohort':
+                echo $Course->add__to__cohort__process();
+                break;
+
+            case 'update_cohort_nurses':
+                echo $Course->update__cohort__nurses__process();
+                break;
 				
 			case 'update_course':
 				echo $Course->update__course__process();

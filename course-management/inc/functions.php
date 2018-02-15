@@ -669,6 +669,7 @@ endif;
 
 if ( !function_exists('get_option_data') ) :
 	function get_option_data($data, $args){
+        error_log("Get option data: ".json_encode($data));
 		if($data == null || empty($data))
 			return false;
 		if($args == null || empty($args))
@@ -817,11 +818,15 @@ if( !function_exists('get_options_list')):
 				$value = (array)$value;	
 			}
 		}
+        foreach($value as $v){
+            error_log("Value: $v");
+        }
 		foreach($data as $key => $val):
 			$selected = (!empty($value) && in_array($key, $value) ) ? 'selected' : '';
 				$return .= '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
 		endforeach;
 		
+        error_log($return);
 		return $return;
 	}
 endif;

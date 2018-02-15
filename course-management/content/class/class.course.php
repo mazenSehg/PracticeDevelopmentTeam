@@ -126,20 +126,22 @@ if( !class_exists('Course') ):
 						
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
-						<label for="dob"><?php _e('Starting Date');?></label>
+						<label for="start"><?php _e('Starting Date');?></label>
 						<input type="text" name="start" class="form-control input-datepicker" readonly="readonly"/> 
 					</div>
-					<div class="form-group col-sm-2 col-xs-12">
-						<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="years" class="form-control require" min="0" max="10"value="0"/>
+                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="sd1"><?php _e('Study Day 1');?></label>
+						<input type="text" name="sd1" class="form-control input-datepicker" readonly="readonly"/> 
 					</div>
-					<div class="form-group col-sm-2 col-xs-12">
-						<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="months" class="form-control require" min="0" max = "12"value="0"/>
+				</div>
+                <div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="sd2"><?php _e('Study Day 2');?></label>
+						<input type="text" name="sd2" class="form-control input-datepicker" readonly="readonly"/> 
 					</div>
-					<div class="form-group col-sm-2 col-xs-12">
-						<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="days" class="form-control require" min="0" max = "31" value="0"/>
+                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="sd3"><?php _e('Study Day 3');?></label>
+						<input type="text" name="sd3" class="form-control input-datepicker" readonly="readonly"/> 
 					</div>
 				</div>
 				<div class="form-group">
@@ -185,20 +187,21 @@ if( !class_exists('Course') ):
 						<label for="dob"><?php _e('Starting Date');?></label>
 						<input type="text" name="start" class="form-control input-datepicker" readonly="readonly" value ="<?php echo date('M d, Y', strtotime($course->date)); ?>"/> 
 					</div>
-					<div class="form-group col-sm-2 col-xs-12">
-						<label for="retrain_date"><?php _e('Years');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="years" class="form-control require" min="0" max="10"value="<?php echo $course->y; ?>"/>
-					</div>
-					<div class="form-group col-sm-2 col-xs-12">
-						<label for="retrain_date"><?php _e('Months');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="months" class="form-control require" min="0" max = "12"value="<?php echo $course->m; ?>"/>
-					</div>
-					<div class="form-group col-sm-2 col-xs-12">
-						<label for="retrain_date"><?php _e('Days');?>&nbsp;<span class="required">*</span></label>
-						<input type="number" name="days" class="form-control require" min="0" max = "31" value="<?php echo $course->d; ?>"/>
+                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="sd1"><?php _e('Study Day 1');?></label>
+						<input type="text" name="sd1" class="form-control input-datepicker" readonly="readonly" value ="<?php echo date('M d, Y', strtotime($course->sd1)); ?>"/> 
 					</div>
 				</div>
-						
+                <div class="row">
+					<div class="form-group col-sm-6 col-xs-12">
+						<label for="sd2"><?php _e('Study Day 2');?></label>
+						<input type="text" name="sd2" class="form-control input-datepicker" readonly="readonly" value ="<?php echo date('M d, Y', strtotime($course->sd2)); ?>"/> 
+					</div>
+                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="sd3"><?php _e('Study Day 3');?></label>
+						<input type="text" name="sd3" class="form-control input-datepicker" readonly="readonly" value ="<?php echo date('M d, Y', strtotime($course->sd3)); ?>"/> 
+					</div>
+				</div>
 				<div class="form-group">
 					<div class="ln_solid"></div>
 					<input type="hidden" name="action" value="update_cohort" />
@@ -380,7 +383,6 @@ if( !class_exists('Course') ):
 						<th><?php _e('Name');?></th>
 						<th><?php _e('Cohort Type');?></th>
 						<th><?php _e('Starting Period');?></th>
-						<th><?php _e('Frequency of Cohort');?></th>
 						<th class="text-center"><?php _e('Actions');?></th>
 					</tr>
 				</thead>
@@ -390,8 +392,13 @@ if( !class_exists('Course') ):
 						<td><?php _e($course->name);?></td>
 						<td><?php _e($course->type);?></td>
 						<td><?php echo date('M d, Y', strtotime($course->date));?></td>
-						<td><?php echo "Days: ".($course->d)."<br>"."Months: ".($course->m)."<br>"."Years: ".($course->y);?></td>
 						<td class="text-center">
+                            <button type="button" class="btn btn-success btn-xs get-cohort" data-toggle="modal" data-target="#view-cohort-data-modal" data-cohort="<?php echo $course->ID;?>">
+									<i class="fa fa-view"></i>&nbsp;<?php _e('View Cohort');?>
+								</button>
+                            <button type="button" class="btn btn-success btn-xs add-to-cohort" data-toggle="modal" data-target="#add-to-cohort-data-modal" data-cohort="<?php echo $course->ID;?>">
+                                <i class="fa fa-view"></i>&nbsp;<?php _e('Add Student(s) to Cohort');?>
+                            </button>
 							<?php if( user_can('edit_course') ): ?>
 							<a href="<?php the_permalink('edit-cohort', array('id' => $course->ID));?>" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?></a>
 							<?php endif; ?>
@@ -404,6 +411,8 @@ if( !class_exists('Course') ):
 				</tbody>
 			</table>
 			<?php endif;
+            echo $this->add__to__cohort__data__modal();
+            echo $this->view__cohort__data__modal();
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -497,7 +506,56 @@ if( !class_exists('Course') ):
 				endif;
 			endif;
 			return json_encode($return);
-		} 
+		}
+        
+        
+        public function view__cohort__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="view-cohort-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('View Cohort');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="view-cohort-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="hidden fc_create" data-toggle="modal" data-target="#view-cohort-data-modal"></div>
+			<?php
+			return ob_get_clean();
+		}
+        
+        public function add__to__cohort__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="add-to-cohort-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Add to Cohort');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="add-to-cohort-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="hidden fc_create" data-toggle="modal" data-target="#add-to-cohort-data-modal"></div>
+			<?php
+			return ob_get_clean();
+		}
 
 		//Process functions starts here
 		public function add__cohort__process(){
@@ -525,10 +583,10 @@ if( !class_exists('Course') ):
 							'ID' => $guid, 
 							'name' => $name, 
 							'type' => $type, 
-							'date' => date('Y-m-d h:i:s', strtotime($start)), 
-							'y' => $years, 
-							'm' => $months, 
-							'd' => $days, 
+							'date' => date('Y-m-d h:i:s', strtotime($start)),
+                            'sd1' => date('Y-m-d h:i:s', strtotime($sd1)),
+                            'sd2' => date('Y-m-d h:i:s', strtotime($sd2)),
+                            'sd3' => date('Y-m-d h:i:s', strtotime($sd3))
 						)
 					);
 					if($result):
@@ -545,6 +603,117 @@ if( !class_exists('Course') ):
 					endif;
 				endif;
 			endif;
+			return json_encode($return);
+		}
+        
+        public function add__to__cohort__process(){
+			extract($_POST);
+			$cohort_id = trim($cohort_id);
+			$return['html'] = '';
+			$users = get_tabledata(TBL_USERS, false, array('cohort'=> $cohort_id), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+            $selected_data = get_option_data($users, array('name', 'ID'));
+            $selected_data = maybe_unserialize($selected_data);
+            
+			
+            error_log("Should be selected: ".json_encode($selected_data));
+				/*$nurses = maybe_unserialize($booking->nurses);
+                $admins = maybe_unserialize($booking->admins);
+				$date_book_received = isset($booking->date_book_received) ? maybe_unserialize($booking->date_book_received) : array();
+				$collected = isset($booking->collected) ? maybe_unserialize($booking->collected) : array();
+				$date_book_returned = isset($booking->date_book_returned) ? maybe_unserialize($booking->date_book_returned) : array();
+				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
+				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();*/
+					ob_start();
+            ?>
+                <form class="add-to-cohort-form submit-form" method="post" autocomplete="off">
+                    <div class="form-group">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
+					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+						$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+						$option_data = get_option_data($data, array('ID', 'name'));
+						echo get_options_list($option_data, $selected_data);
+						?>
+					</select>
+				</div>
+
+                <div class="form-group">
+					<div class="ln_solid"></div>
+					<input type="hidden" name="action" value="update_cohort_nurses" />
+					<input type="hidden" name="cohort_id" value="<?php echo $cohort_id;?>" />
+					<button class="btn btn-success btn-md" type="submit"><?php _e('Update Cohort');?></button>
+				</div>
+			</form>
+					<?php
+					$return['html'] = ob_get_clean();
+                /*error_log(json_encode($users));*/
+			
+			return json_encode($return);
+		}
+        
+        
+        
+        public function get__cohort__process(){
+			extract($_POST);
+			$cohort_id = trim($cohort_id);
+			$return['html'] = '';
+			$users = get_tabledata(TBL_USERS, false, array('cohort'=> $cohort_id));
+				/*$nurses = maybe_unserialize($booking->nurses);
+                $admins = maybe_unserialize($booking->admins);
+				$date_book_received = isset($booking->date_book_received) ? maybe_unserialize($booking->date_book_received) : array();
+				$collected = isset($booking->collected) ? maybe_unserialize($booking->collected) : array();
+				$date_book_returned = isset($booking->date_book_returned) ? maybe_unserialize($booking->date_book_returned) : array();
+				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
+				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();*/
+					ob_start();
+            ?>
+                					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th><?php _e('Name'); ?></th>
+								<th><?php _e('Nurse Type'); ?></th>
+								<th><?php _e('Currently Employed'); ?></th>
+								<th><?php _e('Email'); ?></th>
+                                <th><?php _e('Study Day 1');?></th>
+                                <th><?php _e('Study Day 2');?></th>
+                                <th><?php _e('Study Day 3');?></th>
+								<th><?php _e('Actions');?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($users as $user): 
+                                $prog = get_tabledata(TBL_PROG, true, array('user_ID'=> $user->ID));
+                                $std1=0;
+                                $std2=0;
+                                $std3=0;
+                                if($prog){
+                                    $stud = $prog->stud;
+                                    $stud = maybe_unserialize($stud);
+                                    $stud = maybe_unserialize($stud);
+                                    $std1 = $stud['stud_d1'];
+                                    $std2 = $stud['stud_d2'];
+                                    $std3 = $stud['stud_d3'];
+                                }
+                                
+                            
+                            ?>
+							<tr>
+								<td><?php echo get_user_name($user);?></td>
+								<td><?php echo $user->user_role;?></td>
+								<td><label><input type="checkbox" class="js-switch user-modal-approve-switch" <?php checked($user->currently_employed , 1);?> data-action="complete"/></label></td>
+								<td><?php echo $user->user_email?></td>
+                                <td><input id = "stud_d1" type="checkbox" name="stud_d1" class="js-switch" <?php if ($std1 == 1){?> checked="checked" <?php } ?>/></td>
+                                <td><input id = "stud_d2" type="checkbox" name="stud_d2" class="js-switch" <?php if ($std2 == 1){?> checked="checked" <?php } ?>/></td>
+                                <td><input id = "stud_d3" type="checkbox" name="stud_d3" class="js-switch" <?php if ($std3 == 1){?> checked="checked" <?php } ?>/></td>
+								<td><a href="<?php the_permalink('view-progress', array('user_id'=> $user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('View');?></a></td>
+							</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php
+					$return['html'] = ob_get_clean();
+                /*error_log(json_encode($users));*/
+			
 			return json_encode($return);
 		}
 			
@@ -665,10 +834,10 @@ if( !class_exists('Course') ):
 						array(
 							'name' => $name, 
 							'type' => $type, 
-							'date' => date('Y-m-d h:i:s', strtotime($start)), 
-							'y' => $years, 
-							'm' => $months, 
-							'd' => $days, 
+							'date' => date('Y-m-d h:i:s', strtotime($start)),
+                            'sd1' => date('Y-m-d h:i:s', strtotime($sd1)),
+                            'sd2' => date('Y-m-d h:i:s', strtotime($sd2)),
+                            'sd3' => date('Y-m-d h:i:s', strtotime($sd3)),
 						), 
 						array(
 							'ID' => $course_id
@@ -688,6 +857,50 @@ if( !class_exists('Course') ):
 					endif;
 				endif;
 			endif;
+			return json_encode($return);
+		}
+        
+        public function update__cohort__nurses__process(){
+			extract($_POST);
+			$return = array(
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update booking, Please try again.'), 
+				'reset_form' => 0
+			);
+            
+            error_log("Nurses to update: ".json_encode($nurses));
+            
+			
+				$validation_args = array(
+					'cohort_id'=> $cohort_id, 
+				);
+
+            $result = $this->database->update(TBL_USERS,array('cohort' => '0'),array('cohort'=>$cohort_id));
+				foreach($nurses as $nurse){
+					$result = $this->database->update(TBL_USERS, 
+                    array(
+                    'cohort' => $cohort_id, 
+                    ), 
+                    array(
+                    'ID'=> $nurse
+                    )
+                    );
+				}
+                
+
+				if($result):
+					$notification_args = array(
+						'title' => __('Booking updated'), 
+						'notification'=> __('You have successfully updated cohort.'), 
+					);
+
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = __('Success !');
+					$return['message'] = __('Cohort has been updated successfully.');
+                endif;
+
 			return json_encode($return);
 		}
 
@@ -833,6 +1046,9 @@ if( !class_exists('Course') ):
 				return 0;
 			endif;
 		}
+        
+        
+        
 	}
 	$Course = new Course();
 endif;

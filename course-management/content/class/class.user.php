@@ -698,24 +698,27 @@ if( !class_exists('User') ):
 									</form>
 								</div>
 								<div class="tab-pane fade" id="tab6default">
+                                    <?php
+                                        $user_cohort=$user->cohort;
+            
+                                        $prog = get_tabledata(TBL_PROG, true, array('user_ID'=> $user__id));
+                                        $stud = $prog->stud;
+                                        $stud = maybe_unserialize($stud);
+                                        $stud = maybe_unserialize($stud);
+                                        $std1 = $stud['stud_d1'];
+                                        $std2 = $stud['stud_d2'];
+                                        $std3 = $stud['stud_d3'];
+                                        $prognotes = $stud['stud_notes'];
+            
+                                    ?>
 									<form class="submit-form" method="post" autocomplete="off">
 										<div class="row">
 											<div class="form-group col-sm-6 col-xs-12">
 												<label for="date-of-fault"><?php _e('Cohort');?></label>
-												<select name="stud_cohort" class="form-control fetch-cohort-dates-data select_single require">
+												<select name="stud_cohort" class="form-control fetch-cohort-dates-data select_single require" value="<?php echo $user_cohort; ?>">
 													<?php
 													$data = get_tabledata(TBL_COHORTS, false, array());
 													$option_data = get_option_data($data, array('ID', 'name'));
-													echo get_options_list($option_data);
-													?>
-												</select>
-											</div>
-											<div class="form-group col-sm-6 col-xs-12">
-												<label for="date-of-fault"><?php _e('Cohort date');?></label>
-												<select name="stud_cohort_date" class="form-control select_single select-dates require">
-													<?php
-													$data = get_tabledata(TBL_COHORTS_EXT, false, array());
-													$option_data = get_option_data($data, array('ID', 'Cohort_date'));
 													echo get_options_list($option_data);
 													?>
 												</select>
@@ -724,21 +727,24 @@ if( !class_exists('User') ):
 										<div class="row">
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for="date-of-fault"><?php _e('Study Day 1');?></label>
-												<input id = "stud_d1" type="text" name="stud_d1" class="form-control input-datepicker" readonly="readonly" value="" />
+                                                <br>
+                                                <label><input id = "stud_d1" type="checkbox" name="stud_d1" class="js-switch" <?php if ($std1 == 1){?> checked="checked" <?php } ?>/></label>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for="date-of-fault"><?php _e('Study Day 2');?></label>
-												<input id = "stud_d2" type="text" name="stud_d2" class="form-control input-datepicker" readonly="readonly" value="" />
+                                                <br>
+												<label><input id = "stud_d2" type="checkbox" name="stud_d2" class="js-switch" <?php if ($std2 == 1){?> checked="checked" <?php } ?> /></label>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for="date-of-fault"><?php _e('Study Day 3');?></label>
-												<input id = "stud_d3" type="text" name="stud_d3" class="form-control input-datepicker" readonly="readonly" value="" />
+                                                <br>
+												<label><input id = "stud_d3" type="checkbox" name="stud_d3" class="js-switch" <?php if ($std3 == 1){?> checked="checked" <?php } ?>/></label>
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-sm-12 col-xs-12">
 												<label for="description-of-fault"><?php _e('Notes');?></label>
-												<textarea name="stud_notes" class="form-control" rows="4"></textarea>
+												<textarea name="stud_notes" class="form-control" rows="4"><?php echo $prognotes ?></textarea>
 											</div>
 										</div>
 										<div class="form-group">
@@ -2252,9 +2258,10 @@ if( !class_exists('User') ):
 				'reset_form' => 0
 			);
 				
-			$age = array(
-				"stud_cohort" => $stud_cohort, 
-				"stud_cohort_date"=> $stud_cohort_date, 
+            $stud_d1 = (isset($stud_d1)) ? 1 : 0;
+            $stud_d2 = (isset($stud_d1)) ? 1 : 0;
+            $stud_d3 = (isset($stud_d1)) ? 1 : 0;
+			$age = array( 
 				"stud_d1" => $stud_d1, 
 				"stud_d2" => $stud_d2, 
 				"stud_d3" => $stud_d3, 
@@ -2266,7 +2273,7 @@ if( !class_exists('User') ):
 			if(user_can('add_user')):
 				$guid = get_guid(TBL_PROG);
 				if( is_value_exists(TBL_PROG, array('user_ID' => $user_id3), $user_id3)){
-					$result = $this->database->update(TBL_PROG, 
+					$result1 = $this->database->update(TBL_PROG, 
 						array(
 							'stud'=>$ages
 						), 
@@ -2281,7 +2288,12 @@ if( !class_exists('User') ):
 						)
 					);
 				}
-
+                $result2 = $this->database->update(TBL_USERS,
+                        array(
+                            'cohort' => $stud_cohort
+                        ),array(
+                            'ID' => $user_id3
+                        ));
 				$notification_args = array(
 					'title' => __('Account Information'), 
 					'notification'=> __('You have successfully updated preceptor progress'), 

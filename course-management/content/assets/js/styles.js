@@ -29,7 +29,12 @@ var MainJs = {
             }, 500);
         }
         if (t.doc.find(".select_single")[0]) {
-            $(".select_single").select2();
+            
+            
+            t.select_single = t.doc.find('.select_single').select2({
+                allowClear: true
+            });
+            
         }
     },
 
@@ -65,6 +70,22 @@ var MainJs = {
         window.prettyPrint;
         prettyPrint();
 
+        
+        
+        var elements= document.querySelectorAll('.select_single');
+
+        [].forEach.call(elements, function( el ) {
+            if(el.getAttribute("value")){
+                var val;
+                val = el.getAttribute("value");
+                el.setAttribute("id","mySelect2");
+                $("#mySelect2").select2();
+                $('#mySelect2').val(val).trigger('change');
+                $("#mySelect2").removeClass("select_single");
+            }
+            
+        });
+        
         t.select_single = t.doc.find('.select_single').select2({
             allowClear: true
         });
@@ -863,6 +884,46 @@ var MainJs = {
                     t.select_single.select2({
                         allowClear: true
                     });
+                }
+            });
+        });
+        t.doc.on('click', '.get-cohort', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#view-cohort-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#view-cohort-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'get_cohort',
+                    cohort_id: _this.data('cohort')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#view-cohort-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
+                }
+            });
+        });
+        t.doc.on('click', '.add-to-cohort', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#add-to-cohort-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#add-to-cohort-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'add-to-cohort',
+                    cohort_id: _this.data('cohort')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#add-to-cohort-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
                 }
             });
         });
