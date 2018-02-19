@@ -941,7 +941,8 @@ var MainJs = {
                 type: 'POST',
                 data: {
                     action: 'fetch_booking_nurses',
-                    booking_id: _this.data('booking')
+                    booking_id: _this.data('booking'),
+                    course_id: _this.data('course')
                 },
                 url: ajax_url,
                 dataType: 'json',

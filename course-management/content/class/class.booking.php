@@ -869,11 +869,18 @@ if( !class_exists('Booking') ):
 					$course = get_tabledata(TBL_COURSE_TYPE, true, array('ID'=> $booking->course_ID));
 					$row = array();
 					$booking_name = __('Booking (#').$booking->ID.')';
-					$nurses = maybe_unserialize($booking->nurses);
+                    $nurses = null;
+                    if(isset($booking->nurses)){
+                       $nurses = maybe_unserialize($booking->nurses); 
+                    }
+					
 					$i = 0;
-					foreach($nurses as $nurse):
-						$i += 1;
-					endforeach;
+                    if($nurses){
+                        foreach($nurses as $nurse):
+                            $i += 1;
+                        endforeach;
+                    }
+					
 					$attend = $i."/".$booking->max_num;
 
 					$booking_date = date('M d, Y', strtotime($booking->date_from)).' - '. date('M d, Y', strtotime($booking->date_to));
@@ -884,7 +891,7 @@ if( !class_exists('Booking') ):
 					?>
 					<div class="text-center">
 						<?php if( user_can('edit_booking') ): ?>
-						<button type="button" class="btn btn-success btn-xs get-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>">
+						<button type="button" class="btn btn-success btn-xs get-nurses" data-toggle="modal" data-target="#nurse-data-modal" data-booking="<?php echo $booking->ID;?>" data-course="<?php echo $booking->course_ID;?>">
 							<i class="fa fa-view"></i>&nbsp;<?php _e('View Trainee(s)');?>
 						</button>
                         <button type="button" class="btn btn-success btn-xs enrol-nurses" data-toggle="modal" data-target="#enrol-data-modal" data-booking="<?php echo $booking->ID;?>">
@@ -969,6 +976,10 @@ if( !class_exists('Booking') ):
 								<th><?php _e('Trainee Name'); ?></th>
 								<th><?php _e('Attendance'); ?></th>
 								<th><?php _e('Complete'); ?></th>
+                                <?php if($course_id=='10000102735'):?>
+                                <th><?php _e('Students Mentored'); ?></th>
+                                <th><?php _e('Completed Triennial Review'); ?></th>
+                                <?php endif; ?>
 								<th><?php _e('Reminder'); ?></th>
 								<th><?php _e('Additional Information');?></th>
 								<th><?php _e('Remove'); ?></th>
@@ -980,6 +991,12 @@ if( !class_exists('Booking') ):
 								<td><?php echo get_user_name($nurse);?></td>
 								<td><label><input type="checkbox" class="js-switch nurse-modal-approve-switch" <?php if(isset($attendance[$nurse] )) checked($attendance[$nurse] , 1);?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="attendance"/></label></td>
 								<td><label><input type="checkbox" class="js-switch nurse-modal-approve-switch" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="complete"/></label></td>
+                                <?php if($course_id=='10000102735'):
+                                $mentor = get_tabledata(TBL_MENTORS, true, array('user_ID'=> $nurse));
+                                ?>
+                                <td><input type="text" value="<?php echo $mentor->students;?>"/></td>
+                                <th><?php _e('Completed Triennial Review'); ?></th>
+                                <?php endif; ?>
 								<td><label><button type="button" class="btn btn-dark btn-xs remind-nurse-btn" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('Send');?></button></label></td>
 								<td><label><button type="button" class="btn btn-info btn-xs get-additional-information" data-toggle="modal" data-target="#additional-information-data-modal" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('View');?></button></label></td>
 								<td><label><button type="button" class="btn btn-danger btn-xs remove-nurse-btn" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('Remove');?></button></label></td>

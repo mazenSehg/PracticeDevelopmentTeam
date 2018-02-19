@@ -1711,7 +1711,6 @@ if( !class_exists('User') ):
 				$where = ' WHERE ';
 			}
 				
-			$query = $where . " `course_type_ID` LIKE '%" . $selected . "%' ";
 			
 			$users_list = get_tabledata(TBL_MENTORS , false, $args );
 			
@@ -1720,31 +1719,16 @@ if( !class_exists('User') ):
 			elseif(!$users_list):
 				echo page_not_found("Oops! There is no mentors in website", ' ', false);
 			else:
-				$query = $where . " `course_type_ID` LIKE '%" . $selected . "%' ";
 				$users_list = get_tabledata(TBL_MENTORS , false, $args, $query);
 			?>
 			
-			<form action="<?php the_permalink('mentors');?>" method="GET">
-				<div class="row calendar-custom-filters">
-					<div class="form-group col-sm-2 col-xs-6">
-						<label for="courses"><?php _e('Course Types');?></label>
-						<select name="course" class="form-control select_single" data-placeholder="Choose course" onchange="this.form.submit();">
-							<?php
-							$data = get_tabledata(TBL_COURSE_TYPES, false, array(), '', ' ID, name');
-							$option_data = get_option_data($data, array('ID', 'name'));
-							echo get_options_list($option_data, $selected);
-							?>
-						</select>
-					</div>
-				</div>
-			</form>
+			
 			
 			<table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap datatable-buttons" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th><?php _e('Name');?></th>
-						<th><?php _e('Courses');?></th>
-						<th><?php _e('Updated On');?></th>
+						<th><?php _e('Due an Update Before');?></th>
 						<th class="text-center"><?php _e('Actions');?></th>
 					</tr>
 				</thead>
@@ -1752,22 +1736,13 @@ if( !class_exists('User') ):
 					<?php
 					if($users_list): foreach($users_list as $single_user):
 						$user = get_userdata($single_user->user_ID);
-						$course_types = maybe_unserialize($single_user->course_type_ID);
-						$course_types = !empty($course_types) ? implode(', ', $course_types) : '';
-						$courses = get_tabledata( TBL_COURSE_TYPE, false, array(), ' WHERE `ID` IN ('. $course_types . ')', 'name');
-						$course_arr = array();
-						if($courses):
-							foreach($courses as $course):
-								$course_arr[] = $course->name;
-							endforeach;
-						endif;
+
 					?>
 					<tr>
 						<td><?php _e($user->first_name.' '.$user->last_name);?></td>
-						<td><?php echo !empty($course_arr) ? implode(', ', $course_arr) : '-'; ?></td>
-						<td><?php echo date('M d, Y h:i:s A', strtotime($single_user->date_modified));?></td>
+						<td><?php echo date('M d, Y', strtotime("$single_user->last_update + 1 year"));?></td>
 						<td class="text-center">
-							<a href="<?php the_permalink('edit-mentor', array('id'=> $single_user->ID));?>" class="btn btn-dark btn-xs">
+							<a href="<?php the_permalink('edit-mentor', array('id'=> $single_user->user_ID));?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
 							</a>
 							<a href="#" class="btn btn-danger btn-xs delete-record" data-id="<?php echo $single_user->ID;?>" data-action="delete_mentor">
@@ -1800,17 +1775,23 @@ if( !class_exists('User') ):
 							?>
 						</select>
 					</div>
-					<div class="form-group col-sm-6 col-xs-12">
-						<label for="course_type"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
-						<select name="course_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose Course Type" multiple="multiple">
-							<?php
-							$data = get_tabledata(TBL_COURSE_TYPE, false, array(), '', ' ID, CONCAT_WS(" | ", course_ID, name) as name');
-							$option_data = get_option_data($data, array('ID', 'name'));
-							echo get_options_list($option_data);
-							?>
+                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="type"><?php _e('Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="type" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a Type">
+							<option value=""></option>
+                            <option value="1">Co-Mentor</option>
+                            <option value="2">Mentor</option>
+                            <option value="3">Sign-off Mentor in Training</option>
+                            <option value="4">Sign-off Mentor</option>
 						</select>
 					</div>
 				</div>
+                <div class="row">
+                    <div class="form-group col-sm-6 col-xs-12">
+                        <label for="last_mentor_update"><?php _e('Last Mentor Update');?></label>
+                        <input type="text" name="last_mentor_update" class="form-control input-datepicker" readonly="readonly"/>
+                    </div>   
+                </div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 form-goup">
 						<div class="ln_solid"></div>
@@ -1828,7 +1809,7 @@ if( !class_exists('User') ):
 		public function edit__mentor__page(){
 			ob_start();
 			$mentor__id = $_GET['id'];
-			$mentor = get_tabledata(TBL_MENTORS, true, array('ID'=> $mentor__id));
+			$mentor = get_tabledata(TBL_MENTORS, true, array('user_ID'=> $mentor__id));
 			if( !( is_admin() || ( get_current_user_role() == 'course_admin' && $mentor && $mentor->user_ID == get_current_user_id()) ) ):
 				echo page_not_found('Oops ! You are not allowed to view this page.', 'Please check other pages !');
 			elseif(!$mentor):
@@ -1838,7 +1819,7 @@ if( !class_exists('User') ):
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						<label for="user"><?php _e('User');?>&nbsp;<span class="required">*</span></label>
-						<select name="user" class="form-control select_single require" tabindex="-1" data-placeholder="Choose an User">
+						<select name="user" class="form-control select_single require" tabindex="-1" data-placeholder="Choose a User">
 							<?php
 							$data = get_tabledata(TBL_USERS, false, array( 'user_role' => 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name, last_name) as name');
 							$option_data = get_option_data($data, array('ID', 'name'));
@@ -1846,17 +1827,24 @@ if( !class_exists('User') ):
 							?>
 						</select>
 					</div>
-					<div class="form-group col-sm-6 col-xs-12">
-						<label for="course_type"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
-						<select name="course_type[]" class="form-control select_single require" tabindex="-1" data-placeholder="Choose Course Type" multiple="multiple">
+                    <div class="form-group col-sm-6 col-xs-12">
+						<label for="type"><?php _e('Type');?>&nbsp;<span class="required">*</span></label>
+						<select name="type" class="form-control select_single require" tabindex="-1" data-placeholder="Choose an Type">
 							<?php
-							$data = get_tabledata(TBL_COURSE_TYPE, false, array(), '', ' ID, CONCAT_WS(" | ", course_ID, name) as name');
-							$option_data = get_option_data($data, array('ID', 'name'));
-							echo get_options_list($option_data, maybe_unserialize($mentor->course_type_ID));
+                            error_log("Mentor_ID: $mentor__id");
+							$data = get_tabledata(TBL_MENTORS, true, array( 'user_ID' => $mentor__id));
+							$option_data = array('1'=>'Co-Mentor','2'=>'Mentor','3'=>'Sign-off Mentor in Training','4'=>'Sign-off Mentor');
+							echo get_options_list($option_data, $data->mentor_type);
 							?>
 						</select>
 					</div>
 				</div>
+                <div class="row">
+                    <div class="form-group col-sm-6 col-xs-12">
+                        <label for="last_mentor_update"><?php _e('Last Mentor Update');?></label>
+                        <input type="text" name="last_mentor_update" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($data->last_update) ? date('M d, Y', strtotime($data->last_update)) : '';?>"/>
+                    </div>   
+                </div>
 				<div class="row">
 					<div class="form-group col-sm-12 col-xs-12">
 						<div class="ln_solid"></div>
@@ -2987,7 +2975,8 @@ if( !class_exists('User') ):
 						array(
 							'ID' => $guid, 
 							'user_ID' => $user, 
-							'course_type_ID'=> $course_type, 
+                            'mentor_type'=>$type,
+                            'last_update'=>date("Y-m-d h:i:s", strtotime($last_mentor_update))
 						)
 					);
 					if($result):
@@ -3016,18 +3005,19 @@ if( !class_exists('User') ):
 			);
 
 			if(user_can('edit_user')):
-				if( is_value_exists(TBL_MENTORS, array('user_ID' => $user), $mentor_id) ):
+/*				if( is_value_exists(TBL_MENTORS, array('user_ID' => $user), $mentor_id) ):
 					$return['status'] = 2;
 					$return['message_heading'] = __('Mentor record already exists.');
 					$return['message'] = __('The user you selected already exists in mentor record.');
-				else:
+				else:*/
+                    error_log("Type = $type, last_update=".date("Y-m-d", strtotime($last_mentor_update)).", user_id=$mentor_id");
 					$result = $this->database->update(TBL_MENTORS, 
 						array(
-							'user_ID' => $user, 
-							'course_type_ID'=> $course_type, 
+                            'mentor_type'=>$type,
+                            'last_update'=>date("Y-m-d", strtotime($last_mentor_update))
 						), 
 						array(
-							'ID' => $mentor_id, 
+							'user_ID' => $mentor_id, 
 						)
 					);
 					if($result):
@@ -3040,7 +3030,7 @@ if( !class_exists('User') ):
 						$return['message_heading'] = __('Success !');
 						$return['message'] = __('Mentor Teach successfully updated.');
 					endif;
-				endif;
+/*				endif;*/
 			endif;
 			return json_encode($return);
 		}
