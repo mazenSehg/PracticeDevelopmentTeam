@@ -931,6 +931,7 @@ var MainJs = {
 
     BookingFunctions: function() {
         t = this;
+        var traineeOptions;
 
         t.doc.on('click', '.get-nurses', function(e) {
             _this = $(this);
@@ -1244,6 +1245,53 @@ var MainJs = {
             var form = t.doc.find(".remove-trainee-modal-form");
             form.find("input[name=booking_id]").val(booking_id);
             form.find("input[name=user_id]").val(user_id);
+        });
+        
+        t.doc.on("select2:selecting", '#choose_course_type',  function(e) {
+            if(!traineeOptions){
+                traineeOptions=$("#choose_trainees").html();
+            }
+            if(e.params.args.data.id=='10000102735'){
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        action: 'get_mentor_names',
+                    },
+                    url: t.ajax_url,
+                    dataType: 'json',
+                    success: function(res) {
+                       
+                        var select = $("#choose_trainees");
+                        select.html('');
+                        select.append(res.mentors);
+                        select.change();
+                    }
+                });
+            }else{
+                var select = $("#choose_trainees");
+                select.html('');
+                select.append(traineeOptions);
+                select.change();
+            }
+            
+       });
+        
+        t.doc.on("submit",'#update_mentor_student_numbers', function(e){
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'update_mentor_student_numbers',
+                },
+                url: t.ajax_url,
+                dataType: 'json',
+                success: function(res) {
+                       
+                    var select = $("#choose_trainees");
+                    select.html('');
+                    select.append(res.mentors);
+                    select.change();
+                }
+            });
         });
     },
     date_change: function(name) {

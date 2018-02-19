@@ -98,6 +98,14 @@
 				echo $User->update__mentor__process();
 				break;
 
+            case 'get_mentor_names':
+                echo $Booking->get__mentor__list();
+                break;
+
+            case 'update_mentor_student_numbers':
+                echo $Booking->update__mentor__student__numbers();
+                break;
+
             case 'edit_note':
                 echo $User->edit__note__process();
                 break;

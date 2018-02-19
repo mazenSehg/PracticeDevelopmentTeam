@@ -616,10 +616,25 @@ if ( !function_exists('get_tabledata') ) :
 		if(!empty($where) ){
 			foreach ( $where as $field => $value ) {
 				if ( is_null( $value ) ) {
-					$conditions[] = "`$field` IS NULL";
+					$conditions[] = "$field IS NULL";
 					continue;
 				}
-				$conditions[] = "`$field` = '". $value ."' ";
+                if(is_array($value)){
+                    foreach($value as $val){
+                        $conditions[] = "$field = '". $val ."' ";
+                    }
+                    $conditions = implode(' OR ', $conditions);
+                    $query .= " WHERE ".$conditions ." " ;
+                    error_log("QUERY: $query");
+                    if($extra != '')
+                        $query .= $extra;
+	   		          
+                    if($single)
+                        return $db->get_row($query);
+                    else
+                        return $db->get_results($query);
+                }
+                $conditions[] = "$field = '". $value ."' ";
 			}
 			$conditions = implode( ' AND ', $conditions );
 			$query .= " WHERE ".$conditions ." " ;

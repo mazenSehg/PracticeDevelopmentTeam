@@ -20,7 +20,7 @@ if( !class_exists('Booking') ):
 			<form class="add-booking submit-form" method="post" autocomplete="off">
 				<div class="form-group">
 					<label for="admins"><?php _e('Course Type');?>&nbsp;<span class="required">*</span></label>
-					<select name="code" class="form-control select_single require" data-placeholder="Choose course Type" multiple="multiple">
+					<select name="code" class="form-control select_single require" id="choose_course_type" data-placeholder="Choose course Type" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_COURSE_TYPE, false, array(), '', ' ID, CONCAT_WS(" | ", course_ID , name) AS name ');
 						$option_data = get_option_data($data, array('ID', 'name'));
@@ -80,7 +80,7 @@ if( !class_exists('Booking') ):
 
 				<div class="form-group">
 					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
-					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" id="choose_trainees" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
 						$option_data = get_option_data($data, array('ID', 'name'));
@@ -970,6 +970,7 @@ if( !class_exists('Booking') ):
                         </tbody>
                     </table>
                     <br>
+                    <form class="update_mentor_student_numbers submit-form" method="post" autocomplete="off">
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
 						<thead>
 							<tr>
@@ -994,7 +995,7 @@ if( !class_exists('Booking') ):
                                 <?php if($course_id=='10000102735'):
                                 $mentor = get_tabledata(TBL_MENTORS, true, array('user_ID'=> $nurse));
                                 ?>
-                                <td><input type="text" value="<?php echo $mentor->students;?>"/></td>
+                                <td><input type="text" name="<?php echo $mentor->user_ID;?>" value="<?php echo $mentor->students;?>"/></td>
                                 <th><?php _e('Completed Triennial Review'); ?></th>
                                 <?php endif; ?>
 								<td><label><button type="button" class="btn btn-dark btn-xs remind-nurse-btn" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('Send');?></button></label></td>
@@ -1004,7 +1005,14 @@ if( !class_exists('Booking') ):
 							<?php endforeach; ?>
 						</tbody>
 					</table>
-					<?php
+                    <div class="form-group">
+                        <div class="ln_solid"></div>
+                        <input type="hidden" name="action" value="update_mentor_student_numbers" />
+                        <input type="hidden" name="booking_id" value="" />
+                        <button class="btn btn-success btn-md" type="submit"><?php _e('Update');?></button>
+                    </div>
+                </form>
+                <?php
 					$return['html'] = ob_get_clean();
 				endif;
 			endif;
@@ -1031,9 +1039,21 @@ if( !class_exists('Booking') ):
 					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
 					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
 						<?php
-						$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-						$option_data = get_option_data($data, array('ID', 'name'));
-						echo get_options_list($option_data, maybe_unserialize($booking->nurses));
+                        if($booking->course_ID=='10000102735'){
+                            $ret = $this->get__mentor__list();
+                            $option_data = json_decode($ret)->mentors;
+                            $option_data = get_option_data($option_data, array('ID', 'name'));
+                            error_log("OPTION DATA ".json_encode($option_data));
+                        }else{
+                            $data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+                            $option_data = get_option_data($data, array('ID', 'name'));
+                        }
+                        if($nurses){
+                            echo get_options_list($option_data, maybe_unserialize($booking->nurses));
+                        }else{
+                            echo get_options_list($option_data);
+                        }
+						
 						?>
 					</select>
 				</div>
@@ -1429,6 +1449,59 @@ if( !class_exists('Booking') ):
 
 			return json_encode($return);
 		}
+        
+        public function get__mentor__list(){
+            extract($_POST);
+            $data = get_tabledata(TBL_MENTORS, false);
+            $mentor_ids=array();
+            foreach($data as $mentor):
+                $mentor_ids[] = $mentor->user_ID;
+            endforeach;
+            $data = get_tabledata(TBL_USERS, false, array('ID'=> $mentor_ids), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS    name ');
+             if(!isset($freshList)):
+            $return['mentors']=$data;                 
+            else:          
+             $option_data = get_option_data($data, array('ID', 'name'));
+            $return['mentors'] = get_options_list($option_data);          
+            endif;
+           
+           
+            return json_encode($return);
+
+        }
+        
+        public function update__mentor__student__numbers(){
+            $return = array(
+				'status' => 0, 
+				'message_heading'=> __('Failed !'), 
+				'message' => __('Could not update booking, Please try again.'), 
+				'reset_form' => 0
+			);
+            foreach ($_POST as $key => $value) {
+                //do something
+                $result = $this->database->update(TBL_MENTORS, 
+						array(
+							'students'=> $value, 
+						), 
+						array(
+							'user_ID' => $key, 
+						)
+					);
+                if($result):
+					$notification_args = array(
+						'title' => __('Student numbers updated'), 
+						'notification'=> __('You have successfully updated student numbers for mentors.'), 
+					);
+					add_user_notification($notification_args);
+					$return['status'] = 1;
+					$return['message_heading'] = __('Success !');
+					$return['message'] = __('Mentor student numbers have been successfully updated.');
+					/*$return['reset_form'] = 1;*/
+                endif;
+            }
+            
+            return json_encode($return);
+        }
 	}
 	$Booking = new Booking();
 endif;
