@@ -1741,7 +1741,10 @@ if( !class_exists('User') ):
 					<tr>
 						<td><?php _e($user->first_name.' '.$user->last_name);?></td>
 						<td><?php echo date('M d, Y', strtotime("$single_user->last_update + 1 year"));?></td>
-						<td class="text-center">
+                        <td class="text-center">
+                            <button type="button" class="btn btn-success btn-xs get-mentor" data-toggle="modal" data-target="#mentor-data-modal" data-mentor="<?php     echo $single_user->user_ID;?>">
+                                <i class="fa fa-view"></i>&nbsp;<?php _e('View Mentor');?>
+                            </button>
 							<a href="<?php the_permalink('edit-mentor', array('id'=> $single_user->user_ID));?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
 							</a>
@@ -1753,7 +1756,9 @@ if( !class_exists('User') ):
 					<?php endforeach; endif; ?>
 				</tbody>
 			</table>
-			<?php endif;
+			<?php 
+            echo $this->mentor__data__modal();
+            endif;
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -2417,6 +2422,29 @@ if( !class_exists('User') ):
 			<?php
 			return ob_get_clean();
 		}
+          
+        public function mentor__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="mentor-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Mentor Details');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="mentor-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			return ob_get_clean();
+		}
         
         
 		public function update__notes__process(){
@@ -2995,6 +3023,53 @@ if( !class_exists('User') ):
 			return json_encode($return);
 		}
 		
+        public function view__mentor__process(){
+			extract($_POST);
+			$mentor_id = trim($mentor_id);
+			$return['html'] = '';
+			$mentor = get_tabledata(TBL_MENTORS, true, array('user_ID'=> $mentor_id));
+			if($mentor):
+					ob_start();
+					?>
+					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th><?php _e('Trainee Name'); ?></th>
+                                <td><?php _e('Last Update'); ?> </td>
+                                <th><?php _e('Students Mentored'); ?></th>
+                                <th><?php _e('Completed Triennial Review'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><?php echo get_user_name($mentor_id);?></td>
+								<td><?php echo date('M d, Y', strtotime($mentor->last_update));?></td>
+                                <?php
+                                $students = array();
+                                $studentNum=0;
+                                $found=false;
+                                $triennial_review;
+                                if($mentor->students){
+                                    $students = maybe_unserialize($mentor->students);
+                                }
+                                $triennial_review=$mentor->triennial_review;
+                                foreach($students as $record){
+                                    $formatted = explode("///",$record);
+                                    $studentNum+=$formatted[1];
+                                }
+                                ?>
+                                <td><?php echo $studentNum; ?></td>
+                                <td><label><input type="checkbox" class="js-switch nurse-modal-approve-switch" <?php checked($triennial_review , 1);?> data-booking="niall" data-user="<?php echo $mentor_id;?>" data-action="triennial_review" disabled/></label></td>
+							</tr>
+						</tbody>
+					</table>
+                <?php
+					$return['html'] = ob_get_clean();
+			endif;
+			return json_encode($return);
+		}
+        
+        
 		public function update__mentor__teach__process(){
 			extract($_POST);
 			$return = array(

@@ -235,7 +235,7 @@ if( !class_exists('Booking') ):
 					<tr>
 						<th><?php _e('Course Name');?></th>
 						<th><?php _e('Booking Date');?></th>
-						<th><?php _e('Attendance');?></th>
+						<th><?php _e('Capacity');?></th>
 						<th class="text-center"><?php _e('Actions');?></th>
 					</tr>
 				</thead>
@@ -997,10 +997,12 @@ if( !class_exists('Booking') ):
                                 $students = array();
                                 $studentNum;
                                 $found=false;
+                                $triennial_review;
                                 $bookingdate=$booking->date_from;
                                 if($mentor->students){
                                     $students = maybe_unserialize($mentor->students);
                                 }
+                                $triennial_review=$mentor->triennial_review;
                                 foreach($students as $record){
                                     $formatted = explode("///",$record);
                                     if($formatted[0]==$bookingdate){
@@ -1010,7 +1012,7 @@ if( !class_exists('Booking') ):
                                 }
                                 ?>
                                 <td><input type="text" name="<?php echo $mentor->user_ID;?>" value="<?php echo ($found) ? $studentNum : '';?>"/></td>
-                                <th><?php _e('Completed Triennial Review'); ?></th>
+                                <td><label><input type="checkbox" class="js-switch nurse-modal-approve-switch" <?php checked($triennial_review , 1);?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="triennial_review"/></label></td>
                                 <?php endif; ?>
 								<td><label><button type="button" class="btn btn-dark btn-xs remind-nurse-btn" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('Send');?></button></label></td>
 								<td><label><button type="button" class="btn btn-info btn-xs get-additional-information" data-toggle="modal" data-target="#additional-information-data-modal" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('View');?></button></label></td>
@@ -1102,16 +1104,14 @@ if( !class_exists('Booking') ):
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Email</th>
                                 <th>Signature</th>
-                                <?php echo ($booking->course_ID=='10000102735')?"<th>Students</th>":""; ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($nurses as $nurse): echo "<tr>
                                 <td>".get_user_name($nurse)."</td>
-                                <td></td>";
-                                echo ($booking->course_ID=='10000102735')?"<td></td>":"";
-                                echo "</tr>";
+                                <td></td><td></td></tr>";
                             endforeach;?>
                         </tbody>
                     </table>
@@ -1390,6 +1390,14 @@ if( !class_exists('Booking') ):
 						$return['message'] = 'Reminder not sent';
 					}
 				}
+                if($type == 'triennial_review'){
+                    $update = $this->database->update(TBL_MENTORS, array('triennial_review'=> $status), array('user_ID'=> $user_id));
+					if($update){
+						$return['status'] = 1;
+						$return['message_heading'] = __('Success !');
+						$return['message'] = 'User has been updated';
+					}
+                }
 			endif;
 			return json_encode($return);
 		}

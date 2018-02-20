@@ -863,6 +863,32 @@ var MainJs = {
             });
         });
         
+        t.doc.on('click', '.get-mentor', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#mentor-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#mentor-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'view_mentor',
+                    mentor_id: _this.data('mentor')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    /*alert(r['html']);*/
+                    t.doc.find('#mentor-data-modal-body').html(r['html']);
+                    
+
+                    t.reInit();
+                    var elem = $('.js-switch');
+                    var init = new Switchery(elem);
+                    return false;
+                }
+            });
+        });
+        
         
     },
 

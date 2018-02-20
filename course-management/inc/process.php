@@ -68,7 +68,11 @@
 			case 'add_new_mentor':
 				echo $User->add__mentor__teach__process();
 				break;
-			
+
+            case 'view_mentor':
+                echo $User->view__mentor__process();
+                break;
+
 			case 'edit_mentor':
 				echo $User->update__mentor__teach__process();
 				break;
