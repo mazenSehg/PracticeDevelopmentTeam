@@ -994,8 +994,22 @@ if( !class_exists('Booking') ):
 								<td><label><input type="checkbox" class="js-switch nurse-modal-approve-switch" <?php if(isset($enroll[$nurse])) checked($enroll[$nurse] , 1);?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="complete"/></label></td>
                                 <?php if($course_id=='10000102735'):
                                 $mentor = get_tabledata(TBL_MENTORS, true, array('user_ID'=> $nurse));
+                                $students = array();
+                                $studentNum;
+                                $found=false;
+                                $bookingdate=$booking->date_from;
+                                if($mentor->students){
+                                    $students = maybe_unserialize($mentor->students);
+                                }
+                                foreach($students as $record){
+                                    $formatted = explode("///",$record);
+                                    if($formatted[0]==$bookingdate){
+                                        $studentNum=$formatted[1];
+                                        $found=true;
+                                    }
+                                }
                                 ?>
-                                <td><input type="text" name="<?php echo $mentor->user_ID;?>" value="<?php echo $mentor->students;?>"/></td>
+                                <td><input type="text" name="<?php echo $mentor->user_ID;?>" value="<?php echo ($found) ? $studentNum : '';?>"/></td>
                                 <th><?php _e('Completed Triennial Review'); ?></th>
                                 <?php endif; ?>
 								<td><label><button type="button" class="btn btn-dark btn-xs remind-nurse-btn" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"><?php _e('Send');?></button></label></td>
@@ -1008,7 +1022,7 @@ if( !class_exists('Booking') ):
                     <div class="form-group">
                         <div class="ln_solid"></div>
                         <input type="hidden" name="action" value="update_mentor_student_numbers" />
-                        <input type="hidden" name="booking_id" value="" />
+                        <input type="hidden" name="booking_id" value="<?php echo $booking_id;?>" />
                         <button class="btn btn-success btn-md" type="submit"><?php _e('Update');?></button>
                     </div>
                 </form>
@@ -1089,13 +1103,15 @@ if( !class_exists('Booking') ):
                             <tr>
                                 <th>Name</th>
                                 <th>Signature</th>
+                                <?php echo ($booking->course_ID=='10000102735')?"<th>Students</th>":""; ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($nurses as $nurse): echo "<tr>
                                 <td>".get_user_name($nurse)."</td>
-                                <td></td>
-                                </tr>";
+                                <td></td>";
+                                echo ($booking->course_ID=='10000102735')?"<td></td>":"";
+                                echo "</tr>";
                             endforeach;?>
                         </tbody>
                     </table>
@@ -1477,27 +1493,54 @@ if( !class_exists('Booking') ):
 				'message' => __('Could not update booking, Please try again.'), 
 				'reset_form' => 0
 			);
+            $bookingdate;
+            if (isset($_POST['booking_id'])){
+                $booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=> $_POST['booking_id']));
+                $bookingdate=$booking->date_from;
+                unset($_POST['booking_id']);
+            }
             foreach ($_POST as $key => $value) {
-                //do something
-                $result = $this->database->update(TBL_MENTORS, 
-						array(
-							'students'=> $value, 
-						), 
-						array(
-							'user_ID' => $key, 
-						)
-					);
-                if($result):
-					$notification_args = array(
-						'title' => __('Student numbers updated'), 
-						'notification'=> __('You have successfully updated student numbers for mentors.'), 
-					);
-					add_user_notification($notification_args);
+                $mentor = get_tabledata(TBL_MENTORS, true, array('user_ID'=> $key));
+                $students=array();
+                if($mentor){
+                    $found = false;
+                    
+                    if($mentor->students){
+                        $students = maybe_unserialize($mentor->students);
+                    }
+                    foreach($students as $record){
+                        $formatted = explode("///",$record);
+                        if($formatted[0]==$bookingdate){
+                            $index = array_search($record,$students);
+                            $students[$index]="$bookingdate///$value";
+                            $found=true;
+                        }
+                    }
+                    if(!$found){
+                        array_push($students,"$bookingdate///$value");
+                    }
+                    
+                    //do something
+                    $result = $this->database->update(TBL_MENTORS, 
+                        array(
+                            'students'=> $students, 
+                        ), 
+                        array(
+                            'user_ID' => $key, 
+                        )
+                        );
+                    if($result):
+                    $notification_args = array(
+                        'title' => __('Student numbers updated'), 
+                        'notification'=> __('You have successfully updated student numbers for mentors.'), 
+                    );
+                    add_user_notification($notification_args);
 					$return['status'] = 1;
 					$return['message_heading'] = __('Success !');
-					$return['message'] = __('Mentor student numbers have been successfully updated.');
-					/*$return['reset_form'] = 1;*/
-                endif;
+                    $return['message'] = __('Mentor student numbers have been successfully updated.');
+                    endif;
+                }
+                
             }
             
             return json_encode($return);
