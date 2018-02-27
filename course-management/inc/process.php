@@ -270,6 +270,10 @@
 				echo $Booking->enrol__nurses__process();
 				break;
 
+			case 'email_nurses':
+				echo $Booking->email__nurses__process();
+				break;
+
             case 'get_register':
                 echo $Booking->get__register__process();
                 break;

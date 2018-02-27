@@ -1002,6 +1002,28 @@ var MainJs = {
             });
         });
 
+        t.doc.on('click', '.email-nurses', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#email-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#email-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'email_nurses',
+                    booking_id: _this.data('booking'),
+                    course_id: _this.data('course')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#email-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
+                }
+            });
+        });
+
         t.doc.on('click', '.add-pending-bookings', function(e) {
             e.preventDefault();
             $_this = $(this);

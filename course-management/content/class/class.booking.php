@@ -275,6 +275,28 @@ if( !class_exists('Booking') ):
 			<?php
 			return ob_get_clean();
 		}
+		public function email__data__modal(){
+			ob_start(); ?>
+			<!-- calendar modal -->
+			<div id="email-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Send Email');?></h1>
+						</div>
+						<div class="modal-body">
+							<div id="email-data-modal-body"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php
+			return ob_get_clean();
+		}
         
         public function enrol__data__modal(){
 			ob_start(); ?>
@@ -903,6 +925,9 @@ if( !class_exists('Booking') ):
 						<a href="<?php the_permalink('edit-booking', array('id'=> $booking->ID));?>" class="btn btn-dark btn-xs">
 							<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
 						</a>
+						<button type="button" class="btn btn-success btn-xs email-nurses" data-toggle="modal" data-target="#email-data-modal" data-booking="<?php echo $booking->ID;?>" data-course="<?php echo $booking->course_ID;?>">
+							<i class="fa fa-mail"></i>&nbsp;<?php _e('Email Trainee(s)');?>
+						</button>
 						<?php endif; ?>
 
 						<?php if( user_can('delete_booking') ): ?>
@@ -1079,6 +1104,67 @@ if( !class_exists('Booking') ):
 					<input type="hidden" name="action" value="update_attendees" />
 					<input type="hidden" name="booking_id" value="<?php echo $booking->ID;?>" />
 					<button class="btn btn-success btn-md" type="submit"><?php _e('Update Attendees');?></button>
+				</div>
+			</form>
+					<?php
+					$return['html'] = ob_get_clean();
+			endif;
+			return json_encode($return);
+		}
+
+		public function email__nurses__process(){
+			extract($_POST);
+			$booking_id = trim($booking_id);
+			$return['html'] = '';
+			$booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=> $booking_id));
+			if($booking):
+				$nurses = maybe_unserialize($booking->nurses);
+                $admins = maybe_unserialize($booking->admins);
+				$date_book_received = isset($booking->date_book_received) ? maybe_unserialize($booking->date_book_received) : array();
+				$collected = isset($booking->collected) ? maybe_unserialize($booking->collected) : array();
+				$date_book_returned = isset($booking->date_book_returned) ? maybe_unserialize($booking->date_book_returned) : array();
+				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
+				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
+					ob_start();
+            ?>
+                <form class="email-attendees submit-form" method="post" autocomplete="off">
+                    <div class="form-group">
+					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
+					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+                            $data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' user_email, CONCAT_WS(" ", first_name , last_name) AS name ');
+                            $option_data = get_option_data($data, array('user_email', 'name'));
+                        if($nurses){
+                            echo get_options_list($option_data, maybe_unserialize($booking->nurses));
+                        }else{
+                            echo get_options_list($option_data);
+						}
+						
+						
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="templates"><?php _e('Email Template');?>&nbsp;</label>
+					<select name="templates[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+						<?php
+                            $data = get_tabledata(TBL_TEMPLATES,false);
+                            $option_data = get_option_data($data, array('title', 'ID'));
+                            echo get_options_list($option_data);
+						?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="body"><?php _e('Body');?>&nbsp;</label>
+					<textarea name="body" class="form-control select_single" data-placeholder="Choose template" >
+					</textarea>
+				</div>
+
+                <div class="form-group">
+					<div class="ln_solid"></div>
+					<input type="hidden" name="action" value="send_email" />
+					<input type="hidden" name="booking_id" value="<?php echo $booking->ID;?>" />
+					<button class="btn btn-success btn-md" type="submit"><?php _e('Send Email');?></button>
 				</div>
 			</form>
 					<?php
