@@ -6,9 +6,11 @@ if( !class_exists('Booking') ):
 	class Booking{
 
 		private $database;
-
+		private $mailer;
 		function __construct(){
 			global $db;
+			global $mail;
+			$this->mailer = $mail;
 			$this->database = $db;
 		}
 
@@ -242,6 +244,7 @@ if( !class_exists('Booking') ):
 
 			</table>
 			<?php
+			echo $this->email__data__modal();
 			echo $this->booking__data__modal();
 			echo $this->nurses__data__modal();
             echo $this->enrol__data__modal();
@@ -1128,12 +1131,13 @@ if( !class_exists('Booking') ):
 					ob_start();
             ?>
                 <form class="email-attendees submit-form" method="post" autocomplete="off">
-                    <div class="form-group">
-					<label for="nurses"><?php _e('Trainee(s)');?>&nbsp;</label>
-					<select name="nurses[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+                   	
+				 <div class="form-group">
+					<label for="recipient"><?php _e('Trainee(s)');?>&nbsp;</label>
+					<select name="recipients[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
 						<?php
-                            $data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' user_email, CONCAT_WS(" ", first_name , last_name) AS name ');
-                            $option_data = get_option_data($data, array('user_email', 'name'));
+                            $data = get_tabledata(TBL_USERS, false, array('user_role'=> 'nurse'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+                            $option_data = get_option_data($data, array('ID', 'name'));
                         if($nurses){
                             echo get_options_list($option_data, maybe_unserialize($booking->nurses));
                         }else{
@@ -1146,22 +1150,19 @@ if( !class_exists('Booking') ):
 				</div>
 				<div class="form-group">
 					<label for="templates"><?php _e('Email Template');?>&nbsp;</label>
-					<select name="templates[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+					<select name="templates[]" id="templates" class="form-control select_single" data-placeholder="Choose template">
 						<?php
                             $data = get_tabledata(TBL_TEMPLATES,false);
-                            $option_data = get_option_data($data, array('title', 'ID'));
+                            $option_data = get_option_data($data, array('ID', 'title'));
                             echo get_options_list($option_data);
 						?>
 					</select>
 				</div>
-				<div class="form-group">
-					<label for="body"><?php _e('Body');?>&nbsp;</label>
-					<textarea name="body" class="form-control select_single" data-placeholder="Choose template" >
-					</textarea>
+				<div class="form-group body-div">
 				</div>
-
                 <div class="form-group">
 					<div class="ln_solid"></div>
+					<input type="hidden" id="subject"  name="subject">
 					<input type="hidden" name="action" value="send_email" />
 					<input type="hidden" name="booking_id" value="<?php echo $booking->ID;?>" />
 					<button class="btn btn-success btn-md" type="submit"><?php _e('Send Email');?></button>
@@ -1172,7 +1173,50 @@ if( !class_exists('Booking') ):
 			endif;
 			return json_encode($return);
 		}
-        
+
+	public function get__template__process(){
+		extract($_POST);	
+		$template = get_tabledata(TBL_TEMPLATES,true,array("ID"=>$template_id));
+		$return['subject'] = $template->subject;
+		//$return['body'] = text_editor( 'body', stripslashes($template->body) );
+		$return['body'] = "<textarea name='body' class='form-control'>".stripslashes($template->body)."</textarea>";
+		return json_encode($return);
+		
+
+	}
+     
+
+
+        public function send__email__process(){
+                error_reporting(E_ALL);
+		$new_body = substitute_keywords($_POST);
+		echo "<script type='text/javascript'>alert(".$d.");</script>";
+		extract($_POST);
+                $return = array("success" => "false", "message" => "Invalid Email", "data" => array());
+		//if(filter_var($emailadd, FILTER_VALIDATE_EMAIL)) {
+                        $return = array("success" => "true", "message" => "Message sent", "data" => array());
+			 $headers = 'From: rsc-tr.workforce@nhs.net' . "\r\n" .'MIME-Version: 1.0' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+			require_once( ABSPATH . INC. '/phpmailer/PHPMailerAutoload.php');	
+			$email = new PHPMailer(); 
+			 $email->From      = 'rsc-tr.workforce@nhs.net';
+                        $email->FromName  = 'Workforce';
+                        $email->Subject   = $subject;
+                        $email->Body      = $new_body;
+                        foreach($recipients as $recipient) {
+				error_log("Recipient: $recipient");
+				$data = get_tabledata(TBL_USERS,true,array("ID"=>$recipient));
+				error_log(json_encode($data));
+				$address = $data->user_email;
+                                $email->AddAddress( $address );
+                        }
+                        $email->AddBCC( 'niall.shaw@nhs.net' );
+                        $email->Send();
+
+                //} else {
+                //      error_log('Not sending email to '.$emailadd);
+               // }
+                echo(json_encode($return));
+        } 
         
         public function get__register__process(){
             extract($_POST);

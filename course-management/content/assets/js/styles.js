@@ -888,6 +888,50 @@ var MainJs = {
                 }
             });
         });
+
+        t.doc.on('click', '.email-user', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#email-user-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#email-user-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'email_user',
+                    user_id: _this.data('user'),
+                    all: true
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#email-user-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
+                }
+            });
+        });
+
+        t.doc.on('click', '.email-mentor', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#email-user-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#email-user-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'email_mentor',
+                    user_id: _this.data('mentor'),
+                    all: true
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#email-user-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
+                }
+            });
+        });
         
         
     },
@@ -928,11 +972,62 @@ var MainJs = {
                 dataType: 'json',
                 success: function(r) {
                     t.doc.find('#view-cohort-data-modal-body').html(r['html']);
+                    t.doc.find('.cohort-email-all').attr("data-cohort",_this.data('cohort'));
+			t.reInit();
+                    return false;
+                }
+            });
+        });
+
+
+        t.doc.on('click', '.cohort-email-trainee', function(e) {
+            _this = $(this);
+		alert("in correct function");
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#email-cohort-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#email-cohort-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'cohort_email',
+                    cohort_id: _this.data('cohort'),
+		    trainee_id: _this.data('trainee')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#email-cohort-data-modal-body').html(r['html']);
                     t.reInit();
                     return false;
                 }
             });
         });
+
+
+        t.doc.on('click', '.cohort-email-all', function(e) {
+            _this = $(this);
+            var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
+            t.doc.find('#email-cohort-data-modal-body').html('<h1 class="text-center green">' + spinner + '</h1>');
+            t.doc.find('.modal:not(#email-cohort-data-modal) button[data-dismiss="modal"]').click();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'cohort_email',
+                    cohort_id: _this.data('cohort'),
+                    all: true
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find('#email-cohort-data-modal-body').html(r['html']);
+                    t.reInit();
+                    return false;
+                }
+            });
+        });
+
+
+
         t.doc.on('click', '.add-to-cohort', function(e) {
             _this = $(this);
             var spinner = '<i class="fa fa-circle-o-notch fa-spin fa-5x" aria-hidden="true"></i>';
@@ -1023,7 +1118,27 @@ var MainJs = {
                 }
             });
         });
-
+        t.doc.on('select2:select', '#templates', function(e) {
+            _this = $(this);
+            $.ajax({
+                type: 'POST',
+                data: {
+                    action: 'get_template_process',
+                    template_id: this.value,
+		    booking_id: _this.data('booking'),
+		    course_id: _this.data('course')
+                },
+                url: ajax_url,
+                dataType: 'json',
+                success: function(r) {
+                    t.doc.find(".body-div").html(r['body']);
+       		   t.doc.find("#subject").attr("value",r['subject']);
+		    //t.doc.find("#body-box").attr("contenteditable","true"); 
+                   t.reInit();
+			 return false;
+                }
+            });
+        });
         t.doc.on('click', '.add-pending-bookings', function(e) {
             e.preventDefault();
             $_this = $(this);

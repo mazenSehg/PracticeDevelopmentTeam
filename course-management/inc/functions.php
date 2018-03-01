@@ -95,6 +95,36 @@ if( !function_exists('strip_all_tags')) :
 	}
 endif;
 
+if( !function_exists('substitute_keywords')) :
+        function substitute_keywords($post) {
+		error_reporting(E_ALL);
+		extract($post);
+		$body = str_replace("[DATE]",date("Y-m-d"),$body);
+		preg_match('#\[(.*?)\]#', $body, $match);
+		foreach($match as $keyword){
+			$keyobj = explode('_',$keyword);
+			switch($keyobj[0]){
+				case "COHORT":
+					$data=get_tabledata(TBL_COHORTS,true,array("ID"=>$cohort_id));
+					$a = array('[COHORT_NAME]','[COHORT_DATE]','[COHORT_SD1]','[COHORT_SD2]','[COHORT_SD3]');
+                                        $b = array($data->name,$data->date,$data->sd1,$data->sd2,$data->sd3);
+					$body = str_replace($a,$b,$body);
+					break;
+				case "COURSE":
+					$data=get_tabledata(TBL_BOOKINGS,true,array("ID"=>$booking_id));
+					$loc = get_tabledata(TBL_LOCATIONS, true, array("ID"=>$data->location));
+                                        $a = array('[COURSE_NAME]','[COURSE_DATE]','[COURSE_DESCRIPTION]','[COURSE_LOCATION]');
+                                        $b = array($data->name,($data->date_from).' - '.($data->date_to),$data->description,$loc->name);
+					$body = str_replace($a,$b,$body);
+					break;
+			}
+		}
+		
+		return $body;
+	}
+endif;
+
+
 if( !function_exists('absint')) :
 	function absint( $maybeint ) {
 		return abs( intval( $maybeint ) );

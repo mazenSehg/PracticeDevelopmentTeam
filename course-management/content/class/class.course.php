@@ -413,6 +413,7 @@ if( !class_exists('Course') ):
 			<?php endif;
             echo $this->add__to__cohort__data__modal();
             echo $this->view__cohort__data__modal();
+	    echo $this->email__cohort__data__modal();
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -523,6 +524,8 @@ if( !class_exists('Course') ):
 							<div id="view-cohort-data-modal-body"></div>
 						</div>
 						<div class="modal-footer">
+							<button type="button" class="btn btn-success btn-block cohort-email-all" data-toggle="modal" data-target="#email-cohort-data-modal"><i class="fa fa-view"></i>&nbsp;<?php _e('Email All');?>
+                                                                </button>	
 							<button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
 						</div>
 					</div>
@@ -556,6 +559,30 @@ if( !class_exists('Course') ):
 			<?php
 			return ob_get_clean();
 		}
+
+        public function email__cohort__data__modal(){
+                        ob_start(); ?>
+                        <!-- calendar modal -->
+                        <div id="email-cohort-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                                <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h1 class="modal-title text-center text-uppercase"><?php _e('Email Cohort');?></h1>
+                                                </div>
+                                                <div class="modal-body">
+                                                        <div id="email-cohort-data-modal-body"></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                        <button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="hidden fc_create" data-toggle="modal" data-target="#email-cohort-data-modal"></div>
+                        <?php
+                        return ob_get_clean();
+                }
 
 		//Process functions starts here
 		public function add__cohort__process(){
@@ -665,8 +692,8 @@ if( !class_exists('Course') ):
 				$date_book_returned = isset($booking->date_book_returned) ? maybe_unserialize($booking->date_book_returned) : array();
 				$attendance = isset($booking->attendance) ? maybe_unserialize($booking->attendance) : array();
 				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();*/
-					ob_start();
-            ?>
+					ob_start();           
+ ?>
                 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
 						<thead>
 							<tr>
@@ -705,7 +732,8 @@ if( !class_exists('Course') ):
                                 <td><input id = "stud_d1" type="checkbox" name="stud_d1" class="js-switch" <?php if ($std1 == 1){?> checked="checked" <?php } ?>/></td>
                                 <td><input id = "stud_d2" type="checkbox" name="stud_d2" class="js-switch" <?php if ($std2 == 1){?> checked="checked" <?php } ?>/></td>
                                 <td><input id = "stud_d3" type="checkbox" name="stud_d3" class="js-switch" <?php if ($std3 == 1){?> checked="checked" <?php } ?>/></td>
-								<td><a href="<?php the_permalink('view-progress', array('user_id'=> $user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('View');?></a></td>
+								<td><a href="<?php the_permalink('view-progress', array('user_id'=> $user->ID));?>" class="btn btn-success btn-xs"><i class="fa fa-eye"></i>&nbsp;<?php _e('View');?></a><button type="button" class="btn btn-success btn-xs cohort-email-trainee" data-toggle="modal" data-target="#email-cohort-data-modal" data-trainee="<?php echo $user->ID;?>" data-cohort="<?php echo $cohort_id;?>"><i class="fa fa-view"></i>&nbsp;<?php _e('Email');?>
+                                                                </button></td>
 							</tr>
 							<?php endforeach; ?>
 						</tbody>
@@ -717,6 +745,76 @@ if( !class_exists('Course') ):
 			return json_encode($return);
 		}
 			
+
+
+                public function email__cohort__process(){
+                        extract($_POST);
+                        $cohort_id = trim($cohort_id);
+                        $return['html'] = '';
+                        $cohort = get_tabledata(TBL_COHORTS, true, array('ID'=> $cohort_id));
+			$trainee='';
+			if($trainee_id){
+			$trainee_id = trim($trainee_id);
+                        $trainee = get_tabledata(TBL_USERS, true, array('ID'=>$trainee_id));
+			}
+			if($cohort):
+                                        
+				ob_start();
+            ?>
+                <form class="email-attendees submit-form" method="post" autocomplete="off">
+
+                                 <div class="form-group">
+                                        <label for="recipient"><?php _e('Trainee(s)');?>&nbsp;</label>
+                                        <select name="recipients[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+                                                <?php
+                            $data = get_tabledata(TBL_USERS, false, array('cohort'=> $cohort_id), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+                            $option_data = get_option_data($data, array('ID', 'name'));
+                        if($trainee!=''){
+                            echo get_options_list($option_data, array($trainee_id));
+                        }else{
+				$all = array();
+				foreach($data as $d):
+				$all[] = $d->ID;
+				endforeach;
+                            echo get_options_list($option_data,$all);
+                                                }
+
+
+                                                ?>
+                                        </select>
+                                </div>
+                                <div class="form-group">
+                                        <label for="templates"><?php _e('Email Template');?>&nbsp;</label>
+                                        <select name="templates[]" id="templates" class="form-control select_single" data-placeholder="Choose template">
+                                                <?php
+                            $data = get_tabledata(TBL_TEMPLATES,false);
+                            $option_data = get_option_data($data, array('ID', 'title'));
+                            echo get_options_list($option_data);
+                                                ?>
+                                        </select>
+                                </div>
+                                <div class="form-group body-div">
+                                </div>
+                <div class="form-group">
+                                        <div class="ln_solid"></div>
+                                        <input type="hidden" id="subject"  name="subject">
+                                        <input type="hidden" name="action" value="send_email" />
+                                        <input type="hidden" name="cohort_id" value="<?php echo $cohort_id;?>" />
+                                        <button class="btn btn-success btn-md" type="submit"><?php _e('Send Email');?></button>
+                                </div>
+                        </form>
+                                        <?php
+                                        $return['html'] = ob_get_clean();
+                        endif;
+                        return json_encode($return);
+                }
+
+
+
+
+
+
+
 		public function update__course__process(){
 			extract($_POST);
 			$return = array(

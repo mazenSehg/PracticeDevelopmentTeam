@@ -53,6 +53,15 @@
 				echo $User->add__user__process();
 				break;
 				
+
+			case 'email_user':
+				echo $User->email__user__process();
+				break;
+
+                        case 'email_mentor':
+                                echo $User->email__mentor__process();
+                                break;
+
 			case 'fetch_add_to_booking_data':
 				echo $User->fetch__add__to__booking__data__process();
 				break;
@@ -186,6 +195,10 @@
 				echo $Course->delete__cohort__process();
 				break;
 
+                        case 'cohort_email':
+                                echo $Course->email__cohort__process();
+                                break;
+
 			case 'course_approve_change':
 				echo $Course->activate_course();
 				break;
@@ -273,6 +286,14 @@
 			case 'email_nurses':
 				echo $Booking->email__nurses__process();
 				break;
+
+                        case 'get_template_process':
+                                echo $Booking->get__template__process();
+                                break;
+
+                        case 'send_email':
+                                echo $Booking->send__email__process();
+                                break;
 
             case 'get_register':
                 echo $Booking->get__register__process();

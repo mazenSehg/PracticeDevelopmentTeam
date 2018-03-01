@@ -1574,6 +1574,8 @@ if( !class_exists('User') ):
 							<a href="<?php the_permalink('view-user', array('user_id'=> $single_user->ID));?>" class="btn btn-success btn-xs">
 								<i class="fa fa-eye"></i>&nbsp;<?php _e('View');?>
 							</a>
+							                <button type="button" class="btn btn-success btn-xs email-user" data-toggle="modal" data-target="#email-user-data-modal" data-user="<?php echo $single_user->ID;?>"><i class="fa fa-envelope"></i>&nbsp;<?php _e('Email');?>
+                                                                </button>
 							<a href="<?php the_permalink('edit-user', array('user_id'=> $single_user->ID));?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
 							</a>
@@ -1585,7 +1587,9 @@ if( !class_exists('User') ):
 					<?php endforeach; endif; ?>
 				</tbody>
 			</table>
-			<?php endif;
+			<?php
+			echo $this->email__user__data__modal(); 
+			endif;
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -1653,7 +1657,32 @@ if( !class_exists('User') ):
 			$content = ob_get_clean();
 			return $content;
 		}
-			
+		
+
+		 public function email__user__data__modal($mentor=false){
+                        ob_start(); ?>
+                        <!-- calendar modal -->
+                        <div id="email-user-data-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                                <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h1 class="modal-title text-center text-uppercase"><?php ($mentor)?_e('Email Mentors(s)'):_e('Email User(s)');?></h1>
+                                                </div>
+                                                <div class="modal-body">
+                                                        <div id="email-user-data-modal-body"></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                        <button type="button" class="btn btn-dark btn-block" data-dismiss="modal"><?php _e('Cancel');?></button>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="hidden fc_create" data-toggle="modal" data-target="#email-user-data-modal"></div>
+                        <?php
+                        return ob_get_clean();
+                }
+	
 		public function add__to__booking__modal(){
 			ob_start(); ?>
 			<!-- calendar modal -->
@@ -1745,6 +1774,8 @@ if( !class_exists('User') ):
                             <button type="button" class="btn btn-success btn-xs get-mentor" data-toggle="modal" data-target="#mentor-data-modal" data-mentor="<?php     echo $single_user->user_ID;?>">
                                 <i class="fa fa-view"></i>&nbsp;<?php _e('View Mentor');?>
                             </button>
+				                <button type="button" class="btn btn-success btn-xs email-mentor" data-toggle="modal" data-target="#email-user-data-modal" data-mentor="<?php echo $user->ID;?>"><i class="fa fa-envelope"></i>&nbsp;<?php _e('Email');?>
+                                                                </button>
 							<a href="<?php the_permalink('edit-mentor', array('id'=> $single_user->user_ID));?>" class="btn btn-dark btn-xs">
 								<i class="fa fa-edit"></i>&nbsp;<?php _e('Edit');?>
 							</a>
@@ -1758,6 +1789,7 @@ if( !class_exists('User') ):
 			</table>
 			<?php 
             echo $this->mentor__data__modal();
+	    echo $this->email__user__data__modal(true);
             endif;
 			$content = ob_get_clean();
 			return $content;
@@ -2179,6 +2211,106 @@ if( !class_exists('User') ):
 			endif;
 			return json_encode($return);
 		}
+
+               public function email__user__process(){
+                        extract($_POST);
+                        $user_id = trim($user_id);
+                        $return['html'] = '';
+                        $user = get_tabledata(TBL_USERS, true, array('ID'=> $user_id));
+                        if($user):
+
+                                ob_start();
+            ?>
+                <form class="email-attendees submit-form" method="post" autocomplete="off">
+
+                                 <div class="form-group">
+                                        <label for="recipient"><?php _e('Trainee(s)');?>&nbsp;</label>
+                                        <select name="recipients[]" class="form-control select_single" data-placeholder="Choose trainee(s)" multiple="multiple">
+                                                <?php
+                            $data = get_tabledata(TBL_USERS,false, array(), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+                            $option_data = get_option_data($data, array('ID', 'name'));
+                            echo get_options_list($option_data, array($user_id));
+
+                                                ?>
+                                        </select>
+                                </div>
+                                <div class="form-group">
+                                        <label for="templates"><?php _e('Email Template');?>&nbsp;</label>
+                                        <select name="templates[]" id="templates" class="form-control select_single" data-placeholder="Choose template">
+                                                <?php
+                            $data = get_tabledata(TBL_TEMPLATES,false);
+                            $option_data = get_option_data($data, array('ID', 'title'));
+                            echo get_options_list($option_data);
+                                                ?>
+                                        </select>
+                                </div>
+                                <div class="form-group body-div">
+                                </div>
+                <div class="form-group">
+                                        <div class="ln_solid"></div>
+                                        <input type="hidden" id="subject"  name="subject">
+                                        <input type="hidden" name="action" value="send_email" />
+                                        <button class="btn btn-success btn-md" type="submit"><?php _e('Send Email');?></button>
+                                </div>
+                        </form>
+                                        <?php
+                                        $return['html'] = ob_get_clean();
+                        endif;
+                        return json_encode($return);
+                }
+
+               public function email__mentor__process(){
+                        extract($_POST);
+                        $user_id = trim($user_id);
+                        $return['html'] = '';
+                        $user = get_tabledata(TBL_USERS, true, array('ID'=> $user_id));
+                        if($user):
+
+                                ob_start();
+            ?>
+                <form class="email-attendees submit-form" method="post" autocomplete="off">
+
+                                 <div class="form-group">
+                                        <label for="recipient"><?php _e('Trainee(s)');?>&nbsp;</label>
+                                        <select name="recipients[]" class="form-control select_single" data-placeholder="Choose mentor(s)" multiple="multiple">
+                                                <?php
+                            $data = get_tabledata(TBL_MENTORS,false, array(), '', 'user_ID');
+				$mentorIDs=array();
+				foreach($data as $d):
+					$mentorIDs[]=$d->user_ID;
+				endforeach;
+			    $data = get_tabledata(TBL_USERS,false, array("ID"=>$mentorIDs), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+                            $option_data = get_option_data($data, array('ID', 'name'));
+                            echo get_options_list($option_data, array($user_id));
+
+                                                ?>
+                                        </select>
+                                </div>
+                                <div class="form-group">
+                                        <label for="templates"><?php _e('Email Template');?>&nbsp;</label>
+                                        <select name="templates[]" id="templates" class="form-control select_single" data-placeholder="Choose template">
+                                                <?php
+                            $data = get_tabledata(TBL_TEMPLATES,false);
+                            $option_data = get_option_data($data, array('ID', 'title'));
+                            echo get_options_list($option_data);
+                                                ?>
+                                        </select>
+                                </div>
+                                <div class="form-group body-div">
+                                </div>
+                <div class="form-group">
+                                        <div class="ln_solid"></div>
+                                        <input type="hidden" id="subject"  name="subject">
+                                        <input type="hidden" name="action" value="send_email" />
+                                        <button class="btn btn-success btn-md" type="submit"><?php _e('Send Email');?></button>
+                                </div>
+                        </form>
+                                        <?php
+                                        $return['html'] = ob_get_clean();
+                        endif;
+                        return json_encode($return);
+                }
+
 
 		public function update__fdap__process(){
 			extract($_POST);
