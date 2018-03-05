@@ -1,4 +1,5 @@
 <?php
+define('IS_PDT',false);
 define('DB_NAME', 'pdt_database');
 define('DB_USER', 'pdt_test');
 define('DB_PASSWORD', 'pdt_pass');

@@ -1,7 +1,6 @@
 <?php
 // if accessed directly than exit
 if(!defined('ABSPATH')) exit;
-
 date_default_timezone_set('Europe/London');
 if( !class_exists('User') ):
 
@@ -100,7 +99,7 @@ if( !class_exists('User') ):
 			<div class="row">
 				<div class=" main-box">
 					<div class="col-md-12 text-center">
-						<h1 class=" big-title"><?php _e('Resusitation course booking and management');?>&nbsp;</h1>
+						<h1 class=" big-title"><?php (IS_PDT)?_e('Professional Development Tracker'):_e('Resusitation course booking and management');?>&nbsp;</h1>
 						<div class="ln_solid"></div>
 					</div>
 				</div>
@@ -116,9 +115,10 @@ if( !class_exists('User') ):
 			<div class="row">
 				<div class="main-box">
 					<div class="col-md-12 text-center">
-						<h1 class=" big-title"><?php _e('Resusitation course booking and management');?>&nbsp;</h1>
+			                     <h1 class=" big-title"><?php (IS_PDT)?_e('Professional Development Tracker'):_e('Resusitation course booking and management');?>&nbsp;</h1>
 						<div class="ln_solid"></div>
 					</div>
+					<?php if(!IS_PDT): ?>
 					<div class="col-md-4 col-xs-12 pull-left">
 						<form class="browse-form" method="get" autocomplete="off">
 							<h3 class="form-title">
@@ -135,6 +135,7 @@ if( !class_exists('User') ):
 							</div>
 						</form>
 					</div>
+					<?php endif; ?>
 					<div class="col-md-4 col-xs-12 pull-right">
 						<form class="login-form" method="get" autocomplete="off">
 							<h3 class="form-title">
