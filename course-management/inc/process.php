@@ -303,6 +303,10 @@
 				echo $Booking->fetch__booking__additional__information__process();
 				break;
 			
+			case 'add_booking_additional_info':
+				echo $Booking->add__booking__additional__info__process();
+				break;
+			
 			case 'fetch_available_bookings':
 				echo $Booking->fetch__available__bookings__process();
 				break;

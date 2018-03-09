@@ -1261,6 +1261,8 @@ if( !class_exists('Booking') ):
 			$return['html'] = '';
 			$booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=> $booking_id));
 			if($booking):
+                        	$all_additional_info = maybe_unserialize($booking->additional_info);
+				$course_id = $booking->course_ID;
 				$nurses = maybe_unserialize($booking->nurses);
 				$date_book_received = isset($booking->date_book_received) ? maybe_unserialize($booking->date_book_received) : array();
 				$collected = isset($booking->collected) ? maybe_unserialize($booking->collected) : array();
@@ -1269,6 +1271,8 @@ if( !class_exists('Booking') ):
 				$enroll = isset($booking->enroll) ? maybe_unserialize($booking->enroll) : array();
 				if(!empty($nurses) && in_array($user_id, $nurses ) ):
 					$nurse = $user_id;
+					$personal_add_info = (array_key_exists($nurse,$all_additional_info))?$all_additional_info[$nurse]:null;
+					error_log("PERSONAL_ALL_INFO: ".json_encode($personal_add_info));
 					ob_start();
 					?>
 					<a href="<?php the_permalink('edit-booking', array('id'=> $booking->ID));?>" class="btn btn-dark btn-xs">
@@ -1278,6 +1282,7 @@ if( !class_exists('Booking') ):
 						<?php _e('View Trainee(s)');?>
 					</button>
 					<div>&nbsp;</div>
+							<form class="add-additional submit-form" method="post" autocomplete="off">
 					<table class="table table-striped table-condensed table-bordered" style="margin-bottom: 0px;">
 						<thead>
 							<tr>
@@ -1285,6 +1290,17 @@ if( !class_exists('Booking') ):
 								<th><?php _e('Date Book Received'); ?></th>
 								<th><?php _e('Collected'); ?></th>
 								<th><?php _e('Date book Returned'); ?></th>
+								<?php 
+								if($course_id=='10000471378'){
+								?>
+								<th><?php _e('IV Calc Result 1'); ?> </th>
+								<th><?php _e('Result 2'); ?></th>
+								<th><?php _e('Result 3'); ?> </th>
+								<th><?php _e('VIVA Required'); ?> </th>
+								<th><?php _e('Declaration of IV competence received'); ?></th>
+								<th><?php _e('Extension Agreed');?></th>
+								<?php
+								}?>
 							</tr>
 						</thead>
 						<tbody>
@@ -1293,14 +1309,54 @@ if( !class_exists('Booking') ):
 								<td><input type="text" readonly="readonly" name="date_book_received" class="form-control nurse-modal-datepicker" value="<?php echo (isset($date_book_received[$nurse]) && $date_book_received[$nurse] != '') ? date('M d, Y', strtotime($date_book_received[$nurse])) : '';?>" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"/></td>
 								<td><label><input type="checkbox" class="js-switch nurse-modal-approve-switch" <?php if(isset($collected[$nurse])) checked($collected[$nurse] , 1);?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="collected"/></label></td>
 								<td><input type="text" readonly="readonly" name="date_book_returned" class="form-control nurse-modal-datepicker" value="<?php echo (isset($date_book_returned[$nurse]) && $date_book_returned[$nurse] != '') ? date('M d, Y', strtotime($date_book_returned[$nurse])) : '';?>" data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>"/></td>
+								<?php if($course_id=='10000471378'){ ?>
+                                                                <td><input class="form-control" type="text" name="result1" value="<?php echo (isset($personal_add_info))?$personal_add_info['result1']:''?>"/></td>
+                                                                <td><input class="form-control" type="text" name="result2" value="<?php echo (isset($personal_add_info))?$personal_add_info['result2']:''?>"/></td>
+                                                                <td><input class="form-control" type="text" name="result3" value="<?php echo (isset($personal_add_info))?$personal_add_info['result3']:''?>"/></td>
+<td><label><input type="checkbox" name="viva-required"  class="js-switch viva-required-switch" <?php if(isset($personal_add_info)) checked($personal_add_info['viva-required'],'on');?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="viva_required"/></label></td>
+<td><label><input type="checkbox" name="declaration" class="js-switch iv-declaration-switch" <?php if(isset($personal_add_info)) checked($personal_add_info['declaration'],'on');?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="declaration_received"/></label></td><td><label><input type="checkbox" name="extension_agreed" class="js-switch extension-agreed-switch" <?php if(isset($personal_add_info)) checked($personal_add_info['extension_agreed'],'on');?> data-booking="<?php echo $booking_id;?>" data-user="<?php echo $nurse;?>" data-action="extension_agreed"/></label></td>
+							</tr><tr><td></td><td></td><td></td><td></td><td><select class="select_single" name="paper_result1"><option></option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result1'],"1"); ?> value="1" >Paper 1</option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result1'],"2"); ?> value="2">Paper 2</option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result1'],"3"); ?>  value="3">Paper 3</option></select></td><td><select class="select_single" name="paper_result2"><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result2'],"1"); ?>value="1">Paper 1</option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result2'],"2"); ?> value="2">Paper 2</option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result2'],"3"); ?> value="3">Paper 3</option></select></td><td><select class="select_single" name="paper_result3"><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result3'],"1"); ?> value="1">Paper 1</option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result3'],"2"); ?> value="2">Paper 2</option><option <?php if(isset($personal_add_info)) selected($personal_add_info['paper_result3'],"3"); ?> value="3">Paper 3</option></select></td><td></td><td></td><td></td>
+								<?php } ?>
 							</tr>
 						</tbody>
 					</table>
+									<div class="form-group">
+					<div class="ln_solid"></div>
+					<input type="hidden" name="booking_id" value="<?php echo $booking_id;?>"/>
+					<input type="hidden" name="user_id" value="<?php echo $nurse; ?>" />
+					<input type="hidden" name="action" value="add_booking_additional_info" />
+					<button class="btn btn-success btn-block" type="submit"><?php _e('UPDATE');?></button>
+				</div>
+				</form>
 					<?php
 					$return['html'] = ob_get_clean();
 				endif;
 			endif;
 			return json_encode($return);
+		}
+
+		public function add__booking__additional__info__process(){
+			extract($_POST);
+			$data = get_tabledata(TBL_BOOKINGS,true,array("ID"=>$booking_id));
+			$current = maybe_unserialize($data->additional_info);
+			$additional_info = array();
+			foreach($_POST as $key => $value){
+				if($key!=='booking_id'&&$key!=='user_id'&&$key!=='action'){
+					$additional_info[$key]=$value;
+				}
+			}
+			
+				$current[$user_id]=$additional_info;
+			$result = $this->database->update(TBL_BOOKINGS, 
+						array(
+							'additional_info'=> $current, 
+						), 
+						array(
+							'ID' => $booking_id, 
+						)
+					);
+			return $result;
+
 		}
 
 		public function fetch__available__bookings__process(){

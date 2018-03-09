@@ -473,85 +473,76 @@ if( !class_exists('User') ):
 									</ul>
 								</div>
 								<div class="tab-pane fade" id="tab3default">
+									<!-- connect to tbl_user_progress -->
+									<?php $userProg = get_tabledata(TBL_PROG,true,array('user_ID'=>$user__id));
+									$prec;
+									if($userProg){
+									$prec = $userProg->prec;
+									$prec = unserialize(unserialize($prec));
+									}
+
+									error_log(json_encode($prec));
+									?>
 									<form class="submit-form" method="post" autocomplete="off">
-										<div class="row">
+										<div class="row" id="<?php echo $prec['prec_intro']; ?>">
 											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('Precptorship Intro');?></label>
-												<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($fault->prec_intro) ? date('M d, Y', strtotime($fault->prec_intro)) : '';?>" />
+												<label for="p_intro"><?php _e('Preceptorship Intro');?></label>
+												<input type="text" name="p_intro" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($prec['prec_intro']) ? date('M d, Y', strtotime($prec['prec_intro'])) : '';?>" />
 											</div>
+                                                                                        <div class="form-group col-sm-4 col-xs-12">
+                                                                                                <label for="admins"><?php _e('Allocated Preceptor');?>&nbsp;<span class="required">*</span></label>
+                                                                                                <select name="trainers" class="form-control select_single require">
+                                                                                                        <?php
+                                                                                                        $data = get_tabledata(TBL_USERS, false, array('user_role'=> 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
+                                                                                                        $option_data = get_option_data($data, array('ID', 'name'));
+                                                                                                        echo get_options_list($option_data, maybe_unserialize($prec['prec_trainer']));
+                                                                                                        ?>
+                                                                                                </select>
+                                                                                        </div>
 											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('Precptorship Name');?></label>
-												<input type="text" name="p_name" class="form-control" value="<?php echo isset($fault->prec_name) ? $fault->prec_name : '';?>" />
-											</div>
-											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('Precptorship Email');?></label>
-												<input type="text" name="p_email" class="form-control " value="<?php echo isset($fault->p_email) ? $fault->p_email : '';?>" />
+												<label for="p_location"><?php _e('Place of Training');?></label>
+												<input type="text" name="p_location" class="form-control " value="<?php echo isset($prec['p_location']) ? $prec['p_location'] : '';?>" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-sm-3 col-xs-12">
-												<label for="decommed"><?php _e('Current Preceptee');?></label>
+												<label for="p_current"><?php _e('Current Preceptee');?></label>
 												<br/>
-												<label><input type="checkbox" name="p_current" class="js-switch" <?php isset($fault->current_prec) ? checked($fault->current_prec, 1) : '';?> /></label>
+												<label><input type="checkbox" name="p_current" class="js-switch" <?php isset($prec['current_prec']) ? checked($prec['current_prec'], 1) : '';?> /></label>
 											</div>
 											
-											<div class="form-group col-sm-3 col-xs-12">
-												<label for="decommed"><?php _e('Awaiting Pin');?></label>
-												<br/>
-												<label><input type="checkbox" name="p_pin" class="js-switch" <?php isset($fault->pin) ? checked($fault->pin, 1) : '';?>/></label>
-											</div>
-											<div class="form-group col-sm-3 col-xs-12">
-												<label for="decommed"><?php _e('Academic Delay');?></label>
-												<br/>
-												<label><input type="checkbox" name="p_delay" class="js-switch" <?php isset($fault->delay) ? checked($fault->delay, 1) : '';?>/></label>
-											</div>
-											<div class="form-group col-sm-3 col-xs-12">
-												<label for="decommed"><?php _e('International Nurse');?></label>
-												<br/>
-												<label><input type="checkbox" name="p_nurse" class="js-switch" <?php ; isset($fault->int_nurse) ? checked($fault->int_nurse, 1) : ''; ?> /></label>
-											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('WTE');?></label>
-												<input type="text" name="p_wte" class="form-control " value="<?php echo isset($fault->WTE) ? $fault->WTE : '';?>" />
+												<label for="q_date"><?php _e('Qualification Date');?></label>
+												<input type="text" name="q_date" class="form-control input-datepicker" readonly="readonly" value="<?php echo isset($prec['q_date']) ? date('M d, Y', strtotime($prec['q_date'])): '';?>" />
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('Country of First Registeration');?></label>
-												<input type="text" name="p_country" class="form-control" value="<?php echo isset($fault->p_country) ? $fault->p_country : '';?>" />
+												<label for="p_regdate"><?php _e('Professional Registration Date');?></label>
+												<input type="text" name="p_regdate" class="form-control input-datepicker" readonly="readonly"  value="<?php echo isset($prec['p_regdate']) ? date('M d, Y', strtotime($prec['p_regdate'])) : '';?>" />
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('Awards');?></label>
-												<input type="text" name="p_awards" class="form-control" value="<?php echo isset($fault->awards) ? $fault->awards : '';?>" />
+												<label for="p_country"><?php _e('Country of Registration');?></label>
+												<input type="text" name="p_country" class="form-control" value="<?php echo isset($prec['p_country']) ? $prec['p_country'] : '';?>" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-sm-4 col-xs-12">
 												<label for=""><?php _e('Sign off Period');?></label>
 												<br/>
-												<label><input type="radio" class="flat" name="p_period" value="6" <?php isset($fault->sign_off) ? checked($fault->sign_off, '6') : ''; ?> /> <?php _e('6 Months');?></label>
+												<label><input type="radio" class="flat" name="p_period" value="6" <?php isset($prec['sign_off']) ? checked($prec['sign_off'], '6') : ''; ?> /> <?php _e('6 Months');?></label>
 												<label>&nbsp;</label>
-												<label><input type="radio" class="flat" name="p_period" value="12" <?php isset($fault->sign_off) ? checked($fault->sign_off, '12') : ''; ?> /> <?php _e('12 Months');?></label>
+												<label><input type="radio" class="flat" name="p_period" value="12" <?php isset($prec['sign_off']) ? checked($prec['sign_off'], '12') : ''; ?> /> <?php _e('12 Months');?></label>
 											</div>
 											<div class="form-group col-sm-4 col-xs-12">
-												<label for="date-of-fault"><?php _e('Links');?></label>
-												<input type="text" name="p_link" class="form-control " value="<?php echo isset($fault->link) ? $fault->link : '';?>" />
-											</div>
-											<div class="form-group col-sm-4 col-xs-12">
-												<label for="admins"><?php _e('Allocated trainer');?>&nbsp;<span class="required">*</span></label>
-												<select name="trainers" class="form-control select_single require">
-													<?php
-													$data = get_tabledata(TBL_USERS, false, array('user_role'=> 'course_admin'), '', ' ID, CONCAT_WS(" ", first_name , last_name) AS name ');
-													$option_data = get_option_data($data, array('ID', 'name'));
-													echo get_options_list($option_data, maybe_unserialize($fault->prec_trainer));
-													?>
-												</select>
+												<label for="p_rag"><?php _e('RAG Status');?></label>
+												<select  name="p_rag" class="form-control select_single require"/><option value="red">Red</option><option value="amber">Amber</option><option value="green">Green</option></select>
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-sm-12 col-xs-12">
 												<label for="description-of-fault">Notes</label>
-												<textarea name="p_notes" class="form-control" rows="4"><?php echo isset($fault->prec_notes) ? $fault->prec_notes : '';?></textarea>
+												<textarea name="p_notes" class="form-control" rows="4"><?php echo isset($prec['prec_notes']) ? $prec['prec_notes']: '';?></textarea>
 											</div>
 										</div>
 										<div class="form-group">
@@ -985,6 +976,10 @@ if( !class_exists('User') ):
 						<label for="beep"><?php _e('Beep');?></label>
 						<input type="text" name="beep" class="form-control" />
 					</div>
+                                        <div class="form-group col-sm-6 col-xs-12">
+                                                <label for="ward_manager"><?php _e('Ward Manager Email');?><span class="required">*</span></label>
+                                                <input type="text" name="ward_manager" class="form-control require" />
+                                        </div>
 				</div>
 
 				<div class="form-group">
@@ -1180,6 +1175,10 @@ if( !class_exists('User') ):
 						<select id="purpose" name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role"><?php echo get_options_list(get_roles()); ?>
 						</select>
 					</div>
+                                        <div class="form-group col-sm-6 col-xs-12">
+                                                <label for="ward_manager"><?php _e('Ward Manager Email');?><span class="required"> *</span></label>
+                                                <input type="text" name="ward_manager" class="form-control require" />
+                                        </div>
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
@@ -2009,7 +2008,8 @@ if( !class_exists('User') ):
 							'user_status' => 1, 
 							'user_pass' => set_password($user_pass), 
 							'user_salt' => $salt, 
-							'created_by' => $this->current__user__id, 
+							'created_by' => $this->current__user__id,
+							'ward_manager' => $ward_manager 
 						)
 					);
 				}else{
@@ -2032,7 +2032,8 @@ if( !class_exists('User') ):
 							'work_area_ID' => $work_area, 
 							'rag_status' => $rag_status, 
 							'extended_support' => $extended_support, 
-							'support_since' => $support_since, 
+							'support_since' => $support_since,
+							'ward_manager' => $ward_manager 
 						)
 					);
 
@@ -2109,6 +2110,9 @@ if( !class_exists('User') ):
 				$p_nurse = ( isset($p_nurse) ) ? 1 : 0;
 				$age = array(							
 					"prec_intro" => date("Y-m-d h:i:s", strtotime($p_intro)), 
+					"p_location" => $p_location,
+					"q_date"=>date("Y-m-d h:i:s", strtotime($q_date)),
+					"p_regdate"=>date("Y-m-d h:i:s", strtotime($p_regdate)),
 					"current_prec"=> $p_current, 
 					"pin" => $p_pin, 
 					"delay" => $p_delay, 
