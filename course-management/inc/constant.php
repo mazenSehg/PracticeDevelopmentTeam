@@ -15,6 +15,7 @@ define( 'NO_REPLY', 'no-reply@prospectstrails.com' );
 
 define( 'TBL_USERS', $db->prefix. 'users' );
 define( 'TBL_USERMETA', $db->prefix. 'usermeta' );
+define( 'TBL_REMINDERS', $db->prefix.'reminders');
 define( 'TBL_OPTION', $db->prefix. 'options' );
 define( 'TBL_ACCESS_LOG', $db->prefix. 'access_log' );
 define( 'TBL_NOTIFICATIONS', $db->prefix. 'notifications' );

@@ -237,6 +237,21 @@ if ( !function_exists('get_user_name') ) :
 	}
 endif;
 
+if ( !function_exists('get_user_email') ) :
+        function get_user_email( $user = null ){
+                if($user == null || $user == '')
+                        return false;
+
+                if(is_object($user))
+                        return $user->user_email;
+
+                if($user_data = get_userdata($user))
+                        return $user_data->user_email;
+
+                return false;
+        }
+endif;
+
 if ( !function_exists('get_current_user_hospital') ) :
 	function get_current_user_hospital(){
 		
