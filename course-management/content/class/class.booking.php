@@ -797,10 +797,18 @@ if( !class_exists('Booking') ):
 					$date_book_returned[$nurse] = isset($old_date_book_returned[$nurse]) ? $old_date_book_returned[$nurse] : '';
 					$date_book_received[$nurse] = isset($old_date_book_received[$nurse]) ? $old_date_book_received[$nurse] : '';
 				}*/
-            
+           			$booking = get_tabledata(TBL_BOOKINGS, true, array('ID'=>$booking_id));
+				$additional_info = maybe_unserialize($booking->additional_info);
+				foreach($additional_info as $key=>$value){
+
+					if(!in_array($key,$nurses)){
+						unset($additional_info[$key]);
+					}
+				}
 				$result = $this->database->update(TBL_BOOKINGS, 
 					array(
-						'nurses' => $nurses, 
+						'nurses' => $nurses,
+						'additional_info'=>$additional_info 
 					), 
 					array(
 						'ID'=> $booking_id
@@ -1609,7 +1617,7 @@ if( !class_exists('Booking') ):
 				$collected = maybe_unserialize($booking->collected);
 				$date_book_returned = maybe_unserialize($booking->date_book_returned);
 				$date_book_received = maybe_unserialize($booking->date_book_received);
-				
+				$additional_info=maybe_unserialize($booking->additional_info);	
 				$insert = $this->database->insert( TBL_REMOVED_USERS, 
 					array(
 						'course_ID' => $booking->course_ID, 
@@ -1624,20 +1632,11 @@ if( !class_exists('Booking') ):
 					
 					if( !empty($nurses) && ($key = array_search($user_id, $nurses)) !== false){
 						unset($nurses[$key]);
-						unset($enroll[$user_id]);
-						unset($attendance[$user_id]);
-						unset($collected[$user_id]);
-						unset($date_book_returned[$user_id]);
-						unset($date_book_received[$user_id]);
-						
+						unset($additional_info[$key]);
 						$result = $this->database->update(TBL_BOOKINGS, 
 							array(
-								'nurses' => $nurses, 
-								'date_book_received'=> $date_book_received, 
-								'date_book_returned'=> $date_book_returned, 
-								'collected' => $collected, 
-								'enroll' => $enroll, 
-								'attendance' => $attendance, 
+								'nurses' => $nurses,
+								'additional_info'=>$additional_info 
 							), 
 							array(
 								'ID'=> $booking_id
