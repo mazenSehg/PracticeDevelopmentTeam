@@ -112,9 +112,15 @@ if( !function_exists('substitute_keywords')) :
 					break;
 				case "COURSE":
 					$data=get_tabledata(TBL_BOOKINGS,true,array("ID"=>$booking_id));
-					$loc = get_tabledata(TBL_LOCATIONS, true, array("ID"=>$data->location));
+					$locations = maybe_unserialize($data->location);
+					$loc='';
+					foreach($locations as $location){
+						$x = get_tabledata(TBL_LOCATIONS, true, array("ID"=>$location));
+						$loc.=($x->name)." / ";
+					}
+					$loc = substr($loc, 0, -3);
                                         $a = array('[COURSE_NAME]','[COURSE_DATE]','[COURSE_DESCRIPTION]','[COURSE_LOCATION]');
-                                        $b = array($data->name,($data->date_from).' - '.($data->date_to),$data->description,$loc->name);
+                                        $b = array($data->name,($data->date_from).' - '.($data->date_to),$data->description,$loc);
 					$body = str_replace($a,$b,$body);
 					break;
 			}

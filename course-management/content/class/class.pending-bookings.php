@@ -19,6 +19,94 @@ if( !class_exists('Pending_Bookings') ):
 		public function add__booking__page(){
 			ob_start();
 			?>
+			<div class="panel with-nav-tabs panel-default">
+                        	<div class="panel-heading">
+        	                        <ul class="nav nav-tabs">
+						<li class="active"><a href="#tab1default" data-toggle="tab">Internal Candidate</a></li>
+						<li><a href="#tab2default" data-toggle="tab">External Candidate</a></li>
+					</ul>
+				</div>
+				<div class="panel-body">
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="tab1default">
+						<form class="add-pending-booking submit-form" method="post" autocomplete="off">
+                                <div class="row">
+                                        <div class="col-sm-4 form-group">
+                                                <label for="title"><?php _e('Title');?>&nbsp;<span class="required">*</span></label>
+                                                <select name="title" class="form-control select_single require" data-placeholder="Choose Title">
+                                                        <?php
+                                                        $option_data = array('Mr' => 'Mr', 'Mrs' => 'Mrs', 'Dr' => 'Dr', 'Ms' => 'Ms');
+                                                        echo get_options_list($option_data);
+                                                        ?>
+                                                </select>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                                <label for="first_name"><?php _e('First Name');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="first_name" class="form-control require" value=""/>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                                <label for="last_name"><?php _e('Last Name');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="last_name" class="form-control require" value=""/>
+                                        </div>
+                                </div>
+                                <div class="row">
+
+                                        <div class="col-sm-4 form-group">
+                                                <label for="preferred_name"><?php _e('Preferred Name');?>&nbsp;</label>
+                                                <input type="text" name="preferred_name" class="form-control" value=""/>
+                                        </div>
+                                       <div class="col-sm-4 form-group">
+                                                <label for="professional_registration_no"><?php _e('Professional Registration No');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="professional_registration_no" class="form-control require" value=""/>
+                                        </div>
+ 
+                                        <div class="col-sm-4 form-group">
+                                                <label for="email"><?php _e('Email');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="email" class="form-control require" value="" />
+                                        </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col-sm-4 form-group">
+                                                <label for="telephone_no"><?php _e('Telephone No');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="telephone_no" class="form-control require" value="" />
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                                <label for="ward_manager"><?php _e("Ward Manager's Email");?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="ward_manager" class="form-control require" value="" />
+                                        </div>
+                                    
+                                </div>
+	                        <div class="form-group">
+                                        <label for="course_name"><?php _e('Course Applied For');?>&nbsp;<span class="required">*</span></label>
+                                        <input type="text" name="course_name" class="form-control require" value="" readonly=""/>
+                                        <input type="hidden" name="course_id" value="" />
+                                        <input type="hidden" name="booking_id" value="" />
+                                </div>
+                                <div class="row">
+                                        <div class="col-sm-12 form-group">
+                                                <h4><?php _e('Digital Signature');?></h4>
+                                                <p><?php _e('By filling out your full name below, this acts as a digital signature and that you can confirm all of the information provided above is correct and valid.');?>
+                                                </p>
+                                        </div>
+                                        <div class="col-sm-6 form-group">
+                                                <label for="full_name"><?php _e('Full Name');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="full_name" class="form-control require" value=""/>
+                                        </div>
+                                        <div class="col-sm-6 form-group">
+                                        <label for="current_date"><?php _e('Date');?>&nbsp;<span class="required">*</span></label>
+                                                <input type="text" name="current_date" class="form-control require" value="<?php echo date('d M , Y');?>" readonly="readonly"/>
+                                        </div>
+                                </div>
+
+                                <div class="form-group">
+                                        <div class="ln_solid"></div>
+					<input type="hidden" name="user_type" value="internal"/>
+                                        <input type="hidden" name="action" value="add_new_pending_booking" />
+                                        <button class="btn btn-success btn-md btn-block" type="submit"><?php _e('Submit');?></button>
+                                </div>
+                                </form>
+						</div>
+						<div class="tab-pane fade" id="tab2default">
 			<form class="add-pending-booking submit-form" method="post" autocomplete="off">
 				<div class="row">
 					<div class="col-sm-4 form-group">
@@ -42,12 +130,12 @@ if( !class_exists('Pending_Bookings') ):
 				<div class="row">
                     
 					<div class="col-sm-4 form-group">
-						<label for="preferred_name"><?php _e('Preferred Name');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="preferred_name" class="form-control require" value=""/>
+						<label for="preferred_name"><?php _e('Preferred Name');?>&nbsp;</label>
+						<input type="text" name="preferred_name" class="form-control" value=""/>
 					</div>
 					<div class="col-sm-4 form-group">
-						<label for="professional_registeration_no"><?php _e('Professional Registeration No');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="professional_registeration_no" class="form-control require" value=""/>
+						<label for="professional_registration_no"><?php _e('Professional Registration No');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="professional_registration_no" class="form-control require" value=""/>
 					</div>
 					<div class="col-sm-4 form-group">
 						<label for="email"><?php _e('Email');?>&nbsp;<span class="required">*</span></label>
@@ -122,10 +210,15 @@ if( !class_exists('Pending_Bookings') ):
 
 				<div class="form-group">
 					<div class="ln_solid"></div>
+					<input type="hidden" name="user_type" value="external"/>
 					<input type="hidden" name="action" value="add_new_pending_booking" />
 					<button class="btn btn-success btn-md btn-block" type="submit"><?php _e('Submit');?></button>
 				</div>
 			</form>			
+				</div>
+				</div>
+				</div>
+				</div>
 			<?php
 			$content = ob_get_clean();
 			return $content;
@@ -172,8 +265,8 @@ if( !class_exists('Pending_Bookings') ):
 						<input type="text" name="preferred_name" class="form-control require" value="<?php echo $booking->preferred_name;?>"/>
 					</div>
 					<div class="col-sm-4 form-group">
-						<label for="professional_registeration_no"><?php _e('Professional Registeration No');?>&nbsp;<span class="required">*</span></label>
-						<input type="text" name="professional_registeration_no" class="form-control require" value="<?php echo $booking->professional_registeration_no;?>"/>
+						<label for="professional_registration_no"><?php _e('Professional Registration No');?>&nbsp;<span class="required">*</span></label>
+						<input type="text" name="professional_registration_no" class="form-control require" value="<?php echo $booking->professional_registeration_no;?>"/>
 					</div>
 					<div class="col-sm-4 form-group">
 						<label for="email"><?php _e('Email');?>&nbsp;<span class="required">*</span></label>
@@ -276,7 +369,7 @@ if( !class_exists('Pending_Bookings') ):
 						<th><?php _e('Booking For');?></th>
 						<th><?php _e('First Name');?></th>
 						<th><?php _e('Last Name');?></th>
-						<th><?php _e('Professional Registeration No');?></th>
+						<th><?php _e('Professional Registration No');?></th>
 						<th><?php _e('Request Date');?></th>
 						<?php if( user_can('edit_booking') ): ?>
 						<th><?php _e('Response');?></th>
@@ -345,7 +438,7 @@ if( !class_exists('Pending_Bookings') ):
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h1 class="modal-title text-center text-uppercase"><?php _e('Registeration Form');?></h1>
+							<h1 class="modal-title text-center text-uppercase"><?php _e('Registration Form');?></h1>
 						</div>
 						<div class="modal-body"><?php echo $this->add__booking__page();?></div>
 						<div class="modal-footer">
@@ -541,9 +634,7 @@ if( !class_exists('Pending_Bookings') ):
 				'message' => __('Could not create booking, Please try again.'),
 				'reset_form' => 0
 			);
-			
 			$guid = get_guid(TBL_PENDING_BOOKINGS);
-
 			$result = $this->database->insert(TBL_PENDING_BOOKINGS,
 				array(
 					'ID' => $guid,
@@ -552,18 +643,18 @@ if( !class_exists('Pending_Bookings') ):
 					'title' => $title,
 					'first_name' => $first_name,
 					'last_name' => $last_name,
-					'preferred_name' => $preferred_name,
-					'professional_registeration_no' => $professional_registeration_no,
+					'preferred_name' => isset($preferred_name)?$preferred_name:null,
+					'professional_registeration_no' => $professional_registration_no,
 					'email' => $email,
 					'telephone_no' => $telephone_no,
 					'address' => $address,
 					'postcode'=> $postcode,
-					'employer'=> $employer,
-					'current_role' => $current_role,
-					'specialty' => $specialty,
-					'employer_address' => $employer_address,
-					'employer_postcode' => $employer_postcode,
-					'paid' => isset($paid) ? 1 : 0,
+					'employer'=> isset($employer)?$employer:null,
+					'current_role' => isset($current_role)?$current_role:null,
+					'specialty' => isset($specialty)?$specialty:null,
+					'employer_address' => isset($employer_address)?$employer_address:null,
+					'employer_postcode' => isset($employer_postcode)?$employer_postcode:null,
+					'paid' => isset($paid) ? 1 : ($user_type=='external'?0:null),
 					'full_name' => $full_name,
 					'current_date' => date('Y-m-d', strtotime($current_date)),
 				)
@@ -619,7 +710,7 @@ if( !class_exists('Pending_Bookings') ):
 						'first_name' => $first_name,
 						'last_name' => $last_name,
 						'preferred_name' => $preferred_name,
-						'professional_registeration_no' => $professional_registeration_no,
+						'professional_registeration_no' => $professional_registration_no,
 						'email' => $email,
 						'telephone_no' => $telephone_no,
 						'address' => $address,
@@ -687,13 +778,14 @@ if( !class_exists('Pending_Bookings') ):
 			
 			if( user_can('edit_booking') && user_can('add_user') ):
 				$booking = get_tabledata(TBL_PENDING_BOOKINGS,true,array('ID'=> $booking_id));
-				
-				if( is_value_exists(TBL_USERS,array('user_email' => $booking->email) ) ):
-					$return['status'] = 0;
-					$return['message_heading'] = __('Email Already Exist');
-					$return['message'] = __('User Email address is already exists.');
-					return json_encode($return);
-				endif;
+				$guid;
+				$user_result;
+				if( is_value_exists(TBL_USERS,array('user_email' => $booking->email) ) ){
+					$user_result = true;
+					$user = get_tabledata(TBL_USERS,true,array('user_email'=>$booking->email));
+					$guid = $user->ID;
+					error_log("GUID: $guid");
+				}else{
 				
 				$user_pass = password_generator();
 				$salt = generateSalt();
@@ -727,16 +819,18 @@ if( !class_exists('Pending_Bookings') ):
 						'created_by' => $this->current__user__id,
 					)
 				);
+				}
 
 				if($user_result):
 					$user__id = $guid;
+					error_log("USER__ID: $user__id");
 					update_user_meta($user__id,'user_phone',$booking->telephone_no);
 					$notification_args = array(
 						'title' => __('New Account Created'),
 						'notification'=> __('You have successfully created a new account').' ('.ucfirst($booking->first_name).' '.ucfirst($booking->last_name).').',
 					);
 					add_user_notification($notification_args);
-					
+					error_log("Booking id: $booking->booking_id");
 					$main_booking = get_tabledata(TBL_BOOKINGS,true,array('ID'=> $booking->booking_id));
 					if($main_booking):
 						$nurses = maybe_unserialize($main_booking->nurses);
@@ -748,22 +842,11 @@ if( !class_exists('Pending_Bookings') ):
 						$nurses[] = $user__id;
 						$nurses = array_unique($nurses);
 						
-						foreach($nurses as $nurse){
-							$enroll[$nurse] = isset($old_enroll[$nurse]) ? $old_enroll[$nurse] : 0;
-							$attendance[$nurse] = isset($old_attendance[$nurse]) ? $old_attendance[$nurse] : 0;
-							$collected[$nurse] = isset($old_collected[$nurse]) ? $old_collected[$nurse] : 0;
-							$date_book_returned[$nurse] = isset($old_date_book_returned[$nurse]) ? $old_date_book_returned[$nurse] : '';
-							$date_book_received[$nurse] = isset($old_date_book_received[$nurse]) ? $old_date_book_received[$nurse] : '';
-						}
-						
+
+						error_log("Booking->booking_id : $booking->booking_id");
 						$booking_result = $this->database->update(TBL_BOOKINGS,
 							array(
 								'nurses' => $nurses,
-								'date_book_received'=> $date_book_received,
-								'date_book_returned'=> $date_book_returned,
-								'collected' => $collected,
-								'enroll' => $enroll,
-								'attendance' => $attendance
 							),
 							array(
 								'ID'=> $booking->booking_id
@@ -791,6 +874,7 @@ if( !class_exists('Pending_Bookings') ):
 								/*============= Send email to user =============*/
 								$template_id = get_option('after_course_request_accepted');
 								if( $template_id != ''){
+									require_once('/var/www/html/NIALL/practisedevelopmentteam/course-management/inc/phpmailer/PHPMailerAutoload.php');
 									$email_subject = get_table_column_data( TBL_TEMPLATES, 'subject', array( 'ID' => $template_id) );
 									$email_body = get_table_column_data( TBL_TEMPLATES, 'body', array( 'ID' => $template_id) );
 									if($email_body && $email_subject){
@@ -802,7 +886,14 @@ if( !class_exists('Pending_Bookings') ):
 												'{{user_email}}' => $user_data->user_email,
 											)
 										);
-										$email_sent = send_email($user_data->user_email, $email_subject, $email_body);
+										$email = new PHPMailer();
+										$email->From      = 'rsc-tr.workforce@nhs.net';
+                        							$email->FromName  = 'Workforce';
+										$email->Subject = $email_subject;
+										$email->Body = $email_body;
+										$email->AddAddress($user_data->user_email);
+										$email->Send();
+										//$email_sent = send_email($user_data->user_email, $email_subject, $email_body);
 									}
 								}
 								/*============= Send email to user =============*/

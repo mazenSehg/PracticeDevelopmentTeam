@@ -27,4 +27,12 @@ require_once( ABSPATH . CONTENT . '/class/class.pending-bookings.php');
 require_once( ABSPATH . CONTENT . '/class/class.header.php');
 require_once( ABSPATH . CONTENT . '/class/class.footer.php');
 
+
+if(IS_PDT){
+$db->update(TBL_OPTION,array('option_value'=>'PDT'),array('option_name'=>'site_name'));
+$db->update(TBL_OPTION,array('option_value'=>'Professional Development Tracker'),array('option_name'=>'site_description'));
+}else{
+$db->update(TBL_OPTION,array('option_value'=>'Resus'),array('option_name'=>'site_name'));
+$db->update(TBL_OPTION,array('option_value'=>'Resusitation Description'),array('option_name'=>'site_description'));
+}
 ?>

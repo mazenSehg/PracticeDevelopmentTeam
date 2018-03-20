@@ -53,8 +53,8 @@ if( !class_exists('Booking') ):
 				</div>
 				
 				<div class="form-group">
-					<label for="location"><?php _e('Location');?>&nbsp;<span class="required">*</span></label>
-					<select name="location" class="form-control select_single require" data-placeholder="Choose location">
+					<label for="locations"><?php _e('Location');?>&nbsp;<span class="required">*</span></label>
+					<select name="location[]" class="form-control select_single require" data-placeholder="Choose location(s)" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_LOCATIONS, false);
 						$option_data = get_option_data($data, array('ID', 'name'));
@@ -145,17 +145,14 @@ if( !class_exists('Booking') ):
 				</div>
 				
 				<div class="form-group">
-					<label for="location"><?php _e('Location(s)');?>&nbsp;<span class="required">*</span></label>
-					<select name="location" class="form-control select_single require" data-placeholder="Choose location">
+					<label for="locations"><?php _e('Location(s)');?>&nbsp;<span class="required">*</span></label>
+					<select name="location[]" class="form-control select_single require" data-placeholder="Choose location(s)" multiple="multiple">
 						<?php
 						$data = get_tabledata(TBL_LOCATIONS, false);
 						$option_data = get_option_data($data, array('ID', 'name'));
 						echo get_options_list($option_data, maybe_unserialize($booking->location));
 						?>
 					</select>
-                    <div id="go">
-                    </div>
-                    <button id="another" onclick="anotherLink()" type="button">Add new Location</button>
                     
 				</div>
 

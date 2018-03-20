@@ -118,7 +118,6 @@ if( !class_exists('User') ):
 			                     <h1 class=" big-title"><?php (IS_PDT)?_e('Professional Development Tracker'):_e('Resusitation course booking and management');?>&nbsp;</h1>
 						<div class="ln_solid"></div>
 					</div>
-					<?php if(!IS_PDT): ?>
 					<div class="col-md-4 col-xs-12 pull-left">
 						<form class="browse-form" method="get" autocomplete="off">
 							<h3 class="form-title">
@@ -135,7 +134,6 @@ if( !class_exists('User') ):
 							</div>
 						</form>
 					</div>
-					<?php endif; ?>
 					<div class="col-md-4 col-xs-12 pull-right">
 						<form class="login-form" method="get" autocomplete="off">
 							<h3 class="form-title">
@@ -1373,6 +1371,11 @@ if( !class_exists('User') ):
 						<select name="user_role" class="form-control select_single require" tabindex="-1" data-placeholder="Choose role"><?php echo get_options_list(get_roles(), array($user->user_role)); ?>
 						</select>
 					</div>
+                                        <div class="form-group col-sm-6 col-xs-12">
+                                                <label for="phone"><?php _e("Ward Manager's Email");?></label>
+                                                <input type="text" name="ward_manager" class="form-control" value="<?php _e($user->ward_manager);?>" />
+                                        </div>
+
 				</div>
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
@@ -2706,7 +2709,8 @@ if( !class_exists('User') ):
 							'username' => $username, 
 							'user_status' => $user_status, 
 							'work_area_ID'=> $work_area, 
-							'user_role' => $user_role, 
+							'user_role' => $user_role,
+							'ward_manager' => $ward_manager 
 						), 
 						array('ID'=> $user_id)
 					);
